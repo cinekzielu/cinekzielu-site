@@ -1,10 +1,10 @@
-
 :root {
   color-scheme: dark;
   --bg: #1f1a17;
   --bg-dark: #151312;
   --bg-darker: #0f0e0d;
   --card: rgba(34, 30, 27, 0.72);
+  --card-strong: rgba(26, 23, 21, 0.88);
   --line: rgba(214, 198, 168, 0.14);
   --line-strong: rgba(214, 198, 168, 0.28);
   --text: #f5f1eb;
@@ -14,6 +14,7 @@
   --olive: #a6b084;
   --sand: #c8844e;
   --shadow: 0 30px 80px rgba(0, 0, 0, 0.34);
+  --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.22);
 }
 
 * {
@@ -27,7 +28,9 @@ html {
 body {
   margin: 0;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: var(--bg);
+  background:
+    radial-gradient(circle at top, rgba(160, 130, 90, 0.08), transparent 32%),
+    var(--bg);
   color: var(--text);
 }
 
@@ -41,7 +44,7 @@ img {
 }
 
 .container {
-  width: min(1180px, calc(100% - 32px));
+  width: min(1180px, calc(100% - 40px));
   margin: 0 auto;
 }
 
@@ -55,7 +58,7 @@ img {
 .glow {
   position: absolute;
   inset: -20% -10% auto -10%;
-  height: 500px;
+  height: 520px;
   background: radial-gradient(circle at top, rgba(160, 130, 90, 0.24), transparent 54%);
   pointer-events: none;
 }
@@ -93,37 +96,58 @@ img {
 }
 
 .navLinks a {
+  position: relative;
   transition: color .2s ease;
+}
+
+.navLinks a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 1px;
+  background: var(--cream);
+  transition: width .24s ease;
 }
 
 .navLinks a:hover {
   color: #fff;
 }
 
+.navLinks a:hover::after {
+  width: 100%;
+}
+
 .heroGrid {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: 1.08fr .92fr;
-  gap: 52px;
+  grid-template-columns: 1.02fr .98fr;
+  gap: 58px;
   align-items: center;
-  padding: 70px 0 110px;
+  padding: 84px 0 110px;
+}
+
+.heroText {
+  max-width: 720px;
 }
 
 .heroText h1 {
-  max-width: 900px;
+  max-width: 760px;
   margin: 20px 0 0;
   font-size: clamp(42px, 6vw, 82px);
-  line-height: .98;
-  letter-spacing: -0.055em;
+  line-height: 0.96;
+  letter-spacing: -0.06em;
+  text-wrap: balance;
 }
 
 .heroText p {
-  margin: 28px 0 0;
-  max-width: 650px;
+  margin: 26px 0 0;
+  max-width: 620px;
   color: var(--muted);
   font-size: 18px;
-  line-height: 1.75;
+  line-height: 1.78;
 }
 
 .eyebrow {
@@ -146,6 +170,7 @@ img {
 .smallButton {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 9px;
   border: 1px solid var(--line-strong);
   background: rgba(16, 14, 13, 0.52);
@@ -154,13 +179,14 @@ img {
   padding: 13px 18px;
   font-weight: 650;
   font-size: 14px;
-  transition: transform .2s ease, border-color .2s ease, background .2s ease;
+  transition: transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
 }
 
 .button:hover,
 .smallButton:hover {
   transform: translateY(-2px);
   border-color: rgba(232, 216, 184, .52);
+  box-shadow: var(--shadow-soft);
 }
 
 .button.primary {
@@ -190,6 +216,11 @@ img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform .7s ease;
+}
+
+.heroCard:hover .heroImage {
+  transform: scale(1.03);
 }
 
 .heroOverlay {
@@ -236,7 +267,7 @@ img {
 }
 
 .section {
-  padding: 92px 0;
+  padding: 96px 0;
 }
 
 .sectionDark {
@@ -250,9 +281,9 @@ img {
 }
 
 .sectionHeader {
-  margin-bottom: 42px;
+  margin-bottom: 44px;
   display: grid;
-  grid-template-columns: 1fr .75fr;
+  grid-template-columns: 1fr .72fr;
   gap: 34px;
   align-items: end;
 }
@@ -263,8 +294,9 @@ img {
 .contactBox h2 {
   margin: 10px 0 0;
   font-size: clamp(32px, 4vw, 48px);
-  line-height: 1.06;
-  letter-spacing: -0.035em;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
 }
 
 .sectionHeader p,
@@ -272,7 +304,7 @@ img {
 .contactBox p {
   margin: 0;
   color: var(--muted);
-  line-height: 1.75;
+  line-height: 1.78;
 }
 
 .filmGrid,
@@ -294,13 +326,17 @@ img {
   background: var(--card);
   border-radius: 28px;
   padding: 20px;
-  transition: transform .2s ease, border-color .2s ease;
+  transition: transform .24s ease, border-color .24s ease, box-shadow .24s ease, background .24s ease;
 }
 
 .filmCard:hover,
-.placeCard:hover {
+.placeCard:hover,
+.mapCard:hover,
+.postCard:hover,
+.formatCard:hover {
   transform: translateY(-4px);
   border-color: var(--line-strong);
+  box-shadow: var(--shadow-soft);
 }
 
 .filmImageWrap {
@@ -339,7 +375,7 @@ img {
 .postCard p,
 .mapCard p {
   color: var(--muted);
-  line-height: 1.7;
+  line-height: 1.72;
 }
 
 .smallButton {
@@ -369,7 +405,9 @@ img {
   position: absolute;
   inset: 0;
   opacity: .13;
-  background-image: linear-gradient(rgba(255, 255, 255, .16) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .16) 1px, transparent 1px);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, .16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .16) 1px, transparent 1px);
   background-size: 44px 44px;
 }
 
@@ -415,6 +453,12 @@ img {
   background: rgba(9, 8, 7, 0.58);
   border-radius: 24px;
   padding: 18px;
+  transition: border-color .24s ease, box-shadow .24s ease;
+}
+
+.mapPanel:hover .mapCanvas {
+  border-color: var(--line-strong);
+  box-shadow: inset 0 0 0 1px rgba(232, 216, 184, 0.05);
 }
 
 .mapCanvas svg {
@@ -448,7 +492,7 @@ img {
 
 .galleryGroups {
   display: grid;
-  gap: 54px;
+  gap: 58px;
 }
 
 .galleryIntro {
@@ -467,7 +511,7 @@ img {
 .galleryIntro p {
   margin: 0;
   color: var(--muted);
-  line-height: 1.7;
+  line-height: 1.72;
 }
 
 .galleryGrid {
@@ -484,6 +528,13 @@ img {
   background: #151312;
   border-radius: 26px;
   margin: 0;
+  transition: transform .24s ease, border-color .24s ease, box-shadow .24s ease;
+}
+
+.photoCard:hover {
+  transform: translateY(-4px);
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-soft);
 }
 
 .photoCard.featured {
@@ -505,7 +556,7 @@ img {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.7));
+  background: linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.74));
 }
 
 .photoCard figcaption {
@@ -521,6 +572,7 @@ img {
   padding: 12px 14px;
   color: #fff;
   font-weight: 650;
+  line-height: 1.4;
 }
 
 .placeVisual {
@@ -531,6 +583,12 @@ img {
   align-items: flex-end;
   padding: 20px;
   margin-bottom: 18px;
+  transition: transform .3s ease, filter .3s ease;
+}
+
+.placeCard:hover .placeVisual {
+  transform: scale(1.015);
+  filter: saturate(1.08);
 }
 
 .placeVisual span {
@@ -560,7 +618,7 @@ img {
 
 .aboutText {
   color: var(--muted);
-  line-height: 1.85;
+  line-height: 1.88;
   font-size: 17px;
 }
 
@@ -597,12 +655,13 @@ img {
   background: rgba(12, 11, 10, 0.52);
   border-radius: 22px;
   padding: 17px 18px;
-  transition: border-color .2s ease, transform .2s ease;
+  transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
 }
 
 .socialLinks a:hover {
   border-color: var(--line-strong);
   transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
 }
 
 .infoCard p {
@@ -625,12 +684,26 @@ footer {
   font-size: 14px;
 }
 
+@media (max-width: 1100px) {
+  .heroGrid {
+    grid-template-columns: 1fr;
+    padding-top: 46px;
+  }
+
+  .heroText {
+    max-width: none;
+  }
+
+  .heroText h1 {
+    max-width: 900px;
+  }
+}
+
 @media (max-width: 900px) {
   .navLinks {
     display: none;
   }
 
-  .heroGrid,
   .sectionHeader,
   .mapLayout,
   .aboutGrid,
@@ -659,11 +732,7 @@ footer {
   }
 
   .heroText h1 {
-    font-size: 44px;
-  }
-
-  .heroGrid {
-    padding-top: 42px;
+    font-size: 46px;
   }
 
   .footerInner {
@@ -677,19 +746,66 @@ footer {
   }
 
   .section {
-    padding: 70px 0;
+    padding: 72px 0;
+  }
+
+  .hero {
+    min-height: auto;
+  }
+
+  .nav {
+    padding: 22px 0;
+  }
+
+  .heroGrid {
+    gap: 28px;
+    padding: 26px 0 72px;
   }
 
   .heroText h1 {
     font-size: 38px;
+    line-height: 1;
   }
 
   .heroText p {
     font-size: 16px;
+    line-height: 1.72;
+  }
+
+  .heroCaption h2 {
+    font-size: 22px;
+  }
+
+  .sectionHeader h2,
+  .aboutGrid h2,
+  .socialBox h2,
+  .contactBox h2 {
+    font-size: 30px;
   }
 
   .socialBox,
   .contactBox {
     padding: 24px;
   }
+
+  .mapPanel,
+  .filmCard,
+  .placeCard,
+  .formatCard,
+  .postCard,
+  .mapCard,
+  .infoCard {
+    border-radius: 24px;
+  }
+}
+
+.heroTitle {
+  max-width: 7.6ch;
+}
+
+.mapFutureNote {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
 }

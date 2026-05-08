@@ -163,7 +163,7 @@ function App() {
         <div className="heroGrid container">
           <div className="heroText">
             <div className="eyebrow">Cinek Zielu / Marcin Zieliński</div>
-            <h1>Moje wyprawy, filmy i historie z miejsc, do których ciągle wracam myślami.</h1>
+            <h1 className="heroTitle">Moje wyprawy, filmy i historie z miejsc, do których ciągle wracam myślami.</h1>
             <p>
               Chodzę po górach, podróżuję, nagrywam i robię zdjęcia. Czasem wychodzi z tego vlog,
               czasem krótki film, czasem po prostu kilka ujęć, do których sam lubię wracać.
@@ -232,6 +232,7 @@ function App() {
               <div className="mapTop">
                 <div>
                   <div className="cardType">Travel layers</div>
+                  <div className="mapFutureNote">Docelowo interaktywna mapa wypraw i filmów</div>
                   <h3>Świat → Europa → Region → Film</h3>
                 </div>
                 <div className="chips">
