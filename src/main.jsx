@@ -159,6 +159,34 @@ function App() {
     []
   )
   const activePhoto = activePhotoIndex === null ? null : galleryPhotos[activePhotoIndex]
+  const touchStartX = React.useRef(0)
+  const touchStartY = React.useRef(0)
+
+
+  const showPreviousPhoto = React.useCallback(() => {
+    setActivePhotoIndex((current) => (current - 1 + galleryPhotos.length) % galleryPhotos.length)
+  }, [galleryPhotos.length])
+
+  const showNextPhoto = React.useCallback(() => {
+    setActivePhotoIndex((current) => (current + 1) % galleryPhotos.length)
+  }, [galleryPhotos.length])
+
+  const handleLightboxTouchStart = (event) => {
+    const touch = event.touches[0]
+    touchStartX.current = touch.clientX
+    touchStartY.current = touch.clientY
+  }
+
+  const handleLightboxTouchEnd = (event) => {
+    const touch = event.changedTouches[0]
+    const deltaX = touch.clientX - touchStartX.current
+    const deltaY = touch.clientY - touchStartY.current
+
+    if (Math.abs(deltaX) < 50 || Math.abs(deltaX) < Math.abs(deltaY) * 1.25) return
+
+    if (deltaX < 0) showNextPhoto()
+    if (deltaX > 0) showPreviousPhoto()
+  }
 
   React.useEffect(() => {
     const elements = document.querySelectorAll('.reveal')
@@ -192,10 +220,10 @@ function App() {
         setActivePhotoIndex(null)
       }
       if (activePhotoIndex !== null && event.key === 'ArrowLeft') {
-        setActivePhotoIndex((current) => (current - 1 + galleryPhotos.length) % galleryPhotos.length)
+        showPreviousPhoto()
       }
       if (activePhotoIndex !== null && event.key === 'ArrowRight') {
-        setActivePhotoIndex((current) => (current + 1) % galleryPhotos.length)
+        showNextPhoto()
       }
     }
 
@@ -206,7 +234,7 @@ function App() {
       document.body.style.overflow = ''
       window.removeEventListener('keydown', handleKeyDown)
     }
-  }, [activePhotoIndex, galleryPhotos.length, isMobileMenuOpen])
+  }, [activePhotoIndex, isMobileMenuOpen, showNextPhoto, showPreviousPhoto])
 
   return (
     <main>
@@ -321,7 +349,7 @@ function App() {
               <div className="mapTop">
                 <div>
                   <div className="cardType">Travel layers</div>
-                  <div className="mapFutureNote">Docelowo interaktywna mapa wypraw i filmów</div>
+                  <div className="mapFutureNote">Wkrótce: interaktywna mapa wypraw i filmów</div>
                   <h3>Świat → Europa → Region → Film</h3>
                 </div>
                 <div className="chips">
@@ -470,7 +498,12 @@ function App() {
       </section>
       {activePhoto && (
         <div className="lightboxOverlay" onClick={() => setActivePhotoIndex(null)}>
-          <div className="lightboxContent" onClick={(event) => event.stopPropagation()}>
+          <div
+            className="lightboxContent"
+            onClick={(event) => event.stopPropagation()}
+            onTouchStart={handleLightboxTouchStart}
+            onTouchEnd={handleLightboxTouchEnd}
+          >
             <button className="lightboxClose" type="button" aria-label="Zamknij podgląd" onClick={() => setActivePhotoIndex(null)}>
               <X size={20} />
             </button>
@@ -478,7 +511,7 @@ function App() {
               className="lightboxArrow lightboxArrowLeft"
               type="button"
               aria-label="Poprzednie zdjęcie"
-              onClick={() => setActivePhotoIndex((current) => (current - 1 + galleryPhotos.length) % galleryPhotos.length)}
+              onClick={showPreviousPhoto}
             >
               ‹
             </button>
@@ -487,7 +520,7 @@ function App() {
               className="lightboxArrow lightboxArrowRight"
               type="button"
               aria-label="Następne zdjęcie"
-              onClick={() => setActivePhotoIndex((current) => (current + 1) % galleryPhotos.length)}
+              onClick={showNextPhoto}
             >
               ›
             </button>
