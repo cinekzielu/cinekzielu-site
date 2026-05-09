@@ -1,0 +1,19 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="112" fill="#021313"/>
+
+  <path d="M100 156 L180 110 L216 144 L285 72 L344 148 L374 128 L438 146"
+        stroke="#F5F1E0"
+        stroke-width="30"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+
+  <text x="256" y="400"
+        text-anchor="middle"
+        font-family="Alefa Slab One, Helvetica, sans-serif"
+        font-size="290"
+        font-weight="810"
+        fill="#F5F1E0"
+        letter-spacing="15">
+    CZ
+  </text>
+</svg>
