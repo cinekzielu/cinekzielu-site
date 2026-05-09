@@ -1,6 +1,6 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { Camera, Play } from 'lucide-react'
+import { Camera, Menu, Play, X } from 'lucide-react'
 import './styles.css'
 
 const socials = {
@@ -141,7 +141,19 @@ const blogPosts = [
   { title: 'Od wejścia na szczyt do gotowego montażu', category: 'Proces' },
 ]
 
+const mobileNavLinks = [
+  { href: '#films', label: 'Filmy' },
+  { href: '#map', label: 'Mapa' },
+  { href: '#gallery', label: 'Galeria' },
+  { href: '#about', label: 'O mnie' },
+  { href: '#contact', label: 'Kontakt' },
+]
+
+const mobileMenuVariant = 'A'
+
 function App() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
+
   React.useEffect(() => {
     const elements = document.querySelectorAll('.reveal')
 
@@ -165,6 +177,24 @@ function App() {
     }
   }, [])
 
+  React.useEffect(() => {
+    if (!isMobileMenuOpen) return undefined
+
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') {
+        setIsMobileMenuOpen(false)
+      }
+    }
+
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', closeOnEscape)
+
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', closeOnEscape)
+    }
+  }, [isMobileMenuOpen])
+
   return (
     <main>
       <section className="hero">
@@ -172,19 +202,39 @@ function App() {
         <div className="cinematicFog fogOne"></div>
         <div className="cinematicFog fogTwo"></div>
         <div className="glow"></div>
-        <nav className="nav container">
+        <nav className={`nav container mobileVariant${mobileMenuVariant}`}>
           <div>
             <div className="logo">Cinek Zielu</div>
             <div className="sublogo">Marcin Zieliński • Góry • Podróże • Film</div>
           </div>
           <div className="navLinks">
-            <a href="#films">Filmy</a>
-            <a href="#map">Mapa</a>
-            <a href="#gallery">Galeria</a>
-            <a href="#about">O mnie</a>
-            <a href="#contact">Kontakt</a>
+            {mobileNavLinks.map((item) => (
+              <a href={item.href} key={item.href}>
+                {item.label}
+              </a>
+            ))}
           </div>
+          <button
+            className="hamburgerButton"
+            type="button"
+            aria-label={isMobileMenuOpen ? 'Zamknij menu' : 'Otwórz menu'}
+            aria-expanded={isMobileMenuOpen}
+            onClick={() => setIsMobileMenuOpen((current) => !current)}
+          >
+            {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
         </nav>
+        <div
+          className={`mobileMenuBackdrop ${isMobileMenuOpen ? 'isOpen' : ''}`}
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+        <div className={`mobileMenu mobileVariant${mobileMenuVariant} ${isMobileMenuOpen ? 'isOpen' : ''}`}>
+          {mobileNavLinks.map((item) => (
+            <a href={item.href} key={item.href} onClick={() => setIsMobileMenuOpen(false)}>
+              {item.label}
+            </a>
+          ))}
+        </div>
 
         <div className="heroGrid container">
           <div className="heroText">
