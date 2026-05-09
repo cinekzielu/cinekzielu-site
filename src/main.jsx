@@ -142,6 +142,29 @@ const blogPosts = [
 ]
 
 function App() {
+  React.useEffect(() => {
+    const elements = document.querySelectorAll('.reveal')
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('isVisible')
+          }
+        })
+      },
+      {
+        threshold: 0.12,
+      }
+    )
+
+    elements.forEach((element) => observer.observe(element))
+
+    return () => {
+      elements.forEach((element) => observer.unobserve(element))
+    }
+  }, [])
+
   return (
     <main>
       <section className="hero">
@@ -198,7 +221,7 @@ function App() {
         </div>
       </section>
 
-      <section id="films" className="section sectionDark">
+      <section id="films" className="section sectionDark reveal">
         <div className="container">
           <SectionHeader
             label="Wybrane filmy"
@@ -223,7 +246,7 @@ function App() {
         </div>
       </section>
 
-      <section id="map" className="section sectionDarker">
+      <section id="map" className="section sectionDarker reveal">
         <div className="container">
           <SectionHeader
             label="Mapa wypraw"
@@ -333,7 +356,7 @@ function App() {
         </div>
       </section>
 
-      <section id="gallery" className="section">
+      <section id="gallery" className="section reveal">
         <div className="container">
           <SectionHeader
             label="Galeria"
@@ -369,7 +392,7 @@ function App() {
         </div>
       </section>
 
-      <section id="places" className="section sectionDark">
+      <section id="places" className="section sectionDark reveal">
         <div className="container">
           <SectionHeader
             label="Miejsca"
@@ -392,7 +415,7 @@ function App() {
         </div>
       </section>
 
-      <section id="about" className="section">
+      <section id="about" className="section reveal">
         <div className="container aboutGrid">
           <div>
             <div className="cardType">O mnie</div>
@@ -416,7 +439,7 @@ function App() {
         </div>
       </section>
 
-      <section className="section sectionDark">
+      <section className="section sectionDark reveal">
         <div className="container">
           <SectionHeader
             label="Formaty"
@@ -435,7 +458,7 @@ function App() {
         </div>
       </section>
 
-      <section id="social" className="section">
+      <section id="social" className="section reveal">
         <div className="container socialBox">
           <div>
             <div className="cardType">Social media</div>
@@ -459,7 +482,7 @@ function App() {
         </div>
       </section>
 
-      <section id="contact" className="section sectionDarker">
+      <section id="contact" className="section sectionDarker reveal">
         <div className="container contactBox">
           <div>
             <div className="cardType">Kontakt / współpraca</div>
@@ -485,7 +508,7 @@ function App() {
         </div>
       </section>
 
-      <section className="section sectionDark">
+      <section className="section sectionDark reveal">
         <div className="container">
           <SectionHeader
             label="Aktualności"
