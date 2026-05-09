@@ -534,6 +534,7 @@ img {
   background: #151312;
   border-radius: 26px;
   margin: 0;
+  cursor: zoom-in;
   transition: transform .24s ease, border-color .24s ease, box-shadow .24s ease;
 }
 
@@ -579,6 +580,99 @@ img {
   color: #fff;
   font-weight: 650;
   line-height: 1.4;
+}
+
+.lightboxOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  background: rgba(4, 4, 4, 0.84);
+  backdrop-filter: blur(8px);
+}
+
+.lightboxContent {
+  position: relative;
+  width: min(1080px, 100%);
+  max-height: 100%;
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+}
+
+.lightboxImage {
+  width: auto;
+  max-width: 100%;
+  max-height: min(78vh, 860px);
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 30px 75px rgba(0, 0, 0, 0.55);
+  object-fit: contain;
+}
+
+.lightboxCaption {
+  text-align: center;
+}
+
+.lightboxCaption span {
+  color: var(--faint);
+  font-size: 10px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+}
+
+.lightboxCaption p {
+  margin: 6px 0 0;
+  font-size: clamp(16px, 3.2vw, 22px);
+  color: #f4ede4;
+}
+
+.lightboxClose,
+.lightboxArrow {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(10, 10, 10, 0.6);
+  color: #f6f1ea;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: transform .2s ease, border-color .2s ease, background .2s ease;
+}
+
+.lightboxClose:hover,
+.lightboxArrow:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.48);
+  background: rgba(18, 18, 18, 0.78);
+}
+
+.lightboxClose {
+  top: 2px;
+  right: 2px;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+}
+
+.lightboxArrow {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  font-size: 36px;
+  line-height: 1;
+}
+
+.lightboxArrowLeft {
+  left: -72px;
+}
+
+.lightboxArrowRight {
+  right: -72px;
 }
 
 .placeVisual {
@@ -933,6 +1027,35 @@ footer {
   .footerInner {
     flex-direction: column;
     gap: 6px;
+  }
+
+  .lightboxOverlay {
+    padding: 18px;
+  }
+
+  .lightboxImage {
+    max-height: 72vh;
+  }
+
+  .lightboxArrow {
+    width: 50px;
+    height: 50px;
+    font-size: 30px;
+  }
+
+  .lightboxArrowLeft {
+    left: 6px;
+  }
+
+  .lightboxArrowRight {
+    right: 6px;
+  }
+
+  .lightboxClose {
+    top: -4px;
+    right: 0;
+    width: 42px;
+    height: 42px;
   }
 }
 
