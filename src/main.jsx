@@ -153,6 +153,12 @@ const mobileMenuVariant = 'A'
 
 function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
+  const [activePhotoIndex, setActivePhotoIndex] = React.useState(null)
+  const galleryPhotos = React.useMemo(
+    () => galleryGroups.flatMap((group) => group.photos.map((photo) => ({ ...photo, group: group.title }))),
+    []
+  )
+  const activePhoto = activePhotoIndex === null ? null : galleryPhotos[activePhotoIndex]
 
   React.useEffect(() => {
     const elements = document.querySelectorAll('.reveal')
@@ -178,22 +184,29 @@ function App() {
   }, [])
 
   React.useEffect(() => {
-    if (!isMobileMenuOpen) return undefined
+    if (!isMobileMenuOpen && activePhotoIndex === null) return undefined
 
-    const closeOnEscape = (event) => {
+    const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
         setIsMobileMenuOpen(false)
+        setActivePhotoIndex(null)
+      }
+      if (activePhotoIndex !== null && event.key === 'ArrowLeft') {
+        setActivePhotoIndex((current) => (current - 1 + galleryPhotos.length) % galleryPhotos.length)
+      }
+      if (activePhotoIndex !== null && event.key === 'ArrowRight') {
+        setActivePhotoIndex((current) => (current + 1) % galleryPhotos.length)
       }
     }
 
     document.body.style.overflow = 'hidden'
-    window.addEventListener('keydown', closeOnEscape)
+    window.addEventListener('keydown', handleKeyDown)
 
     return () => {
       document.body.style.overflow = ''
-      window.removeEventListener('keydown', closeOnEscape)
+      window.removeEventListener('keydown', handleKeyDown)
     }
-  }, [isMobileMenuOpen])
+  }, [activePhotoIndex, galleryPhotos.length, isMobileMenuOpen])
 
   return (
     <main>
@@ -430,6 +443,20 @@ function App() {
                         index === 0 && group.title === 'Szwajcaria' ? 'featured' : ''
                       }`}
                       key={photo.title}
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`Otwórz podgląd zdjęcia: ${photo.title}`}
+                      onClick={() => {
+                        const selectedPhotoIndex = galleryPhotos.findIndex((item) => item.src === photo.src)
+                        setActivePhotoIndex(selectedPhotoIndex)
+                      }}
+                      onKeyDown={(event) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                          event.preventDefault()
+                          const selectedPhotoIndex = galleryPhotos.findIndex((item) => item.src === photo.src)
+                          setActivePhotoIndex(selectedPhotoIndex)
+                        }
+                      }}
                     >
                       <img src={photo.src} alt={photo.title} />
                       <figcaption>{photo.title}</figcaption>
@@ -441,6 +468,36 @@ function App() {
           </div>
         </div>
       </section>
+      {activePhoto && (
+        <div className="lightboxOverlay" onClick={() => setActivePhotoIndex(null)}>
+          <div className="lightboxContent" onClick={(event) => event.stopPropagation()}>
+            <button className="lightboxClose" type="button" aria-label="Zamknij podgląd" onClick={() => setActivePhotoIndex(null)}>
+              <X size={20} />
+            </button>
+            <button
+              className="lightboxArrow lightboxArrowLeft"
+              type="button"
+              aria-label="Poprzednie zdjęcie"
+              onClick={() => setActivePhotoIndex((current) => (current - 1 + galleryPhotos.length) % galleryPhotos.length)}
+            >
+              ‹
+            </button>
+            <img className="lightboxImage" src={activePhoto.src} alt={activePhoto.title} />
+            <button
+              className="lightboxArrow lightboxArrowRight"
+              type="button"
+              aria-label="Następne zdjęcie"
+              onClick={() => setActivePhotoIndex((current) => (current + 1) % galleryPhotos.length)}
+            >
+              ›
+            </button>
+            <div className="lightboxCaption">
+              <span>{activePhoto.group}</span>
+              <p>{activePhoto.title}</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       <section id="places" className="section sectionDark reveal">
         <div className="container">
