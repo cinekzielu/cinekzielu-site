@@ -600,6 +600,7 @@ img {
   display: grid;
   justify-items: center;
   gap: 16px;
+  touch-action: pan-y;
 }
 
 .lightboxImage {
@@ -642,9 +643,16 @@ img {
 
 .lightboxClose:hover,
 .lightboxArrow:hover {
-  transform: translateY(-1px);
   border-color: rgba(255, 255, 255, 0.48);
   background: rgba(18, 18, 18, 0.78);
+}
+
+.lightboxClose:hover {
+  transform: translateY(-1px);
+}
+
+.lightboxArrow:hover {
+  transform: translateY(calc(-50% - 1px));
 }
 
 .lightboxClose {
@@ -1038,24 +1046,26 @@ footer {
   }
 
   .lightboxArrow {
-    width: 50px;
-    height: 50px;
-    font-size: 30px;
+    width: 42px;
+    height: 42px;
+    font-size: 24px;
+    border-radius: 12px;
   }
 
   .lightboxArrowLeft {
-    left: 6px;
+    left: 2px;
   }
 
   .lightboxArrowRight {
-    right: 6px;
+    right: 2px;
   }
 
   .lightboxClose {
-    top: -4px;
-    right: 0;
-    width: 42px;
-    height: 42px;
+    top: -2px;
+    right: -2px;
+    width: 36px;
+    height: 36px;
+    border-radius: 11px;
   }
 }
 
