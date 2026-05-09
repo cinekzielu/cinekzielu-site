@@ -809,3 +809,104 @@ footer {
   font-size: 13px;
   line-height: 1.5;
 }
+/* === ETAP 4.1 — cinematic hero motion === */
+
+.cinematicNoise {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.08;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.12) 0 1px, transparent 1px),
+    radial-gradient(circle at 70% 60%, rgba(255,255,255,0.08) 0 1px, transparent 1px);
+  background-size: 42px 42px, 58px 58px;
+  animation: grainMove 14s steps(8) infinite;
+}
+
+.cinematicFog {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  width: 520px;
+  height: 220px;
+  border-radius: 999px;
+  filter: blur(42px);
+  opacity: 0.13;
+  background: rgba(232, 216, 184, 0.34);
+  animation: fogFloat 16s ease-in-out infinite alternate;
+}
+
+.fogOne {
+  top: 20%;
+  left: -160px;
+}
+
+.fogTwo {
+  right: -180px;
+  bottom: 18%;
+  opacity: 0.09;
+  animation-duration: 22s;
+}
+
+.heroCard {
+  animation: heroCardIn 0.9s ease both;
+}
+
+.heroText {
+  animation: heroTextIn 0.85s ease both;
+}
+
+.heroImage {
+  animation: slowHeroZoom 12s ease-in-out infinite alternate;
+}
+
+@keyframes grainMove {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-2%, 1%); }
+  50% { transform: translate(1%, -2%); }
+  75% { transform: translate(-1%, -1%); }
+  100% { transform: translate(2%, 1%); }
+}
+
+@keyframes fogFloat {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(80px, -30px, 0) scale(1.12); }
+}
+
+@keyframes slowHeroZoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.045); }
+}
+
+@keyframes heroTextIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cinematicNoise,
+  .cinematicFog,
+  .heroCard,
+  .heroText,
+  .heroImage {
+    animation: none;
+  }
+}

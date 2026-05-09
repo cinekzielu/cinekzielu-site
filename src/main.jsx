@@ -145,6 +145,9 @@ function App() {
   return (
     <main>
       <section className="hero">
+        <div className="cinematicNoise"></div>
+        <div className="cinematicFog fogOne"></div>
+        <div className="cinematicFog fogTwo"></div>
         <div className="glow"></div>
         <nav className="nav container">
           <div>
