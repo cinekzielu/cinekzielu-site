@@ -436,6 +436,66 @@ img {
   font-size: 26px;
 }
 
+
+
+.interactiveMap {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--line);
+  background: rgba(9, 8, 7, 0.58);
+  border-radius: 24px;
+  padding: 18px;
+  transition: border-color .24s ease, box-shadow .24s ease;
+}
+
+.mapPanel:hover .interactiveMap {
+  border-color: var(--line-strong);
+  box-shadow: inset 0 0 0 1px rgba(232, 216, 184, 0.05);
+}
+
+.interactiveMap svg {
+  width: 100%;
+  height: 100%;
+}
+
+.mapLand { stroke: rgba(214,198,168,.22); stroke-width: 2; }
+.mapLandWorld { fill: rgba(120,104,82,.22); }
+.mapLandEurope { fill: rgba(120,104,82,.30); }
+.mapLandAfrica { fill: rgba(120,104,82,.24); }
+.mapRoute { stroke: rgba(232,216,184,.38); stroke-width: 2; stroke-dasharray: 8 8; }
+.mapPointHalo { fill: transparent; stroke: color-mix(in oklab, var(--point-accent), white 15%); opacity: .75; transition: all .24s ease; }
+.mapPointDot { fill: var(--point-accent); transition: transform .24s ease; }
+.mapPointHalo.isActive { opacity: 1; }
+.mapPointDot.isActive { transform: scale(1.08); }
+
+.mapPointButton {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(232, 216, 184, 0.18);
+  background: rgba(9, 8, 7, 0.75);
+  color: #e8d8b8;
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.mapPointButton:hover,
+.mapPointButton.isActive {
+  border-color: color-mix(in oklab, var(--point-accent), white 30%);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--point-accent), transparent 78%);
+  transform: translate(-50%, calc(-50% - 2px));
+}
+
+.mapCard.isActiveRegion {
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-soft);
+}
+
+.layerBlock { margin-top: 16px; }
+.mapComingSoon { margin: 10px 0 0; }
+.chips .isActive { border-color: var(--line-strong); color: #f1e5d0; }
 .chips,
 .tagWrap {
   display: flex;
@@ -1394,4 +1454,10 @@ footer {
     transform: none;
     transition: none;
   }
+}
+
+@media (max-width: 860px) {
+  .mapLayout { grid-template-columns: 1fr; }
+  .mapPointButton { padding: 9px 12px; font-size: 12px; }
+  .interactiveMap { padding: 10px; }
 }
