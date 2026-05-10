@@ -328,7 +328,7 @@ function App() {
         </div>
       </section>
 
-      <section id="map" className="section sectionDarker reveal"><div className="container"><SectionHeader label="Mapa wypraw" title="Cinematic expedition atlas" text="Hierarchia: Świat → kontynent → kraj → region specjalny / miejsce." /><MapAtlas atlasPath={atlasPath} setAtlasPath={setAtlasPath} activeNode={activeNode} atlasLookups={atlasLookups} /></div></section>
+      <section id="map" className="section sectionDarker reveal"><div className="container"><SectionHeader label="Mapa wypraw" title="Interaktywna mapa wypraw" text="Hierarchia: Świat → kontynent → kraj/region → Tatry/szczyty." /><MapAtlas atlasPath={atlasPath} setAtlasPath={setAtlasPath} activeNode={activeNode} atlasLookups={atlasLookups} /></div></section>
 
       <section id="gallery" className="section reveal">
         <div className="container">
