@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { Camera, Menu, Play, X } from 'lucide-react'
 import './styles.css'
 import { travelAtlasData } from './data/travelData'
+import { MapAtlas } from './components/MapAtlas'
 
 const socials = {
   youtube: 'https://www.youtube.com/@cinek_zielu',
@@ -327,7 +328,7 @@ function App() {
         </div>
       </section>
 
-      <section id="map" className="section sectionDarker reveal"><div className="container"><SectionHeader label="Mapa wypraw" title="Cinematic expedition atlas" text="Hierarchia: Świat → kontynent → kraj → region specjalny / miejsce." /><AtlasMap atlasPath={atlasPath} setAtlasPath={setAtlasPath} atlasLevel={atlasLevel} activeNode={activeNode} atlasLookups={atlasLookups} /></div></section>
+      <section id="map" className="section sectionDarker reveal"><div className="container"><SectionHeader label="Mapa wypraw" title="Cinematic expedition atlas" text="Hierarchia: Świat → kontynent → kraj → region specjalny / miejsce." /><MapAtlas atlasPath={atlasPath} setAtlasPath={setAtlasPath} activeNode={activeNode} atlasLookups={atlasLookups} /></div></section>
 
       <section id="gallery" className="section reveal">
         <div className="container">
@@ -562,40 +563,4 @@ function App() {
 }
 
 
-function AtlasMap({ atlasPath, setAtlasPath, atlasLevel, activeNode, atlasLookups }) {
-  const continents = travelAtlasData.continents
-  const countries = travelAtlasData.countries
-  const specialRegions = travelAtlasData.specialRegions
-  const summits = travelAtlasData.summits
-  const films = travelAtlasData.films
-  const goUp = () => setAtlasPath((prev) => (prev.length > 1 ? prev.slice(0, -1) : prev))
-  const breadcrumb = atlasPath.map((id) => (id === 'world' ? { id, name: 'Świat' } : activeNode.id === id ? { id, name: activeNode.name } : { id, name: atlasLookups.continents[id]?.name || atlasLookups.countries[id]?.name || atlasLookups.specialRegions[id]?.name || atlasLookups.summits[id]?.name || atlasLookups.places[id]?.name }))
-  const nodes = atlasLevel === 0 ? continents : atlasLevel === 1 ? countries.filter((c) => c.continentId === activeNode.id) : atlasLevel === 2 ? (specialRegions.filter((r) => r.parentCountries?.includes(activeNode.id)).concat(travelAtlasData.places.filter((p) => p.parentId === activeNode.id))) : atlasLevel === 3 ? summits.filter((s) => s.parentId === activeNode.id) : []
-  return <div className="atlasLayout"><div className="atlasMapWrap"><div className="atlasToolbar"><div className="chips">{breadcrumb.map((item, idx) => <span key={item.id}>{item.name}{idx < breadcrumb.length - 1 ? ' /' : ''}</span>)}</div>{atlasLevel > 0 && <button className="smallButton" type="button" onClick={goUp}>Wróć poziom wyżej</button>}</div><div className="atlasStage">{nodes.map((node) => <button key={node.id} type="button" className={`atlasNode ${node.visited ? 'isVisited' : 'isMuted'}`} style={{ left: `${node.mapPosition?.x ?? 50}%`, top: `${node.mapPosition?.y ?? 50}%` }} onClick={() => setAtlasPath((prev) => [...prev, node.id])}><span>{node.name}</span></button>)}</div></div><article className="mapCard isActiveRegion"><h3>{activeNode.name}</h3><p>{activeNode.description}</p>{activeNode.countryIds && <p>Kraje: {activeNode.countryIds.map((id) => atlasLookups.countries[id]?.name).filter(Boolean).join(', ')}</p>}{activeNode.regionIds && <p>Regiony: {activeNode.regionIds.map((id) => atlasLookups.specialRegions[id]?.name).join(', ')}</p>}{activeNode.placeIds && <p>Miejsca: {activeNode.placeIds.map((id) => atlasLookups.places[id]?.name).join(', ') || 'Więcej wkrótce'}</p>}{activeNode.summitIds && <p>Szczyty: {activeNode.summitIds.map((id) => atlasLookups.summits[id]?.name).join(', ')}</p>}{activeNode.filmId && <a className="smallButton" href={atlasLookups.films[activeNode.filmId].url} target="_blank" rel="noreferrer">Obejrzyj film</a>}{activeNode.id === 'morocco' && <a className="smallButton" href={films.find((f) => f.parentId === 'morocco')?.url} target="_blank" rel="noreferrer">Obejrzyj film</a>}{!activeNode.filmId && !activeNode.placeIds && !activeNode.summitIds && <p className="mapComingSoon">Więcej wkrótce.</p>}</article></div>
-}
-function SectionHeader({ label, title, text }) {
-  return (
-    <div className="sectionHeader">
-      <div>
-        <div className="cardType">{label}</div>
-        <h2>{title}</h2>
-      </div>
-      {text && <p>{text}</p>}
-    </div>
-  )
-}
-
-function InfoCard({ title, text }) {
-  return (
-    <div className="infoCard">
-      <div className="cardType">{title}</div>
-      <p>{text}</p>
-    </div>
-  )
-}
-
-createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-)
+createRoot(document.getElementById('root')).render(<App />)

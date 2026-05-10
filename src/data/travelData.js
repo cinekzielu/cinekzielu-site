@@ -46,7 +46,7 @@ export const travelAtlasData = {
       description: 'Zimowe wejścia, granie, techniczne przejścia i vlogi z Tatr.',
       mapPosition: { x: 52, y: 41 },
       coordinates: '49.2°N, 20.0°E',
-      summitIds: ['lomnica', 'koscielec', 'gerlach', 'durny-szczyt', 'swinica'],
+      summitIds: ['lomnica', 'koscielec', 'gerlach', 'durny-szczyt', 'krywan', 'swinica'],
       contentTypes: ['Vlog', 'Short film', 'Galeria'],
     },
   ],
@@ -67,6 +67,7 @@ export const travelAtlasData = {
     { id: 'koscielec', name: 'Kościelec', parentId: 'tatry', visited: true, status: 'active', description: 'Zimowe wejście i bardziej filmowa forma wyprawy.', mapPosition: { x: 44, y: 45 }, filmId: 'film-koscielec', gallery: [] },
     { id: 'gerlach', name: 'Gerlach', parentId: 'tatry', visited: true, status: 'active', description: 'Najwyższy szczyt Tatr — więcej materiału wkrótce.', mapPosition: { x: 63, y: 47 }, gallery: [] },
     { id: 'durny-szczyt', name: 'Durny Szczyt', parentId: 'tatry', visited: true, status: 'active', description: 'Techniczne przejścia i surowy charakter ścian.', mapPosition: { x: 52, y: 56 }, gallery: [] },
+    { id: 'krywan', name: 'Krywań', parentId: 'tatry', visited: true, status: 'active', description: 'Symboliczny szczyt po słowackiej stronie Tatr.', mapPosition: { x: 47, y: 52 }, gallery: [] },
     { id: 'swinica', name: 'Świnica', parentId: 'tatry', visited: true, status: 'active', description: 'Klasyczny tatrzański kierunek na mocny dzień w górach.', mapPosition: { x: 35, y: 58 }, gallery: [] },
   ],
   films: [
