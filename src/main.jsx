@@ -14,6 +14,31 @@ const socials = {
 
 const img = (name) => `/images/${name}`
 
+const featuredFilms = [
+  {
+    title: 'Tatry — wejście i droga',
+    type: 'Vlog',
+    desc: 'Materiały z tatrzańskich szlaków: podejścia, warunki i klimat całej wyprawy od startu po zejście.',
+    image: img('film-tatry.jpg'),
+    link: socials.youtube,
+  },
+  {
+    title: 'Maroko — trekking i kontrast',
+    type: 'Short film',
+    desc: 'Podróż i trekking w zupełnie innym świetle: kontrast krajobrazu, tempo drogi i codzienność po trasie.',
+    image: img('film-maroko.jpg'),
+    link: socials.youtube,
+  },
+  {
+    title: 'Kościelec zimą — warunki i emocje',
+    type: 'Cinematic',
+    desc: 'Zimowe podejście na Kościelec pokazane filmowo — skupienie, ruch, chłód i satysfakcja na końcu dnia.',
+    image: img('film-koscielec.jpg'),
+    link: socials.youtube,
+  },
+]
+
+
 const places = [
   {
     title: 'Tatry',
