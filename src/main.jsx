@@ -2,7 +2,7 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { Camera, Menu, Play, X } from 'lucide-react'
 import './styles.css'
-import { travelRegions } from './data/travelData'
+import { travelAtlasData } from './data/travelData'
 
 const socials = {
   youtube: 'https://www.youtube.com/@cinek_zielu',
@@ -133,8 +133,22 @@ function App() {
     []
   )
   const activePhoto = activePhotoIndex === null ? null : galleryPhotos[activePhotoIndex]
-  const [activeRegionId, setActiveRegionId] = React.useState(travelRegions[0].regionId)
-  const activeRegion = travelRegions.find((region) => region.regionId === activeRegionId) ?? travelRegions[0]
+  const [atlasPath, setAtlasPath] = React.useState(['world'])
+
+  const atlasLookups = React.useMemo(() => ({
+    continents: Object.fromEntries(travelAtlasData.continents.map((item) => [item.id, item])),
+    countries: Object.fromEntries(travelAtlasData.countries.map((item) => [item.id, item])),
+    specialRegions: Object.fromEntries(travelAtlasData.specialRegions.map((item) => [item.id, item])),
+    places: Object.fromEntries(travelAtlasData.places.map((item) => [item.id, item])),
+    summits: Object.fromEntries(travelAtlasData.summits.map((item) => [item.id, item])),
+    films: Object.fromEntries(travelAtlasData.films.map((item) => [item.id, item])),
+  }), [])
+  const atlasLevel = atlasPath.length - 1
+  const activeId = atlasPath[atlasPath.length - 1]
+  const activeNode = React.useMemo(() => {
+    if (activeId === 'world') return { id: 'world', name: 'Świat', description: 'Wybierz kontynent, aby wejść głębiej w atlas wypraw.' }
+    return atlasLookups.continents[activeId] || atlasLookups.countries[activeId] || atlasLookups.specialRegions[activeId] || atlasLookups.summits[activeId] || atlasLookups.places[activeId]
+  }, [activeId, atlasLookups])
   const touchStartX = React.useRef(0)
   const touchStartY = React.useRef(0)
 
@@ -313,135 +327,7 @@ function App() {
         </div>
       </section>
 
-      <section id="map" className="section sectionDarker reveal">
-        <div className="container">
-          <SectionHeader
-            label="Mapa wypraw"
-            title="Od mapy świata do konkretnego szczytu"
-            text="Kliknij region na mapie i przejdź przez warstwy wypraw: region, miejsca i kolejne materiały filmowo-fotograficzne."
-          />
-          <div className="mapLayout">
-            <div className="mapPanel">
-              <div className="mapTop">
-                <div>
-                  <div className="cardType">Travel layers</div>
-                  <h3>Poziom 1: regiony wypraw</h3>
-                </div>
-                <div className="chips">
-                  <span className="isActive">Poziom 1 • Mapa</span>
-                  <span>Poziom 2 • Miejsca</span>
-                  <span>Poziom 3 • Film/Galeria</span>
-                </div>
-              </div>
-
-              <div className="interactiveMap" aria-label="Interaktywna mapa wypraw">
-                <svg viewBox="0 0 900 500" role="img">
-                  <path
-                    d="M96 290 C160 195 255 172 340 210 C415 245 472 218 548 170 C640 112 758 152 820 245 C768 255 712 282 648 304 C560 334 447 320 360 308 C255 294 174 332 96 290Z"
-                    className="mapLand mapLandWorld"
-                  />
-                  <path
-                    d="M290 184 C330 145 390 140 438 168 C486 194 507 246 490 292 C458 272 402 264 360 286 C320 258 292 228 290 184Z"
-                    className="mapLand mapLandEurope"
-                  />
-                  <path
-                    d="M485 248 C548 215 606 228 640 282 C603 320 542 330 493 304 C468 286 466 266 485 248Z"
-                    className="mapLand mapLandAfrica"
-                  />
-
-                  {travelRegions.map((region, index) => {
-                    const isActive = activeRegion.regionId === region.regionId
-                    const previous = index > 0 ? travelRegions[index - 1] : null
-                    return (
-                      <g key={region.regionId}>
-                        {previous ? (
-                          <line
-                            x1={(previous.position.x / 100) * 900}
-                            y1={(previous.position.y / 100) * 500}
-                            x2={(region.position.x / 100) * 900}
-                            y2={(region.position.y / 100) * 500}
-                            className="mapRoute"
-                          />
-                        ) : null}
-                        <circle
-                          cx={(region.position.x / 100) * 900}
-                          cy={(region.position.y / 100) * 500}
-                          r={isActive ? 18 : 13}
-                          className={`mapPointHalo ${isActive ? 'isActive' : ''}`}
-                          style={{ '--point-accent': region.accent }}
-                        />
-                        <circle
-                          cx={(region.position.x / 100) * 900}
-                          cy={(region.position.y / 100) * 500}
-                          r={isActive ? 8 : 6}
-                          className={`mapPointDot ${isActive ? 'isActive' : ''}`}
-                          style={{ '--point-accent': region.accent }}
-                        />
-                      </g>
-                    )
-                  })}
-                </svg>
-
-                {travelRegions.map((region) => {
-                  const isActive = activeRegion.regionId === region.regionId
-                  return (
-                    <button
-                      key={region.regionId}
-                      type="button"
-                      className={`mapPointButton ${isActive ? 'isActive' : ''}`}
-                      style={{ left: `${region.position.x}%`, top: `${region.position.y}%`, '--point-accent': region.accent }}
-                      onClick={() => setActiveRegionId(region.regionId)}
-                      aria-pressed={isActive}
-                    >
-                      <span>{region.regionName}</span>
-                    </button>
-                  )
-                })}
-              </div>
-            </div>
-
-            <article className="mapCard isActiveRegion">
-              <div className="mapCardTop">
-                <div>
-                  <h3>{activeRegion.regionName}</h3>
-                  <span>{activeRegion.area}</span>
-                </div>
-                <small>{activeRegion.coordinatesLabel}</small>
-              </div>
-              <p>{activeRegion.description}</p>
-
-              <div className="layerBlock">
-                <div className="cardType">Poziom 2 • Miejsca</div>
-                <div className="tagWrap">
-                  {activeRegion.places.map((place) => (
-                    <span key={place}>{place}</span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="layerBlock">
-                <div className="cardType">Typ treści</div>
-                <div className="tagWrap">
-                  {activeRegion.contentTypes.map((contentType) => (
-                    <span key={contentType}>{contentType}</span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="layerBlock">
-                <div className="cardType">Poziom 3 • Film / Galeria</div>
-                {activeRegion.films.length > 0 ? (
-                  <a className="smallButton" href={activeRegion.films[0].url} target="_blank" rel="noreferrer">
-                    Obejrzyj film
-                  </a>
-                ) : (
-                  <p className="mapComingSoon">Więcej wkrótce — kolejny film i galeria z tej wyprawy.</p>
-                )}
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
+      <section id="map" className="section sectionDarker reveal"><div className="container"><SectionHeader label="Mapa wypraw" title="Cinematic expedition atlas" text="Hierarchia: Świat → kontynent → kraj → region specjalny / miejsce." /><AtlasMap atlasPath={atlasPath} setAtlasPath={setAtlasPath} atlasLevel={atlasLevel} activeNode={activeNode} atlasLookups={atlasLookups} /></div></section>
 
       <section id="gallery" className="section reveal">
         <div className="container">
@@ -675,6 +561,18 @@ function App() {
   )
 }
 
+
+function AtlasMap({ atlasPath, setAtlasPath, atlasLevel, activeNode, atlasLookups }) {
+  const continents = travelAtlasData.continents
+  const countries = travelAtlasData.countries
+  const specialRegions = travelAtlasData.specialRegions
+  const summits = travelAtlasData.summits
+  const films = travelAtlasData.films
+  const goUp = () => setAtlasPath((prev) => (prev.length > 1 ? prev.slice(0, -1) : prev))
+  const breadcrumb = atlasPath.map((id) => (id === 'world' ? { id, name: 'Świat' } : activeNode.id === id ? { id, name: activeNode.name } : { id, name: atlasLookups.continents[id]?.name || atlasLookups.countries[id]?.name || atlasLookups.specialRegions[id]?.name || atlasLookups.summits[id]?.name || atlasLookups.places[id]?.name }))
+  const nodes = atlasLevel === 0 ? continents : atlasLevel === 1 ? countries.filter((c) => c.continentId === activeNode.id) : atlasLevel === 2 ? (specialRegions.filter((r) => r.parentCountries?.includes(activeNode.id)).concat(travelAtlasData.places.filter((p) => p.parentId === activeNode.id))) : atlasLevel === 3 ? summits.filter((s) => s.parentId === activeNode.id) : []
+  return <div className="atlasLayout"><div className="atlasMapWrap"><div className="atlasToolbar"><div className="chips">{breadcrumb.map((item, idx) => <span key={item.id}>{item.name}{idx < breadcrumb.length - 1 ? ' /' : ''}</span>)}</div>{atlasLevel > 0 && <button className="smallButton" type="button" onClick={goUp}>Wróć poziom wyżej</button>}</div><div className="atlasStage">{nodes.map((node) => <button key={node.id} type="button" className={`atlasNode ${node.visited ? 'isVisited' : 'isMuted'}`} style={{ left: `${node.mapPosition?.x ?? 50}%`, top: `${node.mapPosition?.y ?? 50}%` }} onClick={() => setAtlasPath((prev) => [...prev, node.id])}><span>{node.name}</span></button>)}</div></div><article className="mapCard isActiveRegion"><h3>{activeNode.name}</h3><p>{activeNode.description}</p>{activeNode.countryIds && <p>Kraje: {activeNode.countryIds.map((id) => atlasLookups.countries[id]?.name).filter(Boolean).join(', ')}</p>}{activeNode.regionIds && <p>Regiony: {activeNode.regionIds.map((id) => atlasLookups.specialRegions[id]?.name).join(', ')}</p>}{activeNode.placeIds && <p>Miejsca: {activeNode.placeIds.map((id) => atlasLookups.places[id]?.name).join(', ') || 'Więcej wkrótce'}</p>}{activeNode.summitIds && <p>Szczyty: {activeNode.summitIds.map((id) => atlasLookups.summits[id]?.name).join(', ')}</p>}{activeNode.filmId && <a className="smallButton" href={atlasLookups.films[activeNode.filmId].url} target="_blank" rel="noreferrer">Obejrzyj film</a>}{activeNode.id === 'morocco' && <a className="smallButton" href={films.find((f) => f.parentId === 'morocco')?.url} target="_blank" rel="noreferrer">Obejrzyj film</a>}{!activeNode.filmId && !activeNode.placeIds && !activeNode.summitIds && <p className="mapComingSoon">Więcej wkrótce.</p>}</article></div>
+}
 function SectionHeader({ label, title, text }) {
   return (
     <div className="sectionHeader">
