@@ -1,0 +1,73 @@
+const img = (name) => `/images/${name}`
+
+export const galleryCollections = [
+  {
+    slug: 'tatry',
+    title: 'Tatry',
+    description: 'Surowe granie, chłodne poranki i kadry, które najlepiej oddają charakter tatrzańskich wypraw.',
+    cover: img('lomnica-thumb.png'),
+    tags: ['góry', 'outdoor', 'zimowe wejścia'],
+    photos: [
+      { title: 'Łomnica 2634 m', src: img('lomnica-thumb.png'), format: 'wide' },
+      { title: 'Kościelec — winter ascent', src: img('koscielec-thumb.jpg'), format: 'wide' },
+      { title: 'Tatrzańskie warstwy', src: img('tatry-mountains.jpg'), format: 'wide' },
+    ],
+  },
+  {
+    slug: 'szwajcaria',
+    title: 'Szwajcaria',
+    description: 'Najbardziej rozbudowana kolekcja: alpejskie doliny, jeziora, szlaki i zwierzęta w cinematic świetle.',
+    cover: img('swiss-lake.jpg'),
+    tags: ['alpy', 'krajobraz', 'podróż'],
+    photos: [
+      { title: 'Krowy w alpejskiej dolinie', src: img('swiss-cows.jpg'), format: 'wide' },
+      { title: 'Jezioro i chmury', src: img('swiss-lake.jpg'), format: 'portrait' },
+      { title: 'Zielone zbocza', src: img('swiss-village.jpg'), format: 'portrait' },
+      { title: 'Kościół wśród gór', src: img('swiss-church.jpg'), format: 'portrait' },
+      { title: 'Alpejski szczyt', src: img('alpine-peak.jpg'), format: 'wide' },
+      { title: 'Mgła i owce', src: img('fog-sheep.jpg'), format: 'wide' },
+      { title: 'Szlak nad jeziorem', src: img('swiss-trail.jpg'), format: 'wide' },
+      { title: 'Koziorożec', src: img('ibex-portrait.jpg'), format: 'portrait' },
+      { title: 'Koziorożce', src: img('ibex-double.jpg'), format: 'portrait' },
+      { title: 'Portret koziorożca', src: img('ibex-close.jpg'), format: 'portrait' },
+      { title: 'Alpejski portret', src: img('ibex-strong.jpg'), format: 'portrait' },
+    ],
+  },
+  {
+    slug: 'maroko',
+    title: 'Maroko',
+    description: 'Ciepły klimat, pył drogi i pustynne światło z pierwszej dużej przygody poza Europą.',
+    cover: img('maroko-thumb.png'),
+    tags: ['podróż', 'pustynia', 'cinematic'],
+    photos: [{ title: 'Maroko cz. 1', src: img('maroko-thumb.png'), format: 'wide' }],
+  },
+  {
+    slug: 'zwierzeta',
+    title: 'Zwierzęta',
+    description: 'Spotkania ze zwierzętami na szlaku: spokojne obserwacje, detale i naturalny rytm gór.',
+    cover: img('ibex-strong.jpg'),
+    tags: ['wildlife', 'detale', 'natura'],
+    photos: [
+      { title: 'Koziorożec', src: img('ibex-portrait.jpg'), format: 'portrait' },
+      { title: 'Koziorożce', src: img('ibex-double.jpg'), format: 'portrait' },
+      { title: 'Portret koziorożca', src: img('ibex-close.jpg'), format: 'portrait' },
+      { title: 'Alpejski portret', src: img('ibex-strong.jpg'), format: 'portrait' },
+      { title: 'Krowy w alpejskiej dolinie', src: img('swiss-cows.jpg'), format: 'wide' },
+    ],
+  },
+  {
+    slug: 'najlepsze-kadry',
+    title: 'Najlepsze kadry',
+    description: 'Subiektywny wybór najmocniejszych zdjęć — przekrój przez góry, podróże i outdoor.',
+    cover: img('alpine-peak.jpg'),
+    tags: ['best of', 'portfolio', 'outdoor'],
+    photos: [
+      { title: 'Łomnica 2634 m', src: img('lomnica-thumb.png'), format: 'wide' },
+      { title: 'Alpejski szczyt', src: img('alpine-peak.jpg'), format: 'wide' },
+      { title: 'Jezioro i chmury', src: img('swiss-lake.jpg'), format: 'portrait' },
+      { title: 'Maroko cz. 1', src: img('maroko-thumb.png'), format: 'wide' },
+      { title: 'Kościelec — winter ascent', src: img('koscielec-thumb.jpg'), format: 'wide' },
+      { title: 'Alpejski portret', src: img('ibex-strong.jpg'), format: 'portrait' },
+    ],
+  },
+]

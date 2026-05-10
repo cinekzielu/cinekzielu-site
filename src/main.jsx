@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { Camera, Menu, Play, X } from 'lucide-react'
 import './styles.css'
 import { travelAtlasData } from './data/travelData'
+import { galleryCollections } from './data/galleryData'
 import { MapAtlas } from './components/MapAtlas'
 
 const socials = {
@@ -12,67 +13,6 @@ const socials = {
 }
 
 const img = (name) => `/images/${name}`
-
-const featuredFilms = [
-  {
-    title: 'Łomnica 2634 m',
-    type: 'Tatry / YouTube vlog',
-    desc: 'Wejście na jeden z najbardziej charakterystycznych szczytów Tatr. Górski klimat, trasa, widoki i osobisty zapis wyprawy.',
-    link: 'https://www.youtube.com/watch?v=zb8zqv8gpZk&t=5s',
-    image: img('lomnica-thumb.png'),
-  },
-  {
-    title: 'Maroko cz. 1',
-    type: 'Podróż / Maroko',
-    desc: 'Pierwsza część podróży po Maroku — inny klimat, droga, pustynne światło i wejście w zupełnie nową przestrzeń poza Europą.',
-    link: 'https://youtu.be/McawfrouM_0',
-    image: img('maroko-thumb.png'),
-  },
-  {
-    title: 'Kościelec — Winter Ascent',
-    type: 'Cinematic short film',
-    desc: 'Bardziej filmowa, atmosferyczna forma z zimowego wejścia. Mocny przykład kierunku cinematic outdoor.',
-    link: 'https://youtu.be/QRSSYlhRGMM',
-    image: img('koscielec-thumb.jpg'),
-  },
-]
-
-const galleryGroups = [
-  {
-    title: 'Tatry',
-    desc: 'Szczyty, zimowe wejścia, surowe warunki i górskie historie bliżej domu.',
-    accent: 'Kamień / śnieg / stal',
-    photos: [
-      { title: 'Łomnica 2634 m', src: img('lomnica-thumb.png'), format: 'wide' },
-      { title: 'Kościelec — winter ascent', src: img('koscielec-thumb.jpg'), format: 'wide' },
-      { title: 'Tatrzańskie warstwy', src: img('tatry-mountains.jpg'), format: 'wide' },
-    ],
-  },
-  {
-    title: 'Maroko',
-    desc: 'Podróż, pustynia, światło i klimat pierwszej większej przygody poza Europą.',
-    accent: 'Piasek / słońce / droga',
-    photos: [{ title: 'Maroko cz. 1', src: img('maroko-thumb.png'), format: 'wide' }],
-  },
-  {
-    title: 'Szwajcaria',
-    desc: 'Alpejskie krajobrazy, jeziora, mgła, zwierzęta i spokojniejszy filmowy klimat.',
-    accent: 'Zieleń / mgła / jeziora',
-    photos: [
-      { title: 'Krowy w alpejskiej dolinie', src: img('swiss-cows.jpg'), format: 'wide' },
-      { title: 'Jezioro i chmury', src: img('swiss-lake.jpg'), format: 'portrait' },
-      { title: 'Zielone zbocza', src: img('swiss-village.jpg'), format: 'portrait' },
-      { title: 'Kościół wśród gór', src: img('swiss-church.jpg'), format: 'portrait' },
-      { title: 'Alpejski szczyt', src: img('alpine-peak.jpg'), format: 'wide' },
-      { title: 'Mgła i owce', src: img('fog-sheep.jpg'), format: 'wide' },
-      { title: 'Szlak nad jeziorem', src: img('swiss-trail.jpg'), format: 'wide' },
-      { title: 'Koziorożec', src: img('ibex-portrait.jpg'), format: 'portrait' },
-      { title: 'Koziorożce', src: img('ibex-double.jpg'), format: 'portrait' },
-      { title: 'Portret koziorożca', src: img('ibex-close.jpg'), format: 'portrait' },
-      { title: 'Alpejski portret', src: img('ibex-strong.jpg'), format: 'portrait' },
-    ],
-  },
-]
 
 const places = [
   {
@@ -128,12 +68,17 @@ const mobileMenuVariant = 'A'
 
 function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
+  const [activeCollectionSlug, setActiveCollectionSlug] = React.useState(null)
   const [activePhotoIndex, setActivePhotoIndex] = React.useState(null)
-  const galleryPhotos = React.useMemo(
-    () => galleryGroups.flatMap((group) => group.photos.map((photo) => ({ ...photo, group: group.title }))),
-    []
+  const activeCollection = React.useMemo(
+    () => galleryCollections.find((collection) => collection.slug === activeCollectionSlug) ?? null,
+    [activeCollectionSlug]
   )
-  const activePhoto = activePhotoIndex === null ? null : galleryPhotos[activePhotoIndex]
+  const activeCollectionPhotos = React.useMemo(
+    () => (activeCollection ? activeCollection.photos.map((photo) => ({ ...photo, group: activeCollection.title })) : []),
+    [activeCollection]
+  )
+  const activePhoto = activePhotoIndex === null ? null : activeCollectionPhotos[activePhotoIndex]
   const [atlasPath, setAtlasPath] = React.useState(['world'])
 
   const atlasLookups = React.useMemo(() => ({
@@ -155,12 +100,12 @@ function App() {
 
 
   const showPreviousPhoto = React.useCallback(() => {
-    setActivePhotoIndex((current) => (current - 1 + galleryPhotos.length) % galleryPhotos.length)
-  }, [galleryPhotos.length])
+    setActivePhotoIndex((current) => (current - 1 + activeCollectionPhotos.length) % activeCollectionPhotos.length)
+  }, [activeCollectionPhotos.length])
 
   const showNextPhoto = React.useCallback(() => {
-    setActivePhotoIndex((current) => (current + 1) % galleryPhotos.length)
-  }, [galleryPhotos.length])
+    setActivePhotoIndex((current) => (current + 1) % activeCollectionPhotos.length)
+  }, [activeCollectionPhotos.length])
 
   const handleLightboxTouchStart = (event) => {
     const touch = event.touches[0]
@@ -179,6 +124,10 @@ function App() {
     if (deltaX > 0) showPreviousPhoto()
   }
 
+
+  React.useEffect(() => {
+    setActivePhotoIndex(null)
+  }, [activeCollectionSlug])
   React.useEffect(() => {
     const elements = document.querySelectorAll('.reveal')
 
@@ -337,46 +286,70 @@ function App() {
             title="Zdjęcia z miejsc, które najmocniej zapamiętałem"
             text="Galeria działa jako naturalny kontrast do ciemnej, filmowej strony — więcej światła, zieleni, zwierząt, gór i prawdziwych momentów z wyjazdów."
           />
-          <div className="galleryGroups">
-            {galleryGroups.map((group) => (
-              <div key={group.title} className="galleryGroup">
-                <div className="galleryIntro">
-                  <div>
-                    <div className="cardType">{group.accent}</div>
-                    <h3>{group.title}</h3>
+          {!activeCollection && (
+            <div className="collectionGrid">
+              {galleryCollections.map((collection) => (
+                <article className="collectionCard" key={collection.slug}>
+                  <div className="collectionCoverWrap">
+                    <img src={collection.cover} alt={collection.title} className="collectionCover" />
                   </div>
-                  <p>{group.desc}</p>
+                  <div className="collectionBody">
+                    <div className="collectionTop">
+                      <h3>{collection.title}</h3>
+                      <span>{collection.photos.length} zdjęć</span>
+                    </div>
+                    <p>{collection.description}</p>
+                    <div className="collectionTags">
+                      {collection.tags.map((tag) => (
+                        <span key={tag}>{tag}</span>
+                      ))}
+                    </div>
+                    <button className="smallButton" type="button" onClick={() => setActiveCollectionSlug(collection.slug)}>
+                      Zobacz więcej
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+
+          {activeCollection && (
+            <div className="galleryCollectionView">
+              <div className="galleryCollectionTop">
+                <div>
+                  <p className="galleryBreadcrumb">Galeria / {activeCollection.title}</p>
+                  <h3>{activeCollection.title}</h3>
                 </div>
-                <div className="galleryGrid">
-                  {group.photos.map((photo, index) => (
-                    <figure
-                      className={`photoCard ${photo.format === 'portrait' ? 'portrait' : ''} ${
-                        index === 0 && group.title === 'Szwajcaria' ? 'featured' : ''
-                      }`}
-                      key={photo.title}
-                      role="button"
-                      tabIndex={0}
-                      aria-label={`Otwórz podgląd zdjęcia: ${photo.title}`}
-                      onClick={() => {
-                        const selectedPhotoIndex = galleryPhotos.findIndex((item) => item.src === photo.src)
-                        setActivePhotoIndex(selectedPhotoIndex)
-                      }}
-                      onKeyDown={(event) => {
-                        if (event.key === 'Enter' || event.key === ' ') {
-                          event.preventDefault()
-                          const selectedPhotoIndex = galleryPhotos.findIndex((item) => item.src === photo.src)
-                          setActivePhotoIndex(selectedPhotoIndex)
-                        }
-                      }}
-                    >
-                      <img src={photo.src} alt={photo.title} />
-                      <figcaption>{photo.title}</figcaption>
-                    </figure>
-                  ))}
-                </div>
+                <button className="smallButton" type="button" onClick={() => setActiveCollectionSlug(null)}>
+                  Wróć do kolekcji
+                </button>
               </div>
-            ))}
-          </div>
+
+              <div className="galleryGrid">
+                {activeCollection.photos.map((photo, index) => (
+                  <figure
+                    className={`photoCard ${photo.format === 'portrait' ? 'portrait' : ''} ${
+                      index === 0 && activeCollection.title === 'Szwajcaria' ? 'featured' : ''
+                    }`}
+                    key={`${activeCollection.slug}-${photo.title}`}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Otwórz podgląd zdjęcia: ${photo.title}`}
+                    onClick={() => setActivePhotoIndex(index)}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault()
+                        setActivePhotoIndex(index)
+                      }
+                    }}
+                  >
+                    <img src={photo.src} alt={photo.title} />
+                    <figcaption>{photo.title}</figcaption>
+                  </figure>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
       {activePhoto && (
