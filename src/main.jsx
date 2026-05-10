@@ -2,6 +2,7 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { Camera, Menu, Play, X } from 'lucide-react'
 import './styles.css'
+import { travelRegions } from './data/travelData'
 
 const socials = {
   youtube: 'https://www.youtube.com/@cinek_zielu',
@@ -32,33 +33,6 @@ const featuredFilms = [
     desc: 'Bardziej filmowa, atmosferyczna forma z zimowego wejścia. Mocny przykład kierunku cinematic outdoor.',
     link: 'https://youtu.be/QRSSYlhRGMM',
     image: img('koscielec-thumb.jpg'),
-  },
-]
-
-const travelMap = [
-  {
-    place: 'Tatry',
-    country: 'Polska / Słowacja',
-    type: 'zimowe wejścia, szczyty, vlogi i bardziej surowy górski klimat',
-    coords: '49.2°N, 20.0°E',
-    accent: 'Kamień / śnieg',
-    children: ['Łomnica', 'Kościelec', 'Gerlach', 'Durny Szczyt', 'Świnica'],
-  },
-  {
-    place: 'Szwajcaria',
-    country: 'Alpy',
-    type: 'jeziora, zielone doliny, cinematic short films, zdjęcia i spokojniejsze formy',
-    coords: '46.8°N, 8.2°E',
-    accent: 'Zieleń / mgła',
-    children: ['Interlaken', 'Zermatt', 'Stoos', 'Augstmatthorn', 'Fronalpstock'],
-  },
-  {
-    place: 'Maroko',
-    country: 'Afryka Północna',
-    type: 'podróż, pustynia, Atlas, trekking i pierwszy większy wyjazd poza Europę',
-    coords: '31.6°N, 7.9°W',
-    accent: 'Piasek / słońce',
-    children: ['Marrakesz', 'Sahara', 'Atlas', 'Toubkal', 'Agafay'],
   },
 ]
 
@@ -159,6 +133,8 @@ function App() {
     []
   )
   const activePhoto = activePhotoIndex === null ? null : galleryPhotos[activePhotoIndex]
+  const [activeRegionId, setActiveRegionId] = React.useState(travelRegions[0].regionId)
+  const activeRegion = travelRegions.find((region) => region.regionId === activeRegionId) ?? travelRegions[0]
   const touchStartX = React.useRef(0)
   const touchStartY = React.useRef(0)
 
@@ -342,107 +318,127 @@ function App() {
           <SectionHeader
             label="Mapa wypraw"
             title="Od mapy świata do konkretnego szczytu"
-            text="Docelowo ta sekcja może działać jak interaktywna mapa podróży: najpierw świat, potem Europa, później konkretne regiony, szczyty, filmy i galerie."
+            text="Kliknij region na mapie i przejdź przez warstwy wypraw: region, miejsca i kolejne materiały filmowo-fotograficzne."
           />
           <div className="mapLayout">
             <div className="mapPanel">
               <div className="mapTop">
                 <div>
                   <div className="cardType">Travel layers</div>
-                  <div className="mapFutureNote">Wkrótce: interaktywna mapa wypraw i filmów</div>
-                  <h3>Świat → Europa → Region → Film</h3>
+                  <h3>Poziom 1: regiony wypraw</h3>
                 </div>
                 <div className="chips">
-                  <span>Świat</span>
-                  <span>Europa</span>
-                  <span>Tatry</span>
+                  <span className="isActive">Poziom 1 • Mapa</span>
+                  <span>Poziom 2 • Miejsca</span>
+                  <span>Poziom 3 • Film/Galeria</span>
                 </div>
               </div>
-              <div className="mapCanvas" aria-label="Symboliczna mapa podróży">
-                <svg viewBox="0 0 900 500">
-                  <defs>
-                    <filter id="glow">
-                      <feGaussianBlur stdDeviation="4" result="coloredBlur" />
-                      <feMerge>
-                        <feMergeNode in="coloredBlur" />
-                        <feMergeNode in="SourceGraphic" />
-                      </feMerge>
-                    </filter>
-                    <linearGradient id="route" x1="0" x2="1" y1="0" y2="0">
-                      <stop offset="0%" stopColor="rgba(200,132,78,0.55)" />
-                      <stop offset="50%" stopColor="rgba(166,176,132,0.55)" />
-                      <stop offset="100%" stopColor="rgba(232,216,184,0.55)" />
-                    </linearGradient>
-                  </defs>
+
+              <div className="interactiveMap" aria-label="Interaktywna mapa wypraw">
+                <svg viewBox="0 0 900 500" role="img">
                   <path
-                    d="M90 270 C160 190 260 180 345 225 C420 265 480 230 548 180 C640 112 762 150 820 245 C760 238 710 270 650 296 C560 335 450 310 365 300 C250 286 170 330 90 270Z"
-                    fill="rgba(120,104,82,0.22)"
-                    stroke="rgba(214,198,168,0.22)"
-                    strokeWidth="2"
+                    d="M96 290 C160 195 255 172 340 210 C415 245 472 218 548 170 C640 112 758 152 820 245 C768 255 712 282 648 304 C560 334 447 320 360 308 C255 294 174 332 96 290Z"
+                    className="mapLand mapLandWorld"
                   />
                   <path
-                    d="M285 185 C322 142 386 138 435 168 C482 197 507 246 488 292 C452 271 398 264 357 284 C323 259 285 231 285 185Z"
-                    fill="rgba(120,104,82,0.30)"
-                    stroke="rgba(214,198,168,0.24)"
-                    strokeWidth="2"
+                    d="M290 184 C330 145 390 140 438 168 C486 194 507 246 490 292 C458 272 402 264 360 286 C320 258 292 228 290 184Z"
+                    className="mapLand mapLandEurope"
                   />
                   <path
-                    d="M485 250 C548 214 608 228 640 282 C603 318 542 330 492 304 C468 288 466 264 485 250Z"
-                    fill="rgba(120,104,82,0.24)"
-                    stroke="rgba(214,198,168,0.22)"
-                    strokeWidth="2"
+                    d="M485 248 C548 215 606 228 640 282 C603 320 542 330 493 304 C468 286 466 266 485 248Z"
+                    className="mapLand mapLandAfrica"
                   />
-                  <g filter="url(#glow)">
-                    <circle cx="455" cy="205" r="7" fill="#e8d8b8" />
-                    <circle cx="455" cy="205" r="18" fill="none" stroke="rgba(232,216,184,0.45)" />
-                    <text x="475" y="210" fill="#e8d8b8" fontSize="18">
-                      Tatry
-                    </text>
-                    <circle cx="430" cy="240" r="7" fill="#a6b084" />
-                    <circle cx="430" cy="240" r="18" fill="none" stroke="rgba(166,176,132,0.42)" />
-                    <text x="450" y="245" fill="#a6b084" fontSize="18">
-                      Szwajcaria
-                    </text>
-                    <circle cx="365" cy="305" r="7" fill="#c8844e" />
-                    <circle cx="365" cy="305" r="18" fill="none" stroke="rgba(200,132,78,0.42)" />
-                    <text x="385" y="310" fill="#c8844e" fontSize="18">
-                      Maroko
-                    </text>
-                  </g>
-                  <path
-                    d="M365 305 C390 270 410 250 430 240 C440 225 448 215 455 205"
-                    fill="none"
-                    stroke="url(#route)"
-                    strokeWidth="2"
-                    strokeDasharray="8 8"
-                  />
-                  <text x="64" y="438" fill="rgba(214,198,168,0.42)" fontSize="14">
-                    Docelowo: kliknięcie w punkt otwiera listę filmów, zdjęć i konkretnych miejsc.
-                  </text>
+
+                  {travelRegions.map((region, index) => {
+                    const isActive = activeRegion.regionId === region.regionId
+                    const previous = index > 0 ? travelRegions[index - 1] : null
+                    return (
+                      <g key={region.regionId}>
+                        {previous ? (
+                          <line
+                            x1={(previous.position.x / 100) * 900}
+                            y1={(previous.position.y / 100) * 500}
+                            x2={(region.position.x / 100) * 900}
+                            y2={(region.position.y / 100) * 500}
+                            className="mapRoute"
+                          />
+                        ) : null}
+                        <circle
+                          cx={(region.position.x / 100) * 900}
+                          cy={(region.position.y / 100) * 500}
+                          r={isActive ? 18 : 13}
+                          className={`mapPointHalo ${isActive ? 'isActive' : ''}`}
+                          style={{ '--point-accent': region.accent }}
+                        />
+                        <circle
+                          cx={(region.position.x / 100) * 900}
+                          cy={(region.position.y / 100) * 500}
+                          r={isActive ? 8 : 6}
+                          className={`mapPointDot ${isActive ? 'isActive' : ''}`}
+                          style={{ '--point-accent': region.accent }}
+                        />
+                      </g>
+                    )
+                  })}
                 </svg>
+
+                {travelRegions.map((region) => {
+                  const isActive = activeRegion.regionId === region.regionId
+                  return (
+                    <button
+                      key={region.regionId}
+                      type="button"
+                      className={`mapPointButton ${isActive ? 'isActive' : ''}`}
+                      style={{ left: `${region.position.x}%`, top: `${region.position.y}%`, '--point-accent': region.accent }}
+                      onClick={() => setActiveRegionId(region.regionId)}
+                      aria-pressed={isActive}
+                    >
+                      <span>{region.regionName}</span>
+                    </button>
+                  )
+                })}
               </div>
             </div>
 
-            <div className="mapCards">
-              {travelMap.map((item) => (
-                <div className="mapCard" key={item.place}>
-                  <div className="mapCardTop">
-                    <div>
-                      <h3>{item.place}</h3>
-                      <span>{item.country}</span>
-                    </div>
-                    <small>{item.coords}</small>
-                  </div>
-                  <p>{item.type}</p>
-                  <div className="cardType">{item.accent}</div>
-                  <div className="tagWrap">
-                    {item.children.map((child) => (
-                      <span key={child}>{child}</span>
-                    ))}
-                  </div>
+            <article className="mapCard isActiveRegion">
+              <div className="mapCardTop">
+                <div>
+                  <h3>{activeRegion.regionName}</h3>
+                  <span>{activeRegion.area}</span>
                 </div>
-              ))}
-            </div>
+                <small>{activeRegion.coordinatesLabel}</small>
+              </div>
+              <p>{activeRegion.description}</p>
+
+              <div className="layerBlock">
+                <div className="cardType">Poziom 2 • Miejsca</div>
+                <div className="tagWrap">
+                  {activeRegion.places.map((place) => (
+                    <span key={place}>{place}</span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="layerBlock">
+                <div className="cardType">Typ treści</div>
+                <div className="tagWrap">
+                  {activeRegion.contentTypes.map((contentType) => (
+                    <span key={contentType}>{contentType}</span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="layerBlock">
+                <div className="cardType">Poziom 3 • Film / Galeria</div>
+                {activeRegion.films.length > 0 ? (
+                  <a className="smallButton" href={activeRegion.films[0].url} target="_blank" rel="noreferrer">
+                    Obejrzyj film
+                  </a>
+                ) : (
+                  <p className="mapComingSoon">Więcej wkrótce — kolejny film i galeria z tej wyprawy.</p>
+                )}
+              </div>
+            </article>
           </div>
         </div>
       </section>
