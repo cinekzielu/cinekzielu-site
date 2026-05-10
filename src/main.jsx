@@ -563,4 +563,23 @@ function App() {
 }
 
 
+function SectionHeader({ label, title, text }) {
+  return (
+    <header className="sectionHeader">
+      <div className="cardType">{label}</div>
+      <h2>{title}</h2>
+      <p>{text}</p>
+    </header>
+  )
+}
+
+function InfoCard({ title, text }) {
+  return (
+    <article className="infoCard">
+      <h3>{title}</h3>
+      <p>{text}</p>
+    </article>
+  )
+}
+
 createRoot(document.getElementById('root')).render(<App />)
