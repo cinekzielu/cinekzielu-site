@@ -1461,3 +1461,12 @@ footer {
   .mapPointButton { padding: 9px 12px; font-size: 12px; }
   .interactiveMap { padding: 10px; }
 }
+
+.atlasLayout { display:grid; grid-template-columns:1.2fr .8fr; gap:24px; }
+.atlasMapWrap { border:1px solid var(--line); border-radius:32px; padding:20px; background:linear-gradient(145deg,#191614,#0d0c0b); }
+.atlasToolbar { display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:14px; }
+.atlasStage { position:relative; min-height:420px; border:1px solid var(--line); border-radius:22px; background:radial-gradient(circle at 30% 20%, rgba(134,112,78,.2), transparent 35%), rgba(8,7,6,.55); overflow:hidden; }
+.atlasNode { position:absolute; transform:translate(-50%,-50%); border-radius:999px; padding:10px 14px; border:1px solid var(--line); background:rgba(12,10,9,.85); color:var(--text); }
+.atlasNode.isVisited { border-color: rgba(232,216,184,.6); box-shadow:0 0 0 4px rgba(232,216,184,.12); }
+.atlasNode.isMuted { opacity:.6; }
+@media (max-width: 980px){ .atlasLayout{grid-template-columns:1fr;} .atlasStage{min-height:340px;} }
