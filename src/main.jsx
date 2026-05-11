@@ -517,34 +517,6 @@ function App() {
               </div>
 
 
-              {randomRelatedExpedition && (
-                <div className="expeditionNextStory reveal">
-                  <div className="expeditionNextStoryHeader">
-                    <p className="storyLabel">Zobacz też</p>
-                    <p className="expeditionNextStoryHint">Następna historia, którą możesz zobaczyć.</p>
-                  </div>
-                  <article className="expeditionCard expeditionNextStoryCard">
-                    <div className="expeditionImageWrap">
-                      <img src={randomRelatedExpedition.heroImage} alt={randomRelatedExpedition.title} />
-                    </div>
-                    <div className="expeditionBody">
-                      <div className="cardType">Polecana historia</div>
-                      <h3>{randomRelatedExpedition.title}</h3>
-                      <p className="expeditionLocation">{randomRelatedExpedition.location}</p>
-                      <p>{randomRelatedExpedition.shortDescription}</p>
-                      <div className="expeditionTags">
-                        {randomRelatedExpedition.tags.map((tag) => (
-                          <span key={tag}>{tag}</span>
-                        ))}
-                      </div>
-                      <button className="smallButton" type="button" onClick={() => openExpedition(randomRelatedExpedition.slug)}>
-                        Zobacz historię
-                      </button>
-                    </div>
-                  </article>
-                </div>
-              )}
-
               <div className="expeditionPlaceholder reveal">
                 <div className="expeditionGalleryHeader">
                   <p className="storyLabel">Galeria wyprawy</p>
@@ -582,6 +554,29 @@ function App() {
                   <p>Galeria tej wyprawy zostanie rozbudowana.</p>
                 )}
               </div>
+
+              {randomRelatedExpedition && (
+                <div className="expeditionNextStory reveal">
+                  <div className="expeditionNextStoryHeader">
+                    <p className="storyLabel">Zobacz też</p>
+                    <p className="expeditionNextStoryHint">Subtelna rekomendacja kolejnej historii z drogi.</p>
+                  </div>
+                  <article className="expeditionCard expeditionNextStoryCard">
+                    <div className="expeditionImageWrap">
+                      <img src={randomRelatedExpedition.heroImage} alt={randomRelatedExpedition.title} />
+                    </div>
+                    <div className="expeditionBody">
+                      <div className="cardType">Polecana historia</div>
+                      <h3>{randomRelatedExpedition.title}</h3>
+                      <p className="expeditionLocation">{randomRelatedExpedition.location}</p>
+                      <p>{randomRelatedExpedition.shortDescription}</p>
+                      <button className="smallButton" type="button" onClick={() => openExpedition(randomRelatedExpedition.slug)}>
+                        Zobacz historię
+                      </button>
+                    </div>
+                  </article>
+                </div>
+              )}
             </article>
             ) : (
               <article id="expedition-detail" className="expeditionDetail">
@@ -772,26 +767,55 @@ function App() {
       </section>
 
       <section id="about" className="section reveal">
-        <div className="container aboutGrid">
-          <div>
-            <div className="cardType">O mnie</div>
-            <h2>Najpierw jest droga. Dopiero później film, zdjęcia i cała reszta.</h2>
+        <div className="container aboutProfile">
+          <div className="aboutLead">
+            <div className="cardType">Kim jestem</div>
+            <h2>Najpierw idę w teren. Potem buduję z tego historię.</h2>
+            <p className="aboutIntro">
+              Cinek Zielu to moja osobista marka twórcy outdoorowego — oparta na realnej drodze, nie na pozowaniu pod przygodę.
+            </p>
+            <div className="aboutPillars">
+              <span>Góry</span>
+              <span>Podróże</span>
+              <span>Film</span>
+              <span>Fotografia</span>
+            </div>
           </div>
-          <div className="aboutText">
+          <div className="aboutEditorial">
             <p>
-              Nazywam się Marcin Zieliński, a w internecie działam jako <strong>Cinek Zielu</strong>.
-              Najczęściej zabieram kamerę i aparat tam, gdzie sam chciałbym wrócić — w góry, na szlaki
-              i w miejsca, które mają swój klimat.
+              Jestem Marcin Zieliński i działam jako <strong>Cinek Zielu</strong>. Najbliżej mi do gór: tam wszystko jest
+              prostsze, surowsze i bardziej prawdziwe. Właśnie w takim klimacie najczęściej tworzę.
             </p>
             <p>
-              Nie zawsze chodzi o idealny plan albo wielką produkcję. Czasem wystarczy dobry dzień w górach,
-              trochę zmęczenia, dziwna sytuacja po drodze albo widok, który zostaje w głowie dłużej niż zakładałem.
+              Podróże traktuję jak drogę, nie checklistę. Interesuje mnie tempo miejsca, światło, ludzie po trasie i momenty,
+              które dzieją się między planem a celem.
             </p>
             <p>
-              Z takich momentów powstają moje vlogi, krótkie filmy, zdjęcia i materiały z podróży. Ta strona ma
-              zebrać je w jednym miejscu — bez przesadnego nadęcia, bardziej jako zapis przygód, które naprawdę były moje.
+              Film i zdjęcia są dla mnie sposobem, żeby zatrzymać klimat wyprawy — nie tylko sam szczyt, ale też napięcie,
+              zmęczenie i ciszę. Dlatego ta strona to nie zbiór wyjazdów, tylko historie z miejsc, które naprawdę coś zostawiły.
+            </p>
+            <div className="aboutWhatICreate">
+              <p className="storyLabel">Na tej stronie znajdziesz</p>
+              <ul>
+                <li>wyprawy</li>
+                <li>filmy</li>
+                <li>zdjęcia</li>
+                <li>historie z miejsc</li>
+              </ul>
+            </div>
+            <p className="aboutCta">
+              Jeśli chcesz zobaczyć więcej albo odezwać się w sprawie współpracy, przejdź do kontaktu.
             </p>
           </div>
+          <aside className="aboutVisualCard" aria-label="Portret twórcy">
+            <img src={img('hero.jpg')} alt="Cinek Zielu w górskim krajobrazie" />
+            <div>
+              <p className="storyLabel">Manifest twórcy</p>
+              <p>
+                Tworzę materiały outdoorowe w filmowym stylu, ale punktem wyjścia zawsze jest prawdziwe doświadczenie miejsca.
+              </p>
+            </div>
+          </aside>
         </div>
       </section>
 
@@ -844,8 +868,8 @@ function App() {
             <div className="cardType">Kontakt / współpraca</div>
             <h2>Masz pomysł na film, wyjazd albo współpracę outdoorową?</h2>
             <p>
-              Jestem otwarty na projekty związane z górami, podróżami, sprzętem, outdoorowym stylem życia i tworzeniem
-              materiałów w naturalnym, filmowym klimacie. Najprościej złapać mnie przez Instagram albo YouTube.
+              Jestem otwarty na projekty związane z górami, podróżami, sprzętem i filmowym outdoor storytellingiem.
+              Najprościej odezwać się przez Instagram albo YouTube.
             </p>
             <div className="buttons">
               <a className="button primary" href={socials.instagram} target="_blank" rel="noreferrer">
