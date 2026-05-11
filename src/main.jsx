@@ -157,6 +157,15 @@ function App() {
     [activeExpeditionCollection]
   )
   const hasExpeditionGallery = expeditionGalleryPhotos.length >= 3
+  const randomRelatedExpedition = React.useMemo(() => {
+    if (!activeExpeditionSlug) return null
+
+    const candidates = expeditionsData.filter((expedition) => expedition.slug !== activeExpeditionSlug)
+    if (!candidates.length) return null
+
+    const randomIndex = Math.floor(Math.random() * candidates.length)
+    return candidates[randomIndex]
+  }, [activeExpeditionSlug])
 
   const atlasLookups = React.useMemo(() => ({
     continents: Object.fromEntries(travelAtlasData.continents.map((item) => [item.id, item])),
@@ -506,6 +515,35 @@ function App() {
                   <p>{activeExpedition.longDescription}</p>
                 </div>
               </div>
+
+
+              {randomRelatedExpedition && (
+                <div className="expeditionNextStory reveal">
+                  <div className="expeditionNextStoryHeader">
+                    <p className="storyLabel">Zobacz też</p>
+                    <p className="expeditionNextStoryHint">Następna historia, którą możesz zobaczyć.</p>
+                  </div>
+                  <article className="expeditionCard expeditionNextStoryCard">
+                    <div className="expeditionImageWrap">
+                      <img src={randomRelatedExpedition.heroImage} alt={randomRelatedExpedition.title} />
+                    </div>
+                    <div className="expeditionBody">
+                      <div className="cardType">Polecana historia</div>
+                      <h3>{randomRelatedExpedition.title}</h3>
+                      <p className="expeditionLocation">{randomRelatedExpedition.location}</p>
+                      <p>{randomRelatedExpedition.shortDescription}</p>
+                      <div className="expeditionTags">
+                        {randomRelatedExpedition.tags.map((tag) => (
+                          <span key={tag}>{tag}</span>
+                        ))}
+                      </div>
+                      <button className="smallButton" type="button" onClick={() => openExpedition(randomRelatedExpedition.slug)}>
+                        Zobacz historię
+                      </button>
+                    </div>
+                  </article>
+                </div>
+              )}
 
               <div className="expeditionPlaceholder reveal">
                 <div className="expeditionGalleryHeader">
