@@ -148,6 +148,15 @@ function App() {
     () => expeditionsData.find((expedition) => expedition.slug === activeExpeditionSlug) ?? null,
     [activeExpeditionSlug]
   )
+  const activeExpeditionCollection = React.useMemo(() => {
+    if (!activeExpedition?.galleryCollectionSlug) return null
+    return galleryCollections.find((collection) => collection.slug === activeExpedition.galleryCollectionSlug) ?? null
+  }, [activeExpedition])
+  const expeditionGalleryPhotos = React.useMemo(
+    () => activeExpeditionCollection?.photos.slice(0, 6) ?? [],
+    [activeExpeditionCollection]
+  )
+  const hasExpeditionGallery = expeditionGalleryPhotos.length >= 3
 
   const atlasLookups = React.useMemo(() => ({
     continents: Object.fromEntries(travelAtlasData.continents.map((item) => [item.id, item])),
@@ -309,6 +318,16 @@ function App() {
     }
     setActiveExpeditionSlug(slug)
     setIsExpeditionNotFound(false)
+  }
+
+  const openCollectionFromExpedition = () => {
+    if (!activeExpeditionCollection) {
+      window.location.hash = '#gallery'
+      return
+    }
+
+    setActiveCollectionSlug(activeExpeditionCollection.slug)
+    window.location.hash = '#gallery'
   }
 
   const goBackToExpeditions = () => {
@@ -489,14 +508,41 @@ function App() {
               </div>
 
               <div className="expeditionPlaceholder reveal">
-                <p className="storyLabel">Galeria wyprawy</p>
-                <div className="expeditionPlaceholderGrid">
-                  <div />
-                  <div />
-                  <div />
-                  <div />
+                <div className="expeditionGalleryHeader">
+                  <p className="storyLabel">Galeria wyprawy</p>
+                  <button className="smallButton" type="button" onClick={openCollectionFromExpedition}>
+                    Zobacz pełną kolekcję
+                  </button>
                 </div>
-                <p>Galeria zostanie rozbudowana.</p>
+                {hasExpeditionGallery ? (
+                  <div className="expeditionGalleryGrid">
+                    {expeditionGalleryPhotos.map((photo, index) => (
+                      <figure
+                        className={`expeditionPhotoCard ${photo.format === 'portrait' ? 'portrait' : ''}`}
+                        key={`${activeExpeditionCollection.slug}-${photo.title}`}
+                        role="button"
+                        tabIndex={0}
+                        aria-label={`Otwórz podgląd zdjęcia: ${photo.title}`}
+                        onClick={() => {
+                          setActiveCollectionSlug(activeExpeditionCollection.slug)
+                          setActivePhotoIndex(index)
+                        }}
+                        onKeyDown={(event) => {
+                          if (event.key === 'Enter' || event.key === ' ') {
+                            event.preventDefault()
+                            setActiveCollectionSlug(activeExpeditionCollection.slug)
+                            setActivePhotoIndex(index)
+                          }
+                        }}
+                      >
+                        <img src={photo.src} alt={photo.title} />
+                        <figcaption>{photo.title}</figcaption>
+                      </figure>
+                    ))}
+                  </div>
+                ) : (
+                  <p>Galeria tej wyprawy zostanie rozbudowana.</p>
+                )}
               </div>
             </article>
             ) : (

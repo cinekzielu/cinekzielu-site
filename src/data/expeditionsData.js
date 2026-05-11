@@ -20,7 +20,7 @@ export const expeditionsData = [
       filmFormat: 'Vlog / cinematic edit',
     },
     tags: ['Tatry', 'Szczyt', 'Wejście', 'Cinematic'],
-    gallery: ['Galeria podejścia — wkrótce', 'Trasa GPX — wkrótce'],
+    galleryCollectionSlug: 'tatry',
   },
   {
     slug: 'koscielec-zima',
@@ -41,7 +41,7 @@ export const expeditionsData = [
       filmFormat: 'Expedition short',
     },
     tags: ['Zima', 'Kościelec', 'Tatry', 'Alpinizm'],
-    gallery: ['Galeria zimowa — wkrótce', 'Opis wariantów trasy — wkrótce'],
+    galleryCollectionSlug: 'tatry',
   },
   {
     slug: 'maroko-czesc-1',
@@ -62,6 +62,6 @@ export const expeditionsData = [
       filmFormat: 'Travel documentary',
     },
     tags: ['Maroko', 'Atlas', 'Trekking', 'Travel film'],
-    gallery: ['Galeria z etapu 1 — wkrótce', 'Mapa trasy — wkrótce'],
+    galleryCollectionSlug: 'maroko',
   },
 ]
