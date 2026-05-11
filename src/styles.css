@@ -1079,6 +1079,24 @@ img {
   color: var(--text);
 }
 
+.aboutProfile {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr) minmax(260px, .7fr);
+  gap: clamp(22px, 3vw, 44px);
+  align-items: start;
+}
+
+.aboutIntro { margin: 0; color: #d7cab8; line-height: 1.75; }
+.aboutPillars { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 9px; }
+.aboutPillars span { border: 1px solid var(--line-strong); border-radius: 999px; padding: 7px 12px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: #dfcfb9; }
+.aboutEditorial { color: var(--muted); line-height: 1.88; font-size: 16px; }
+.aboutEditorial strong { color: var(--text); }
+.aboutWhatICreate ul { margin: 10px 0 0; padding-left: 18px; display: grid; gap: 6px; color: #e7dccd; }
+.aboutCta { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); color: #d8c9b6; }
+.aboutVisualCard { border: 1px solid var(--line); border-radius: 24px; overflow: hidden; background: linear-gradient(165deg, rgba(24, 20, 18, 0.92), rgba(10, 9, 8, 0.92)); }
+.aboutVisualCard img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.aboutVisualCard div { padding: 16px; color: #dacdbc; font-size: 14px; line-height: 1.7; }
+
 .formatCard .number {
   margin-bottom: 28px;
   color: rgba(232, 216, 184, 0.22);
@@ -1274,6 +1292,7 @@ footer {
   .sectionHeader,
   .mapLayout,
   .aboutGrid,
+  .aboutProfile,
   .socialBox,
   .contactBox {
     grid-template-columns: 1fr;
@@ -1322,6 +1341,10 @@ footer {
   .heroImageWrap {
     aspect-ratio: 5 / 6;
     border-radius: 22px;
+  }
+
+  .aboutVisualCard img {
+    aspect-ratio: 16 / 9;
   }
 
   .heroCaption {
@@ -2002,10 +2025,10 @@ footer {
 
 .expeditionNextStory {
   margin: clamp(36px, 7vw, 80px) clamp(20px, 5vw, 72px) 0;
-  padding: clamp(18px, 3vw, 28px);
+  padding: clamp(14px, 2.6vw, 22px);
   border-radius: 20px;
-  border: 1px solid var(--line-strong);
-  background: linear-gradient(140deg, rgba(154, 132, 102, 0.14), rgba(12, 11, 10, 0.88) 42%);
+  border: 1px solid var(--line);
+  background: linear-gradient(140deg, rgba(154, 132, 102, 0.1), rgba(12, 11, 10, 0.82) 44%);
 }
 
 .expeditionNextStoryHeader {
@@ -2020,7 +2043,16 @@ footer {
 
 .expeditionNextStoryCard {
   max-width: 100%;
+  border-radius: 18px;
+  border-color: rgba(220, 206, 182, 0.24);
+  background: rgba(16, 14, 12, 0.84);
 }
+
+.expeditionNextStoryCard .expeditionImageWrap { aspect-ratio: 16 / 8; }
+.expeditionNextStoryCard .expeditionBody { padding: 14px 16px 16px; }
+.expeditionNextStoryCard .expeditionBody h3 { margin: 8px 0 6px; font-size: clamp(20px, 2.5vw, 26px); }
+.expeditionNextStoryCard .expeditionBody p { margin-bottom: 10px; }
+.expeditionNextStoryCard .expeditionTags { display: none; }
 
 .expeditionPlaceholder {
   margin: clamp(36px, 7vw, 80px) clamp(20px, 5vw, 72px) clamp(28px, 4vw, 54px);
