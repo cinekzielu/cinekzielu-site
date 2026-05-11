@@ -2025,6 +2025,16 @@ footer {
   background: linear-gradient(140deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
 }
 
+.expeditionCinematicHero.reveal,
+.expeditionStatsBar.reveal,
+.expeditionStory.reveal,
+.expeditionPlaceholder.reveal {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: none;
+}
+
 @media (max-width: 1024px) {
   .expeditionGrid {
     grid-template-columns: 1fr 1fr;
@@ -2127,16 +2137,6 @@ footer {
 
   .expeditionPlaceholder {
     margin: 28px 16px 20px;
-  }
-
-  .expeditionCinematicHero.reveal,
-  .expeditionStatsBar.reveal,
-  .expeditionStory.reveal,
-  .expeditionPlaceholder.reveal {
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    transition: none;
   }
 
 }
