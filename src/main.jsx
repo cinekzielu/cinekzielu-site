@@ -98,6 +98,12 @@ const mobileNavLinks = [
 ]
 
 const mobileMenuVariant = 'A'
+const defaultTitle = 'Cinek Zielu | Góry, podróże i filmy dokumentalne'
+
+const parseExpeditionSlugFromPath = (pathname) => {
+  const match = pathname.match(/^\/wyprawy\/([^/]+)\/?$/)
+  return match ? decodeURIComponent(match[1]) : null
+}
 
 function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
@@ -114,6 +120,7 @@ function App() {
   const activePhoto = activePhotoIndex === null ? null : activeCollectionPhotos[activePhotoIndex]
   const [atlasPath, setAtlasPath] = React.useState(['world'])
   const [activeExpeditionSlug, setActiveExpeditionSlug] = React.useState(null)
+  const [isExpeditionNotFound, setIsExpeditionNotFound] = React.useState(false)
   const activeExpedition = React.useMemo(
     () => expeditionsData.find((expedition) => expedition.slug === activeExpeditionSlug) ?? null,
     [activeExpeditionSlug]
@@ -213,6 +220,61 @@ function App() {
       window.removeEventListener('keydown', handleKeyDown)
     }
   }, [activePhotoIndex, isMobileMenuOpen, showNextPhoto, showPreviousPhoto])
+
+  React.useEffect(() => {
+    const syncExpeditionFromUrl = () => {
+      const slugFromPath = parseExpeditionSlugFromPath(window.location.pathname)
+
+      if (!slugFromPath) {
+        setActiveExpeditionSlug(null)
+        setIsExpeditionNotFound(false)
+        return
+      }
+
+      const matchedExpedition = expeditionsData.find((item) => item.slug === slugFromPath)
+      if (matchedExpedition) {
+        setActiveExpeditionSlug(matchedExpedition.slug)
+        setIsExpeditionNotFound(false)
+        return
+      }
+
+      setActiveExpeditionSlug(null)
+      setIsExpeditionNotFound(true)
+    }
+
+    syncExpeditionFromUrl()
+    window.addEventListener('popstate', syncExpeditionFromUrl)
+
+    return () => window.removeEventListener('popstate', syncExpeditionFromUrl)
+  }, [])
+
+  React.useEffect(() => {
+    if (activeExpedition) {
+      document.title = `Cinek Zielu — ${activeExpedition.title}`
+      return
+    }
+
+    document.title = defaultTitle
+  }, [activeExpedition])
+
+  const openExpedition = (slug) => {
+    const nextUrl = `/wyprawy/${slug}`
+    if (window.location.pathname !== nextUrl) {
+      window.history.pushState({}, '', nextUrl)
+    }
+    setActiveExpeditionSlug(slug)
+    setIsExpeditionNotFound(false)
+  }
+
+  const goBackToExpeditions = () => {
+    window.history.pushState({}, '', '/#expeditions')
+    setActiveExpeditionSlug(null)
+    setIsExpeditionNotFound(false)
+
+    window.requestAnimationFrame(() => {
+      document.getElementById('expeditions')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
+  }
 
   return (
     <main>
@@ -349,7 +411,7 @@ function App() {
                         <span key={tag}>{tag}</span>
                       ))}
                     </div>
-                    <button className="smallButton" type="button" onClick={() => setActiveExpeditionSlug(expedition.slug)}>
+                    <button className="smallButton" type="button" onClick={() => openExpedition(expedition.slug)}>
                       Zobacz historię
                     </button>
                   </div>
@@ -362,7 +424,7 @@ function App() {
             <article className="expeditionDetail">
               <div className="expeditionDetailTop">
                 <p className="galleryBreadcrumb">Historie z wypraw / {activeExpedition.title}</p>
-                <button className="smallButton" type="button" onClick={() => setActiveExpeditionSlug(null)}>
+                <button className="smallButton" type="button" onClick={goBackToExpeditions}>
                   Wróć do wypraw
                 </button>
               </div>
@@ -392,6 +454,24 @@ function App() {
               </div>
               <div className="expeditionPlaceholder">
                 Galeria / trasa / opis wyprawy — wkrótce
+              </div>
+            </article>
+          )}
+
+          {isExpeditionNotFound && (
+            <article className="expeditionDetail">
+              <div className="expeditionDetailTop">
+                <p className="galleryBreadcrumb">Historie z wypraw / Nie znaleziono</p>
+                <button className="smallButton" type="button" onClick={goBackToExpeditions}>
+                  Wróć do wypraw
+                </button>
+              </div>
+              <div className="expeditionDetailBody">
+                <div>
+                  <div className="cardType">Spokojnie</div>
+                  <h3>Nie znaleziono tej wyprawy</h3>
+                  <p>Ten adres nie prowadzi do istniejącej historii. Wróć do listy wypraw i wybierz jedną z dostępnych relacji.</p>
+                </div>
               </div>
             </article>
           )}
