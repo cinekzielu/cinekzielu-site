@@ -2096,6 +2096,7 @@ footer {
 .expeditionCinematicHero.reveal,
 .expeditionStatsBar.reveal,
 .expeditionStory.reveal,
+.expeditionNextStory.reveal,
 .expeditionPlaceholder.reveal {
   opacity: 1;
   visibility: visible;

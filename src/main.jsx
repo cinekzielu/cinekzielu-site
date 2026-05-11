@@ -158,14 +158,14 @@ function App() {
   )
   const hasExpeditionGallery = expeditionGalleryPhotos.length >= 3
   const randomRelatedExpedition = React.useMemo(() => {
-    if (!activeExpeditionSlug) return null
+    if (!activeExpedition) return null
 
-    const candidates = expeditionsData.filter((expedition) => expedition.slug !== activeExpeditionSlug)
+    const candidates = expeditionsData.filter((expedition) => expedition.slug !== activeExpedition.slug)
     if (!candidates.length) return null
 
     const randomIndex = Math.floor(Math.random() * candidates.length)
-    return candidates[randomIndex]
-  }, [activeExpeditionSlug])
+    return candidates[randomIndex] ?? null
+  }, [activeExpedition])
 
   const atlasLookups = React.useMemo(() => ({
     continents: Object.fromEntries(travelAtlasData.continents.map((item) => [item.id, item])),
