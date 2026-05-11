@@ -922,51 +922,40 @@ function App() {
         </div>
       </section>
 
-      <section id="social" className="section reveal">
-        <div className="container socialBox">
-          <div>
-            <div className="cardType">Social media</div>
-            <h2>Zobacz filmy, krótkie formy i codzienne kulisy tworzenia.</h2>
-            <p>
-              YouTube, Instagram i TikTok to naturalne przedłużenie strony — tam lądują nowe filmy, zdjęcia, rolki i momenty z procesu — od terenu po montaż.
-            </p>
-          </div>
-          <div className="socialLinks">
-            <a href={socials.youtube} target="_blank" rel="noreferrer">
-              YouTube
-            </a>
-            <a href={socials.instagram} target="_blank" rel="noreferrer">
-              Instagram
-            </a>
-            <a href={socials.tiktok} target="_blank" rel="noreferrer">
-              <Camera size={18} /> TikTok
-            </a>
-          </div>
-        </div>
-      </section>
-
       <section id="contact" className="section sectionDarker reveal">
-        <div className="container contactBox">
-          <div>
-            <div className="cardType">Kontakt / współpraca</div>
-            <h2>Masz pomysł na film, wyjazd albo współpracę outdoorową?</h2>
+        <div className="container contactHub">
+          <div className="contactIntro">
+            <div className="cardType">Współpraca i kontakt</div>
+            <h2>Jeśli chcesz porozmawiać o projekcie, wyprawie albo filmie — zapraszam.</h2>
             <p>
-              Jestem otwarty na projekty związane z górami, podróżami, sprzętem i filmowym outdoor storytellingiem.
-              Najprościej odezwać się przez Instagram albo YouTube.
+              Najwygodniej odezwać się przez social media. To tam najczęściej jestem, tam publikuję nowe materiały
+              i tam najszybciej można złapać kontakt w sprawie wspólnych działań.
             </p>
-            <div className="buttons">
-              <a className="button primary" href={socials.instagram} target="_blank" rel="noreferrer">
-                Napisz na Instagramie
-              </a>
-              <a className="button" href={socials.youtube} target="_blank" rel="noreferrer">
-                Zobacz YouTube
-              </a>
-            </div>
+            <div className="contactIntroNote">Najlepiej odezwać się przez Instagram. YouTube i TikTok to dobre miejsce, żeby zobaczyć więcej materiałów.</div>
           </div>
-          <div className="contactDetails">
-            <InfoCard title="Zakres" text="filmy • zdjęcia • reels • vlogi • outdoor" />
-            <InfoCard title="Klimat" text="góry, podróże, przygoda, naturalny storytelling" />
-            <InfoCard title="Kontakt" text="Instagram / YouTube / TikTok" />
+
+          <div className="contactSocials">
+            <a className="socialCard" href={socials.instagram} target="_blank" rel="noreferrer">
+              <span>Instagram</span>
+              <strong>Kulisy wypraw i codzienne kadry</strong>
+            </a>
+            <a className="socialCard" href={socials.youtube} target="_blank" rel="noreferrer">
+              <span>YouTube</span>
+              <strong>Dłuższe filmy i cinematic opowieści</strong>
+            </a>
+            <a className="socialCard" href={socials.tiktok} target="_blank" rel="noreferrer">
+              <span>TikTok</span>
+              <strong>Krótkie formy, tempo i momenty z trasy</strong>
+            </a>
+          </div>
+
+          <div className="contactCollab">
+            <h3>Projekty, które tworzę</h3>
+            <ul>
+              <li>Wyprawy i dokumentacja terenowa</li>
+              <li>Filmy, short form i outdoor storytelling</li>
+              <li>Zdjęcia i wizualne historie z miejsc</li>
+            </ul>
           </div>
         </div>
       </section>
@@ -994,8 +983,8 @@ function App() {
 
       <footer>
         <div className="container footerInner">
-          <span>Cinek Zielu — portfolio osobiste</span>
-          <span>Filmowy, outdoorowy, nowoczesny kierunek wizualny</span>
+          <span>Cinek Zielu — twórca outdoor i storyteller wizualny</span>
+          <span>Kontakt i współpraca: Instagram • YouTube • TikTok</span>
         </div>
       </footer>
     </main>

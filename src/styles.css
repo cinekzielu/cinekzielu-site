@@ -1211,6 +1211,86 @@ img {
   line-height: 1.4;
 }
 
+
+.contactHub {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, .95fr);
+  gap: 18px;
+  border: 1px solid var(--line);
+  background: radial-gradient(circle at top left, rgba(160, 130, 90, 0.15), transparent 38%), linear-gradient(180deg, rgba(38, 32, 28, 0.85), rgba(14, 13, 12, 0.96));
+  border-radius: 34px;
+  padding: 42px;
+}
+
+.contactIntro {
+  padding-right: 14px;
+}
+
+.contactIntroNote {
+  margin-top: 24px;
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+  color: #decfb8;
+  line-height: 1.7;
+}
+
+.contactSocials {
+  display: grid;
+  gap: 12px;
+}
+
+.socialCard {
+  display: grid;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 18px;
+  background: rgba(12, 11, 10, 0.5);
+  transition: border-color .24s ease, transform .24s ease, box-shadow .24s ease;
+}
+
+.socialCard:hover {
+  border-color: var(--line-strong);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+}
+
+.socialCard span {
+  font-size: 11px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: #d3b98f;
+}
+
+.socialCard strong {
+  font-size: 17px;
+  font-weight: 500;
+  color: #f4ecdd;
+  line-height: 1.45;
+}
+
+.contactCollab {
+  grid-column: 1 / -1;
+  margin-top: 8px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 20px;
+  background: rgba(10, 9, 8, 0.42);
+}
+
+.contactCollab h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.contactCollab ul {
+  margin: 12px 0 0;
+  padding-left: 18px;
+  color: #e8dcc9;
+  display: grid;
+  gap: 8px;
+  line-height: 1.65;
+}
 footer {
   border-top: 1px solid var(--line);
   padding: 32px 0;
@@ -1363,7 +1443,8 @@ footer {
   .aboutGrid,
   .aboutProfile,
   .socialBox,
-  .contactBox {
+  .contactBox,
+  .contactHub {
     grid-template-columns: 1fr;
   }
 
@@ -1475,8 +1556,13 @@ footer {
   }
 
   .socialBox,
-  .contactBox {
+  .contactBox,
+  .contactHub {
     padding: 28px;
+  }
+
+  .contactIntro {
+    padding-right: 0;
   }
 
   .workflowSteps {
@@ -1614,8 +1700,13 @@ footer {
   }
 
   .socialBox,
-  .contactBox {
+  .contactBox,
+  .contactHub {
     padding: 24px;
+  }
+
+  .socialCard strong {
+    font-size: 15px;
   }
 
   .collectionBody {
