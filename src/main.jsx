@@ -98,7 +98,30 @@ const mobileNavLinks = [
 ]
 
 const mobileMenuVariant = 'A'
-const defaultTitle = 'Cinek Zielu | Góry, podróże i filmy dokumentalne'
+const defaultMetadata = {
+  title: 'Cinek Zielu | Góry, podróże i filmy dokumentalne',
+  description:
+    'Cinek Zielu (Marcin Zieliński) — góry, podróże i filmy dokumentalne. Zobacz zdjęcia, relacje i historie z wypraw.',
+  image: '/og-image.jpg',
+}
+
+const setMetaTag = ({ selector, attribute, value }) => {
+  const element = document.querySelector(selector)
+  if (!element) return
+  element.setAttribute(attribute, value)
+}
+
+const updatePageMetadata = ({ title, description, image }) => {
+  document.title = title
+  setMetaTag({ selector: 'meta[name="description"]', attribute: 'content', value: description })
+  setMetaTag({ selector: 'meta[property="og:title"]', attribute: 'content', value: title })
+  setMetaTag({ selector: 'meta[property="og:description"]', attribute: 'content', value: description })
+  setMetaTag({ selector: 'meta[property="og:image"]', attribute: 'content', value: image })
+  setMetaTag({ selector: 'meta[name="twitter:title"]', attribute: 'content', value: title })
+  setMetaTag({ selector: 'meta[name="twitter:description"]', attribute: 'content', value: description })
+  setMetaTag({ selector: 'meta[name="twitter:image"]', attribute: 'content', value: image })
+}
+
 
 const parseExpeditionSlugFromPath = (pathname) => {
   const match = pathname.match(/^\/wyprawy\/([^/]+)\/?$/)
@@ -250,12 +273,19 @@ function App() {
 
   React.useEffect(() => {
     if (activeExpedition) {
-      document.title = `Cinek Zielu — ${activeExpedition.title}`
+      updatePageMetadata({
+        title: `Cinek Zielu — ${activeExpedition.title}`,
+        description: activeExpedition.shortDescription,
+        image: activeExpedition.heroImage,
+      })
       return
     }
 
-    document.title = defaultTitle
+    updatePageMetadata(defaultMetadata)
   }, [activeExpedition])
+
+  // Uwaga: crawlers social media zwykle nie wykonują JS w SPA konsekwentnie.
+  // Dla pełnego SEO/OG per URL docelowo potrzebne będą SSR (np. Next.js) albo statycznie generowane strony.
 
   const openExpedition = (slug) => {
     const nextUrl = `/wyprawy/${slug}`
