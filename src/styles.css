@@ -2011,18 +2011,64 @@ footer {
     rgba(12, 11, 10, 0.66);
 }
 
-.expeditionPlaceholderGrid {
-  margin: 16px 0;
-  display: grid;
-  gap: 10px;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+.expeditionGalleryHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
 }
 
-.expeditionPlaceholderGrid div {
-  height: 90px;
+.expeditionGalleryGrid {
+  margin: 16px 0 10px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.expeditionPhotoCard {
+  margin: 0;
+  grid-column: span 4;
+  position: relative;
+  overflow: hidden;
   border-radius: 12px;
-  border: 1px dashed rgba(255, 255, 255, 0.24);
-  background: linear-gradient(140deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  min-height: 180px;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.expeditionPhotoCard.portrait {
+  grid-column: span 3;
+}
+
+.expeditionPhotoCard img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .5s var(--easing-cinematic), filter .5s var(--easing-cinematic);
+}
+
+.expeditionPhotoCard::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(6, 6, 6, 0.04), rgba(6, 6, 6, 0.46));
+}
+
+.expeditionPhotoCard figcaption {
+  position: absolute;
+  left: 10px;
+  bottom: 8px;
+  z-index: 1;
+  margin: 0;
+  font-size: 11px;
+  color: rgba(243, 235, 224, 0.8);
+  letter-spacing: .04em;
+}
+
+.expeditionPhotoCard:hover img,
+.expeditionPhotoCard:focus-visible img {
+  transform: scale(1.04);
+  filter: saturate(1.05);
 }
 
 .expeditionCinematicHero.reveal,
@@ -2165,8 +2211,19 @@ footer {
     border-bottom: 0;
   }
 
-  .expeditionPlaceholderGrid {
+  .expeditionGalleryHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .expeditionGalleryGrid {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .expeditionPhotoCard,
+  .expeditionPhotoCard.portrait {
+    grid-column: auto;
+    min-height: 140px;
   }
 }
 
