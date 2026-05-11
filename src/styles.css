@@ -341,7 +341,8 @@ img {
 .filmGrid,
 .placeGrid,
 .formatGrid,
-.postGrid {
+.postGrid,
+.gearGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 22px;
@@ -352,7 +353,8 @@ img {
 .formatCard,
 .postCard,
 .mapCard,
-.infoCard {
+.infoCard,
+.gearCard {
   border: 1px solid var(--line);
   background: var(--card);
   border-radius: 28px;
@@ -505,7 +507,8 @@ img {
 .placeCard h3,
 .formatCard h3,
 .postCard h3,
-.mapCard h3 {
+.mapCard h3,
+.gearCard h3 {
   margin: 12px 0 0;
   font-size: 22px;
   line-height: 1.2;
@@ -515,7 +518,8 @@ img {
 .placeCard p,
 .formatCard p,
 .postCard p,
-.mapCard p {
+.mapCard p,
+.gearCard p {
   color: var(--muted);
   line-height: 1.72;
 }
@@ -1097,6 +1101,71 @@ img {
 .aboutVisualCard img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
 .aboutVisualCard div { padding: 16px; color: #dacdbc; font-size: 14px; line-height: 1.7; }
 
+
+.gearCard {
+  background: linear-gradient(165deg, rgba(28, 24, 21, 0.9), rgba(14, 13, 12, 0.95));
+}
+
+.gearLabel {
+  display: inline-flex;
+  padding: 6px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  color: #e5d5be;
+  font-size: 11px;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+
+.workflowBox {
+  margin-top: 26px;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  padding: 24px;
+  background: radial-gradient(circle at top right, rgba(198, 153, 92, 0.14), transparent 52%), linear-gradient(170deg, rgba(22, 19, 17, 0.92), rgba(10, 9, 8, 0.94));
+}
+
+.workflowBox h3 {
+  margin: 8px 0 0;
+  font-size: clamp(24px, 3vw, 34px);
+}
+
+.workflowSteps {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.workflowStep {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: start;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 14px;
+  background: rgba(12, 11, 10, 0.5);
+}
+
+.workflowStep span {
+  color: rgba(232, 216, 184, 0.4);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.workflowStep h4 {
+  margin: 2px 0 0;
+  font-size: 16px;
+}
+
+.workflowStep p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  line-height: 1.65;
+  font-size: 14px;
+}
+
 .formatCard .number {
   margin-bottom: 28px;
   color: rgba(232, 216, 184, 0.22);
@@ -1301,7 +1370,8 @@ footer {
   .filmGrid,
   .placeGrid,
   .formatGrid,
-  .postGrid {
+  .postGrid,
+  .gearGrid {
     grid-template-columns: 1fr;
   }
 
@@ -1407,6 +1477,10 @@ footer {
   .socialBox,
   .contactBox {
     padding: 28px;
+  }
+
+  .workflowSteps {
+    grid-template-columns: 1fr;
   }
 
   .footerInner {
@@ -1582,7 +1656,9 @@ footer {
   .formatCard,
   .postCard,
   .mapCard,
-  .infoCard {
+  .infoCard,
+  .gearCard,
+  .workflowBox {
     border-radius: 24px;
   }
 }

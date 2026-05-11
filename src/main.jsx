@@ -82,6 +82,55 @@ const formats = [
   },
 ]
 
+
+const creativeGear = [
+  {
+    title: 'Aparat',
+    label: 'Obraz i detal',
+    desc: 'To nim łapię światło, fakturę skały i drobne momenty po drodze. Ma dawać obraz, który czuć, a nie tylko oglądać.',
+  },
+  {
+    title: 'Kamera sportowa',
+    label: 'Ruch i tempo',
+    desc: 'Wchodzi tam, gdzie liczy się dynamika: podejścia, ekspozycja, szybkie zmiany pogody. Dzięki niej film oddaje rytm wyprawy od środka.',
+  },
+  {
+    title: 'Obiektywy',
+    label: 'Skala i perspektywa',
+    desc: 'Szeroko pokazuję przestrzeń, ciaśniej buduję emocję człowieka w terenie. To one decydują, czy widz patrzy na krajobraz, czy czuje historię.',
+  },
+  {
+    title: 'Dźwięk',
+    label: 'Atmosfera',
+    desc: 'Wiatr, kroki, oddech i cisza robią połowę klimatu. Dźwięk prowadzi widza przez materiał równie mocno jak obraz.',
+  },
+  {
+    title: 'Montaż',
+    label: 'Finalny klimat',
+    desc: 'Tu z surowych ujęć powstaje opowieść: tempo, napięcie i oddech filmu. Montaż nie udaje przygody — porządkuje to, co naprawdę wydarzyło się w trasie.',
+  },
+  {
+    title: 'Podejście do tworzenia',
+    label: 'Autentyczność',
+    desc: 'Nie gonię za checklistą kadrów. Najpierw przeżywam drogę, później wybieram ujęcia, które najuczciwiej oddają miejsce i emocje.',
+  },
+]
+
+const workflowSteps = [
+  {
+    title: 'Wyprawa i nagranie',
+    desc: 'Plan to punkt startowy, ale najważniejsze są warunki i momenty, które pojawiają się po drodze.',
+  },
+  {
+    title: 'Selekcja materiału',
+    desc: 'Wybieram ujęcia, które niosą historię: światło, ruch, emocję i naturalny rytm miejsca.',
+  },
+  {
+    title: 'Montaż i klimat filmu',
+    desc: 'Składam całość tak, by widz czuł drogę od pierwszego kroku do ostatniego kadru.',
+  },
+]
+
 const blogPosts = [
   { title: 'Jak wygląda tworzenie filmu górskiego od środka', category: 'Behind the scenes' },
   { title: 'Sprzęt, który zabieram w góry na nagrania', category: 'Sprzęt' },
@@ -819,6 +868,41 @@ function App() {
         </div>
       </section>
 
+
+      <section id="gear" className="section sectionDark reveal">
+        <div className="container">
+          <SectionHeader
+            label="Sprzęt i kulisy"
+            title="Sprzęt i kulisy tworzenia"
+            text="Czym pracuję to tylko część historii. Najważniejsze jest to, jak sprzęt pomaga oddać klimat miejsca, drogę i emocje, które dzieją się między kadrami."
+          />
+          <div className="gearGrid">
+            {creativeGear.map((item) => (
+              <article className="gearCard" key={item.title}>
+                <span className="gearLabel">{item.label}</span>
+                <h3>{item.title}</h3>
+                <p>{item.desc}</p>
+              </article>
+            ))}
+          </div>
+          <div className="workflowBox" aria-label="Jak wygląda proces tworzenia">
+            <p className="storyLabel">Workflow</p>
+            <h3>Jak wygląda proces</h3>
+            <div className="workflowSteps">
+              {workflowSteps.map((step, index) => (
+                <article className="workflowStep" key={step.title}>
+                  <span>0{index + 1}</span>
+                  <div>
+                    <h4>{step.title}</h4>
+                    <p>{step.desc}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="section sectionDark reveal">
         <div className="container">
           <SectionHeader
@@ -842,10 +926,9 @@ function App() {
         <div className="container socialBox">
           <div>
             <div className="cardType">Social media</div>
-            <h2>Zobacz moje filmy, krótkie formy i bieżące projekty.</h2>
+            <h2>Zobacz filmy, krótkie formy i codzienne kulisy tworzenia.</h2>
             <p>
-              YouTube, Instagram i TikTok to naturalne przedłużenie strony — tam dzieje się większość nowych filmów,
-              zdjęć, rolek i kulis.
+              YouTube, Instagram i TikTok to naturalne przedłużenie strony — tam lądują nowe filmy, zdjęcia, rolki i momenty z procesu — od terenu po montaż.
             </p>
           </div>
           <div className="socialLinks">
