@@ -439,34 +439,9 @@ function App() {
             title="Historie z wypraw"
             text="Fundament pod podstrony wypraw i filmów: osobne historie, kontekst trasy i najważniejsze dane w jednym miejscu."
           />
-          {!activeExpedition && (
-            <div className="expeditionGrid">
-              {expeditionsData.map((expedition) => (
-                <article className="expeditionCard" key={expedition.slug}>
-                  <div className="expeditionImageWrap">
-                    <img src={expedition.heroImage} alt={expedition.title} />
-                  </div>
-                  <div className="expeditionBody">
-                    <div className="cardType">{expedition.type}</div>
-                    <h3>{expedition.title}</h3>
-                    <p className="expeditionLocation">{expedition.location}</p>
-                    <p>{expedition.shortDescription}</p>
-                    <div className="expeditionTags">
-                      {expedition.tags.map((tag) => (
-                        <span key={tag}>{tag}</span>
-                      ))}
-                    </div>
-                    <button className="smallButton" type="button" onClick={() => openExpedition(expedition.slug)}>
-                      Zobacz historię
-                    </button>
-                  </div>
-                </article>
-              ))}
-            </div>
-          )}
-
-          {activeExpedition && (
-            <article id="expedition-detail" className="expeditionDetail">
+          {activeExpedition || isExpeditionNotFound ? (
+            activeExpedition ? (
+              <article id="expedition-detail" className="expeditionDetail">
               <div className="expeditionCinematicHero reveal">
                 <img src={activeExpedition.heroImage} alt={activeExpedition.title} className="expeditionCinematicHeroImage" />
                 <div className="expeditionCinematicHeroOverlay" />
@@ -524,24 +499,47 @@ function App() {
                 <p>Galeria zostanie rozbudowana.</p>
               </div>
             </article>
-          )}
-
-          {isExpeditionNotFound && (
-            <article id="expedition-detail" className="expeditionDetail">
-              <div className="expeditionDetailTop">
-                <p className="galleryBreadcrumb">Historie z wypraw / Nie znaleziono</p>
-                <button className="smallButton" type="button" onClick={goBackToExpeditions}>
-                  Wróć do wypraw
-                </button>
-              </div>
-              <div className="expeditionDetailBody">
-                <div>
-                  <div className="cardType">Spokojnie</div>
-                  <h3>Nie znaleziono tej wyprawy</h3>
-                  <p>Ten adres nie prowadzi do istniejącej historii. Wróć do listy wypraw i wybierz jedną z dostępnych relacji.</p>
+            ) : (
+              <article id="expedition-detail" className="expeditionDetail">
+                <div className="expeditionDetailTop">
+                  <p className="galleryBreadcrumb">Historie z wypraw / Nie znaleziono</p>
+                  <button className="smallButton" type="button" onClick={goBackToExpeditions}>
+                    Wróć do wypraw
+                  </button>
                 </div>
-              </div>
-            </article>
+                <div className="expeditionDetailBody">
+                  <div>
+                    <div className="cardType">Spokojnie</div>
+                    <h3>Nie znaleziono tej wyprawy</h3>
+                    <p>Ten adres nie prowadzi do istniejącej historii. Wróć do listy wypraw i wybierz jedną z dostępnych relacji.</p>
+                  </div>
+                </div>
+              </article>
+            )
+          ) : (
+            <div className="expeditionGrid">
+              {expeditionsData.map((expedition) => (
+                <article className="expeditionCard" key={expedition.slug}>
+                  <div className="expeditionImageWrap">
+                    <img src={expedition.heroImage} alt={expedition.title} />
+                  </div>
+                  <div className="expeditionBody">
+                    <div className="cardType">{expedition.type}</div>
+                    <h3>{expedition.title}</h3>
+                    <p className="expeditionLocation">{expedition.location}</p>
+                    <p>{expedition.shortDescription}</p>
+                    <div className="expeditionTags">
+                      {expedition.tags.map((tag) => (
+                        <span key={tag}>{tag}</span>
+                      ))}
+                    </div>
+                    <button className="smallButton" type="button" onClick={() => openExpedition(expedition.slug)}>
+                      Zobacz historię
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
           )}
         </div>
       </section>
