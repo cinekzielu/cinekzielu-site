@@ -452,38 +452,61 @@ function App() {
 
           {activeExpedition && (
             <article className="expeditionDetail">
-              <div className="expeditionDetailTop">
-                <p className="galleryBreadcrumb">Historie z wypraw / {activeExpedition.title}</p>
-                <button className="smallButton" type="button" onClick={goBackToExpeditions}>
-                  Wróć do wypraw
-                </button>
-              </div>
-              <div className="expeditionDetailHero">
-                <img src={activeExpedition.heroImage} alt={activeExpedition.title} />
-              </div>
-              <div className="expeditionDetailBody">
-                <div>
-                  <div className="cardType">{activeExpedition.subtitle}</div>
+              <div className="expeditionCinematicHero reveal">
+                <img src={activeExpedition.heroImage} alt={activeExpedition.title} className="expeditionCinematicHeroImage" />
+                <div className="expeditionCinematicHeroOverlay" />
+                <div className="expeditionCinematicHeroContent">
+                  <p className="galleryBreadcrumb">Historie z wypraw / {activeExpedition.title}</p>
+                  <div className="cardType">{activeExpedition.type}</div>
                   <h3>{activeExpedition.title}</h3>
+                  <p className="expeditionHeroSubtitle">{activeExpedition.subtitle}</p>
+                  <div className="expeditionHeroMeta">
+                    <span>{activeExpedition.location}</span>
+                    <span>{activeExpedition.season}</span>
+                    <span>{activeExpedition.mood}</span>
+                  </div>
+                  <div className="expeditionTags">
+                    {activeExpedition.tags.map((tag) => (
+                      <span key={tag}>{tag}</span>
+                    ))}
+                  </div>
+                  <div className="expeditionHeroActions">
+                    {activeExpedition.filmUrl && (
+                      <a className="smallButton expeditionWatchButton" href={activeExpedition.filmUrl} target="_blank" rel="noreferrer">
+                        <Play size={14} /> Obejrzyj film
+                      </a>
+                    )}
+                    <button className="smallButton" type="button" onClick={goBackToExpeditions}>
+                      Wróć do wypraw
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="expeditionStatsBar reveal">
+                <div><span>Wysokość</span><strong>{activeExpedition.stats.height}</strong></div>
+                <div><span>Region</span><strong>{activeExpedition.stats.region}</strong></div>
+                <div><span>Format filmu</span><strong>{activeExpedition.stats.filmFormat}</strong></div>
+                <div><span>Sezon</span><strong>{activeExpedition.season}</strong></div>
+                <div><span>Klimat</span><strong>{activeExpedition.mood}</strong></div>
+              </div>
+
+              <div className="expeditionStory reveal">
+                <div className="expeditionStoryInner">
+                  <p className="storyLabel">Historia wyprawy</p>
                   <p>{activeExpedition.longDescription}</p>
                 </div>
-                <aside className="expeditionMeta">
-                  <p><strong>Lokalizacja:</strong> {activeExpedition.location}</p>
-                  <p><strong>Typ:</strong> {activeExpedition.type}</p>
-                  <p><strong>{activeExpedition.season}</strong></p>
-                  <p><strong>{activeExpedition.mood}</strong></p>
-                  <p><strong>Wysokość:</strong> {activeExpedition.stats.height}</p>
-                  <p><strong>Region:</strong> {activeExpedition.stats.region}</p>
-                  <p><strong>Format filmu:</strong> {activeExpedition.stats.filmFormat}</p>
-                  {activeExpedition.filmUrl && (
-                    <a className="smallButton expeditionWatchButton" href={activeExpedition.filmUrl} target="_blank" rel="noreferrer">
-                      <Play size={14} /> Obejrzyj film
-                    </a>
-                  )}
-                </aside>
               </div>
-              <div className="expeditionPlaceholder">
-                Galeria / trasa / opis wyprawy — wkrótce
+
+              <div className="expeditionPlaceholder reveal">
+                <p className="storyLabel">Galeria wyprawy</p>
+                <div className="expeditionPlaceholderGrid">
+                  <div />
+                  <div />
+                  <div />
+                  <div />
+                </div>
+                <p>Galeria zostanie rozbudowana.</p>
               </div>
             </article>
           )}
