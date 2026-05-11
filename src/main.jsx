@@ -272,6 +272,16 @@ function App() {
   }, [])
 
   React.useEffect(() => {
+    if (!activeExpeditionSlug && !isExpeditionNotFound) return
+
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        document.getElementById('expeditions')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      })
+    })
+  }, [activeExpeditionSlug, isExpeditionNotFound])
+
+  React.useEffect(() => {
     if (activeExpedition) {
       updatePageMetadata({
         title: `Cinek Zielu — ${activeExpedition.title}`,
