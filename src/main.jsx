@@ -1,6 +1,6 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { Camera, Menu, Play, X } from 'lucide-react'
+import { Camera, ChevronLeft, ChevronRight, Menu, Play, X } from 'lucide-react'
 import './styles.css'
 import { travelAtlasData } from './data/travelData'
 import { galleryCollections } from './data/galleryData'
@@ -482,22 +482,33 @@ function App() {
             <button className="lightboxClose" type="button" aria-label="Zamknij podgląd" onClick={() => setActivePhotoIndex(null)}>
               <X size={20} />
             </button>
+            <div className="lightboxTopBar" aria-hidden="true">
+              <span className="lightboxBrand">Cinek Zielu / Galeria</span>
+              <span className="lightboxCounter">
+                {activePhotoIndex + 1} / {activeCollectionPhotos.length}
+              </span>
+            </div>
             <button
               className="lightboxArrow lightboxArrowLeft"
               type="button"
               aria-label="Poprzednie zdjęcie"
               onClick={showPreviousPhoto}
             >
-              ‹
+              <ChevronLeft size={24} />
             </button>
-            <img className="lightboxImage" src={activePhoto.src} alt={activePhoto.title} />
+            <img
+              key={activePhoto.src}
+              className="lightboxImage"
+              src={activePhoto.src}
+              alt={activePhoto.title}
+            />
             <button
               className="lightboxArrow lightboxArrowRight"
               type="button"
               aria-label="Następne zdjęcie"
               onClick={showNextPhoto}
             >
-              ›
+              <ChevronRight size={24} />
             </button>
             <div className="lightboxCaption">
               <span>{activePhoto.group}</span>
