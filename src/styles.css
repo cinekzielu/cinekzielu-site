@@ -2000,6 +2000,28 @@ footer {
   margin-top: 8px;
 }
 
+.expeditionNextStory {
+  margin: clamp(36px, 7vw, 80px) clamp(20px, 5vw, 72px) 0;
+  padding: clamp(18px, 3vw, 28px);
+  border-radius: 20px;
+  border: 1px solid var(--line-strong);
+  background: linear-gradient(140deg, rgba(154, 132, 102, 0.14), rgba(12, 11, 10, 0.88) 42%);
+}
+
+.expeditionNextStoryHeader {
+  margin-bottom: 16px;
+}
+
+.expeditionNextStoryHint {
+  margin: 0;
+  font-size: 14px;
+  color: #cdbca7;
+}
+
+.expeditionNextStoryCard {
+  max-width: 100%;
+}
+
 .expeditionPlaceholder {
   margin: clamp(36px, 7vw, 80px) clamp(20px, 5vw, 72px) clamp(28px, 4vw, 54px);
   border: 1px solid var(--line-strong);
@@ -2179,6 +2201,11 @@ footer {
 
   .expeditionStory {
     padding: 24px 16px 0;
+  }
+
+  .expeditionNextStory {
+    margin: 28px 16px 0;
+    padding: 16px;
   }
 
   .expeditionPlaceholder {
