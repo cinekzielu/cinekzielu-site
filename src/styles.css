@@ -342,7 +342,117 @@ img {
 .formatCard:hover {
   transform: translateY(-4px);
   border-color: var(--line-strong);
-  box-shadow: var(--shadow-soft);
+  box-shadow: 0 20px 36px rgba(8, 8, 8, 0.35), 0 0 0 1px rgba(210, 150, 74, 0.18);
+}
+
+
+.filmCard {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, rgba(31, 27, 24, 0.92), rgba(18, 16, 15, 0.92));
+}
+
+.filmCard::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(circle at 80% 0%, rgba(211, 155, 76, 0.14), transparent 36%);
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+
+.filmCard:hover::after {
+  opacity: 1;
+}
+
+.filmImageBadges {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  z-index: 2;
+}
+
+.filmImageBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(8px);
+  background: rgba(11, 11, 11, 0.48);
+  color: #f4efe5;
+  font-size: 11px;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.filmImageBadgeYoutube {
+  border-color: rgba(255, 118, 118, 0.4);
+}
+
+.filmDuration {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 6px 10px;
+  border-radius: 11px;
+  background: rgba(6, 6, 6, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #f2ede4;
+  letter-spacing: .1em;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.filmMetaRow {
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.filmHelperLabel {
+  font-size: 11px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: rgba(223, 211, 192, 0.68);
+}
+
+.filmCard h3 {
+  font-size: 24px;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+}
+
+.filmCard p {
+  margin-top: 10px;
+}
+
+.filmCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  border: 1px solid rgba(230, 186, 119, 0.4);
+  background: linear-gradient(160deg, rgba(184, 126, 52, 0.25), rgba(57, 43, 26, 0.25));
+  box-shadow: 0 8px 24px rgba(12, 10, 8, 0.28), 0 0 0 rgba(211, 151, 75, 0);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
+}
+
+.filmCta:hover {
+  transform: translateY(-1px);
+  border-color: rgba(230, 186, 119, 0.62);
+  background: linear-gradient(160deg, rgba(184, 126, 52, 0.35), rgba(57, 43, 26, 0.4));
+  box-shadow: 0 10px 28px rgba(10, 8, 7, 0.34), 0 0 18px rgba(211, 151, 75, 0.22);
 }
 
 .filmImageWrap {
@@ -357,12 +467,13 @@ img {
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
-  transition: transform .55s ease;
+  transition: transform .75s cubic-bezier(.2,.7,.2,1), filter .5s ease;
 }
 
 .filmCard:hover img,
 .photoCard:hover img {
-  transform: scale(1.045);
+  transform: scale(1.06);
+  filter: saturate(1.06);
 }
 
 .filmCard h3,
@@ -579,7 +690,7 @@ img {
 .collectionCard:hover {
   transform: translateY(-4px);
   border-color: var(--line-strong);
-  box-shadow: var(--shadow-soft);
+  box-shadow: 0 20px 36px rgba(8, 8, 8, 0.35), 0 0 0 1px rgba(210, 150, 74, 0.18);
 }
 
 .collectionCoverWrap {
@@ -683,7 +794,7 @@ img {
 .photoCard:hover {
   transform: translateY(-4px);
   border-color: var(--line-strong);
-  box-shadow: var(--shadow-soft);
+  box-shadow: 0 20px 36px rgba(8, 8, 8, 0.35), 0 0 0 1px rgba(210, 150, 74, 0.18);
 }
 
 .photoCard.featured {
@@ -1422,7 +1533,8 @@ footer {
 
 @keyframes slowHeroZoom {
   from { transform: scale(1); }
-  to { transform: scale(1.045); }
+  to { transform: scale(1.06);
+  filter: saturate(1.06); }
 }
 
 @keyframes heroTextIn {

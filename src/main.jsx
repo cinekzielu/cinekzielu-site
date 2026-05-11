@@ -17,21 +17,27 @@ const img = (name) => `/images/${name}`
 const featuredFilms = [
   {
     title: 'Tatry — wejście i droga',
-    type: 'Vlog',
+    type: 'VLOG',
+    badge: 'WINTER ASCENT',
+    duration: '18 MIN',
     desc: 'Materiały z tatrzańskich szlaków: podejścia, warunki i klimat całej wyprawy od startu po zejście.',
     image: img('lomnica-thumb.png'),
     link: socials.youtube,
   },
   {
     title: 'Maroko — trekking i kontrast',
-    type: 'Short film',
+    type: 'SHORT FILM',
+    badge: 'CINEMATIC',
+    duration: '7 MIN',
     desc: 'Podróż i trekking w zupełnie innym świetle: kontrast krajobrazu, tempo drogi i codzienność po trasie.',
     image: img('maroko-thumb.png'),
     link: socials.youtube,
   },
   {
     title: 'Kościelec zimą — warunki i emocje',
-    type: 'Cinematic',
+    type: 'CINEMATIC',
+    badge: 'EXPEDITION EDIT',
+    duration: 'SHORT',
     desc: 'Zimowe podejście na Kościelec pokazane filmowo — skupienie, ruch, chłód i satysfakcja na końcu dnia.',
     image: img('koscielec-thumb.jpg'),
     link: socials.youtube,
@@ -289,12 +295,20 @@ function App() {
               <article className="filmCard" key={film.title}>
                 <div className="filmImageWrap">
                   <img src={film.image} alt={film.title} />
+                  <div className="filmImageBadges">
+                    <span className="filmImageBadge filmImageBadgeType">{film.type}</span>
+                    <span className="filmImageBadge filmImageBadgeYoutube"><Play size={13} /> YouTube</span>
+                  </div>
+                  <span className="filmDuration">{film.duration}</span>
                 </div>
-                <div className="cardType">{film.type}</div>
+                <div className="filmMetaRow">
+                  <div className="cardType">{film.badge}</div>
+                  <span className="filmHelperLabel">travel documentary</span>
+                </div>
                 <h3>{film.title}</h3>
                 <p>{film.desc}</p>
-                <a className="smallButton" href={film.link} target="_blank" rel="noreferrer">
-                  Obejrzyj film
+                <a className="smallButton filmCta" href={film.link} target="_blank" rel="noreferrer">
+                  <Play size={14} /> Obejrzyj film
                 </a>
               </article>
             ))}
