@@ -15,6 +15,9 @@
   --sand: #c8844e;
   --shadow: 0 30px 80px rgba(0, 0, 0, 0.34);
   --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.22);
+  --easing-cinematic: cubic-bezier(.22, .61, .36, 1);
+  --card-lift-y: -5px;
+  --glow-soft: 0 24px 48px rgba(6, 6, 6, 0.34), 0 0 0 1px rgba(210, 150, 74, 0.2);
 }
 
 * {
@@ -53,6 +56,7 @@ img {
   overflow: hidden;
   border-bottom: 1px solid var(--line);
   min-height: 100vh;
+  isolation: isolate;
 }
 
 .glow {
@@ -61,7 +65,9 @@ img {
   height: 520px;
   background: radial-gradient(circle at top, rgba(160, 130, 90, 0.24), transparent 54%);
   pointer-events: none;
+  animation: heroGlowPulse 13s var(--easing-cinematic) infinite alternate;
 }
+
 
 .nav {
   position: relative;
@@ -185,14 +191,20 @@ img {
   padding: 13px 18px;
   font-weight: 650;
   font-size: 14px;
-  transition: transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+  transition: transform .28s var(--easing-cinematic), border-color .28s var(--easing-cinematic), background .28s var(--easing-cinematic), box-shadow .28s var(--easing-cinematic), filter .28s var(--easing-cinematic);
 }
 
 .button:hover,
 .smallButton:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.01);
   border-color: rgba(232, 216, 184, .52);
-  box-shadow: var(--shadow-soft);
+  box-shadow: 0 12px 28px rgba(8, 8, 8, .24), 0 0 0 1px rgba(232, 216, 184, .22);
+}
+
+.button:active,
+.smallButton:active {
+  transform: translateY(0) scale(0.99);
+  filter: brightness(.98);
 }
 
 .button.primary {
@@ -274,6 +286,7 @@ img {
 
 .section {
   padding: 96px 0;
+  position: relative;
 }
 
 .sectionDark {
@@ -284,6 +297,18 @@ img {
 .sectionDarker {
   background: rgba(8, 7, 6, 0.5);
   border-bottom: 1px solid var(--line);
+}
+
+.sectionDark::before,
+.sectionDarker::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -1px;
+  height: 70px;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(192, 150, 96, .08), transparent 72%);
 }
 
 .sectionHeader {
@@ -332,7 +357,7 @@ img {
   background: var(--card);
   border-radius: 28px;
   padding: 20px;
-  transition: transform .24s ease, border-color .24s ease, box-shadow .24s ease, background .24s ease;
+  transition: transform .3s var(--easing-cinematic), border-color .3s var(--easing-cinematic), box-shadow .3s var(--easing-cinematic), background .3s var(--easing-cinematic);
 }
 
 .filmCard:hover,
@@ -340,9 +365,9 @@ img {
 .mapCard:hover,
 .postCard:hover,
 .formatCard:hover {
-  transform: translateY(-4px);
+  transform: translateY(var(--card-lift-y));
   border-color: var(--line-strong);
-  box-shadow: 0 20px 36px rgba(8, 8, 8, 0.35), 0 0 0 1px rgba(210, 150, 74, 0.18);
+  box-shadow: var(--glow-soft);
 }
 
 
@@ -467,7 +492,7 @@ img {
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
-  transition: transform .75s cubic-bezier(.2,.7,.2,1), filter .5s ease;
+  transition: opacity .5s ease, transform .75s cubic-bezier(.2,.7,.2,1), filter .5s ease;
 }
 
 .filmCard:hover img,
@@ -684,13 +709,13 @@ img {
   background: var(--card);
   border-radius: 24px;
   overflow: hidden;
-  transition: transform .24s ease, border-color .24s ease, box-shadow .24s ease;
+  transition: transform .3s var(--easing-cinematic), border-color .3s var(--easing-cinematic), box-shadow .3s var(--easing-cinematic);
 }
 
 .collectionCard:hover {
-  transform: translateY(-4px);
+  transform: translateY(var(--card-lift-y));
   border-color: var(--line-strong);
-  box-shadow: 0 20px 36px rgba(8, 8, 8, 0.35), 0 0 0 1px rgba(210, 150, 74, 0.18);
+  box-shadow: var(--glow-soft);
 }
 
 .collectionCoverWrap {
@@ -704,6 +729,13 @@ img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: opacity .45s ease, transform .75s var(--easing-cinematic), filter .5s ease;
+}
+
+.collectionCard:hover .collectionCover,
+.expeditionCard:hover .expeditionImageWrap img {
+  transform: scale(1.045);
+  filter: saturate(1.05);
 }
 
 .collectionBody {
@@ -1531,6 +1563,11 @@ footer {
   to { transform: translate3d(80px, -30px, 0) scale(1.12); }
 }
 
+@keyframes heroGlowPulse {
+  from { opacity: .88; transform: translate3d(0, 0, 0) scale(1); }
+  to { opacity: 1; transform: translate3d(0, 1.6%, 0) scale(1.04); }
+}
+
 @keyframes slowHeroZoom {
   from { transform: scale(1); }
   to { transform: scale(1.06);
@@ -1564,8 +1601,26 @@ footer {
   .cinematicFog,
   .heroCard,
   .heroText,
-  .heroImage {
+  .heroImage,
+  .glow {
     animation: none;
+  }
+
+  .button,
+  .smallButton,
+  .filmCard,
+  .placeCard,
+  .formatCard,
+  .postCard,
+  .mapCard,
+  .infoCard,
+  .collectionCard,
+  .expeditionCard,
+  .filmImageWrap img,
+  .collectionCover,
+  .expeditionImageWrap img {
+    transition: none;
+    transform: none !important;
   }
 }
 
@@ -1691,6 +1746,13 @@ footer {
   border-radius: 24px;
   overflow: hidden;
   box-shadow: var(--shadow-soft);
+  transition: transform .3s var(--easing-cinematic), border-color .3s var(--easing-cinematic), box-shadow .3s var(--easing-cinematic);
+}
+
+.expeditionCard:hover {
+  transform: translateY(var(--card-lift-y));
+  border-color: var(--line-strong);
+  box-shadow: var(--glow-soft);
 }
 
 .expeditionImageWrap {
@@ -1703,6 +1765,7 @@ footer {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: opacity .45s ease, transform .75s var(--easing-cinematic), filter .5s ease;
 }
 
 .expeditionBody {
