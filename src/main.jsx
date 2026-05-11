@@ -4,6 +4,7 @@ import { Camera, Menu, Play, X } from 'lucide-react'
 import './styles.css'
 import { travelAtlasData } from './data/travelData'
 import { galleryCollections } from './data/galleryData'
+import { expeditionsData } from './data/expeditionsData'
 import { MapAtlas } from './components/MapAtlas'
 
 const socials = {
@@ -90,6 +91,7 @@ const blogPosts = [
 const mobileNavLinks = [
   { href: '#films', label: 'Filmy' },
   { href: '#map', label: 'Mapa' },
+  { href: '#expeditions', label: 'Wyprawy' },
   { href: '#gallery', label: 'Galeria' },
   { href: '#about', label: 'O mnie' },
   { href: '#contact', label: 'Kontakt' },
@@ -111,6 +113,11 @@ function App() {
   )
   const activePhoto = activePhotoIndex === null ? null : activeCollectionPhotos[activePhotoIndex]
   const [atlasPath, setAtlasPath] = React.useState(['world'])
+  const [activeExpeditionSlug, setActiveExpeditionSlug] = React.useState(null)
+  const activeExpedition = React.useMemo(
+    () => expeditionsData.find((expedition) => expedition.slug === activeExpeditionSlug) ?? null,
+    [activeExpeditionSlug]
+  )
 
   const atlasLookups = React.useMemo(() => ({
     continents: Object.fromEntries(travelAtlasData.continents.map((item) => [item.id, item])),
@@ -317,6 +324,79 @@ function App() {
       </section>
 
       <section id="map" className="section sectionDarker reveal"><div className="container"><SectionHeader label="Mapa wypraw" title="Interaktywna mapa wypraw" text="Hierarchia: Świat → kontynent → kraj/region → Tatry/szczyty." /><MapAtlas atlasPath={atlasPath} setAtlasPath={setAtlasPath} activeNode={activeNode} atlasLookups={atlasLookups} /></div></section>
+
+      <section id="expeditions" className="section sectionDark reveal">
+        <div className="container">
+          <SectionHeader
+            label="Wyprawy"
+            title="Historie z wypraw"
+            text="Fundament pod podstrony wypraw i filmów: osobne historie, kontekst trasy i najważniejsze dane w jednym miejscu."
+          />
+          {!activeExpedition && (
+            <div className="expeditionGrid">
+              {expeditionsData.map((expedition) => (
+                <article className="expeditionCard" key={expedition.slug}>
+                  <div className="expeditionImageWrap">
+                    <img src={expedition.heroImage} alt={expedition.title} />
+                  </div>
+                  <div className="expeditionBody">
+                    <div className="cardType">{expedition.type}</div>
+                    <h3>{expedition.title}</h3>
+                    <p className="expeditionLocation">{expedition.location}</p>
+                    <p>{expedition.shortDescription}</p>
+                    <div className="expeditionTags">
+                      {expedition.tags.map((tag) => (
+                        <span key={tag}>{tag}</span>
+                      ))}
+                    </div>
+                    <button className="smallButton" type="button" onClick={() => setActiveExpeditionSlug(expedition.slug)}>
+                      Zobacz historię
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+
+          {activeExpedition && (
+            <article className="expeditionDetail">
+              <div className="expeditionDetailTop">
+                <p className="galleryBreadcrumb">Historie z wypraw / {activeExpedition.title}</p>
+                <button className="smallButton" type="button" onClick={() => setActiveExpeditionSlug(null)}>
+                  Wróć do wypraw
+                </button>
+              </div>
+              <div className="expeditionDetailHero">
+                <img src={activeExpedition.heroImage} alt={activeExpedition.title} />
+              </div>
+              <div className="expeditionDetailBody">
+                <div>
+                  <div className="cardType">{activeExpedition.subtitle}</div>
+                  <h3>{activeExpedition.title}</h3>
+                  <p>{activeExpedition.longDescription}</p>
+                </div>
+                <aside className="expeditionMeta">
+                  <p><strong>Lokalizacja:</strong> {activeExpedition.location}</p>
+                  <p><strong>Typ:</strong> {activeExpedition.type}</p>
+                  <p><strong>{activeExpedition.season}</strong></p>
+                  <p><strong>{activeExpedition.mood}</strong></p>
+                  <p><strong>Wysokość:</strong> {activeExpedition.stats.height}</p>
+                  <p><strong>Region:</strong> {activeExpedition.stats.region}</p>
+                  <p><strong>Format filmu:</strong> {activeExpedition.stats.filmFormat}</p>
+                  {activeExpedition.filmUrl && (
+                    <a className="smallButton expeditionWatchButton" href={activeExpedition.filmUrl} target="_blank" rel="noreferrer">
+                      <Play size={14} /> Obejrzyj film
+                    </a>
+                  )}
+                </aside>
+              </div>
+              <div className="expeditionPlaceholder">
+                Galeria / trasa / opis wyprawy — wkrótce
+              </div>
+            </article>
+          )}
+        </div>
+      </section>
 
       <section id="gallery" className="section reveal">
         <div className="container">
