@@ -2039,6 +2039,60 @@ footer {
   }
 }
 
+
+@media (max-width: 900px) {
+  .expeditionDetail {
+    border-radius: 24px;
+  }
+
+  .expeditionCinematicHero {
+    min-height: clamp(320px, 54vh, 460px);
+  }
+
+  .expeditionCinematicHeroContent {
+    max-width: 100%;
+    padding: 20px 16px 18px;
+    padding-top: clamp(18px, 5.2vh, 34px);
+  }
+
+  .expeditionHeroSubtitle {
+    margin-top: 8px;
+    font-size: clamp(16px, 4.8vw, 20px);
+    line-height: 1.35;
+  }
+
+  .expeditionHeroMeta {
+    margin: 12px 0;
+  }
+
+  .expeditionHeroActions {
+    margin-top: 14px;
+  }
+
+  .expeditionStatsBar {
+    margin: 0 12px;
+    margin-top: -14px;
+    grid-template-columns: 1fr;
+  }
+
+  .expeditionStatsBar div {
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .expeditionStatsBar div:last-child {
+    border-bottom: 0;
+  }
+
+  .expeditionStory {
+    padding: 24px 16px 0;
+  }
+
+  .expeditionPlaceholder {
+    margin: 28px 16px 20px;
+  }
+}
+
 @media (max-width: 720px) {
   .expeditionGrid {
     grid-template-columns: 1fr;
@@ -2049,12 +2103,12 @@ footer {
   }
 
   .expeditionCinematicHero {
-    min-height: 60vh;
+    min-height: clamp(300px, 52vh, 420px);
   }
 
   .expeditionStatsBar {
     margin: 0 12px;
-    margin-top: -24px;
+    margin-top: -12px;
     grid-template-columns: 1fr;
   }
 

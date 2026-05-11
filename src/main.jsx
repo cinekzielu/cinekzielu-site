@@ -276,6 +276,11 @@ function App() {
 
     window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {
+        const detailEl = document.getElementById('expedition-detail')
+        if (detailEl) {
+          detailEl.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          return
+        }
         document.getElementById('expeditions')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
       })
     })
@@ -461,7 +466,7 @@ function App() {
           )}
 
           {activeExpedition && (
-            <article className="expeditionDetail">
+            <article id="expedition-detail" className="expeditionDetail">
               <div className="expeditionCinematicHero reveal">
                 <img src={activeExpedition.heroImage} alt={activeExpedition.title} className="expeditionCinematicHeroImage" />
                 <div className="expeditionCinematicHeroOverlay" />
@@ -522,7 +527,7 @@ function App() {
           )}
 
           {isExpeditionNotFound && (
-            <article className="expeditionDetail">
+            <article id="expedition-detail" className="expeditionDetail">
               <div className="expeditionDetailTop">
                 <p className="galleryBreadcrumb">Historie z wypraw / Nie znaleziono</p>
                 <button className="smallButton" type="button" onClick={goBackToExpeditions}>
