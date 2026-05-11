@@ -873,37 +873,82 @@ img {
   z-index: 40;
   display: grid;
   place-items: center;
-  padding: 28px;
-  background: rgba(4, 4, 4, 0.84);
-  backdrop-filter: blur(8px);
+  padding: 20px;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(160, 130, 90, 0.12), transparent 38%),
+    rgba(3, 3, 3, 0.9);
+  backdrop-filter: blur(14px) saturate(125%);
+  animation: lightboxOverlayIn .32s var(--easing-cinematic);
 }
 
 .lightboxContent {
   position: relative;
-  width: min(1080px, 100%);
+  width: min(1320px, 100%);
   max-height: 100%;
   display: grid;
   justify-items: center;
-  gap: 16px;
+  gap: 14px;
   touch-action: pan-y;
+  padding: clamp(54px, 6vw, 72px) clamp(10px, 3vw, 44px) clamp(86px, 11vh, 128px);
+  animation: lightboxContentIn .36s var(--easing-cinematic);
+}
+
+.lightboxTopBar {
+  position: absolute;
+  top: 6px;
+  left: clamp(4px, 1vw, 12px);
+  right: clamp(56px, 8vw, 96px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.lightboxBrand,
+.lightboxCounter {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(6, 6, 6, 0.5);
+  backdrop-filter: blur(12px);
+  border-radius: 999px;
+  padding: 8px 13px;
+  font-size: 10px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: #d9cebe;
+}
+
+.lightboxCounter {
+  letter-spacing: .18em;
+  color: #f8f2ea;
 }
 
 .lightboxImage {
   width: auto;
   max-width: 100%;
-  max-height: min(78vh, 860px);
-  border-radius: 22px;
+  max-height: min(84vh, 960px);
+  border-radius: 24px;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: 0 30px 75px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 42px 95px rgba(0, 0, 0, 0.62);
   object-fit: contain;
+  animation: lightboxImageSwap .34s var(--easing-cinematic);
 }
 
 .lightboxCaption {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(18px, 3vh, 36px);
+  transform: translateX(-50%);
   text-align: center;
+  max-width: min(80ch, calc(100% - 40px));
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(4, 4, 4, 0.52);
+  backdrop-filter: blur(14px);
+  border-radius: 20px;
+  padding: 11px 18px 14px;
 }
 
 .lightboxCaption span {
-  color: var(--faint);
+  color: #beaf9f;
   font-size: 10px;
   letter-spacing: .24em;
   text-transform: uppercase;
@@ -911,61 +956,76 @@ img {
 
 .lightboxCaption p {
   margin: 6px 0 0;
-  font-size: clamp(16px, 3.2vw, 22px);
+  font-size: clamp(17px, 2.2vw, 24px);
   color: #f4ede4;
 }
 
 .lightboxClose,
 .lightboxArrow {
   position: absolute;
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  background: rgba(10, 10, 10, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(8, 8, 8, 0.62);
   color: #f6f1ea;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(14px);
   cursor: pointer;
-  transition: transform .2s ease, border-color .2s ease, background .2s ease;
+  transition: transform .2s ease, border-color .2s ease, background .2s ease, opacity .2s ease;
 }
 
 .lightboxClose:hover,
 .lightboxArrow:hover {
-  border-color: rgba(255, 255, 255, 0.48);
-  background: rgba(18, 18, 18, 0.78);
+  border-color: rgba(255, 255, 255, 0.56);
+  background: rgba(16, 16, 16, 0.84);
+}
+
+.lightboxClose {
+  top: 4px;
+  right: 4px;
+  width: 50px;
+  height: 50px;
+  border-radius: 15px;
+  display: grid;
+  place-items: center;
 }
 
 .lightboxClose:hover {
-  transform: translateY(-1px);
+  transform: translateY(-1px) scale(1.01);
+}
+
+.lightboxArrow {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 58px;
+  height: 58px;
+  border-radius: 17px;
+  display: grid;
+  place-items: center;
 }
 
 .lightboxArrow:hover {
   transform: translateY(calc(-50% - 1px));
 }
 
-.lightboxClose {
-  top: 2px;
-  right: 2px;
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-}
-
-.lightboxArrow {
-  top: 50%;
-  transform: translateY(-50%);
-  width: 56px;
-  height: 56px;
-  border-radius: 16px;
-  font-size: 36px;
-  line-height: 1;
-}
-
 .lightboxArrowLeft {
-  left: -72px;
+  left: clamp(4px, 1vw, 12px);
 }
 
 .lightboxArrowRight {
-  right: -72px;
+  right: clamp(4px, 1vw, 12px);
+}
+
+@keyframes lightboxOverlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes lightboxContentIn {
+  from { opacity: 0; transform: scale(.985); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes lightboxImageSwap {
+  from { opacity: .18; transform: scale(.992); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 .placeVisual {
@@ -1332,34 +1392,50 @@ footer {
   }
 
   .lightboxOverlay {
-    padding: 18px;
+    padding: 12px;
+  }
+
+  .lightboxContent {
+    padding: 56px 2px 96px;
+  }
+
+  .lightboxTopBar {
+    top: -2px;
+    right: 44px;
+  }
+
+  .lightboxBrand,
+  .lightboxCounter {
+    font-size: 9px;
+    padding: 7px 11px;
   }
 
   .lightboxImage {
-    max-height: 72vh;
+    max-height: 74vh;
+  }
+
+  .lightboxCaption {
+    bottom: 14px;
+    border-radius: 16px;
+    padding: 10px 12px 12px;
+  }
+
+  .lightboxCaption p {
+    font-size: clamp(16px, 4vw, 20px);
   }
 
   .lightboxArrow {
-    width: 42px;
-    height: 42px;
-    font-size: 24px;
-    border-radius: 12px;
-  }
-
-  .lightboxArrowLeft {
-    left: 2px;
-  }
-
-  .lightboxArrowRight {
-    right: 2px;
+    width: 44px;
+    height: 44px;
+    border-radius: 13px;
   }
 
   .lightboxClose {
-    top: -2px;
+    top: -4px;
     right: -2px;
-    width: 36px;
-    height: 36px;
-    border-radius: 11px;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
   }
 }
 
@@ -1881,5 +1957,18 @@ footer {
 
   .expeditionDetail {
     padding: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightboxOverlay,
+  .lightboxContent,
+  .lightboxImage {
+    animation: none !important;
+  }
+
+  .lightboxClose,
+  .lightboxArrow {
+    transition: none;
   }
 }
