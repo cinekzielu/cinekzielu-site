@@ -30,6 +30,9 @@
 .summitPoint:hover,.summitPoint:focus-visible{transform:translate(-50%,-50%) scale(1.05);background:rgba(40,32,24,.34)}
 .summitPoint:hover .label{border-color:rgba(244,221,182,.7)}
 .summitPoint.isActive .dot{box-shadow:0 0 0 5px rgba(244,220,183,.16),0 0 14px rgba(244,220,183,.7)}
+.summitPoint.pointTypeviewpoint .dot{border-radius:3px;transform:rotate(45deg);background:rgba(236,214,174,.92)}
+.summitPoint.pointTypetrail .dot{width:12px;height:6px;border-radius:999px;background:rgba(222,198,155,.92)}
+.summitPoint.pointTypecity .dot{width:8px;height:8px;box-shadow:0 0 0 2px rgba(245,224,186,.22),0 0 10px rgba(244,220,183,.36)}
 .atlasCrumbTrail{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap}
 .atlasCrumb{display:flex;flex-direction:column;gap:2px;border:1px solid rgba(230,212,180,.22);background:rgba(15,13,11,.72);border-radius:12px;padding:8px 12px;color:var(--text);cursor:pointer;min-width:120px;text-align:left;transition:.2s;position:relative}
 .atlasCrumb::after{content:'';position:absolute;right:-7px;top:50%;width:10px;height:10px;border-top:1px solid rgba(230,212,180,.24);border-right:1px solid rgba(230,212,180,.24);transform:translateY(-50%) rotate(45deg);background:rgba(11,10,9,.68)}
@@ -41,6 +44,7 @@
 .atlasDetailCard{background:linear-gradient(165deg,rgba(31,27,22,.9),rgba(14,11,9,.95));border:1px solid rgba(227,206,171,.24);box-shadow:0 16px 36px rgba(0,0,0,.35);padding:16px}
 .atlasDetailCard h3{font-size:clamp(1.4rem,2vw,1.75rem)}
 .atlasLead{margin:0 0 10px;font-size:14px;line-height:1.45}
+.atlasPointType{display:inline-flex;align-items:center;gap:6px;margin:0 0 4px;padding:4px 10px;border:1px solid rgba(227,206,171,.25);border-radius:999px;font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:rgba(239,220,188,.86);background:rgba(18,15,13,.72)}
 .atlasEyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
 .atlasLevelLabel{margin:0 0 8px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(239,220,188,.9)}
 .atlasTagRow{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
