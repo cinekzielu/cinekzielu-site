@@ -5,6 +5,11 @@ const tatryGeoPoints = {
   lomnica: { lat: 49.1958, lng: 20.2184, zone: 'high-tatras-region' },
   gerlach: { lat: 49.1661, lng: 20.1341, zone: 'high-tatras-region' },
   'durny-szczyt': { lat: 49.202, lng: 20.2228, zone: 'belianske-tatras' },
+  'lodowy-szczyt': { lat: 49.1937, lng: 20.215, zone: 'high-tatras-region' },
+  'baranie-rogi': { lat: 49.2106, lng: 20.2242, zone: 'belianske-tatras' },
+  'kiezmarski-szczyt': { lat: 49.1955, lng: 20.2325, zone: 'belianske-tatras' },
+  konczysta: { lat: 49.1587, lng: 20.0991, zone: 'high-tatras-region' },
+  rysy: { lat: 49.1794, lng: 20.0881, zone: 'high-tatras-region' },
 }
 
 const tatryUiLayout = {
@@ -13,7 +18,12 @@ const tatryUiLayout = {
   krywan: { nudge: { x: -0.9, y: 1.4 }, labelOffset: { x: -16, y: 10 }, tier: 'primary' },
   lomnica: { nudge: { x: 0.2, y: 0.8 }, labelOffset: { x: 8, y: -8 }, tier: 'primary' },
   gerlach: { nudge: { x: 0.8, y: -0.3 }, labelOffset: { x: 10, y: -12 }, tier: 'featured' },
-  'durny-szczyt': { nudge: { x: 1.4, y: -0.7 }, labelOffset: { x: 10, y: 7 }, tier: 'secondary' },
+  'durny-szczyt': { nudge: { x: 1.4, y: -0.7 }, labelOffset: { x: -30, y: 9 }, tier: 'secondary' },
+  'lodowy-szczyt': { nudge: { x: -0.4, y: 0.2 }, labelOffset: { x: 14, y: -10 }, tier: 'primary' },
+  'baranie-rogi': { nudge: { x: 0.9, y: -0.6 }, labelOffset: { x: 13, y: -2 }, tier: 'secondary' },
+  'kiezmarski-szczyt': { nudge: { x: 1.1, y: 0.3 }, labelOffset: { x: 13, y: 9 }, tier: 'primary' },
+  konczysta: { nudge: { x: -0.3, y: 0.4 }, labelOffset: { x: -16, y: 10 }, tier: 'secondary' },
+  rysy: { nudge: { x: -0.1, y: 0.2 }, labelOffset: { x: -14, y: -10 }, tier: 'featured' },
 }
 
 const tatryBounds = {
