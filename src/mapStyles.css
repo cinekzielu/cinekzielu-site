@@ -1,5 +1,5 @@
-.cinematicAtlas.atlasLayout{grid-template-columns:minmax(0,1.35fr) minmax(320px,.65fr);align-items:stretch;gap:20px}
-.cinematicAtlas .atlasMapWrap{background:radial-gradient(circle at 20% 10%, rgba(186,150,95,.12), transparent 40%),linear-gradient(165deg,#151311,#0b0a09);overflow:hidden;box-shadow:inset 0 0 0 1px rgba(230,214,184,.08),0 24px 42px rgba(0,0,0,.35)}
+.cinematicAtlas.atlasLayout{grid-template-columns:minmax(0,1.3fr) minmax(320px,.7fr);align-items:stretch;gap:20px}
+.cinematicAtlas .atlasMapWrap{background:radial-gradient(circle at 20% 10%, rgba(186,150,95,.12), transparent 40%),linear-gradient(165deg,#151311,#0b0a09);overflow:hidden;box-shadow:inset 0 0 0 1px rgba(230,214,184,.08),0 24px 42px rgba(0,0,0,.35);padding:16px}
 .cinematicStage{position:relative;isolation:isolate;box-shadow:inset 0 0 0 1px rgba(238,216,180,.08),inset 0 -60px 120px rgba(0,0,0,.26)}
 .cinematicStage::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(224,205,167,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(224,205,167,.05) 1px,transparent 1px);background-size:42px 42px;opacity:.25;pointer-events:none}
 .cinematicStage::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 35% 30%, rgba(229,206,162,.12), transparent 42%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E");mix-blend-mode:soft-light;pointer-events:none}
@@ -13,7 +13,7 @@
 .atlasCountry{fill:rgba(117,99,71,.1)}
 .atlasTatryGlow{fill:rgba(208,168,105,.16);stroke:rgba(245,226,189,.55);stroke-dasharray:4 4;cursor:pointer;filter:drop-shadow(0 0 14px rgba(244,214,157,.45));transition:all .3s ease}
 .atlasTatryGlow:hover{fill:rgba(212,174,117,.28)}
-.summitLayer{position:relative;min-height:420px;animation:atlasFade .5s ease;background:radial-gradient(circle at 70% 20%, rgba(205,169,108,.12), transparent 40%)}
+.summitLayer{position:relative;min-height:460px;animation:atlasFade .5s ease;background:radial-gradient(circle at 70% 20%, rgba(205,169,108,.1), transparent 40%)}
 .ridgeLine{position:absolute;inset:8% 4%;width:92%;height:80%;opacity:.6;pointer-events:none}
 .ridgeLine path{fill:none;stroke:rgba(226,202,158,.28);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .summitPoint{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:7px;border:0;background:transparent;color:var(--text);cursor:pointer;transition:.24s;padding:4px 6px;border-radius:10px}
@@ -30,9 +30,6 @@
 .atlasCrumb.isCurrent{background:linear-gradient(160deg,rgba(60,48,31,.88),rgba(18,14,11,.94));border-color:rgba(247,227,189,.85);box-shadow:0 8px 18px rgba(243,213,155,.2)}
 .atlasCrumbLevel{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .atlasCrumbName{font-size:13px;font-weight:600}
-.atlasDepthBadge{display:flex;flex-direction:column;justify-content:center;align-items:flex-end;padding:8px 12px;border:1px solid rgba(236,214,178,.28);border-radius:12px;background:linear-gradient(160deg,rgba(38,30,22,.88),rgba(12,10,8,.92));min-width:148px}
-.atlasDepthBadge span{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
-.atlasDepthBadge strong{font-size:13px;letter-spacing:.02em}
 .atlasDetailCard{background:linear-gradient(165deg,rgba(31,27,22,.9),rgba(14,11,9,.95));border:1px solid rgba(227,206,171,.24);box-shadow:0 16px 36px rgba(0,0,0,.35)}
 .atlasDetailCard h3{font-size:clamp(1.4rem,2vw,1.75rem)}
 .atlasEyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
@@ -48,4 +45,6 @@
 @keyframes atlasFade{from{opacity:0;transform:scale(.985)}to{opacity:1;transform:scale(1)}}
 @keyframes atlasZoom{from{opacity:0;transform:scale(1.03)}to{opacity:1;transform:scale(1)}}
 @keyframes atlasZoomIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
-@media (max-width:980px){.cinematicAtlas.atlasLayout{grid-template-columns:1fr}.atlasSvg,.summitLayer{min-height:320px}.summitPoint .dot{width:12px;height:12px}.summitPoint .label{font-size:12px;padding:6px 9px}.atlasCrumb{min-width:0;flex:1 1 calc(50% - 8px)}.atlasCrumb::after{display:none}.atlasDepthBadge{align-items:flex-start;width:100%}}
+@media (max-width:980px){.cinematicAtlas.atlasLayout{grid-template-columns:1fr}.atlasSvg,.summitLayer{min-height:320px}.atlasStage{min-height:360px}.summitPoint .dot{width:12px;height:12px}.summitPoint .label{font-size:12px;padding:6px 9px}.atlasCrumb{min-width:0;flex:1 1 calc(50% - 8px)}.atlasCrumb::after{display:none}}
+
+.atlasInlineLabel{fill:rgba(246,227,195,.9);font-size:12px;letter-spacing:.12em;text-transform:uppercase;pointer-events:none}
