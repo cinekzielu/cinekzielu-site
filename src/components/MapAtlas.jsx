@@ -3,21 +3,21 @@ import { travelAtlasData } from '../data/travelData'
 import '../mapStyles.css'
 
 const worldShapes = [
-  { id: 'north-america', d: 'M56 94l34-28 54-12 60 22 18 34-18 28-42 16-36-10-16 10-32-10-24-34 2-16z' },
-  { id: 'south-america', d: 'M182 186l30 10 22 38-10 50-24 42-30 20-22-12 8-44-14-28 10-38z' },
-  { id: 'europe', d: 'M258 84l36-12 44 6 30 18 8 20-16 16-38 8-34-6-22-14-12-20z' },
-  { id: 'africa', d: 'M288 144l30-8 34 16 20 34-8 52-24 54-34 20-26-14-8-58 16-54z' },
-  { id: 'asia', d: 'M354 78l66-4 76 20 44 42-8 42-42 34-78 10-52-20-22-42 12-44z' },
-  { id: 'oceania', d: 'M448 250l34-2 34 16 16 24-18 22-34 4-28-16-12-26z' },
+  { id: 'north-america', d: 'M62 98l30-30 42-14 52-6 40 14 20 24-4 22-24 20-34 6-26-8-24 12-36-6-22-18 4-16z' },
+  { id: 'south-america', d: 'M176 170l18 10 16 20 10 28-2 34-10 30-18 28-20 16-14-10 4-24-8-30 6-28 8-24z' },
+  { id: 'europe', d: 'M266 88l22-12 24-2 22 10 12 16-4 14-20 12-30 4-24-8-12-16z' },
+  { id: 'africa', d: 'M278 132l24 2 24 16 14 30-2 38-14 42-24 32-20 10-14-16-6-42 8-44 10-32z' },
+  { id: 'asia', d: 'M328 88l44-14 66 0 56 14 36 24 14 24-2 24-24 24-42 14-58 2-38-10-24-18-14-26 10-32z' },
+  { id: 'oceania', d: 'M448 248l22-6 24 8 22 18-8 22-28 10-24-8-16-18z' },
 ]
 
 const europeCountries = [
-  { id: 'germany', d: 'M214 124l26-10 24 10 2 24-22 14-26-8-10-16z' },
-  { id: 'poland', d: 'M252 118l34-8 24 14-6 26-30 10-24-12-2-18z' },
-  { id: 'slovakia', d: 'M252 164l34-6 20 10-6 16-34 8-18-10z' },
-  { id: 'switzerland', d: 'M214 168l24-4 14 10-8 14-24 4-12-8z' },
-  { id: 'austria', d: 'M238 180l42-10 24 10-10 16-42 10-18-10z' },
-  { id: 'slovenia', d: 'M246 208l24-2 10 10-8 10-26 2-8-10z' },
+  { id: 'germany', d: 'M226 124l30-12 22 12 0 28-22 16-28-8-10-18z' },
+  { id: 'poland', d: 'M280 120l38-8 22 14-4 30-34 12-24-10-4-20z' },
+  { id: 'slovakia', d: 'M286 170l30-6 16 10-4 14-28 8-18-8z' },
+  { id: 'switzerland', d: 'M236 178l18-6 14 8-6 12-20 6-12-8z' },
+  { id: 'austria', d: 'M264 182l34-8 26 10-8 14-36 10-20-10z' },
+  { id: 'slovenia', d: 'M268 210l18-4 12 8-4 10-20 4-10-8z' },
 ]
 
 const tatrySummitFallback = [
@@ -46,12 +46,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
   const tatrySummits = tatrySummitFallback.map((summit) => atlasLookups.summits[summit.id] || summit)
   const activeFilm = activeNode.filmId ? atlasLookups.films[activeNode.filmId] : null
 
-  const tags = [
-    activeNode.visited ? 'odwiedzone' : 'w planach',
-    activeNode.type || (activeNode.altitude ? 'szczyt' : atlasLevel === 0 ? 'atlas' : 'region'),
-    activeFilm ? 'film' : null,
-    activeNode.gallery?.length ? 'galeria' : 'galeria wkrótce',
-  ].filter(Boolean)
+  const tags = [activeNode.visited ? 'odwiedzone' : 'w planach', activeFilm ? 'film' : null, activeNode.gallery?.length ? 'galeria' : 'galeria wkrótce'].filter(Boolean)
 
   return (
     <div className="atlasLayout cinematicAtlas">
@@ -70,6 +65,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
         <div className="atlasStage cinematicStage">
           {activeId === 'world' && (
             <svg viewBox="0 0 560 360" className="atlasSvg atlasSvgInteractive">
+              <path d="M38 178h484" className="atlasLatLine" />
               {worldShapes.map((shape) => {
                 const continent = continents.find((c) => c.id === shape.id)
                 return <path key={shape.id} d={shape.d} className={`atlasOutline ${continent?.visited ? 'isVisited' : 'isMuted'}`} onClick={() => continent && setAtlasPath((prev) => [...prev, continent.id])} />
@@ -79,13 +75,13 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
 
           {activeId === 'europe' && (
             <svg viewBox="0 0 560 360" className="atlasSvg atlasSvgInteractive">
-              <path d="M170 66l102-26 106 18 56 52-10 96-78 52-112 12-94-36-36-70 16-68z" className="atlasOutline isDimmed" />
+              <path d="M178 64l86-22 74 4 62 20 42 42-4 62-26 52-54 34-68 26-84-4-58-32-34-46-2-62 18-46z" className="atlasOutline isDimmed" />
               {europeCountries.map((country) => {
                 const data = atlasLookups.countries[country.id]
                 return <path key={country.id} d={country.d} className={`atlasOutline atlasCountry ${data?.visited ? 'isVisited' : 'isMuted'}`} onClick={() => data && setAtlasPath((prev) => [...prev, data.id])} />
               })}
-              <ellipse cx="278" cy="178" rx="48" ry="22" className="atlasTatryGlow" onClick={() => tatryRegion && setAtlasPath((prev) => [...prev, tatryRegion.id])} />
-              <text x="278" y="182" textAnchor="middle" className="atlasInlineLabel">
+              <circle cx="300" cy="195" r="13" className="atlasTatryGlow" onClick={() => tatryRegion && setAtlasPath((prev) => [...prev, tatryRegion.id])} />
+              <text x="300" y="220" textAnchor="middle" className="atlasInlineLabel">
                 Tatry
               </text>
             </svg>
