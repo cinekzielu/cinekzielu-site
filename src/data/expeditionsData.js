@@ -11,6 +11,8 @@ export const expeditionsData = [
     mood: 'Trudność i klimat: wkrótce',
     heroImage: img('lomnica-thumb.png'),
     filmUrl: 'https://www.youtube.com/@cinek_zielu',
+    atlasFilmId: 'film-lomnica',
+    atlasNodeId: 'lomnica',
     shortDescription: 'Podejście pod Łomnicę z naciskiem na rytm drogi, warunki i ujęcia oddające skalę masywu.',
     longDescription:
       'Ta historia buduje się od pierwszych kroków: chłodne powietrze, cichy start i narastające tempo podejścia. Łomnica to dla mnie materiał o koncentracji i konsekwencji — o przejściu od spokojnego marszu do fragmentów, w których każdy ruch ma znaczenie. Filmowo to mieszanka szerokich planów i bliskich, surowych kadrów z trasy.',
@@ -32,6 +34,8 @@ export const expeditionsData = [
     mood: 'Trudność i klimat: technicznie, surowo',
     heroImage: img('koscielec-thumb.jpg'),
     filmUrl: 'https://www.youtube.com/@cinek_zielu',
+    atlasFilmId: 'film-koscielec',
+    atlasNodeId: 'koscielec',
     shortDescription: 'Zimowe wejście na Kościelec pokazane przez warunki, emocje i pracę kamery w trudnym terenie.',
     longDescription:
       'Kościelec zimą ma zupełnie inny charakter niż letnie wyjścia. Śnieg, lód i wiatr zmieniają tempo, a każdy odcinek trasy wymaga większej uwagi. W tej historii najważniejsze są detale: oddech, dźwięk raków, krótkie postoje i momenty, kiedy panorama otwiera się nagle po intensywnym podejściu. To materiał o zimowej dyscyplinie i satysfakcji na końcu dnia.',
@@ -53,6 +57,8 @@ export const expeditionsData = [
     mood: 'Trudność i klimat: zmienne tempo, ciepłe światło',
     heroImage: img('maroko-thumb.png'),
     filmUrl: 'https://www.youtube.com/@cinek_zielu',
+    atlasFilmId: 'film-morocco',
+    atlasNodeId: 'atlas',
     shortDescription: 'Początek marokańskiej historii: trekking, codzienność w trasie i mocny kontrast światła.',
     longDescription:
       'Maroko od pierwszego dnia narzuca własny rytm: inne kolory, inne światło i zupełnie inne tempo drogi. W części pierwszej skupiam się na wejściu w miejsce — od przygotowania po pierwsze odcinki trekkingu. To opowieść o zmianie perspektywy i o tym, jak podróż wpływa na sposób filmowania, kiedy każdy kadr wymaga nowego spojrzenia.',
