@@ -442,14 +442,14 @@ function App() {
         <div className="heroGrid container">
           <div className="heroText">
             <div className="eyebrow">Cinek Zielu / Marcin Zieliński</div>
-            <h1 className="heroTitle">Moje wyprawy, filmy i historie z miejsc, do których ciągle wracam myślami.</h1>
+            <h1 className="heroTitle">Wyprawy, filmy i historie z miejsc, które zostają ze mną na długo.</h1>
             <p>
-              Chodzę po górach, podróżuję, nagrywam i robię zdjęcia. Czasem wychodzi z tego vlog,
-              czasem krótki film, czasem po prostu kilka ujęć, do których sam lubię wracać.
+              Chodzę po górach, podróżuję, filmuję i fotografuję. Czasem powstaje z tego dłuższa opowieść,
+              czasem krótka forma — zawsze zapis prawdziwej drogi i momentów po trasie.
             </p>
             <div className="buttons">
               <a className="button primary" href="#films">
-                <Play size={16} /> Zobacz filmy
+                <Play size={16} /> Obejrzyj filmy
               </a>
               <a className="button" href={socials.instagram} target="_blank" rel="noreferrer">
                 Instagram
@@ -467,7 +467,7 @@ function App() {
               <div className="heroBadge">Cinek Zielu</div>
               <div className="heroCaption">
                 <h2>Marcin Zieliński</h2>
-                <p>Góry, podróże, filmy i zdjęcia z przygód, które zostają w głowie na dłużej.</p>
+                <p>Góry, podróże i filmowe kadry z miejsc, do których wracam myślami.</p>
               </div>
             </div>
           </div>
@@ -494,7 +494,7 @@ function App() {
                 </div>
                 <div className="filmMetaRow">
                   <div className="cardType">{film.badge}</div>
-                  <span className="filmHelperLabel">travel documentary</span>
+                  <span className="filmHelperLabel">film dokumentalny</span>
                 </div>
                 <h3>{film.title}</h3>
                 <p>{film.desc}</p>
@@ -514,7 +514,7 @@ function App() {
           <SectionHeader
             label="Wyprawy"
             title="Historie z wypraw"
-            text="Fundament pod podstrony wypraw i filmów: osobne historie, kontekst trasy i najważniejsze dane w jednym miejscu."
+            text="Każda wyprawa ma własną historię: krótki kontekst trasy, najważniejsze dane i kadry z drogi."
           />
           {activeExpedition || isExpeditionNotFound ? (
             activeExpedition ? (
@@ -570,7 +570,7 @@ function App() {
                 <div className="expeditionGalleryHeader">
                   <p className="storyLabel">Galeria wyprawy</p>
                   <button className="smallButton" type="button" onClick={openCollectionFromExpedition}>
-                    Zobacz pełną kolekcję
+                    Otwórz pełną kolekcję
                   </button>
                 </div>
                 {hasExpeditionGallery ? (
@@ -600,7 +600,7 @@ function App() {
                     ))}
                   </div>
                 ) : (
-                  <p>Galeria tej wyprawy zostanie rozbudowana.</p>
+                  <p>Ta galeria będzie jeszcze rozwijana.</p>
                 )}
               </div>
 
@@ -608,7 +608,7 @@ function App() {
                 <div className="expeditionNextStory reveal">
                   <div className="expeditionNextStoryHeader">
                     <p className="storyLabel">Zobacz też</p>
-                    <p className="expeditionNextStoryHint">Subtelna rekomendacja kolejnej historii z drogi.</p>
+                    <p className="expeditionNextStoryHint">Kolejna historia, jeśli chcesz iść dalej tym szlakiem.</p>
                   </div>
                   <article className="expeditionCard expeditionNextStoryCard">
                     <div className="expeditionImageWrap">
@@ -620,7 +620,7 @@ function App() {
                       <p className="expeditionLocation">{randomRelatedExpedition.location}</p>
                       <p>{randomRelatedExpedition.shortDescription}</p>
                       <button className="smallButton" type="button" onClick={() => openExpedition(randomRelatedExpedition.slug)}>
-                        Zobacz historię
+                        Wejdź w historię
                       </button>
                     </div>
                   </article>
@@ -639,7 +639,7 @@ function App() {
                   <div>
                     <div className="cardType">Spokojnie</div>
                     <h3>Nie znaleziono tej wyprawy</h3>
-                    <p>Ten adres nie prowadzi do istniejącej historii. Wróć do listy wypraw i wybierz jedną z dostępnych relacji.</p>
+                    <p>Ten adres nie prowadzi do istniejącej relacji. Wróć do listy wypraw i wybierz jedną z dostępnych historii.</p>
                   </div>
                 </div>
               </article>
@@ -662,7 +662,7 @@ function App() {
                       ))}
                     </div>
                     <button className="smallButton" type="button" onClick={() => openExpedition(expedition.slug)}>
-                      Zobacz historię
+                      Wejdź w historię
                     </button>
                   </div>
                 </article>
@@ -677,7 +677,7 @@ function App() {
           <SectionHeader
             label="Galeria"
             title="Zdjęcia z miejsc, które najmocniej zapamiętałem"
-            text="Galeria działa jako naturalny kontrast do ciemnej, filmowej strony — więcej światła, zieleni, zwierząt, gór i prawdziwych momentów z wyjazdów."
+            text="Jasna strona tych samych wypraw: więcej światła, detali i momentów, które trudno oddać samym filmem."
           />
           {!activeCollection && (
             <div className="collectionGrid">
@@ -698,7 +698,7 @@ function App() {
                       ))}
                     </div>
                     <button className="smallButton" type="button" onClick={() => setActiveCollectionSlug(collection.slug)}>
-                      Zobacz więcej
+                      Otwórz kolekcję
                     </button>
                   </div>
                 </article>
@@ -714,7 +714,7 @@ function App() {
                   <h3>{activeCollection.title}</h3>
                 </div>
                 <button className="smallButton" type="button" onClick={() => setActiveCollectionSlug(null)}>
-                  Wróć do kolekcji
+                  Wróć do galerii
                 </button>
               </div>
 
@@ -853,7 +853,7 @@ function App() {
               </ul>
             </div>
             <p className="aboutCta">
-              Jeśli chcesz zobaczyć więcej albo odezwać się w sprawie współpracy, przejdź do kontaktu.
+              Jeśli chcesz zobaczyć więcej albo pogadać o współpracy, przejdź do kontaktu.
             </p>
           </div>
           <aside className="aboutVisualCard" aria-label="Portret twórcy">
@@ -928,10 +928,9 @@ function App() {
             <div className="cardType">Współpraca i kontakt</div>
             <h2>Jeśli chcesz porozmawiać o projekcie, wyprawie albo filmie — zapraszam.</h2>
             <p>
-              Najwygodniej odezwać się przez social media. To tam najczęściej jestem, tam publikuję nowe materiały
-              i tam najszybciej można złapać kontakt w sprawie wspólnych działań.
+              Najłatwiej odezwać się przez social media — tam jestem na bieżąco i tam najszybciej odpowiadam w sprawie wspólnych projektów.
             </p>
-            <div className="contactIntroNote">Najlepiej odezwać się przez Instagram. YouTube i TikTok to dobre miejsce, żeby zobaczyć więcej materiałów.</div>
+            <div className="contactIntroNote">Najlepiej napisać na Instagramie. YouTube i TikTok to miejsce na pełniejsze portfolio materiałów.</div>
           </div>
 
           <div className="contactSocials">
@@ -986,8 +985,8 @@ function App() {
         <div className="container footerInner">
           <div className="footerBrand">
             <p className="footerEyebrow">Cinek Zielu</p>
-            <p className="footerTagline">Historie z miejsc, do których wracam myślami — góry, podróże i film.</p>
-            <p className="footerMicro">Signature ending strony outdoor/cinematic.</p>
+            <p className="footerTagline">Historie z drogi — góry, podróże i film.</p>
+            <p className="footerMicro">Dzięki, że jesteś tu ze mną.</p>
           </div>
 
           <div className="footerLinksWrap">
