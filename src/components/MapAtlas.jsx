@@ -1,5 +1,6 @@
 import React from 'react'
 import { travelAtlasData } from '../data/travelData'
+import { resolveTatryPointPosition } from '../data/atlasGeo'
 import '../mapStyles.css'
 
 const worldShapes = [
@@ -42,14 +43,6 @@ const tatryRegions = [
   { id: 'belianske-tatras', label: 'Tatry Bielskie', x: 84, y: 52, width: 18, height: 9 },
 ]
 
-const tatryPointLayout = [
-  { id: 'swinica', name: 'Świnica', mapPosition: { x: 22, y: 61 }, labelOffset: { x: -8, y: 2 }, zone: 'western-tatras', tier: 'primary', pointType: 'summit' },
-  { id: 'koscielec', name: 'Kościelec', mapPosition: { x: 35, y: 56 }, labelOffset: { x: -10, y: -2 }, zone: 'western-tatras', tier: 'secondary', pointType: 'summit' },
-  { id: 'krywan', name: 'Krywań', mapPosition: { x: 49, y: 50 }, labelOffset: { x: -5, y: -8 }, zone: 'high-tatras-region', tier: 'primary', pointType: 'summit' },
-  { id: 'lomnica', name: 'Łomnica', mapPosition: { x: 63, y: 44 }, labelOffset: { x: 4, y: -8 }, zone: 'high-tatras-region', tier: 'primary', pointType: 'summit' },
-  { id: 'gerlach', name: 'Gerlach', mapPosition: { x: 71, y: 39 }, labelOffset: { x: 4, y: -8 }, zone: 'high-tatras-region', tier: 'featured', pointType: 'summit' },
-  { id: 'durny-szczyt', name: 'Durny', mapPosition: { x: 82, y: 44 }, labelOffset: { x: 5, y: 4 }, zone: 'belianske-tatras', tier: 'secondary', pointType: 'summit' },
-]
 
 const levelNames = ['Świat', 'Kontynent', 'Kraj', 'Region specjalny', 'Szczyt']
 
@@ -65,7 +58,20 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
   const breadcrumb = atlasPath.map((id) => ({ id, name: getNodeName(id) }))
   const countriesForContinent = travelAtlasData.countries.filter((country) => country.continentId === activeId)
   const tatryRegion = travelAtlasData.specialRegions.find((region) => region.id === 'tatry')
-  const tatryPoints = tatryPointLayout.map((point) => ({ ...point, ...(atlasLookups.summits[point.id] || atlasLookups.places[point.id] || {}) }))
+  const tatryPointIds = tatryRegion?.summitIds || []
+  const tatryPoints = tatryPointIds.map((pointId) => {
+    const atlasPoint = atlasLookups.summits[pointId] || atlasLookups.places[pointId] || { id: pointId }
+    const position = resolveTatryPointPosition(pointId)
+    return {
+      ...atlasPoint,
+      zone: position.geo?.zone || null,
+      geo: atlasPoint.geo || position.geo,
+      projectedPosition: position.projectedPosition,
+      mapPosition: position.mapPosition,
+      labelOffset: position.labelOffset,
+      tier: position.tier,
+    }
+  })
   const activeFilm = activeNode.filmId ? atlasLookups.films[activeNode.filmId] : null
   const nodeType = activeNode.atlasType || activeNode.type || null
   const typeLabelMap = { summit: 'Szczyt', trail: 'Szlak / przejście', viewpoint: 'Punkt widokowy', place: 'Miejsce', city: 'Miasto', hut: 'Schronisko', region: 'Region', country: 'Kraj', continent: 'Kontynent' }
