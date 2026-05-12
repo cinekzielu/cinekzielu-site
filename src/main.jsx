@@ -2,9 +2,7 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { Camera, ChevronLeft, ChevronRight, Menu, Play, X } from 'lucide-react'
 import './styles.css'
-import { travelAtlasData } from './data/travelData'
-import { galleryCollections } from './data/galleryData'
-import { expeditionsData } from './data/expeditionsData'
+import { contentData } from './data/contentData'
 import { MapAtlas } from './components/MapAtlas'
 
 const socials = {
@@ -182,7 +180,7 @@ function App() {
   const [activeCollectionSlug, setActiveCollectionSlug] = React.useState(null)
   const [activePhotoIndex, setActivePhotoIndex] = React.useState(null)
   const activeCollection = React.useMemo(
-    () => galleryCollections.find((collection) => collection.slug === activeCollectionSlug) ?? null,
+    () => contentData.galleriesBySlug[activeCollectionSlug] ?? null,
     [activeCollectionSlug]
   )
   const activeCollectionPhotos = React.useMemo(
@@ -194,12 +192,12 @@ function App() {
   const [activeExpeditionSlug, setActiveExpeditionSlug] = React.useState(null)
   const [isExpeditionNotFound, setIsExpeditionNotFound] = React.useState(false)
   const activeExpedition = React.useMemo(
-    () => expeditionsData.find((expedition) => expedition.slug === activeExpeditionSlug) ?? null,
+    () => contentData.expeditionsBySlug[activeExpeditionSlug] ?? null,
     [activeExpeditionSlug]
   )
   const activeExpeditionCollection = React.useMemo(() => {
     if (!activeExpedition?.galleryCollectionSlug) return null
-    return galleryCollections.find((collection) => collection.slug === activeExpedition.galleryCollectionSlug) ?? null
+    return contentData.galleriesBySlug[activeExpedition.galleryCollectionSlug] ?? null
   }, [activeExpedition])
   const expeditionGalleryPhotos = React.useMemo(
     () => activeExpeditionCollection?.photos.slice(0, 6) ?? [],
@@ -209,7 +207,7 @@ function App() {
   const randomRelatedExpedition = React.useMemo(() => {
     if (!activeExpedition) return null
 
-    const candidates = expeditionsData.filter((expedition) => expedition.slug !== activeExpedition.slug)
+    const candidates = contentData.expeditions.filter((expedition) => expedition.slug !== activeExpedition.slug)
     if (!candidates.length) return null
 
     const randomIndex = Math.floor(Math.random() * candidates.length)
@@ -217,12 +215,7 @@ function App() {
   }, [activeExpedition])
 
   const atlasLookups = React.useMemo(() => ({
-    continents: Object.fromEntries(travelAtlasData.continents.map((item) => [item.id, item])),
-    countries: Object.fromEntries(travelAtlasData.countries.map((item) => [item.id, item])),
-    specialRegions: Object.fromEntries(travelAtlasData.specialRegions.map((item) => [item.id, item])),
-    places: Object.fromEntries(travelAtlasData.places.map((item) => [item.id, item])),
-    summits: Object.fromEntries(travelAtlasData.summits.map((item) => [item.id, item])),
-    films: Object.fromEntries(travelAtlasData.films.map((item) => [item.id, item])),
+    ...contentData.atlasLookups,
   }), [])
   const atlasLevel = atlasPath.length - 1
   const activeId = atlasPath[atlasPath.length - 1]
@@ -321,7 +314,7 @@ function App() {
         return
       }
 
-      const matchedExpedition = expeditionsData.find((item) => item.slug === slugFromPath)
+      const matchedExpedition = contentData.expeditionsBySlug[slugFromPath]
       if (matchedExpedition) {
         setActiveExpeditionSlug(matchedExpedition.slug)
         setIsExpeditionNotFound(false)
@@ -646,7 +639,7 @@ function App() {
             )
           ) : (
             <div className="expeditionGrid">
-              {expeditionsData.map((expedition) => (
+              {contentData.expeditions.map((expedition) => (
                 <article className="expeditionCard" key={expedition.slug}>
                   <div className="expeditionImageWrap">
                     <img src={expedition.heroImage} alt={expedition.title} />
@@ -681,7 +674,7 @@ function App() {
           />
           {!activeCollection && (
             <div className="collectionGrid">
-              {galleryCollections.map((collection) => (
+              {contentData.galleries.map((collection) => (
                 <article className="collectionCard" key={collection.slug}>
                   <div className="collectionCoverWrap">
                     <img src={collection.cover} alt={collection.title} className="collectionCover" />
