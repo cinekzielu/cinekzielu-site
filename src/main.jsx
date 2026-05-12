@@ -981,10 +981,24 @@ function App() {
         </div>
       </section>
 
-      <footer>
+      <footer className="footerSignature">
+        <div className="footerSeparator" aria-hidden="true" />
         <div className="container footerInner">
-          <span>Cinek Zielu — twórca outdoor i storyteller wizualny</span>
-          <span>Kontakt i współpraca: Instagram • YouTube • TikTok</span>
+          <div className="footerBrand">
+            <p className="footerEyebrow">Cinek Zielu</p>
+            <p className="footerTagline">Historie z miejsc, do których wracam myślami — góry, podróże i film.</p>
+            <p className="footerMicro">Signature ending strony outdoor/cinematic.</p>
+          </div>
+
+          <div className="footerLinksWrap">
+            <div className="footerLinks">
+              <a href={socials.instagram} target="_blank" rel="noreferrer">Instagram</a>
+              <a href={socials.youtube} target="_blank" rel="noreferrer">YouTube</a>
+              <a href={socials.tiktok} target="_blank" rel="noreferrer">TikTok</a>
+            </div>
+            <a className="footerAnchor" href="#contact">Kontakt i współpraca premium</a>
+            <p className="footerCopyright">© {new Date().getFullYear()} Cinek Zielu</p>
+          </div>
         </div>
       </footer>
     </main>
