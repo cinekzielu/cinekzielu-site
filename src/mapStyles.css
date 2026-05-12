@@ -1,10 +1,11 @@
+.cinematicAtlas.atlasLayout{grid-template-columns:minmax(0,1.35fr) minmax(320px,.65fr);align-items:stretch;gap:20px}
 .cinematicAtlas .atlasMapWrap{background:radial-gradient(circle at 20% 10%, rgba(186,150,95,.12), transparent 40%),linear-gradient(165deg,#151311,#0b0a09);overflow:hidden;box-shadow:inset 0 0 0 1px rgba(230,214,184,.08),0 24px 42px rgba(0,0,0,.35)}
-.cinematicStage{position:relative;isolation:isolate}
+.cinematicStage{position:relative;isolation:isolate;box-shadow:inset 0 0 0 1px rgba(238,216,180,.08),inset 0 -60px 120px rgba(0,0,0,.26)}
 .cinematicStage::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(224,205,167,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(224,205,167,.05) 1px,transparent 1px);background-size:42px 42px;opacity:.25;pointer-events:none}
 .cinematicStage::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 35% 30%, rgba(229,206,162,.12), transparent 42%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E");mix-blend-mode:soft-light;pointer-events:none}
 .atlasSvg{width:100%;height:100%;min-height:420px;animation:atlasFade .55s ease}
-.atlasOutline{fill:rgba(145,120,84,.07);stroke:rgba(230,215,184,.26);stroke-width:1.4;cursor:pointer;transition:all .3s ease}
-.atlasOutline:hover{stroke:rgba(240,222,190,.72);filter:drop-shadow(0 0 6px rgba(240,222,190,.25))}
+.atlasOutline{fill:rgba(145,120,84,.07);stroke:rgba(230,215,184,.26);stroke-width:1.4;cursor:pointer;transition:all .3s ease;transform-origin:center;vector-effect:non-scaling-stroke}
+.atlasOutline:hover,.atlasOutline:focus-visible{stroke:rgba(240,222,190,.72);filter:drop-shadow(0 0 6px rgba(240,222,190,.25));fill:rgba(185,150,100,.2)}
 .atlasOutline.isVisited{fill:rgba(175,142,94,.17);stroke:rgba(240,220,182,.55);filter:drop-shadow(0 0 8px rgba(244,218,174,.28))}
 .atlasOutline.isMuted{fill:rgba(80,70,52,.05);stroke:rgba(211,190,154,.16)}
 .atlasOutline.isDimmed{fill:transparent;stroke:rgba(235,214,175,.18)}
@@ -12,24 +13,30 @@
 .atlasCountry{fill:rgba(117,99,71,.1)}
 .atlasTatryGlow{fill:rgba(208,168,105,.16);stroke:rgba(245,226,189,.55);stroke-dasharray:4 4;cursor:pointer;filter:drop-shadow(0 0 14px rgba(244,214,157,.45));transition:all .3s ease}
 .atlasTatryGlow:hover{fill:rgba(212,174,117,.28)}
-.summitLayer{position:relative;min-height:420px;animation:atlasFade .5s ease}
+.summitLayer{position:relative;min-height:420px;animation:atlasFade .5s ease;background:radial-gradient(circle at 70% 20%, rgba(205,169,108,.12), transparent 40%)}
 .ridgeLine{position:absolute;inset:8% 4%;width:92%;height:80%;opacity:.6;pointer-events:none}
 .ridgeLine path{fill:none;stroke:rgba(226,202,158,.28);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.summitPoint{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:7px;border:0;background:transparent;color:var(--text);cursor:pointer;transition:.24s}
+.summitPoint{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:7px;border:0;background:transparent;color:var(--text);cursor:pointer;transition:.24s;padding:4px 6px;border-radius:10px}
 .summitPoint .dot{width:10px;height:10px;border-radius:50%;background:rgba(244,220,183,.92);box-shadow:0 0 0 1px rgba(255,240,214,.35),0 0 10px rgba(244,220,183,.45)}
 .summitPoint .label{font-size:12px;background:rgba(11,10,8,.82);border:1px solid rgba(230,214,184,.3);padding:5px 8px;border-radius:8px;white-space:nowrap}
-.summitPoint:hover{transform:translate(-50%,-50%) scale(1.05)}
+.summitPoint:hover,.summitPoint:focus-visible{transform:translate(-50%,-50%) scale(1.05);background:rgba(40,32,24,.34)}
 .summitPoint:hover .label{border-color:rgba(244,221,182,.7)}
 .summitPoint.isActive .dot{box-shadow:0 0 0 5px rgba(244,220,183,.16),0 0 14px rgba(244,220,183,.7)}
 .atlasCrumbTrail{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap}
-.atlasCrumb{display:flex;flex-direction:column;gap:2px;border:1px solid rgba(230,212,180,.22);background:rgba(15,13,11,.72);border-radius:12px;padding:8px 12px;color:var(--text);cursor:pointer;min-width:120px;text-align:left;transition:.2s}
-.atlasCrumb:hover{border-color:rgba(245,224,186,.6);transform:translateY(-1px)}
+.atlasCrumb{display:flex;flex-direction:column;gap:2px;border:1px solid rgba(230,212,180,.22);background:rgba(15,13,11,.72);border-radius:12px;padding:8px 12px;color:var(--text);cursor:pointer;min-width:120px;text-align:left;transition:.2s;position:relative}
+.atlasCrumb::after{content:'';position:absolute;right:-7px;top:50%;width:10px;height:10px;border-top:1px solid rgba(230,212,180,.24);border-right:1px solid rgba(230,212,180,.24);transform:translateY(-50%) rotate(45deg);background:rgba(11,10,9,.68)}
+.atlasCrumb:last-child::after{display:none}
+.atlasCrumb:hover,.atlasCrumb:focus-visible{border-color:rgba(245,224,186,.6);transform:translateY(-1px)}
 .atlasCrumb.isCurrent{background:linear-gradient(160deg,rgba(60,48,31,.88),rgba(18,14,11,.94));border-color:rgba(247,227,189,.85);box-shadow:0 8px 18px rgba(243,213,155,.2)}
 .atlasCrumbLevel{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .atlasCrumbName{font-size:13px;font-weight:600}
+.atlasDepthBadge{display:flex;flex-direction:column;justify-content:center;align-items:flex-end;padding:8px 12px;border:1px solid rgba(236,214,178,.28);border-radius:12px;background:linear-gradient(160deg,rgba(38,30,22,.88),rgba(12,10,8,.92));min-width:148px}
+.atlasDepthBadge span{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.atlasDepthBadge strong{font-size:13px;letter-spacing:.02em}
 .atlasDetailCard{background:linear-gradient(165deg,rgba(31,27,22,.9),rgba(14,11,9,.95));border:1px solid rgba(227,206,171,.24);box-shadow:0 16px 36px rgba(0,0,0,.35)}
 .atlasDetailCard h3{font-size:clamp(1.4rem,2vw,1.75rem)}
 .atlasEyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.atlasLevelLabel{margin:0 0 10px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:rgba(239,220,188,.9)}
 .atlasTagRow{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
 .atlasTag{font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:5px 8px;border:1px solid rgba(224,204,170,.26);border-radius:999px;background:rgba(20,17,14,.66)}
 .atlasMeta{color:var(--muted);font-size:14px}
@@ -41,4 +48,4 @@
 @keyframes atlasFade{from{opacity:0;transform:scale(.985)}to{opacity:1;transform:scale(1)}}
 @keyframes atlasZoom{from{opacity:0;transform:scale(1.03)}to{opacity:1;transform:scale(1)}}
 @keyframes atlasZoomIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
-@media (max-width:980px){.atlasSvg,.summitLayer{min-height:320px}.summitPoint .dot{width:12px;height:12px}.summitPoint .label{font-size:12px;padding:6px 9px}.atlasCrumb{min-width:0;flex:1 1 calc(50% - 8px)}}
+@media (max-width:980px){.cinematicAtlas.atlasLayout{grid-template-columns:1fr}.atlasSvg,.summitLayer{min-height:320px}.summitPoint .dot{width:12px;height:12px}.summitPoint .label{font-size:12px;padding:6px 9px}.atlasCrumb{min-width:0;flex:1 1 calc(50% - 8px)}.atlasCrumb::after{display:none}.atlasDepthBadge{align-items:flex-start;width:100%}}
