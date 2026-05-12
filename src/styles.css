@@ -1398,6 +1398,11 @@ img {
 }
 
 @media (max-width: 900px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
   .nav {
     padding: 26px 0;
   }
@@ -1593,6 +1598,19 @@ img {
     padding: 82px 0;
   }
 
+  .sectionHeader {
+    margin-bottom: 34px;
+    gap: 18px;
+  }
+
+  .sectionHeader p,
+  .aboutText,
+  .aboutEditorial,
+  .contactIntroNote,
+  .contactCollab ul {
+    line-height: 1.72;
+  }
+
   .collectionGrid {
     grid-template-columns: 1fr;
   }
@@ -1605,6 +1623,10 @@ img {
   .galleryCollectionTop {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .galleryCollectionTop .smallButton {
+    min-height: 44px;
   }
 
   .galleryGrid {
@@ -1624,6 +1646,11 @@ img {
     padding: 12px;
   }
 
+  .mapPointButton {
+    padding: 9px 12px;
+    font-size: 12px;
+  }
+
   .mapCardTop {
     flex-direction: column;
     gap: 8px;
@@ -1637,6 +1664,11 @@ img {
   .contactBox,
   .contactHub {
     padding: 28px;
+  }
+
+  .socialCard,
+  .socialLinks a {
+    min-height: 52px;
   }
 
   .contactIntro {
@@ -1670,12 +1702,12 @@ img {
   }
 
   .lightboxContent {
-    padding: 56px 2px 96px;
+    padding: 62px 4px 112px;
   }
 
   .lightboxTopBar {
-    top: -2px;
-    right: 44px;
+    top: 2px;
+    right: 50px;
   }
 
   .lightboxBrand,
@@ -1685,13 +1717,13 @@ img {
   }
 
   .lightboxImage {
-    max-height: 74vh;
+    max-height: 70vh;
   }
 
   .lightboxCaption {
-    bottom: 14px;
+    bottom: 12px;
     border-radius: 16px;
-    padding: 10px 12px 12px;
+    padding: 10px 13px 13px;
   }
 
   .lightboxCaption p {
@@ -1699,16 +1731,16 @@ img {
   }
 
   .lightboxArrow {
-    width: 44px;
-    height: 44px;
+    width: 46px;
+    height: 46px;
     border-radius: 13px;
   }
 
   .lightboxClose {
-    top: -4px;
-    right: -2px;
-    width: 40px;
-    height: 40px;
+    top: -2px;
+    right: 0;
+    width: 42px;
+    height: 42px;
     border-radius: 12px;
   }
 }
@@ -1787,13 +1819,14 @@ img {
   .aboutGrid h2,
   .socialBox h2,
   .contactBox h2 {
-    font-size: 30px;
+    font-size: 28px;
+    line-height: 1.08;
   }
 
   .socialBox,
   .contactBox,
   .contactHub {
-    padding: 24px;
+    padding: 22px;
   }
 
   .socialCard strong {
@@ -1843,7 +1876,7 @@ img {
 
   .footerLinks a,
   .footerAnchor {
-    min-height: 40px;
+    min-height: 44px;
     display: inline-flex;
     align-items: center;
   }

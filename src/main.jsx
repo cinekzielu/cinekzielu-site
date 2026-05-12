@@ -996,7 +996,7 @@ function App() {
               <a href={socials.youtube} target="_blank" rel="noreferrer">YouTube</a>
               <a href={socials.tiktok} target="_blank" rel="noreferrer">TikTok</a>
             </div>
-            <a className="footerAnchor" href="#contact">Kontakt i współpraca premium</a>
+            <a className="footerAnchor" href="#contact">Kontakt i współpraca</a>
             <p className="footerCopyright">© {new Date().getFullYear()} Cinek Zielu</p>
           </div>
         </div>
