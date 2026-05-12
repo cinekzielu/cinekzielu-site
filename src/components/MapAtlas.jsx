@@ -3,21 +3,30 @@ import { travelAtlasData } from '../data/travelData'
 import '../mapStyles.css'
 
 const worldShapes = [
-  { id: 'north-america', d: 'M46 96l24-26 44-24 56-8 44 8 26 18 8 18-10 20-22 12-24 2-12 12-18 2-20-6-20 8-22-4-20-14-8-18 8-8z' },
-  { id: 'south-america', d: 'M170 170l18 14 18 24 8 24-2 30-10 30-12 20-14 14-12-6 2-24-8-22 4-22 10-24 0-18z' },
-  { id: 'europe', d: 'M268 86l14-12 24-6 24 8 14 14-2 14-16 10-18 0-10 8-16-4-12-12-2-10z' },
-  { id: 'africa', d: 'M286 126l20 8 20 20 10 34-2 34-12 38-20 30-20 14-12-16-6-30 6-42 8-34 8-24z' },
-  { id: 'asia', d: 'M322 86l44-16 66-2 60 12 40 20 18 26 2 24-14 22-26 14-24 2-12 10-22 2-40-8-20-14-16-20-8-26 8-20z' },
-  { id: 'oceania', d: 'M454 246l20-8 24 4 20 14 6 14-8 16-22 10-24-4-16-14z' },
+  { id: 'north-america', d: 'M50 92l18-18 30-16 36-10 40 2 32 12 20 18 4 22-14 14-22 6-12 10-16 4-18-2-16 8-18 4-18-8-20-12-16-20 0-14 10-10z' },
+  { id: 'south-america', d: 'M162 172l18 8 16 18 10 20 2 24-4 28-10 26-14 22-10 12-10-4 0-18-8-18 2-24 10-22 8-18 0-14z' },
+  { id: 'europe', d: 'M266 86l14-10 20-4 18 4 14 10 2 12-8 10-14 4-14 4-8 8-12-2-12-10-2-12z' },
+  { id: 'africa', d: 'M282 126l18 6 18 16 12 24 2 30-8 34-14 30-14 20-12 10-10-10-2-22 2-26 8-28 10-22 8-16z' },
+  { id: 'asia', d: 'M320 86l34-14 44-8 54 0 46 10 34 18 20 22 8 20-6 22-16 16-24 12-20 2-14 8-22 4-30-2-24-10-18-16-12-22-6-20 6-20z' },
+  { id: 'oceania', d: 'M454 246l16-6 22 2 20 10 10 12-4 12-14 10-20 4-18-4-14-12z' },
+]
+
+const worldLabels = [
+  { id: 'europe', label: 'Europa', x: 286, y: 72 },
+  { id: 'asia', label: 'Azja', x: 402, y: 76 },
+  { id: 'africa', label: 'Afryka', x: 302, y: 120 },
+  { id: 'north-america', label: 'Ameryka Północna', x: 132, y: 44 },
+  { id: 'south-america', label: 'Ameryka Południowa', x: 188, y: 158 },
+  { id: 'oceania', label: 'Oceania', x: 490, y: 236 },
 ]
 
 const europeCountries = [
-  { id: 'germany', label: 'Niemcy', labelX: 240, labelY: 139, d: 'M214 110l28-10 24 8 8 16-6 20-18 18-24 0-16-14-2-20z' },
-  { id: 'poland', label: 'Polska', labelX: 297, labelY: 132, d: 'M272 104l36-6 22 10 8 20-6 22-26 16-28-4-12-20 6-18z' },
-  { id: 'slovakia', label: 'Słowacja', labelX: 300, labelY: 186, d: 'M278 172l34-4 18 8-2 12-34 8-18-8z' },
-  { id: 'switzerland', label: 'Szwajcaria', labelX: 239, labelY: 188, d: 'M218 174l20-8 16 4 0 14-20 8-18-6z' },
-  { id: 'austria', label: 'Austria', labelX: 271, labelY: 206, d: 'M246 186l38-6 28 8 0 14-26 10-34 0-14-12z' },
-  { id: 'slovenia', label: 'Słowenia', labelX: 274, labelY: 228, d: 'M256 218l18-4 14 8-2 10-18 4-14-8z' },
+  { id: 'germany', label: 'DE', labelX: 244, labelY: 132, d: 'M220 102l22-8 20 6 12 14-2 20-12 16-20 6-16-8-8-18 4-18z' },
+  { id: 'poland', label: 'PL', labelX: 296, labelY: 126, d: 'M270 98l30-4 24 8 10 16-4 22-16 18-24 2-20-12-6-20 6-18z' },
+  { id: 'slovakia', label: 'SK', labelX: 296, labelY: 178, d: 'M274 166l34-2 18 6 0 10-20 10-34 2-14-10z' },
+  { id: 'switzerland', label: 'CH', labelX: 236, labelY: 178, d: 'M214 166l22-6 18 2 4 10-10 12-22 4-16-8z' },
+  { id: 'austria', label: 'AT', labelX: 264, labelY: 198, d: 'M238 184l28-6 30 4 10 10-10 12-28 6-24-2-12-10z' },
+  { id: 'slovenia', label: 'SI', labelX: 258, labelY: 218, d: 'M244 212l18-2 12 6 0 8-16 6-14-4z' },
 ]
 
 const tatrySummitFallback = [
@@ -70,12 +79,17 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                 const continent = continents.find((c) => c.id === shape.id)
                 return <path key={shape.id} d={shape.d} className={`atlasOutline ${continent?.visited ? 'isVisited' : 'isMuted'}`} onClick={() => continent && setAtlasPath((prev) => [...prev, continent.id])} />
               })}
+              {worldLabels.map((region) => (
+                <text key={region.id} x={region.x} y={region.y} className={`atlasWorldLabel ${activeId === 'world' && region.id === 'europe' ? 'isActive' : ''}`}>
+                  {region.label}
+                </text>
+              ))}
             </svg>
           )}
 
           {activeId === 'europe' && (
             <svg viewBox="0 0 560 360" className="atlasSvg atlasSvgInteractive">
-              <path d="M172 68l96-28 70 2 70 18 48 42 2 52-18 56-44 46-72 34-90 2-66-32-40-52-4-54 22-36z" className="atlasOutline isDimmed" />
+              <path d="M174 66l86-24 74-2 70 14 54 40 8 58-18 58-46 52-70 34-86 4-72-28-48-54-4-58 20-36z" className="atlasOutline isDimmed" />
               {europeCountries.map((country) => {
                 const data = atlasLookups.countries[country.id]
                 return (
@@ -87,9 +101,9 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                   </g>
                 )
               })}
-              <circle cx="298" cy="192" r="12" className="atlasTatryGlow" onClick={() => tatryRegion && setAtlasPath((prev) => [...prev, tatryRegion.id])} />
-              <circle cx="298" cy="192" r="20" className="atlasTatryRing" />
-              <text x="298" y="220" textAnchor="middle" className="atlasInlineLabel">
+              <circle cx="290" cy="190" r="10" className="atlasTatryGlow" onClick={() => tatryRegion && setAtlasPath((prev) => [...prev, tatryRegion.id])} />
+              <circle cx="290" cy="190" r="16" className="atlasTatryRing" />
+              <text x="290" y="214" textAnchor="middle" className="atlasInlineLabel">
                 Tatry
               </text>
             </svg>
@@ -129,7 +143,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
         <p className="atlasEyebrow">Atlas entry</p>
         <p className="atlasLevelLabel">{levelNames[atlasLevel] || `Poziom ${atlasLevel}`}</p>
         <h3>{activeNode.name}</h3>
-        <p>{activeNode.description}</p>
+        <p className="atlasLead">{activeNode.description}</p>
         <div className="atlasTagRow">{tags.map((tag) => <span key={tag} className="atlasTag">{tag}</span>)}</div>
         {activeNode.countryIds && <p className="atlasMeta">Kraje: {activeNode.countryIds.map((id) => atlasLookups.countries[id]?.name).filter(Boolean).join(', ')}</p>}
         {activeId === 'europe' && <p className="atlasMeta">Wyróżniony region: <strong>Tatry</strong>.</p>}
