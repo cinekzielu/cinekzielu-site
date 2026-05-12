@@ -29,13 +29,26 @@ const europeCountries = [
   { id: 'slovenia', label: 'SI', labelX: 258, labelY: 218, d: 'M244 212l18-2 12 6 0 8-16 6-14-4z' },
 ]
 
-const tatrySummitFallback = [
-  { id: 'gerlach', name: 'Gerlach', mapPosition: { x: 70, y: 34 } },
-  { id: 'lomnica', name: 'Łomnica', mapPosition: { x: 58, y: 39 } },
-  { id: 'durny-szczyt', name: 'Durny', mapPosition: { x: 76, y: 47 } },
-  { id: 'krywan', name: 'Krywań', mapPosition: { x: 46, y: 53 } },
-  { id: 'koscielec', name: 'Kościelec', mapPosition: { x: 33, y: 58 } },
-  { id: 'swinica', name: 'Świnica', mapPosition: { x: 23, y: 64 } },
+const tatryAxes = [
+  { id: 'core-ridge', d: 'M12 62 L22 58 L34 54 L46 50 L59 46 L72 41 L86 35' },
+  { id: 'western-arm', d: 'M18 66 L26 62 L34 58 L43 54' },
+  { id: 'high-tatras', d: 'M45 52 L56 47 L68 42 L79 37' },
+  { id: 'belianske-arm', d: 'M73 40 L82 43 L90 46' },
+]
+
+const tatryRegions = [
+  { id: 'western-tatras', label: 'Tatry Zachodnie', x: 29, y: 66, width: 24, height: 11 },
+  { id: 'high-tatras-region', label: 'Tatry Wysokie', x: 62, y: 50, width: 30, height: 12 },
+  { id: 'belianske-tatras', label: 'Tatry Bielskie', x: 84, y: 52, width: 18, height: 9 },
+]
+
+const tatrySummitLayout = [
+  { id: 'swinica', name: 'Świnica', mapPosition: { x: 22, y: 61 }, labelOffset: { x: -8, y: 2 }, zone: 'western-tatras', tier: 'primary' },
+  { id: 'koscielec', name: 'Kościelec', mapPosition: { x: 35, y: 56 }, labelOffset: { x: -10, y: -2 }, zone: 'western-tatras', tier: 'secondary' },
+  { id: 'krywan', name: 'Krywań', mapPosition: { x: 49, y: 50 }, labelOffset: { x: -5, y: -8 }, zone: 'high-tatras-region', tier: 'primary' },
+  { id: 'lomnica', name: 'Łomnica', mapPosition: { x: 63, y: 44 }, labelOffset: { x: 4, y: -8 }, zone: 'high-tatras-region', tier: 'primary' },
+  { id: 'gerlach', name: 'Gerlach', mapPosition: { x: 71, y: 39 }, labelOffset: { x: 4, y: -8 }, zone: 'high-tatras-region', tier: 'featured' },
+  { id: 'durny-szczyt', name: 'Durny', mapPosition: { x: 82, y: 44 }, labelOffset: { x: 5, y: 4 }, zone: 'belianske-tatras', tier: 'secondary' },
 ]
 
 const levelNames = ['Świat', 'Kontynent', 'Kraj', 'Region specjalny', 'Szczyt']
@@ -52,7 +65,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
   const breadcrumb = atlasPath.map((id) => ({ id, name: getNodeName(id) }))
   const countriesForContinent = travelAtlasData.countries.filter((country) => country.continentId === activeId)
   const tatryRegion = travelAtlasData.specialRegions.find((region) => region.id === 'tatry')
-  const tatrySummits = tatrySummitFallback.map((summit) => atlasLookups.summits[summit.id] || summit)
+  const tatrySummits = tatrySummitLayout.map((summit) => ({ ...summit, ...(atlasLookups.summits[summit.id] || {}) }))
   const activeFilm = activeNode.filmId ? atlasLookups.films[activeNode.filmId] : null
 
   const tags = [activeNode.visited ? 'odwiedzone' : 'w planach', activeFilm ? 'film' : null, activeNode.gallery?.length ? 'galeria' : 'galeria wkrótce'].filter(Boolean)
@@ -101,29 +114,39 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                   </g>
                 )
               })}
-              <circle cx="290" cy="190" r="10" className="atlasTatryGlow" onClick={() => tatryRegion && setAtlasPath((prev) => [...prev, tatryRegion.id])} />
-              <circle cx="290" cy="190" r="16" className="atlasTatryRing" />
-              <text x="290" y="214" textAnchor="middle" className="atlasInlineLabel">
+              <circle cx="302" cy="168" r="9" className="atlasTatryGlow" onClick={() => tatryRegion && setAtlasPath((prev) => [...prev, tatryRegion.id])} />
+              <circle cx="302" cy="168" r="15" className="atlasTatryRing" />
+              <text x="302" y="191" textAnchor="middle" className="atlasInlineLabel">
                 Tatry
               </text>
             </svg>
           )}
 
           {activeId === 'tatry' && (
-            <div className="summitLayer">
-              <svg className="ridgeLine" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <path d="M2 74 L12 64 L22 56 L30 60 L38 48 L48 56 L57 40 L66 52 L74 36 L82 46 L92 38 L98 44" />
+            <div className="summitLayer tatryLayer">
+              <svg className="tatryStructure" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                {tatryRegions.map((region) => (
+                  <ellipse key={region.id} cx={region.x} cy={region.y} rx={region.width / 2} ry={region.height / 2} className="tatryZone" />
+                ))}
+                {tatryAxes.map((axis) => (
+                  <path key={axis.id} d={axis.d} className="tatryAxis" />
+                ))}
               </svg>
+              {tatryRegions.map((region) => (
+                <p key={region.id} className="tatryZoneLabel" style={{ left: `${region.x}%`, top: `${region.y + region.height * 0.8}%` }}>
+                  {region.label}
+                </p>
+              ))}
               {tatrySummits.map((summit) => (
                 <button
                   key={summit.id}
                   type="button"
-                  className={`summitPoint ${activeId === summit.id ? 'isActive' : ''}`}
+                  className={`summitPoint summitTier${summit.tier || 'secondary'} ${activeId === summit.id ? 'isActive' : ''}`}
                   style={{ left: `${summit.mapPosition?.x ?? 50}%`, top: `${summit.mapPosition?.y ?? 50}%` }}
                   onClick={() => summit.id in atlasLookups.summits && setAtlasPath((prev) => [...prev, summit.id])}
                 >
                   <span className="dot" />
-                  <span className="label">{summit.name}</span>
+                  <span className="label" style={{ transform: `translate(${summit.labelOffset?.x ?? 0}px, ${summit.labelOffset?.y ?? 0}px)` }}>{summit.name}</span>
                 </button>
               ))}
             </div>
@@ -147,7 +170,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
         <div className="atlasTagRow">{tags.map((tag) => <span key={tag} className="atlasTag">{tag}</span>)}</div>
         {activeNode.countryIds && <p className="atlasMeta">Kraje: {activeNode.countryIds.map((id) => atlasLookups.countries[id]?.name).filter(Boolean).join(', ')}</p>}
         {activeId === 'europe' && <p className="atlasMeta">Wyróżniony region: <strong>Tatry</strong>.</p>}
-        {activeId === 'tatry' && <p className="atlasMeta">Każdy szczyt ma miejsce na galerię, film i krótki opis trasy.</p>}
+        {activeId === 'tatry' && <p className="atlasMeta">Układ pasma pokazuje osie Tatr i strefy pod dalsze dokładanie szczytów, galerii i opisów tras.</p>}
         {atlasLevel === 1 && countriesForContinent.length > 0 && <p className="atlasMeta">Widoczne kraje: {countriesForContinent.map((country) => country.name).join(', ')}</p>}
         {activeFilm && (
           <a className="smallButton atlasCta" href={activeFilm.url} target="_blank" rel="noreferrer">
