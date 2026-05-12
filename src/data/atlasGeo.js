@@ -8,12 +8,12 @@ const tatryGeoPoints = {
 }
 
 const tatryUiLayout = {
-  swinica: { mapPosition: { x: 22, y: 61 }, labelOffset: { x: -8, y: 2 }, tier: 'primary' },
-  koscielec: { mapPosition: { x: 35, y: 56 }, labelOffset: { x: -10, y: -2 }, tier: 'secondary' },
-  krywan: { mapPosition: { x: 49, y: 50 }, labelOffset: { x: -5, y: -8 }, tier: 'primary' },
-  lomnica: { mapPosition: { x: 63, y: 44 }, labelOffset: { x: 4, y: -8 }, tier: 'primary' },
-  gerlach: { mapPosition: { x: 71, y: 39 }, labelOffset: { x: 4, y: -8 }, tier: 'featured' },
-  'durny-szczyt': { mapPosition: { x: 82, y: 44 }, labelOffset: { x: 5, y: 4 }, tier: 'secondary' },
+  swinica: { nudge: { x: -1.3, y: 0.8 }, labelOffset: { x: -10, y: 1 }, tier: 'primary' },
+  koscielec: { nudge: { x: 1.6, y: -0.4 }, labelOffset: { x: -14, y: -7 }, tier: 'secondary' },
+  krywan: { nudge: { x: -0.9, y: 1.4 }, labelOffset: { x: -16, y: 10 }, tier: 'primary' },
+  lomnica: { nudge: { x: 0.2, y: 0.8 }, labelOffset: { x: 8, y: -8 }, tier: 'primary' },
+  gerlach: { nudge: { x: 0.8, y: -0.3 }, labelOffset: { x: 10, y: -12 }, tier: 'featured' },
+  'durny-szczyt': { nudge: { x: 1.4, y: -0.7 }, labelOffset: { x: 10, y: 7 }, tier: 'secondary' },
 }
 
 const tatryBounds = {
@@ -24,6 +24,19 @@ const tatryBounds = {
 }
 
 const clampPercent = (value) => Math.max(0, Math.min(100, value))
+
+const stylizeTatryProjection = (position) => {
+  if (!position) return null
+  const normalizedX = position.x / 100
+  const axisX = 15 + normalizedX * 72
+  const ridgeSlope = 65 - normalizedX * 28
+  const corridorWave = Math.sin(normalizedX * Math.PI * 1.15) * 2.4
+  const geoPull = ((position.y - 50) / 50) * 5.8
+  return {
+    x: clampPercent(axisX),
+    y: clampPercent(ridgeSlope + corridorWave + geoPull),
+  }
+}
 
 export function projectGeoToTatryLayout({ lat, lng }, bounds = tatryBounds) {
   if (typeof lat !== 'number' || typeof lng !== 'number') return null
@@ -44,6 +57,12 @@ export function resolveTatryPointPosition(pointId) {
   const geoPoint = getTatryGeoPoint(pointId)
   const ui = getTatryUiLayout(pointId)
   const projected = geoPoint ? projectGeoToTatryLayout(geoPoint) : null
+  const stylized = stylizeTatryProjection(projected)
+  const nudgeX = ui?.nudge?.x || 0
+  const nudgeY = ui?.nudge?.y || 0
+  const mapPosition = stylized
+    ? { x: clampPercent(stylized.x + nudgeX), y: clampPercent(stylized.y + nudgeY) }
+    : ui?.mapPosition || projected || { x: 50, y: 50 }
 
   return {
     geo: geoPoint,
@@ -51,6 +70,6 @@ export function resolveTatryPointPosition(pointId) {
     uiPosition: ui?.mapPosition || null,
     labelOffset: ui?.labelOffset || { x: 0, y: 0 },
     tier: ui?.tier || 'secondary',
-    mapPosition: ui?.mapPosition || projected || { x: 50, y: 50 },
+    mapPosition,
   }
 }
