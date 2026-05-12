@@ -18,27 +18,29 @@
 .atlasTatryGlow:hover{fill:rgba(212,174,117,.2);stroke:rgba(248,232,201,.84)}
 .atlasTatryRing{fill:none;stroke:rgba(239,220,186,.35);stroke-width:1;stroke-dasharray:4 6;opacity:.78;pointer-events:none}
 .atlasLatLine{fill:none;stroke:rgba(236,214,174,.2);stroke-width:1;stroke-dasharray:8 8;pointer-events:none}
-.summitLayer{position:relative;min-height:460px;animation:atlasFade .5s ease;background:radial-gradient(circle at 70% 20%, rgba(205,169,108,.1), transparent 40%)}
-.tatryLayer{padding:10px 10px 4px}
-.tatryStructure{position:absolute;inset:7% 4% 12%;width:92%;height:80%;opacity:.95;pointer-events:none}
+.summitLayer{position:relative;min-height:460px;animation:atlasFade .5s ease;background:radial-gradient(circle at 72% 18%, rgba(212,176,118,.09), transparent 38%),radial-gradient(circle at 16% 68%, rgba(170,142,96,.08), transparent 44%)}
+.tatryLayer{padding:12px 12px 6px}
+.tatryLayer::before{content:'';position:absolute;inset:8% 5% 14%;border:1px solid rgba(230,210,176,.08);border-radius:22px;pointer-events:none;background:linear-gradient(160deg,rgba(18,14,10,.2),rgba(18,14,10,.05))}
+.tatryStructure{position:absolute;inset:9% 6% 15%;width:88%;height:76%;opacity:.9;pointer-events:none;filter:drop-shadow(0 14px 24px rgba(0,0,0,.18))}
 .tatryContour{fill:none;stroke-linecap:round;stroke-linejoin:round}
-.tatryContour.isOuter{stroke:rgba(233,212,176,.34);stroke-width:1.2}
-.tatryContour.isInner{stroke:rgba(210,189,153,.26);stroke-width:.8;stroke-dasharray:2 3}
-.tatryGuideLine{fill:none;stroke:rgba(226,204,167,.2);stroke-width:.55;stroke-dasharray:1.2 2.8}
-.tatryBorder{fill:none;stroke:rgba(241,222,188,.5);stroke-width:.6;stroke-dasharray:2.2 2.2}
-.tatryBorderLabel{fill:rgba(240,221,189,.6);font-size:3.1px;letter-spacing:.18em}
-.tatryBorderLabel.isSouth{fill:rgba(229,205,167,.48)}
-.summitPoint{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:7px;border:0;background:transparent;color:var(--text);cursor:pointer;transition:.24s;padding:4px 6px;border-radius:10px;z-index:2}
- .summitPoint .dot{width:10px;height:10px;border-radius:50%;background:rgba(244,220,183,.92);box-shadow:0 0 0 1px rgba(255,240,214,.35),0 0 10px rgba(244,220,183,.45)}
-.summitPoint .leader{position:absolute;left:11px;top:50%;width:var(--leader-length,10px);height:1px;background:linear-gradient(90deg,rgba(243,221,184,.65),rgba(243,221,184,.05));transform-origin:left center;transform:rotate(var(--leader-angle,0rad));pointer-events:none}
-.summitPoint .label{font-size:11.5px;line-height:1.1;background:rgba(11,10,8,.84);border:1px solid rgba(230,214,184,.3);padding:5px 8px;border-radius:8px;white-space:nowrap;max-width:min(32vw,190px);overflow:hidden;text-overflow:ellipsis}
-.summitPoint:hover,.summitPoint:focus-visible{transform:translate(-50%,-50%) scale(1.05);background:rgba(40,32,24,.34)}
-.summitPoint:hover .label{border-color:rgba(244,221,182,.7)}
+.tatryContour.isOuter{stroke:rgba(236,216,182,.36);stroke-width:1.28}
+.tatryContour.isInner{stroke:rgba(219,197,163,.24);stroke-width:.82;stroke-dasharray:2 3.1}
+.tatryGuideLine{fill:none;stroke:rgba(232,210,172,.16);stroke-width:.5;stroke-dasharray:1.1 3.1}
+.tatryBorder{fill:none;stroke:rgba(241,222,188,.3);stroke-width:.56;stroke-dasharray:2 2.8}
+.tatryBorderLabel{fill:rgba(238,220,191,.52);font-size:3px;letter-spacing:.18em}
+.tatryBorderLabel.isSouth{fill:rgba(226,204,168,.42)}
+.summitPoint{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:8px;border:0;background:transparent;color:var(--text);cursor:pointer;transition:.22s;padding:5px 7px;border-radius:12px;z-index:2}
+ .summitPoint .dot{width:9px;height:9px;border-radius:50%;background:rgba(246,226,194,.92);box-shadow:0 0 0 1px rgba(255,242,218,.28),0 4px 9px rgba(0,0,0,.38)}
+.summitPoint .leader{position:absolute;left:10px;top:50%;width:var(--leader-length,10px);height:1px;background:linear-gradient(90deg,rgba(241,220,186,.56),rgba(241,220,186,.06));transform-origin:left center;transform:rotate(var(--leader-angle,0rad));pointer-events:none}
+.summitPoint .label{font-size:11.1px;line-height:1.12;background:rgba(10,9,8,.76);border:1px solid rgba(228,211,180,.24);padding:5px 9px 5px 8px;border-radius:9px;white-space:nowrap;letter-spacing:.012em;max-width:min(31vw,186px);overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 0 rgba(0,0,0,.5);box-shadow:0 8px 16px rgba(0,0,0,.22)}
+.summitPoint:hover,.summitPoint:focus-visible{transform:translate(-50%,-50%) scale(1.04);background:rgba(40,32,24,.24)}
+.summitPoint:hover .label{border-color:rgba(244,221,182,.56);background:rgba(10,9,8,.83)}
 .summitPoint:hover,.summitPoint:focus-visible,.summitPoint.isActive{z-index:4}
-.summitPoint.isActive .dot{box-shadow:0 0 0 5px rgba(244,220,183,.16),0 0 14px rgba(244,220,183,.7)}
+.summitPoint.isActive .dot{box-shadow:0 0 0 4px rgba(244,220,183,.12),0 0 0 1px rgba(255,242,218,.35),0 0 12px rgba(244,220,183,.32)}
+.summitPoint.isActive .label{border-color:rgba(247,228,193,.72);background:rgba(12,10,8,.9)}
 .summitPoint.pointTypeviewpoint .dot{border-radius:3px;transform:rotate(45deg);background:rgba(236,214,174,.92)}
 .summitPoint.pointTypetrail .dot{width:12px;height:6px;border-radius:999px;background:rgba(222,198,155,.92)}
-.summitPoint.pointTypecity .dot{width:8px;height:8px;box-shadow:0 0 0 2px rgba(245,224,186,.22),0 0 10px rgba(244,220,183,.36)}
+.summitPoint.pointTypecity .dot{width:8px;height:8px;box-shadow:0 0 0 2px rgba(245,224,186,.18),0 0 8px rgba(244,220,183,.2)}
 .atlasCrumbTrail{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap}
 .atlasCrumb{display:flex;flex-direction:column;gap:2px;border:1px solid rgba(230,212,180,.22);background:rgba(15,13,11,.72);border-radius:12px;padding:8px 12px;color:var(--text);cursor:pointer;min-width:120px;text-align:left;transition:.2s;position:relative}
 .atlasCrumb::after{content:'';position:absolute;right:-7px;top:50%;width:10px;height:10px;border-top:1px solid rgba(230,212,180,.24);border-right:1px solid rgba(230,212,180,.24);transform:translateY(-50%) rotate(45deg);background:rgba(11,10,9,.68)}
@@ -64,7 +66,7 @@
 @keyframes atlasFade{from{opacity:0;transform:scale(.985)}to{opacity:1;transform:scale(1)}}
 @keyframes atlasZoom{from{opacity:0;transform:scale(1.03)}to{opacity:1;transform:scale(1)}}
 @keyframes atlasZoomIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
-@media (max-width:980px){.cinematicAtlas.atlasLayout{grid-template-columns:1fr}.atlasSvg,.summitLayer{min-height:320px}.atlasStage{min-height:360px}.tatryStructure{inset:10% 2% 18%}.summitPoint .leader{opacity:.8}.summitPoint .dot{width:11px;height:11px}.summitPoint .label{font-size:11px;padding:5px 8px;max-width:48vw}.atlasCrumb{min-width:0;flex:1 1 calc(50% - 8px)}.atlasCrumb::after{display:none}.atlasDetailCard{padding:16px}}
+@media (max-width:980px){.cinematicAtlas.atlasLayout{grid-template-columns:1fr}.atlasSvg,.summitLayer{min-height:320px}.atlasStage{min-height:360px}.tatryLayer{padding:10px 8px 5px}.tatryLayer::before{inset:8% 3% 16%;border-radius:18px}.tatryStructure{inset:12% 4% 19%;width:92%;height:72%}.summitPoint .leader{opacity:.72}.summitPoint .dot{width:10px;height:10px}.summitPoint .label{font-size:10.7px;padding:5px 8px;max-width:54vw}.atlasCrumb{min-width:0;flex:1 1 calc(50% - 8px)}.atlasCrumb::after{display:none}.atlasDetailCard{padding:16px}}
 
 .atlasInlineLabel{fill:rgba(246,227,195,.9);font-size:10px;letter-spacing:.14em;text-transform:uppercase;pointer-events:none}
 
