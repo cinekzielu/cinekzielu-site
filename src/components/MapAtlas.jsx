@@ -31,16 +31,16 @@ const europeCountries = [
 ]
 
 const tatryAxes = [
-  { id: 'core-ridge', d: 'M12 62 L22 58 L34 54 L46 50 L59 46 L72 41 L86 35' },
-  { id: 'western-arm', d: 'M18 66 L26 62 L34 58 L43 54' },
-  { id: 'high-tatras', d: 'M45 52 L56 47 L68 42 L79 37' },
-  { id: 'belianske-arm', d: 'M73 40 L82 43 L90 46' },
+  { id: 'core-ridge', d: 'M14 66 L22 63 L32 59 L43 55 L55 51 L68 46 L82 40 L89 37' },
+  { id: 'western-arm', d: 'M16 69 L23 65 L31 62 L39 58' },
+  { id: 'high-tatras', d: 'M43 56 L54 52 L66 47 L78 42' },
+  { id: 'belianske-arm', d: 'M80 40 L86 42 L92 45' },
 ]
 
 const tatryRegions = [
-  { id: 'western-tatras', label: 'Tatry Zachodnie', x: 29, y: 66, width: 24, height: 11 },
-  { id: 'high-tatras-region', label: 'Tatry Wysokie', x: 62, y: 50, width: 30, height: 12 },
-  { id: 'belianske-tatras', label: 'Tatry Bielskie', x: 84, y: 52, width: 18, height: 9 },
+  { id: 'western-tatras', label: 'Tatry Zachodnie', x: 30, y: 64, width: 28, height: 12 },
+  { id: 'high-tatras-region', label: 'Tatry Wysokie', x: 62, y: 50, width: 34, height: 12 },
+  { id: 'belianske-tatras', label: 'Tatry Bielskie', x: 86, y: 46, width: 16, height: 8 },
 ]
 
 
@@ -179,7 +179,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
         <div className="atlasTagRow">{tags.map((tag) => <span key={tag} className="atlasTag">{tag}</span>)}</div>
         {activeNode.countryIds && <p className="atlasMeta">Kraje: {activeNode.countryIds.map((id) => atlasLookups.countries[id]?.name).filter(Boolean).join(', ')}</p>}
         {activeId === 'europe' && <p className="atlasMeta">Wyróżniony region: <strong>Tatry</strong>.</p>}
-        {activeId === 'tatry' && <p className="atlasMeta">Układ pasma pokazuje osie Tatr i strefy pod dalsze dokładanie szczytów, galerii i opisów tras.</p>}
+        {activeId === 'tatry' && <p className="atlasMeta">Układ pasma wynika z projekcji geo na oś Tatr, dzięki czemu łatwiej i spójniej dodawać kolejne szczyty oraz punkty tras.</p>}
         {atlasLevel === 1 && countriesForContinent.length > 0 && <p className="atlasMeta">Widoczne kraje: {countriesForContinent.map((country) => country.name).join(', ')}</p>}
         {activeFilm && (
           <a className="smallButton atlasCta" href={activeFilm.url} target="_blank" rel="noreferrer">
