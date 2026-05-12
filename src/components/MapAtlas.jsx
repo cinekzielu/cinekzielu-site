@@ -45,6 +45,99 @@ const tatryBorderPLSK = 'M14 62 L25 57 L39 52 L53 47 L68 43 L81 40 L91 42'
 
 const levelNames = ['Świat', 'Kontynent', 'Kraj', 'Region specjalny', 'Szczyt']
 
+const tatryLabelAliases = {
+  'durny-szczyt': 'Durny',
+  'lodowy-szczyt': 'Lodowy',
+  'kiezmarski-szczyt': 'Kieżmarski',
+  'baranie-rogi': 'Baranie Rogi',
+}
+
+const tatryTierWeight = {
+  featured: 3,
+  primary: 2,
+  secondary: 1,
+}
+
+const getTatryCollisionLayout = (points) => {
+  const anchorScaleX = 5.2
+  const anchorScaleY = 4.6
+  const variantOrder = [
+    (base) => ({ x: base.x, y: base.y }),
+    (base) => ({ x: base.x + 14, y: base.y - 8 }),
+    (base) => ({ x: base.x - 14, y: base.y - 8 }),
+    (base) => ({ x: base.x + 16, y: base.y + 10 }),
+    (base) => ({ x: base.x - 18, y: base.y + 10 }),
+    (base) => ({ x: base.x + 24, y: base.y }),
+    (base) => ({ x: base.x - 24, y: base.y }),
+    (base) => ({ x: base.x, y: base.y - 14 }),
+    (base) => ({ x: base.x, y: base.y + 14 }),
+  ]
+
+  const labelBoxes = []
+  const byPriority = [...points].sort((a, b) => (tatryTierWeight[b.tier] || 0) - (tatryTierWeight[a.tier] || 0))
+
+  return byPriority.map((point) => {
+    const fullName = point.name
+    const shortName = tatryLabelAliases[point.id] || point.name
+    const baseOffset = point.labelOffset || { x: 0, y: 0 }
+
+    const pickVariant = (name) => {
+      const textWidth = Math.max(52, Math.min(132, name.length * 6.3 + 24))
+      const textHeight = 22
+      let selected = variantOrder[0](baseOffset)
+      let selectedCollisions = Number.POSITIVE_INFINITY
+      let selectedDistance = Number.POSITIVE_INFINITY
+
+      variantOrder.forEach((variant) => {
+        const offset = variant(baseOffset)
+        const centerX = (point.mapPosition?.x ?? 50) * anchorScaleX + offset.x + textWidth / 2
+        const centerY = (point.mapPosition?.y ?? 50) * anchorScaleY + offset.y
+        const candidate = {
+          left: centerX - textWidth / 2,
+          right: centerX + textWidth / 2,
+          top: centerY - textHeight / 2,
+          bottom: centerY + textHeight / 2,
+        }
+
+        const collisions = labelBoxes.reduce((count, box) => {
+          const overlapX = candidate.left < box.right && candidate.right > box.left
+          const overlapY = candidate.top < box.bottom && candidate.bottom > box.top
+          return overlapX && overlapY ? count + 1 : count
+        }, 0)
+
+        const distance = Math.abs(offset.x - baseOffset.x) + Math.abs(offset.y - baseOffset.y)
+        if (collisions < selectedCollisions || (collisions === selectedCollisions && distance < selectedDistance)) {
+          selected = offset
+          selectedCollisions = collisions
+          selectedDistance = distance
+        }
+      })
+
+      labelBoxes.push({
+        left: (point.mapPosition?.x ?? 50) * anchorScaleX + selected.x,
+        right: (point.mapPosition?.x ?? 50) * anchorScaleX + selected.x + textWidth,
+        top: (point.mapPosition?.y ?? 50) * anchorScaleY + selected.y - textHeight / 2,
+        bottom: (point.mapPosition?.y ?? 50) * anchorScaleY + selected.y + textHeight / 2,
+      })
+
+      return { offset: selected, collisions: selectedCollisions }
+    }
+
+    const full = pickVariant(fullName)
+    const shouldCompact = full.collisions > 0 && shortName !== fullName
+    const compact = shouldCompact ? pickVariant(shortName) : null
+    const finalName = compact ? shortName : fullName
+    const finalOffset = compact ? compact.offset : full.offset
+
+    return {
+      ...point,
+      displayName: finalName,
+      labelOffset: finalOffset,
+      visualPriority: tatryTierWeight[point.tier] || 1,
+    }
+  }).sort((a, b) => a.visualPriority - b.visualPriority)
+}
+
 export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) {
   const atlasLevel = atlasPath.length - 1
   const activeId = atlasPath[atlasPath.length - 1]
@@ -76,7 +169,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
   const typeLabelMap = { summit: 'Szczyt', trail: 'Szlak / przejście', viewpoint: 'Punkt widokowy', place: 'Miejsce', city: 'Miasto', hut: 'Schronisko', region: 'Region', country: 'Kraj', continent: 'Kontynent' }
 
   const tags = [activeNode.visited ? 'odwiedzone' : 'w planach', activeFilm ? 'film' : null, activeNode.gallery?.length ? 'galeria' : 'galeria wkrótce'].filter(Boolean)
-  const tatryPointsWithLeaders = tatryPoints.map((point) => {
+  const tatryPointsWithLeaders = getTatryCollisionLayout(tatryPoints).map((point) => {
     const offsetX = point.labelOffset?.x ?? 0
     const offsetY = point.labelOffset?.y ?? 0
     const leaderLength = Math.hypot(offsetX, offsetY)
@@ -163,7 +256,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                 >
                   <span className="dot" />
                   {summit.hasLeader && <span className="leader" style={{ '--leader-length': `${Math.max(8, summit.leaderLength - 6)}px`, '--leader-angle': `${summit.leaderAngle}rad` }} />}
-                  <span className="label" style={{ transform: `translate(${summit.labelOffset?.x ?? 0}px, ${summit.labelOffset?.y ?? 0}px)` }}>{summit.name}</span>
+                  <span className="label" style={{ transform: `translate(${summit.labelOffset?.x ?? 0}px, ${summit.labelOffset?.y ?? 0}px)` }}>{summit.displayName || summit.name}</span>
                 </button>
               ))}
             </div>
