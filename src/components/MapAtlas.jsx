@@ -188,7 +188,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
         <div className="atlasTagRow">{tags.map((tag) => <span key={tag} className="atlasTag">{tag}</span>)}</div>
         {activeNode.countryIds && <p className="atlasMeta">Kraje: {activeNode.countryIds.map((id) => atlasLookups.countries[id]?.name).filter(Boolean).join(', ')}</p>}
         {activeId === 'europe' && <p className="atlasMeta">Wyróżniony region: <strong>Tatry</strong>.</p>}
-        {activeId === 'tatry' && <p className="atlasMeta">Układ punktów dalej opiera się na warstwie geo, a scena została wygładzona do uproszczonego widoku top-down z subtelną granicą PL–SK i mikro-odnośnikami etykiet.</p>}
+        {activeId === 'tatry' && <p className="atlasMeta">Widok Tatr został dopracowany do spokojniejszej, atlasowej kompozycji top-down: czytelniejsze etykiety, subtelniejsze markery i dyskretna granica PL–SK wspierają orientację bez technicznego szumu.</p>}
         {atlasLevel === 1 && countriesForContinent.length > 0 && <p className="atlasMeta">Widoczne kraje: {countriesForContinent.map((country) => country.name).join(', ')}</p>}
         {activeFilm && (
           <a className="smallButton atlasCta" href={activeFilm.url} target="_blank" rel="noreferrer">
