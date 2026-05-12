@@ -11,8 +11,10 @@
 .atlasOutline.isDimmed{fill:transparent;stroke:rgba(235,214,175,.18)}
 .atlasOutline.isAtlasActive{stroke:rgba(250,233,198,.95);stroke-width:2;filter:drop-shadow(0 0 14px rgba(246,219,165,.45));fill:rgba(196,158,104,.26)}
 .atlasCountry{fill:rgba(117,99,71,.1)}
-.atlasTatryGlow{fill:rgba(208,168,105,.2);stroke:rgba(245,226,189,.65);stroke-dasharray:2 4;cursor:pointer;filter:drop-shadow(0 0 10px rgba(244,214,157,.35));transition:all .3s ease}
-.atlasTatryGlow:hover{fill:rgba(212,174,117,.28)}
+.atlasCountryLabel{fill:rgba(240,221,188,.78);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;pointer-events:none}
+.atlasTatryGlow{fill:rgba(208,168,105,.12);stroke:rgba(245,226,189,.62);stroke-width:1.2;stroke-dasharray:3 5;cursor:pointer;filter:drop-shadow(0 0 7px rgba(244,214,157,.25));transition:all .3s ease}
+.atlasTatryGlow:hover{fill:rgba(212,174,117,.2);stroke:rgba(248,232,201,.84)}
+.atlasTatryRing{fill:none;stroke:rgba(239,220,186,.35);stroke-width:1;stroke-dasharray:5 7;opacity:.85;pointer-events:none}
 .atlasLatLine{fill:none;stroke:rgba(236,214,174,.2);stroke-width:1;stroke-dasharray:8 8;pointer-events:none}
 .summitLayer{position:relative;min-height:460px;animation:atlasFade .5s ease;background:radial-gradient(circle at 70% 20%, rgba(205,169,108,.1), transparent 40%)}
 .ridgeLine{position:absolute;inset:8% 4%;width:92%;height:80%;opacity:.6;pointer-events:none}
@@ -48,4 +50,4 @@
 @keyframes atlasZoomIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
 @media (max-width:980px){.cinematicAtlas.atlasLayout{grid-template-columns:1fr}.atlasSvg,.summitLayer{min-height:320px}.atlasStage{min-height:360px}.summitPoint .dot{width:12px;height:12px}.summitPoint .label{font-size:12px;padding:6px 9px}.atlasCrumb{min-width:0;flex:1 1 calc(50% - 8px)}.atlasCrumb::after{display:none}.atlasDetailCard{padding:16px}}
 
-.atlasInlineLabel{fill:rgba(246,227,195,.9);font-size:11px;letter-spacing:.12em;text-transform:uppercase;pointer-events:none}
+.atlasInlineLabel{fill:rgba(246,227,195,.9);font-size:10px;letter-spacing:.14em;text-transform:uppercase;pointer-events:none}
