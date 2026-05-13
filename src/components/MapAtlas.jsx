@@ -37,7 +37,9 @@ const TatryMapBase = ({ baseData }) => (
   <svg className="tatryStructure" viewBox={baseData.viewBox} preserveAspectRatio="none" aria-hidden="true">
     <path d={baseData.regionContour} className="tatryRegionContour" />
     {baseData.reliefBands.map((band) => <path key={band} d={band} className="tatryReliefBand" />)}
+    {baseData.topoLines?.map((line) => <path key={line} d={line} className="tatryTopoLine" />)}
     {baseData.ridgeLines.map((line) => <path key={line.id} d={line.d} className="tatryRidgeLine" />)}
+    {baseData.valleyLines?.map((line) => <path key={line} d={line} className="tatryValleyLine" />)}
     {baseData.borders.map((border) => (
       <g key={border.id}>
         <path d={border.d} className="tatryBorder" />
