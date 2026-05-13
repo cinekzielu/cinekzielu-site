@@ -45,9 +45,35 @@ const tatryGuideLines = [
 ]
 
 const tatryBorderPLSK = 'M11 58 L18 55 L26 51 L35 47 L44 43 L53 39 L62 36 L70 33 L78 31 L86 32'
+const tatryTopoLines = [
+  'M8 64 C18 59, 25 57, 35 52 C47 45, 61 42, 73 35 C79 31, 84 30, 89 31',
+  'M9 67 C19 62, 31 59, 40 55 C51 49, 64 44, 75 38 C81 35, 86 34, 91 35',
+  'M11 70 C23 66, 35 62, 45 58 C56 53, 67 47, 79 42 C86 39, 91 39, 94 41',
+  'M14 73 C25 70, 37 67, 48 63 C61 58, 73 52, 84 47',
+  'M18 76 C30 74, 42 71, 54 67 C65 63, 76 57, 87 53',
+]
 
 
 const levelNames = ['Świat', 'Kontynent', 'Kraj', 'Region specjalny', 'Szczyt']
+const levelIcons = {
+  world: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="8.4" />
+      <path d="M3.6 12h16.8M12 3.6c2.2 2.2 3.6 5.2 3.6 8.4S14.2 18.2 12 20.4M12 3.6C9.8 5.8 8.4 8.8 8.4 12s1.4 6.2 3.6 8.4" />
+    </svg>
+  ),
+  europe: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M5.2 10.6 7.4 7.9l3-1.2 2.7.6 1.5 1.6 1.9.4 1.2 2-1 2-2.3 1.4-2.4.2-1.8 1.1-2.6-.3-1.8-1.5-.8-2.2z" />
+    </svg>
+  ),
+  mountain: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3.8 18.4 9.7 8.2l4 5.4 1.9-2.8 4.6 7.6H3.8z" />
+      <path d="m9.7 8.2 1.3 1.8 1.4-2.2 1.3 1.8" />
+    </svg>
+  ),
+}
 
 
 const TATRY_MIN_ZOOM = 1
@@ -165,6 +191,11 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
       : atlasLookups.continents[id]?.name || atlasLookups.countries[id]?.name || atlasLookups.specialRegions[id]?.name || atlasLookups.summits[id]?.name || atlasLookups.places[id]?.name || id
 
   const breadcrumb = atlasPath.map((id) => ({ id, name: getNodeName(id) }))
+  const getCrumbIcon = (id, level) => {
+    if (id === 'world') return levelIcons.world
+    if (id === 'europe' || level === 1) return levelIcons.europe
+    return levelIcons.mountain
+  }
   const countriesForContinent = travelAtlasData.countries.filter((country) => country.continentId === activeId)
   const tatryRegion = travelAtlasData.specialRegions.find((region) => region.id === 'tatry')
   const tatryPointIds = tatryRegion?.summitIds || []
@@ -246,8 +277,11 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
           <div className="atlasCrumbTrail" aria-label="Nawigacja atlasu">
             {breadcrumb.map((item, i) => (
               <button key={item.id} className={`atlasCrumb ${i === breadcrumb.length - 1 ? 'isCurrent' : ''}`} type="button" onClick={() => setAtlasPath((prev) => prev.slice(0, i + 1))}>
-                <span className="atlasCrumbLevel">{levelNames[i] || `Poziom ${i}`}</span>
-                <span className="atlasCrumbName">{item.name}</span>
+                <span className="atlasCrumbIcon">{getCrumbIcon(item.id, i)}</span>
+                <span className="atlasCrumbBody">
+                  <span className="atlasCrumbLevel">{levelNames[i] || `Poziom ${i}`}</span>
+                  <span className="atlasCrumbName">{item.name}</span>
+                </span>
               </button>
             ))}
           </div>
@@ -337,6 +371,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                   <path key={line.id} d={line.d} className="tatryGuideLine" />
                 ))}
                 <path d={tatryBorderPLSK} className="tatryBorder" />
+                {tatryTopoLines.map((line, index) => <path key={line} d={line} className={`tatryTopoLine tatryTopoLine${index + 1}`} />)}
                 <text x="91" y="38" className="tatryBorderLabel" textAnchor="end">PL</text>
                 <text x="90" y="46" className="tatryBorderLabel isSouth" textAnchor="end">SK</text>
               </svg>
