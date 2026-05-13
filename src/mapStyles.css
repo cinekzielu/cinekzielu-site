@@ -25,21 +25,21 @@
 .tatryContour{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .tatryContour.isOuter{stroke:rgba(239,220,186,.34);stroke-width:1.06}
 .tatryContour.isInner{stroke:rgba(223,201,166,.2);stroke-width:.72;stroke-dasharray:2 3.6}
-.tatryGuideLine{fill:none;stroke:rgba(232,210,172,.22);stroke-width:.42;stroke-dasharray:1.2 3.8;opacity:.82}
+.tatryGuideLine{fill:none;stroke:rgba(232,210,172,.18);stroke-width:.38;stroke-dasharray:1.1 4.2;opacity:.7}
 .tatryBorder{fill:none;stroke:rgba(244,226,195,.28);stroke-width:.52;stroke-dasharray:1.6 3.4;opacity:.78}
 .tatryBorderLabel{fill:rgba(238,220,191,.52);font-size:3px;letter-spacing:.18em}
 .tatryBorderLabel.isSouth{fill:rgba(226,204,168,.42)}
-.tatryTopoLine{fill:none;stroke:rgba(232,209,170,.15);stroke-width:.33;stroke-linecap:round}
-.tatryTopoLine1{opacity:.88}
-.tatryTopoLine2{opacity:.8}
-.tatryTopoLine3{opacity:.72}
-.tatryTopoLine4{opacity:.64}
-.tatryTopoLine5{opacity:.56}
-.tatryTopoLine6{opacity:.48}
+.tatryTopoLine{fill:none;stroke:rgba(232,209,170,.13);stroke-width:.3;stroke-linecap:round}
+.tatryTopoLine1{opacity:.78;stroke-width:.42}
+.tatryTopoLine2{opacity:.72;stroke-width:.38}
+.tatryTopoLine3{opacity:.63;stroke-width:.35}
+.tatryTopoLine4{opacity:.52}
+.tatryTopoLine5{opacity:.42}
+.tatryTopoLine6{opacity:.34}
 .summitPoint{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:8px;border:0;background:transparent;color:var(--text);cursor:pointer;transition:.22s;padding:5px 7px;border-radius:12px;z-index:2}
-.summitPoint .dot{width:8px;height:8px;border-radius:50%;background:rgba(248,228,194,.96);box-shadow:0 0 0 1px rgba(255,245,224,.34),0 0 0 6px rgba(245,220,181,.07),0 0 13px rgba(245,218,172,.34),0 4px 8px rgba(0,0,0,.34)}
-.summitPoint .leader{position:absolute;left:10px;top:50%;width:var(--leader-length,10px);height:1px;background:linear-gradient(90deg,rgba(241,220,186,.45),rgba(241,220,186,.04));transform-origin:left center;transform:rotate(var(--leader-angle,0rad));pointer-events:none;opacity:.62}
-.summitPoint .label{font-size:11px;line-height:1.1;background:linear-gradient(165deg,rgba(10,9,8,.84),rgba(17,14,11,.68));border:1px solid rgba(228,211,180,.2);padding:5px 9px 5px 8px;border-radius:9px;white-space:nowrap;letter-spacing:.02em;max-width:min(30vw,178px);overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 0 rgba(0,0,0,.55);box-shadow:0 8px 15px rgba(0,0,0,.18)}
+.summitPoint .dot{width:7px;height:7px;border-radius:50%;background:rgba(248,228,194,.95);box-shadow:0 0 0 1px rgba(255,245,224,.3),0 0 0 5px rgba(245,220,181,.06),0 0 11px rgba(245,218,172,.3),0 4px 8px rgba(0,0,0,.32)}
+.summitPoint .leader{position:absolute;left:9px;top:50%;width:var(--leader-length,10px);height:1px;background:linear-gradient(90deg,rgba(241,220,186,.36),rgba(241,220,186,.03));transform-origin:left center;transform:rotate(var(--leader-angle,0rad));pointer-events:none;opacity:.58}
+.summitPoint .label{font-size:10.7px;line-height:1.08;background:linear-gradient(165deg,rgba(10,9,8,.82),rgba(17,14,11,.62));border:1px solid rgba(228,211,180,.18);padding:4px 8px 4px 7px;border-radius:8px;white-space:nowrap;letter-spacing:.02em;max-width:min(30vw,176px);overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 0 rgba(0,0,0,.52);box-shadow:0 7px 13px rgba(0,0,0,.16)}
 .summitPoint:hover,.summitPoint:focus-visible{transform:translate(-50%,-50%) scale(1.04);background:rgba(40,32,24,.24)}
 .summitPoint:hover .label{border-color:rgba(244,221,182,.56);background:rgba(10,9,8,.83)}
 .summitPoint:hover,.summitPoint:focus-visible,.summitPoint.isActive{z-index:4}
