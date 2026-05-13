@@ -99,23 +99,51 @@ const tatryTierWeight = {
   secondary: 1,
 }
 
+const tatryClusterPriority = {
+  'lomnica': 12,
+  'gerlach': 11,
+  'rysy': 10,
+  'swinica': 9,
+  'koscielec': 9,
+  'krywan': 8,
+  'kończysta': 7,
+  'lodowy-szczyt': 7,
+  'baranie-rogi': 6,
+  'kiezmarski-szczyt': 6,
+  'durny-szczyt': 5,
+}
+
 const getTatryCollisionLayout = (points) => {
   const anchorScaleX = 5.2
   const anchorScaleY = 4.6
+  const pointPadding = 5
+  const textHeight = 22
   const variantOrder = [
     (base) => ({ x: base.x, y: base.y }),
-    (base) => ({ x: base.x + 14, y: base.y - 8 }),
-    (base) => ({ x: base.x - 14, y: base.y - 8 }),
-    (base) => ({ x: base.x + 16, y: base.y + 10 }),
-    (base) => ({ x: base.x - 18, y: base.y + 10 }),
-    (base) => ({ x: base.x + 24, y: base.y }),
-    (base) => ({ x: base.x - 24, y: base.y }),
-    (base) => ({ x: base.x, y: base.y - 14 }),
-    (base) => ({ x: base.x, y: base.y + 14 }),
+    (base) => ({ x: base.x + 12, y: base.y - 8 }),
+    (base) => ({ x: base.x - 12, y: base.y - 8 }),
+    (base) => ({ x: base.x + 16, y: base.y + 8 }),
+    (base) => ({ x: base.x - 16, y: base.y + 9 }),
+    (base) => ({ x: base.x + 22, y: base.y - 3 }),
+    (base) => ({ x: base.x - 22, y: base.y - 3 }),
+    (base) => ({ x: base.x + 4, y: base.y - 14 }),
+    (base) => ({ x: base.x - 4, y: base.y + 14 }),
+    (base) => ({ x: base.x + 26, y: base.y + 12 }),
+    (base) => ({ x: base.x - 26, y: base.y + 12 }),
   ]
 
   const labelBoxes = []
-  const byPriority = [...points].sort((a, b) => (tatryTierWeight[b.tier] || 0) - (tatryTierWeight[a.tier] || 0))
+  const mapPoints = points.map((point) => ({
+    id: point.id,
+    x: (point.mapPosition?.x ?? 50) * anchorScaleX,
+    y: (point.mapPosition?.y ?? 50) * anchorScaleY,
+  }))
+
+  const byPriority = [...points].sort((a, b) => {
+    const tierDelta = (tatryTierWeight[b.tier] || 0) - (tatryTierWeight[a.tier] || 0)
+    if (tierDelta !== 0) return tierDelta
+    return (tatryClusterPriority[b.id] || 0) - (tatryClusterPriority[a.id] || 0)
+  })
 
   return byPriority.map((point) => {
     const fullName = point.name
@@ -123,33 +151,48 @@ const getTatryCollisionLayout = (points) => {
     const baseOffset = point.labelOffset || { x: 0, y: 0 }
 
     const pickVariant = (name) => {
-      const textWidth = Math.max(52, Math.min(132, name.length * 6.3 + 24))
-      const textHeight = 22
+      const textWidth = Math.max(52, Math.min(138, name.length * 6 + 24))
       let selected = variantOrder[0](baseOffset)
-      let selectedCollisions = Number.POSITIVE_INFINITY
+      let selectedScore = Number.POSITIVE_INFINITY
       let selectedDistance = Number.POSITIVE_INFINITY
 
       variantOrder.forEach((variant) => {
         const offset = variant(baseOffset)
-        const centerX = (point.mapPosition?.x ?? 50) * anchorScaleX + offset.x + textWidth / 2
-        const centerY = (point.mapPosition?.y ?? 50) * anchorScaleY + offset.y
+        const anchorX = (point.mapPosition?.x ?? 50) * anchorScaleX + offset.x
+        const anchorY = (point.mapPosition?.y ?? 50) * anchorScaleY + offset.y
         const candidate = {
-          left: centerX - textWidth / 2,
-          right: centerX + textWidth / 2,
-          top: centerY - textHeight / 2,
-          bottom: centerY + textHeight / 2,
+          left: anchorX,
+          right: anchorX + textWidth,
+          top: anchorY - textHeight / 2,
+          bottom: anchorY + textHeight / 2,
         }
 
-        const collisions = labelBoxes.reduce((count, box) => {
+        const labelPenalty = labelBoxes.reduce((sum, box) => {
           const overlapX = candidate.left < box.right && candidate.right > box.left
           const overlapY = candidate.top < box.bottom && candidate.bottom > box.top
-          return overlapX && overlapY ? count + 1 : count
+          if (!overlapX || !overlapY) return sum
+          const overlapWidth = Math.min(candidate.right, box.right) - Math.max(candidate.left, box.left)
+          const overlapHeight = Math.min(candidate.bottom, box.bottom) - Math.max(candidate.top, box.top)
+          return sum + overlapWidth * overlapHeight
         }, 0)
 
+        const pointPenalty = mapPoints.reduce((sum, mapPoint) => {
+          if (mapPoint.id === point.id) return sum
+          const nearX = mapPoint.x >= candidate.left - pointPadding && mapPoint.x <= candidate.right + pointPadding
+          const nearY = mapPoint.y >= candidate.top - pointPadding && mapPoint.y <= candidate.bottom + pointPadding
+          return nearX && nearY ? sum + 110 : sum
+        }, 0)
+
+        const leaderLength = Math.hypot(offset.x, offset.y)
+        const angle = Math.abs(Math.atan2(offset.y, offset.x || 0.001))
+        const straightLinePenalty = angle < 0.14 || angle > 2.95 ? 6 : 0
+        const longLeaderPenalty = Math.max(0, leaderLength - 26) * 0.55
         const distance = Math.abs(offset.x - baseOffset.x) + Math.abs(offset.y - baseOffset.y)
-        if (collisions < selectedCollisions || (collisions === selectedCollisions && distance < selectedDistance)) {
+        const score = labelPenalty + pointPenalty + straightLinePenalty + longLeaderPenalty
+
+        if (score < selectedScore || (score === selectedScore && distance < selectedDistance)) {
           selected = offset
-          selectedCollisions = collisions
+          selectedScore = score
           selectedDistance = distance
         }
       })
@@ -161,19 +204,17 @@ const getTatryCollisionLayout = (points) => {
         bottom: (point.mapPosition?.y ?? 50) * anchorScaleY + selected.y + textHeight / 2,
       })
 
-      return { offset: selected, collisions: selectedCollisions }
+      return { offset: selected, score: selectedScore }
     }
 
     const full = pickVariant(fullName)
-    const shouldCompact = full.collisions > 0 && shortName !== fullName
+    const shouldCompact = full.score > 75 && shortName !== fullName
     const compact = shouldCompact ? pickVariant(shortName) : null
-    const finalName = compact ? shortName : fullName
-    const finalOffset = compact ? compact.offset : full.offset
 
     return {
       ...point,
-      displayName: finalName,
-      labelOffset: finalOffset,
+      displayName: compact ? shortName : fullName,
+      labelOffset: compact ? compact.offset : full.offset,
       visualPriority: tatryTierWeight[point.tier] || 1,
     }
   }).sort((a, b) => a.visualPriority - b.visualPriority)
@@ -265,7 +306,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
     const leaderLength = Math.hypot(offsetX, offsetY)
     return {
       ...point,
-      hasLeader: leaderLength >= 13,
+      hasLeader: leaderLength >= 11,
       leaderLength,
       leaderAngle: Math.atan2(offsetY, offsetX),
     }
@@ -387,7 +428,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                   onClick={() => summit.id in atlasLookups.summits && setAtlasPath((prev) => [...prev, summit.id])}
                 >
                   <span className="dot" />
-                  {summit.hasLeader && <span className="leader" style={{ '--leader-length': `${Math.max(8, summit.leaderLength - 6)}px`, '--leader-angle': `${summit.leaderAngle}rad` }} />}
+                  {summit.hasLeader && <span className="leader" style={{ '--leader-length': `${Math.max(7, Math.min(30, summit.leaderLength - 4))}px`, '--leader-angle': `${summit.leaderAngle}rad` }} />}
                   <span className="label" style={{ transform: `translate(${summit.labelOffset?.x ?? 0}px, ${summit.labelOffset?.y ?? 0}px)` }}>{summit.displayName || summit.name}</span>
                 </button>
               ))}
