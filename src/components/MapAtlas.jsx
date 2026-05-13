@@ -135,24 +135,24 @@ const tatryClusterPriority = {
 const getTatryCollisionLayout = (points) => {
   const anchorScaleX = 5.2
   const anchorScaleY = 4.6
-  const pointPadding = 5
-  const textHeight = 22
+  const pointPadding = 7
+  const textHeight = 24
+  const mapBounds = { left: 14, right: 504, top: 14, bottom: 444 }
   const variantOrder = [
-    (base) => ({ x: base.x, y: base.y }),
-    (base) => ({ x: base.x + 12, y: base.y - 8 }),
-    (base) => ({ x: base.x - 12, y: base.y - 8 }),
-    (base) => ({ x: base.x + 16, y: base.y + 8 }),
-    (base) => ({ x: base.x - 16, y: base.y + 9 }),
-    (base) => ({ x: base.x + 22, y: base.y - 3 }),
-    (base) => ({ x: base.x - 22, y: base.y - 3 }),
-    (base) => ({ x: base.x + 4, y: base.y - 14 }),
-    (base) => ({ x: base.x - 4, y: base.y + 14 }),
-    (base) => ({ x: base.x + 26, y: base.y + 12 }),
-    (base) => ({ x: base.x - 26, y: base.y + 12 }),
-    (base) => ({ x: base.x + 30, y: base.y - 14 }),
-    (base) => ({ x: base.x - 30, y: base.y - 14 }),
-    (base) => ({ x: base.x + 30, y: base.y + 16 }),
-    (base) => ({ x: base.x - 30, y: base.y + 16 }),
+    (base) => ({ x: base.x + 18, y: base.y - 8, anchor: 'east' }),
+    (base) => ({ x: base.x - 18, y: base.y - 8, anchor: 'west' }),
+    (base) => ({ x: base.x + 16, y: base.y + 11, anchor: 'east' }),
+    (base) => ({ x: base.x - 16, y: base.y + 11, anchor: 'west' }),
+    (base) => ({ x: base.x + 6, y: base.y - 18, anchor: 'north' }),
+    (base) => ({ x: base.x - 6, y: base.y + 18, anchor: 'south' }),
+    (base) => ({ x: base.x + 28, y: base.y - 2, anchor: 'east' }),
+    (base) => ({ x: base.x - 28, y: base.y - 2, anchor: 'west' }),
+    (base) => ({ x: base.x + 29, y: base.y - 17, anchor: 'east' }),
+    (base) => ({ x: base.x - 29, y: base.y - 17, anchor: 'west' }),
+    (base) => ({ x: base.x + 29, y: base.y + 17, anchor: 'east' }),
+    (base) => ({ x: base.x - 29, y: base.y + 17, anchor: 'west' }),
+    (base) => ({ x: base.x + 40, y: base.y + 2, anchor: 'east' }),
+    (base) => ({ x: base.x - 40, y: base.y + 2, anchor: 'west' }),
   ]
 
   const labelBoxes = []
@@ -207,11 +207,14 @@ const getTatryCollisionLayout = (points) => {
         }, 0)
 
         const leaderLength = Math.hypot(offset.x, offset.y)
+        const leaderCutoff = Math.max(0, leaderLength - 36)
+        const edgeOverflow = Math.max(0, mapBounds.left - candidate.left) + Math.max(0, candidate.right - mapBounds.right) + Math.max(0, mapBounds.top - candidate.top) + Math.max(0, candidate.bottom - mapBounds.bottom)
         const angle = Math.abs(Math.atan2(offset.y, offset.x || 0.001))
-        const straightLinePenalty = angle < 0.14 || angle > 2.95 ? 6 : 0
-        const longLeaderPenalty = Math.max(0, leaderLength - 26) * 0.55
+        const straightLinePenalty = angle < 0.1 || angle > 3 ? 3 : 0
+        const longLeaderPenalty = leaderCutoff * 0.9
+        const cardinalBonus = ['east', 'west'].includes(offset.anchor) ? -4 : 0
         const distance = Math.abs(offset.x - baseOffset.x) + Math.abs(offset.y - baseOffset.y)
-        const score = labelPenalty + pointPenalty + straightLinePenalty + longLeaderPenalty
+        const score = (labelPenalty * 1.45) + (pointPenalty * 1.15) + straightLinePenalty + longLeaderPenalty + (edgeOverflow * 1.6) + cardinalBonus
 
         if (score < selectedScore || (score === selectedScore && distance < selectedDistance)) {
           selected = offset
@@ -238,6 +241,7 @@ const getTatryCollisionLayout = (points) => {
       ...point,
       displayName: compact ? shortName : fullName,
       labelOffset: compact ? compact.offset : full.offset,
+      labelAnchor: (compact ? compact.offset : full.offset).anchor || 'east',
       visualPriority: tatryTierWeight[point.tier] || 1,
     }
   }).sort((a, b) => a.visualPriority - b.visualPriority)
@@ -441,7 +445,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                 >
                   <span className="dot" />
                   {summit.hasLeader && <span className="leader" style={{ '--leader-length': `${Math.max(7, Math.min(30, summit.leaderLength - 4))}px`, '--leader-angle': `${summit.leaderAngle}rad` }} />}
-                  <span className="label" style={{ transform: `translate(${summit.labelOffset?.x ?? 0}px, ${summit.labelOffset?.y ?? 0}px)` }}>{summit.displayName || summit.name}</span>
+                  <span className={`label anchor${summit.labelAnchor || 'east'}`} style={{ transform: `translate(${summit.labelOffset?.x ?? 0}px, ${summit.labelOffset?.y ?? 0}px)` }}>{summit.displayName || summit.name}</span>
                 </button>
               ))}
               </div>

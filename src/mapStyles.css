@@ -31,11 +31,13 @@
 .tatryBorderLabel{fill:rgba(238,220,191,.52);font-size:3px;letter-spacing:.18em}
 .tatryBorderLabel.isSouth{fill:rgba(226,204,168,.42)}
 .summitPoint{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:8px;border:0;background:transparent;color:var(--text);cursor:pointer;transition:.22s;padding:5px 7px;border-radius:12px;z-index:2}
-.summitPoint .dot{width:7px;height:7px;border-radius:50%;background:rgba(248,228,194,.95);box-shadow:0 0 0 1px rgba(255,245,224,.3),0 0 0 5px rgba(245,220,181,.06),0 0 11px rgba(245,218,172,.3),0 4px 8px rgba(0,0,0,.32)}
-.summitPoint .leader{position:absolute;left:9px;top:50%;width:var(--leader-length,10px);height:1px;background:linear-gradient(90deg,rgba(241,220,186,.36),rgba(241,220,186,.03));transform-origin:left center;transform:rotate(var(--leader-angle,0rad));pointer-events:none;opacity:.58}
-.summitPoint .label{font-size:10.7px;line-height:1.08;background:linear-gradient(165deg,rgba(10,9,8,.82),rgba(17,14,11,.62));border:1px solid rgba(228,211,180,.18);padding:4px 8px 4px 7px;border-radius:8px;white-space:nowrap;letter-spacing:.02em;max-width:min(30vw,176px);overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 0 rgba(0,0,0,.52);box-shadow:0 7px 13px rgba(0,0,0,.16)}
+.summitPoint .dot{width:8px;height:8px;border-radius:50%;background:rgba(249,229,196,.98);box-shadow:0 0 0 1px rgba(255,244,218,.36),0 0 0 5px rgba(246,222,182,.08),0 0 16px rgba(246,219,172,.48),0 0 30px rgba(245,218,170,.24),0 4px 8px rgba(0,0,0,.38)}
+.summitPoint .leader{position:absolute;left:10px;top:50%;width:var(--leader-length,10px);height:1px;background:linear-gradient(90deg,rgba(242,221,188,.42),rgba(242,221,188,.05));transform-origin:left center;transform:rotate(var(--leader-angle,0rad));pointer-events:none;opacity:.72;filter:drop-shadow(0 0 3px rgba(246,220,178,.16))}
+.summitPoint .label{font-size:10.8px;line-height:1.08;background:linear-gradient(168deg,rgba(12,10,8,.88),rgba(17,13,10,.66));border:1px solid rgba(232,215,184,.24);padding:5px 10px;border-radius:10px;white-space:nowrap;letter-spacing:.024em;max-width:min(30vw,188px);overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 0 rgba(0,0,0,.56);box-shadow:0 7px 14px rgba(0,0,0,.24),inset 0 0 0 1px rgba(255,239,210,.04)}
+.summitPoint .label.anchorwest{text-align:right}
+.summitPoint .label.anchornorth,.summitPoint .label.anchorsouth{text-align:center}
 .summitPoint:hover,.summitPoint:focus-visible{transform:translate(-50%,-50%) scale(1.04);background:rgba(40,32,24,.24)}
-.summitPoint:hover .label{border-color:rgba(244,221,182,.56);background:rgba(10,9,8,.83)}
+.summitPoint:hover .label{border-color:rgba(246,224,186,.62);background:rgba(12,10,8,.88)}
 .summitPoint:hover,.summitPoint:focus-visible,.summitPoint.isActive{z-index:4}
 .summitPoint.isActive .dot{box-shadow:0 0 0 4px rgba(244,220,183,.12),0 0 0 1px rgba(255,242,218,.35),0 0 12px rgba(244,220,183,.32)}
 .summitPoint.isActive .label{border-color:rgba(247,228,193,.72);background:rgba(12,10,8,.9)}
@@ -76,9 +78,9 @@
 
 .atlasInlineLabel{fill:rgba(246,227,195,.9);font-size:10px;letter-spacing:.14em;text-transform:uppercase;pointer-events:none}
 
-.summitTierfeatured .dot{width:11px;height:11px;background:rgba(250,232,197,.98)}
-.summitTierfeatured .label{border-color:rgba(248,228,190,.72)}
-.summitTierprimary .dot{box-shadow:0 0 0 1px rgba(255,240,214,.35),0 0 12px rgba(244,220,183,.52)}
+.summitTierfeatured .dot{width:11px;height:11px;background:rgba(251,233,200,.99)}
+.summitTierfeatured .label{border-color:rgba(248,228,190,.74);box-shadow:0 10px 18px rgba(0,0,0,.3),0 0 18px rgba(247,223,183,.11),inset 0 0 0 1px rgba(255,241,214,.06)}
+.summitTierprimary .dot{box-shadow:0 0 0 1px rgba(255,240,214,.35),0 0 14px rgba(244,220,183,.54),0 0 24px rgba(244,220,183,.16)}
 
 .summitTiersecondary .label{opacity:.92}
 .summitTiersecondary .dot{opacity:.9}
