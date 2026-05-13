@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { travelAtlasData } from '../data/travelData'
 import { resolveTatryPointPosition } from '../data/atlasGeo'
+import { tatryMapBasePlaceholder } from '../data/tatryMapBase'
 import '../mapStyles.css'
 
 const worldShapes = [
@@ -30,32 +31,23 @@ const europeCountries = [
   { id: 'slovenia', label: 'SI', labelX: 258, labelY: 218, d: 'M244 212l18-2 12 6 0 8-16 6-14-4z' },
 ]
 
-const tatryContours = [
-  { id: 'tatry-outer', d: 'M4 65 L9 61 L13 57 L18 55 L23 51 L28 48 L34 45 L40 43 L47 40 L54 37 L61 34 L68 30 L74 28 L80 25 L85 23 L89 24 L92 27 L94 31 L95 35 L93 39 L89 43 L84 46 L79 49 L73 53 L66 56 L58 60 L50 63 L41 66 L33 69 L24 71 L16 72 L10 70 L6 68 Z' },
-  { id: 'tatry-inner', d: 'M11 62 L16 58 L22 55 L28 51 L34 48 L40 45 L47 42 L54 39 L61 35 L68 32 L74 30 L79 29 L83 30 L85 33 L83 37 L79 40 L74 43 L68 47 L61 50 L53 54 L45 57 L37 61 L29 64 L21 66 L15 66 Z' },
-]
 
-const tatryGuideLines = [
-  { id: 'main-ridge', d: 'M9 63 C17 58, 25 54, 34 49 C43 45, 52 40, 61 35 C69 31, 76 28, 84 27' },
-  { id: 'north-ridge', d: 'M13 58 C22 54, 31 49, 40 45 C49 40, 58 35, 67 31 C74 28, 80 26, 86 26' },
-  { id: 'south-ridge', d: 'M8 67 C17 65, 26 61, 35 57 C45 53, 55 48, 65 43 C73 39, 80 35, 87 31' },
-  { id: 'cross-valley-west', d: 'M27 50 C25 54, 23 58, 21 62' },
-  { id: 'cross-valley-central', d: 'M48 43 C46 48, 44 53, 42 58' },
-  { id: 'cross-valley-east', d: 'M69 34 C67 39, 65 44, 62 49' },
-  { id: 'spur-west', d: 'M18 56 C20 59, 23 61, 26 63' },
-  { id: 'spur-east', d: 'M70 45 C73 47, 76 49, 80 51' },
-]
 
-const tatryBorderPLSK = 'M10 61 C19 56, 29 51, 39 46 C48 41, 58 36, 67 32 C74 29, 81 28, 87 29'
-const tatryTopoLines = [
-  'M7 67 C16 63, 25 60, 34 56 C44 51, 54 46, 64 41 C73 36, 82 33, 90 32',
-  'M8 70 C17 66, 27 63, 37 59 C47 54, 58 49, 68 44 C77 40, 85 36, 92 35',
-  'M10 73 C20 70, 31 66, 42 63 C52 58, 62 53, 72 48 C80 44, 88 41, 94 40',
-  'M13 76 C24 73, 35 70, 46 66 C56 62, 66 57, 76 53 C84 49, 91 46, 95 45',
-  'M16 79 C27 77, 39 74, 51 70 C61 66, 71 62, 81 57 C88 54, 93 51, 96 50',
-  'M21 82 C33 80, 45 77, 57 73 C67 69, 77 65, 86 61 C92 58, 96 56, 98 55',
-]
-
+const TatryMapBase = ({ baseData }) => (
+  <svg className="tatryStructure" viewBox={baseData.viewBox} preserveAspectRatio="none" aria-hidden="true">
+    <path d={baseData.regionContour} className="tatryRegionContour" />
+    {baseData.reliefBands.map((band) => <path key={band} d={band} className="tatryReliefBand" />)}
+    {baseData.ridgeLines.map((line) => <path key={line.id} d={line.d} className="tatryRidgeLine" />)}
+    {baseData.borders.map((border) => (
+      <g key={border.id}>
+        <path d={border.d} className="tatryBorder" />
+        {border.labels?.map((label) => (
+          <text key={`${border.id}-${label.text}-${label.y}`} x={label.x} y={label.y} className={`tatryBorderLabel ${label.variant === 'south' ? 'isSouth' : ''}`} textAnchor={label.anchor || 'start'}>{label.text}</text>
+        ))}
+      </g>
+    ))}
+  </svg>
+)
 
 const levelNames = ['Świat', 'Kontynent', 'Kraj', 'Region specjalny', 'Szczyt']
 const levelIcons = {
@@ -407,18 +399,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                 }}
               >
               <div className="tatryScene" style={tatryTransformStyle}>
-              <svg className="tatryStructure" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                {tatryContours.map((shape) => (
-                  <path key={shape.id} d={shape.d} className={`tatryContour ${shape.id === 'tatry-outer' ? 'isOuter' : 'isInner'}`} />
-                ))}
-                {tatryGuideLines.map((line) => (
-                  <path key={line.id} d={line.d} className="tatryGuideLine" />
-                ))}
-                <path d={tatryBorderPLSK} className="tatryBorder" />
-                {tatryTopoLines.map((line, index) => <path key={line} d={line} className={`tatryTopoLine tatryTopoLine${index + 1}`} />)}
-                <text x="91" y="38" className="tatryBorderLabel" textAnchor="end">PL</text>
-                <text x="90" y="46" className="tatryBorderLabel isSouth" textAnchor="end">SK</text>
-              </svg>
+              <TatryMapBase baseData={tatryMapBasePlaceholder} />
               {tatryPointsWithLeaders.map((summit) => (
                 <button
                   key={summit.id}
@@ -456,7 +437,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
         <div className="atlasTagRow">{tags.map((tag) => <span key={tag} className="atlasTag">{tag}</span>)}</div>
         {activeNode.countryIds && <p className="atlasMeta">Kraje: {activeNode.countryIds.map((id) => atlasLookups.countries[id]?.name).filter(Boolean).join(', ')}</p>}
         {activeId === 'europe' && <p className="atlasMeta">Wyróżniony region: <strong>Tatry</strong>.</p>}
-        {activeId === 'tatry' && <p className="atlasMeta">Widok Tatr został dopracowany do spokojniejszej, atlasowej kompozycji top-down: czytelniejsze etykiety, subtelniejsze markery i dyskretna granica PL–SK wspierają orientację bez technicznego szumu.</p>}
+        {activeId === 'tatry' && <p className="atlasMeta">Widok Tatr działa teraz w układzie hybrydowym: osobna baza mapy (placeholder pod docelowe geodata) oraz niezależny overlay interaktywnych szczytów.</p>}
         {atlasLevel === 1 && countriesForContinent.length > 0 && <p className="atlasMeta">Widoczne kraje: {countriesForContinent.map((country) => country.name).join(', ')}</p>}
         {activeFilm && (
           <a className="smallButton atlasCta" href={activeFilm.url} target="_blank" rel="noreferrer">
