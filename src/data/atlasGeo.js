@@ -38,10 +38,10 @@ const clampPercent = (value) => Math.max(0, Math.min(100, value))
 const stylizeTatryProjection = (position) => {
   if (!position) return null
   const normalizedX = position.x / 100
-  const axisX = 15 + normalizedX * 72
-  const ridgeSlope = 65 - normalizedX * 28
-  const corridorWave = Math.sin(normalizedX * Math.PI * 1.15) * 2.4
-  const geoPull = ((position.y - 50) / 50) * 5.8
+  const axisX = 12 + normalizedX * 80
+  const ridgeSlope = 62 - normalizedX * 26
+  const corridorWave = Math.sin(normalizedX * Math.PI * 1.05) * 1.1
+  const geoPull = ((position.y - 50) / 50) * 9.2
   return {
     x: clampPercent(axisX),
     y: clampPercent(ridgeSlope + corridorWave + geoPull),
