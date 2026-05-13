@@ -33,23 +33,33 @@ const europeCountries = [
 
 
 
-const TatryMapBase = ({ baseData }) => (
-  <svg className="tatryStructure" viewBox={baseData.viewBox} preserveAspectRatio="none" aria-hidden="true">
-    <path d={baseData.regionContour} className="tatryRegionContour" />
-    {baseData.reliefBands.map((band) => <path key={band} d={band} className="tatryReliefBand" />)}
-    {baseData.topoLines?.map((line) => <path key={line} d={line} className="tatryTopoLine" />)}
-    {baseData.ridgeLines.map((line) => <path key={line.id} d={line.d} className="tatryRidgeLine" />)}
-    {baseData.valleyLines?.map((line) => <path key={line} d={line} className="tatryValleyLine" />)}
-    {baseData.borders.map((border) => (
-      <g key={border.id}>
-        <path d={border.d} className="tatryBorder" />
-        {border.labels?.map((label) => (
-          <text key={`${border.id}-${label.text}-${label.y}`} x={label.x} y={label.y} className={`tatryBorderLabel ${label.variant === 'south' ? 'isSouth' : ''}`} textAnchor={label.anchor || 'start'}>{label.text}</text>
-        ))}
-      </g>
-    ))}
-  </svg>
-)
+const TatryMapBase = ({ baseData }) => {
+  const layers = baseData.layers || {}
+  const contourPath = layers.contour?.d || baseData.regionContour
+  const reliefBands = layers.relief?.bands || baseData.reliefBands || []
+  const topoHints = layers.relief?.topoHints || baseData.topoLines || []
+  const ridgeLines = layers.ridges || baseData.ridgeLines || []
+  const valleyLines = layers.valleys || (baseData.valleyLines || []).map((d) => ({ id: d, d }))
+  const border = layers.border || baseData.borders?.[0]
+
+  return (
+    <svg className="tatryStructure" viewBox={baseData.viewBox} preserveAspectRatio="none" aria-hidden="true">
+      {contourPath ? <path d={contourPath} className="tatryRegionContour" /> : null}
+      {reliefBands.map((band) => <path key={band.id || band.d || band} d={band.d || band} className="tatryReliefBand" />)}
+      {topoHints.map((line) => <path key={line.id || line.d || line} d={line.d || line} className="tatryTopoLine" />)}
+      {ridgeLines.map((line) => <path key={line.id} d={line.d} className="tatryRidgeLine" />)}
+      {valleyLines.map((line) => <path key={line.id || line.d} d={line.d || line} className="tatryValleyLine" />)}
+      {border ? (
+        <g key={border.id}>
+          <path d={border.d} className="tatryBorder" />
+          {border.labels?.map((label) => (
+            <text key={`${border.id}-${label.text}-${label.y}`} x={label.x} y={label.y} className={`tatryBorderLabel ${label.variant === 'south' ? 'isSouth' : ''}`} textAnchor={label.anchor || 'start'}>{label.text}</text>
+          ))}
+        </g>
+      ) : null}
+    </svg>
+  )
+}
 
 const levelNames = ['Świat', 'Kontynent', 'Kraj', 'Region specjalny', 'Szczyt']
 const levelIcons = {
