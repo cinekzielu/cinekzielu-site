@@ -85,7 +85,12 @@ const tatryLabelAliases = {
   'lodowy-szczyt': 'Lodowy',
   'kiezmarski-szczyt': 'Kieżmarski',
   'baranie-rogi': 'Baranie Rogi',
+  'jagniecy-szczyt': 'Jagnięcy',
+  'slawkowski-szczyt': 'Sławkowski',
+  'mieguszowiecki-szczyt-wielki': 'Mięguszowiecki',
+  'starorobocianski-wierch': 'Starorobociański',
 }
+
 
 const tatryTierWeight = {
   featured: 3,
@@ -105,6 +110,16 @@ const tatryClusterPriority = {
   'baranie-rogi': 6,
   'kiezmarski-szczyt': 6,
   'durny-szczyt': 5,
+  wysoka: 10,
+  'mieguszowiecki-szczyt-wielki': 9,
+  giewont: 8,
+  szatan: 8,
+  ganek: 7,
+  'posrednia-gran': 7,
+  'slawkowski-szczyt': 6,
+  'jagniecy-szczyt': 6,
+  wolowiec: 5,
+  'starorobocianski-wierch': 5,
 }
 
 const getTatryCollisionLayout = (points) => {
@@ -124,6 +139,10 @@ const getTatryCollisionLayout = (points) => {
     (base) => ({ x: base.x - 4, y: base.y + 14 }),
     (base) => ({ x: base.x + 26, y: base.y + 12 }),
     (base) => ({ x: base.x - 26, y: base.y + 12 }),
+    (base) => ({ x: base.x + 30, y: base.y - 14 }),
+    (base) => ({ x: base.x - 30, y: base.y - 14 }),
+    (base) => ({ x: base.x + 30, y: base.y + 16 }),
+    (base) => ({ x: base.x - 30, y: base.y + 16 }),
   ]
 
   const labelBoxes = []
