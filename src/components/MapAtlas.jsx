@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { travelAtlasData } from '../data/travelData'
 import { resolveTatryPointPosition } from '../data/atlasGeo'
 import '../mapStyles.css'
@@ -48,6 +48,14 @@ const tatryBorderPLSK = 'M11 58 L18 55 L26 51 L35 47 L44 43 L53 39 L62 36 L70 33
 
 
 const levelNames = ['Świat', 'Kontynent', 'Kraj', 'Region specjalny', 'Szczyt']
+
+
+const TATRY_MIN_ZOOM = 1
+const TATRY_MAX_ZOOM = 2.2
+const TATRY_ZOOM_STEP = 0.2
+const TATRY_WHEEL_STEP = 0.12
+
+const clamp = (value, min, max) => Math.min(max, Math.max(min, value))
 
 const tatryLabelAliases = {
   'durny-szczyt': 'Durny',
@@ -145,6 +153,11 @@ const getTatryCollisionLayout = (points) => {
 export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) {
   const atlasLevel = atlasPath.length - 1
   const activeId = atlasPath[atlasPath.length - 1]
+  const stageRef = useRef(null)
+  const [tatryZoom, setTatryZoom] = useState(TATRY_MIN_ZOOM)
+  const [tatryPan, setTatryPan] = useState({ x: 0, y: 0 })
+  const [isDraggingTatry, setIsDraggingTatry] = useState(false)
+  const dragStateRef = useRef(null)
   const continents = travelAtlasData.continents
   const getNodeName = (id) =>
     id === 'world'
@@ -173,6 +186,45 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
   const typeLabelMap = { summit: 'Szczyt', trail: 'Szlak / przejście', viewpoint: 'Punkt widokowy', place: 'Miejsce', city: 'Miasto', hut: 'Schronisko', region: 'Region', country: 'Kraj', continent: 'Kontynent' }
 
   const tags = [activeNode.visited ? 'odwiedzone' : 'w planach', activeFilm ? 'film' : null, activeNode.gallery?.length ? 'galeria' : 'galeria wkrótce'].filter(Boolean)
+  const tatryPanLimits = useMemo(() => {
+    const horizontal = Math.max(0, ((tatryZoom - 1) * 44) / tatryZoom)
+    const vertical = Math.max(0, ((tatryZoom - 1) * 36) / tatryZoom)
+    return { x: horizontal, y: vertical }
+  }, [tatryZoom])
+
+  const applyTatryPan = useCallback((nextPan) => {
+    setTatryPan({
+      x: clamp(nextPan.x, -tatryPanLimits.x, tatryPanLimits.x),
+      y: clamp(nextPan.y, -tatryPanLimits.y, tatryPanLimits.y),
+    })
+  }, [tatryPanLimits.x, tatryPanLimits.y])
+
+  const resetTatryViewport = useCallback(() => {
+    setTatryZoom(TATRY_MIN_ZOOM)
+    setTatryPan({ x: 0, y: 0 })
+    setIsDraggingTatry(false)
+    dragStateRef.current = null
+  }, [])
+
+  const updateTatryZoom = useCallback((nextZoom) => {
+    const clampedZoom = clamp(nextZoom, TATRY_MIN_ZOOM, TATRY_MAX_ZOOM)
+    setTatryZoom(clampedZoom)
+    if (clampedZoom <= TATRY_MIN_ZOOM) {
+      setTatryPan({ x: 0, y: 0 })
+      return
+    }
+    setTatryPan((prev) => ({
+      x: clamp(prev.x, -Math.max(0, ((clampedZoom - 1) * 44) / clampedZoom), Math.max(0, ((clampedZoom - 1) * 44) / clampedZoom)),
+      y: clamp(prev.y, -Math.max(0, ((clampedZoom - 1) * 36) / clampedZoom), Math.max(0, ((clampedZoom - 1) * 36) / clampedZoom)),
+    }))
+  }, [])
+
+  useEffect(() => {
+    if (activeId !== 'tatry') {
+      resetTatryViewport()
+    }
+  }, [activeId, resetTatryViewport])
+
   const tatryPointsWithLeaders = getTatryCollisionLayout(tatryPoints).map((point) => {
     const offsetX = point.labelOffset?.x ?? 0
     const offsetY = point.labelOffset?.y ?? 0
@@ -184,6 +236,8 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
       leaderAngle: Math.atan2(offsetY, offsetX),
     }
   })
+
+  const tatryTransformStyle = { transform: `translate(${tatryPan.x}%, ${tatryPan.y}%) scale(${tatryZoom})` }
 
   return (
     <div className="atlasLayout cinematicAtlas">
@@ -199,7 +253,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
           </div>
         </div>
 
-        <div className="atlasStage cinematicStage">
+        <div className="atlasStage cinematicStage" ref={stageRef}>
           {activeId === 'world' && (
             <svg viewBox="0 0 560 360" className="atlasSvg atlasSvgInteractive">
               <path d="M38 178h484" className="atlasLatLine" />
@@ -239,6 +293,42 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
 
           {activeId === 'tatry' && (
             <div className="summitLayer tatryLayer">
+              <div className="tatryControls" role="group" aria-label="Nawigacja Tatr">
+                <button type="button" className="tatryControlButton" onClick={() => updateTatryZoom(tatryZoom + TATRY_ZOOM_STEP)} aria-label="Przybliż Tatry">+</button>
+                <button type="button" className="tatryControlButton" onClick={() => updateTatryZoom(tatryZoom - TATRY_ZOOM_STEP)} aria-label="Oddal Tatry">−</button>
+                <button type="button" className="tatryControlButton isReset" onClick={resetTatryViewport} disabled={tatryZoom === 1 && tatryPan.x === 0 && tatryPan.y === 0} aria-label="Resetuj widok Tatr">Reset</button>
+              </div>
+              <div
+                className={`tatryViewport ${tatryZoom > 1 ? 'isZoomed' : ''} ${isDraggingTatry ? 'isDragging' : ''}`}
+                onWheel={(event) => {
+                  event.preventDefault()
+                  const delta = event.deltaY > 0 ? -TATRY_WHEEL_STEP : TATRY_WHEEL_STEP
+                  updateTatryZoom(tatryZoom + delta)
+                }}
+                onPointerDown={(event) => {
+                  if (tatryZoom <= 1) return
+                  dragStateRef.current = { x: event.clientX, y: event.clientY, panX: tatryPan.x, panY: tatryPan.y }
+                  setIsDraggingTatry(true)
+                  event.currentTarget.setPointerCapture(event.pointerId)
+                }}
+                onPointerMove={(event) => {
+                  if (!dragStateRef.current || tatryZoom <= 1) return
+                  const stageRect = stageRef.current?.getBoundingClientRect()
+                  if (!stageRect) return
+                  const deltaX = ((event.clientX - dragStateRef.current.x) / stageRect.width) * 100
+                  const deltaY = ((event.clientY - dragStateRef.current.y) / stageRect.height) * 100
+                  applyTatryPan({ x: dragStateRef.current.panX + deltaX, y: dragStateRef.current.panY + deltaY })
+                }}
+                onPointerUp={() => {
+                  dragStateRef.current = null
+                  setIsDraggingTatry(false)
+                }}
+                onPointerCancel={() => {
+                  dragStateRef.current = null
+                  setIsDraggingTatry(false)
+                }}
+              >
+              <div className="tatryScene" style={tatryTransformStyle}>
               <svg className="tatryStructure" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
                 {tatryContours.map((shape) => (
                   <path key={shape.id} d={shape.d} className={`tatryContour ${shape.id === 'tatry-outer' ? 'isOuter' : 'isInner'}`} />
@@ -263,6 +353,8 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                   <span className="label" style={{ transform: `translate(${summit.labelOffset?.x ?? 0}px, ${summit.labelOffset?.y ?? 0}px)` }}>{summit.displayName || summit.name}</span>
                 </button>
               ))}
+              </div>
+              </div>
             </div>
           )}
 
