@@ -31,16 +31,17 @@ const europeCountries = [
 ]
 
 const tatryContours = [
-  { id: 'tatry-outer', d: 'M10 71 L15 64 L22 59 L32 54 L44 50 L56 46 L67 42 L77 38 L86 35 L92 37 L95 43 L92 49 L86 54 L78 58 L66 62 L52 66 L38 70 L26 73 L16 75 Z' },
-  { id: 'tatry-inner', d: 'M17 67 L24 61 L35 56 L47 52 L58 48 L69 44 L78 41 L86 40 L89 43 L84 48 L75 53 L64 57 L50 61 L36 65 L25 68 Z' },
+  { id: 'tatry-outer', d: 'M7 67 L11 60 L18 55 L27 51 L38 47 L49 43 L58 40 L67 36 L76 33 L84 31 L91 33 L95 38 L94 45 L88 52 L80 58 L70 63 L59 67 L46 71 L35 74 L23 76 L12 74 Z' },
+  { id: 'tatry-inner', d: 'M14 64 L21 58 L31 53 L42 49 L53 45 L63 42 L72 39 L80 36 L87 36 L89 40 L84 46 L76 51 L66 56 L55 60 L43 64 L32 67 L22 69 Z' },
 ]
 
 const tatryGuideLines = [
-  { id: 'spine-nw-se', d: 'M18 68 L33 57 L49 50 L64 44 L80 38 L89 40' },
-  { id: 'southern-belt', d: 'M16 72 L28 69 L40 67 L54 64 L69 60 L84 55' },
+  { id: 'spine-nw-se', d: 'M13 63 L26 55 L41 48 L56 42 L72 36 L86 34' },
+  { id: 'southern-belt', d: 'M11 70 L24 67 L37 64 L50 61 L64 57 L78 52 L88 47' },
+  { id: 'northern-edge', d: 'M17 59 L31 52 L47 46 L62 40 L77 35 L89 34' },
 ]
 
-const tatryBorderPLSK = 'M14 62 L25 57 L39 52 L53 47 L68 43 L81 40 L91 42'
+const tatryBorderPLSK = 'M12 60 L25 55 L40 49 L55 44 L69 39 L82 36 L92 37'
 
 
 const levelNames = ['Świat', 'Kontynent', 'Kraj', 'Region specjalny', 'Szczyt']
