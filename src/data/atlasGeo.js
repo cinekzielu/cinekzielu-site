@@ -10,6 +10,16 @@ const tatryGeoPoints = {
   'kiezmarski-szczyt': { lat: 49.1955, lng: 20.2325, zone: 'belianske-tatras' },
   konczysta: { lat: 49.1587, lng: 20.0991, zone: 'high-tatras-region' },
   rysy: { lat: 49.1794, lng: 20.0881, zone: 'high-tatras-region' },
+  giewont: { lat: 49.2509, lng: 19.9346, zone: 'western-tatras' },
+  szatan: { lat: 49.1624, lng: 20.1072, zone: 'high-tatras-region' },
+  'jagniecy-szczyt': { lat: 49.2147, lng: 20.2104, zone: 'belianske-tatras' },
+  'posrednia-gran': { lat: 49.1817, lng: 20.1703, zone: 'high-tatras-region' },
+  'slawkowski-szczyt': { lat: 49.1672, lng: 20.1861, zone: 'high-tatras-region' },
+  ganek: { lat: 49.156, lng: 20.1297, zone: 'high-tatras-region' },
+  wysoka: { lat: 49.1602, lng: 20.1426, zone: 'high-tatras-region' },
+  'mieguszowiecki-szczyt-wielki': { lat: 49.1798, lng: 20.0582, zone: 'high-tatras-region' },
+  wolowiec: { lat: 49.2238, lng: 19.8249, zone: 'western-tatras' },
+  'starorobocianski-wierch': { lat: 49.2231, lng: 19.7972, zone: 'western-tatras' },
 }
 
 const tatryUiLayout = {
@@ -24,12 +34,22 @@ const tatryUiLayout = {
   'kiezmarski-szczyt': { nudge: { x: 1.1, y: 0.3 }, labelOffset: { x: 13, y: 9 }, tier: 'primary' },
   konczysta: { nudge: { x: -0.3, y: 0.4 }, labelOffset: { x: -16, y: 10 }, tier: 'secondary' },
   rysy: { nudge: { x: -0.1, y: 0.2 }, labelOffset: { x: -14, y: -10 }, tier: 'featured' },
+  giewont: { nudge: { x: -0.2, y: -0.2 }, labelOffset: { x: -14, y: -8 }, tier: 'primary' },
+  szatan: { nudge: { x: 0.3, y: 0.5 }, labelOffset: { x: 12, y: -8 }, tier: 'secondary' },
+  'jagniecy-szczyt': { nudge: { x: 0.6, y: -0.1 }, labelOffset: { x: 14, y: 6 }, tier: 'secondary' },
+  'posrednia-gran': { nudge: { x: 0.3, y: 0.2 }, labelOffset: { x: 12, y: -12 }, tier: 'secondary' },
+  'slawkowski-szczyt': { nudge: { x: 0.4, y: 0.5 }, labelOffset: { x: 14, y: 10 }, tier: 'secondary' },
+  ganek: { nudge: { x: 0.2, y: 0.2 }, labelOffset: { x: -20, y: 10 }, tier: 'secondary' },
+  wysoka: { nudge: { x: 0.3, y: 0.3 }, labelOffset: { x: -20, y: -10 }, tier: 'primary' },
+  'mieguszowiecki-szczyt-wielki': { nudge: { x: -0.2, y: 0.2 }, labelOffset: { x: -24, y: 9 }, tier: 'primary' },
+  wolowiec: { nudge: { x: -0.7, y: -0.1 }, labelOffset: { x: -15, y: -9 }, tier: 'secondary' },
+  'starorobocianski-wierch': { nudge: { x: -0.9, y: 0.1 }, labelOffset: { x: -18, y: 8 }, tier: 'secondary' },
 }
 
 const tatryBounds = {
   latMin: 49.12,
   latMax: 49.29,
-  lngMin: 19.88,
+  lngMin: 19.76,
   lngMax: 20.28,
 }
 
