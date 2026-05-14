@@ -108,6 +108,8 @@ const tatryTierWeight = {
   secondary: 1,
 }
 
+const tatryFeaturedIds = new Set(['gerlach', 'lomnica', 'rysy', 'krywan', 'koscielec', 'kiezmarski-szczyt', 'lodowy-szczyt', 'durny-szczyt'])
+
 const tatryClusterPriority = {
   'lomnica': 12,
   'gerlach': 11,
@@ -254,6 +256,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
   const [tatryZoom, setTatryZoom] = useState(TATRY_MIN_ZOOM)
   const [tatryPan, setTatryPan] = useState({ x: 0, y: 0 })
   const [isDraggingTatry, setIsDraggingTatry] = useState(false)
+  const [hoveredSummitId, setHoveredSummitId] = useState(null)
   const dragStateRef = useRef(null)
   const continents = travelAtlasData.continents
   const getNodeName = (id) =>
@@ -331,11 +334,14 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
     const offsetX = point.labelOffset?.x ?? 0
     const offsetY = point.labelOffset?.y ?? 0
     const leaderLength = Math.hypot(offsetX, offsetY)
+    const isFeatured = point.tier === 'featured' || tatryFeaturedIds.has(point.id)
     return {
       ...point,
-      hasLeader: leaderLength >= 11,
+      isFeatured,
+      hasLeader: leaderLength >= 11 && (isFeatured || point.tier === 'primary'),
       leaderLength,
       leaderAngle: Math.atan2(offsetY, offsetX),
+      isSecondary: !isFeatured && point.tier !== 'primary',
     }
   })
 
@@ -439,13 +445,17 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                 <button
                   key={summit.id}
                   type="button"
-                  className={`summitPoint summitTier${summit.tier || 'secondary'} pointType${summit.pointType || summit.atlasType || summit.type || 'place'} ${activeId === summit.id ? 'isActive' : ''}`}
+                  className={`summitPoint summitTier${summit.tier || 'secondary'} ${summit.isFeatured ? 'isFeaturedLabel' : 'isSecondaryLabel'} pointType${summit.pointType || summit.atlasType || summit.type || 'place'} ${activeId === summit.id ? 'isActive' : ''} ${hoveredSummitId === summit.id ? 'isHovered' : ''}`}
                   style={{ left: `${summit.mapPosition?.x ?? 50}%`, top: `${summit.mapPosition?.y ?? 50}%` }}
                   onClick={() => summit.id in atlasLookups.summits && setAtlasPath((prev) => [...prev, summit.id])}
+                  onMouseEnter={() => setHoveredSummitId(summit.id)}
+                  onMouseLeave={() => setHoveredSummitId(null)}
+                  onFocus={() => setHoveredSummitId(summit.id)}
+                  onBlur={() => setHoveredSummitId(null)}
                 >
                   <span className="dot" />
                   {summit.hasLeader && <span className="leader" style={{ '--leader-length': `${Math.max(7, Math.min(30, summit.leaderLength - 4))}px`, '--leader-angle': `${summit.leaderAngle}rad` }} />}
-                  <span className={`label anchor${summit.labelAnchor || 'east'}`} style={{ transform: `translate(${summit.labelOffset?.x ?? 0}px, ${summit.labelOffset?.y ?? 0}px)` }}>{summit.displayName || summit.name}</span>
+                  <span className={`label anchor${summit.labelAnchor || 'east'} ${(!summit.isFeatured && activeId !== summit.id && hoveredSummitId !== summit.id) ? 'isHidden' : ''}`} style={{ transform: `translate(${summit.labelOffset?.x ?? 0}px, ${summit.labelOffset?.y ?? 0}px)` }}>{summit.displayName || summit.name}</span>
                 </button>
               ))}
               </div>
