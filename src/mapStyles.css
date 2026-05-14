@@ -30,15 +30,15 @@
 .tatryBorder{fill:none;stroke:rgba(244,226,195,.12);stroke-width:.32;stroke-dasharray:1 4.4;opacity:.34}
 .tatryBorderLabel{fill:rgba(238,220,191,.52);font-size:3px;letter-spacing:.18em}
 .tatryBorderLabel.isSouth{fill:rgba(226,204,168,.42)}
-.summitPoint{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:8px;border:0;background:transparent;color:var(--text);cursor:pointer;transition:.22s;padding:5px 7px;border-radius:12px;z-index:2}
+.summitPoint{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:8px;border:0;background:transparent;color:var(--text);transition:.22s;z-index:2;pointer-events:none}
 .summitPoint .dot{width:7px;height:7px;border-radius:50%;background:rgba(250,233,201,.98);box-shadow:0 0 0 1px rgba(255,247,226,.36),0 0 0 4px rgba(246,222,182,.08),0 0 14px rgba(246,219,172,.56),0 0 26px rgba(245,218,170,.24),0 3px 7px rgba(0,0,0,.3)}
 .summitPoint .leader{position:absolute;left:9px;top:50%;width:var(--leader-length,10px);height:1px;background:linear-gradient(90deg,rgba(245,225,194,.46),rgba(242,221,188,.04));transform-origin:left center;transform:rotate(var(--leader-angle,0rad));pointer-events:none;opacity:.72;filter:drop-shadow(0 0 3px rgba(246,220,178,.16))}
 .summitPoint .label{font-size:10px;line-height:1.06;background:linear-gradient(168deg,rgba(10,8,7,.58),rgba(14,11,9,.36));border:1px solid rgba(236,219,188,.16);padding:3px 7px;border-radius:7px;white-space:nowrap;letter-spacing:.026em;max-width:min(28vw,170px);overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 0 rgba(0,0,0,.42);box-shadow:0 3px 7px rgba(0,0,0,.14),inset 0 0 0 1px rgba(255,239,210,.03);transition:opacity .2s ease,border-color .2s ease,background .2s ease}
 .summitPoint .label.anchorwest{text-align:right}
 .summitPoint .label.anchornorth,.summitPoint .label.anchorsouth{text-align:center}
-.summitPoint:hover,.summitPoint:focus-visible{transform:translate(-50%,-50%) scale(1.04);background:rgba(40,32,24,.24)}
+.summitPoint:hover,.summitPoint:focus-within{transform:translate(-50%,-50%) scale(1.04)}
 .summitPoint:hover .label{border-color:rgba(246,224,186,.62);background:rgba(12,10,8,.88)}
-.summitPoint:hover,.summitPoint:focus-visible,.summitPoint.isActive{z-index:4}
+.summitPoint:hover,.summitPoint:focus-within,.summitPoint.isActive{z-index:4}
 .summitPoint.isActive .dot{box-shadow:0 0 0 4px rgba(244,220,183,.12),0 0 0 1px rgba(255,242,218,.35),0 0 12px rgba(244,220,183,.32)}
 .summitPoint.isActive .label{border-color:rgba(247,228,193,.72);background:rgba(12,10,8,.9)}
 .summitPoint.pointTypeviewpoint .dot{border-radius:3px;transform:rotate(45deg);background:rgba(236,214,174,.92)}
@@ -85,12 +85,12 @@
 .summitTiersecondary .label{opacity:.92}
 .summitTiersecondary .dot{opacity:.9}
 
-.tatryControls{position:absolute;top:14px;right:14px;display:flex;gap:6px;z-index:6}
+.tatryControls{display:none}
 .tatryControlButton{border:1px solid rgba(233,213,177,.28);background:rgba(12,10,8,.76);color:rgba(244,226,194,.92);border-radius:10px;padding:6px 10px;font-size:13px;line-height:1;cursor:pointer;backdrop-filter:blur(4px);transition:.2s}
 .tatryControlButton:hover,.tatryControlButton:focus-visible{border-color:rgba(246,225,189,.66);background:rgba(25,19,14,.88)}
 .tatryControlButton.isReset{font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 8px}
 .tatryControlButton:disabled{opacity:.45;cursor:default}
-.tatryViewport{position:relative;min-height:inherit;overflow:hidden;touch-action:pan-y}
+.tatryViewport{position:relative;min-height:inherit;overflow:hidden;touch-action:auto}
 .tatryViewport.isZoomed{cursor:grab}
 .tatryViewport.isDragging{cursor:grabbing}
 .tatryScene{position:relative;min-height:460px;transform-origin:50% 50%;transition:transform .22s ease}
@@ -108,3 +108,9 @@
 .summitPoint.isFeaturedLabel .dot{width:10px;height:10px;box-shadow:0 0 0 1px rgba(255,247,226,.42),0 0 0 6px rgba(246,222,182,.1),0 0 18px rgba(246,219,172,.64),0 0 34px rgba(245,218,170,.34)}
 .tatryControlButton{border:1px solid rgba(233,213,177,.18);background:rgba(13,10,8,.58);color:rgba(244,226,194,.86);border-radius:10px;padding:6px 10px;font-size:13px;line-height:1;cursor:pointer;backdrop-filter:blur(3px);transition:.2s}
 .tatryControlButton:hover,.tatryControlButton:focus-visible{border-color:rgba(246,225,189,.36);background:rgba(26,20,15,.72)}
+
+.summitHitArea{position:relative;display:grid;place-items:center;width:20px;height:20px;border:0;border-radius:50%;background:transparent;cursor:pointer;pointer-events:auto;padding:0}
+.summitHitArea:focus-visible{outline:1px solid rgba(246,224,186,.72);outline-offset:2px}
+.summitPoint .label{pointer-events:auto;cursor:pointer;border:0;color:inherit}
+
+.tatryStructure,.tatryRegionContour,.tatryReliefBand,.tatryTopoLine,.tatryRidgeLine,.tatryValleyLine,.tatryBorder,.tatryBorderLabel,.tatryLayer::before{pointer-events:none}
