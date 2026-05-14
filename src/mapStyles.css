@@ -1,6 +1,6 @@
-.cinematicAtlas.atlasLayout{grid-template-columns:minmax(0,1.72fr) minmax(260px,.52fr);align-items:stretch;gap:14px}
-.cinematicAtlas .atlasMapWrap{background:radial-gradient(circle at 20% 10%, rgba(186,150,95,.12), transparent 40%),linear-gradient(165deg,#151311,#0b0a09);overflow:hidden;box-shadow:inset 0 0 0 1px rgba(230,214,184,.08),0 24px 42px rgba(0,0,0,.35);padding:14px}
-.cinematicStage{position:relative;isolation:isolate;box-shadow:inset 0 0 0 1px rgba(238,216,180,.08),inset 0 -60px 120px rgba(0,0,0,.26)}
+.cinematicAtlas.atlasLayout{grid-template-columns:minmax(0,1.72fr) minmax(260px,.52fr);align-items:stretch;gap:16px}
+.cinematicAtlas .atlasMapWrap{background:radial-gradient(circle at 18% 8%, rgba(204,166,108,.14), transparent 40%),radial-gradient(circle at 74% 84%, rgba(130,107,77,.12), transparent 48%),linear-gradient(164deg,#171411,#090806);overflow:hidden;box-shadow:inset 0 0 0 1px rgba(230,214,184,.1),inset 0 18px 44px rgba(255,232,194,.03),0 26px 54px rgba(0,0,0,.42);padding:15px}
+.cinematicStage{position:relative;isolation:isolate;box-shadow:inset 0 0 0 1px rgba(238,216,180,.1),inset 0 -76px 130px rgba(0,0,0,.34),0 6px 20px rgba(0,0,0,.2)}
 .cinematicStage::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(224,205,167,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(224,205,167,.04) 1px,transparent 1px);background-size:46px 46px;opacity:.19;pointer-events:none}
 .cinematicStage::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 35% 30%, rgba(229,206,162,.1), transparent 44%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.045'/%3E%3C/svg%3E");mix-blend-mode:soft-light;pointer-events:none}
 .atlasSvg{width:100%;height:100%;min-height:470px;animation:atlasFade .55s ease}
@@ -22,18 +22,18 @@
 .tatryLayer{padding:12px 12px 6px}
 .tatryLayer::before{content:'';position:absolute;inset:9% 5% 15%;border:1px solid rgba(227,206,171,.08);pointer-events:none;background:radial-gradient(circle at 32% 36%, rgba(235,214,178,.08), transparent 56%),radial-gradient(circle at 74% 52%, rgba(235,214,178,.05), transparent 55%),linear-gradient(140deg,rgba(244,223,185,.06),transparent 62%),linear-gradient(318deg,rgba(9,8,7,.44),transparent 48%);box-shadow:inset 0 0 0 1px rgba(10,9,8,.42)}
 .tatryStructure{position:absolute;inset:9% 5% 14%;width:90%;height:76%;opacity:.95;pointer-events:none;filter:drop-shadow(0 14px 20px rgba(0,0,0,.24))}
-.tatryRegionContour{fill:rgba(157,136,104,.09);stroke:rgba(236,216,181,.21);stroke-width:.84;stroke-linecap:round;stroke-linejoin:round}
-.tatryReliefBand{fill:none;stroke:rgba(233,210,171,.19);stroke-width:.39;stroke-linecap:round;opacity:.78}
-.tatryTopoLine{fill:none;stroke:rgba(226,203,167,.1);stroke-width:.24;stroke-linecap:round;stroke-dasharray:.7 2.4;opacity:.66}
-.tatryRidgeLine{fill:none;stroke:rgba(244,225,192,.34);stroke-width:.52;stroke-linecap:round;stroke-dasharray:1.1 2.5}
-.tatryValleyLine{fill:none;stroke:rgba(214,191,156,.13);stroke-width:.29;stroke-linecap:round;stroke-dasharray:.9 2.7;opacity:.62}
-.tatryBorder{fill:none;stroke:rgba(244,226,195,.24);stroke-width:.42;stroke-dasharray:1.3 3.8;opacity:.62}
+.tatryRegionContour{fill:rgba(166,142,109,.12);stroke:rgba(239,219,184,.26);stroke-width:.9;stroke-linecap:round;stroke-linejoin:round}
+.tatryReliefBand{fill:none;stroke:rgba(236,214,178,.22);stroke-width:.42;stroke-linecap:round;opacity:.82}
+.tatryTopoLine{fill:none;stroke:rgba(226,203,167,.08);stroke-width:.2;stroke-linecap:round;stroke-dasharray:.7 2.5;opacity:.56}
+.tatryRidgeLine{fill:none;stroke:rgba(245,226,194,.4);stroke-width:.56;stroke-linecap:round;stroke-dasharray:1 2.3;opacity:.92}
+.tatryValleyLine{fill:none;stroke:rgba(214,191,156,.15);stroke-width:.32;stroke-linecap:round;stroke-dasharray:.9 2.6;opacity:.66}
+.tatryBorder{fill:none;stroke:rgba(244,226,195,.2);stroke-width:.38;stroke-dasharray:1.2 4.1;opacity:.52}
 .tatryBorderLabel{fill:rgba(238,220,191,.52);font-size:3px;letter-spacing:.18em}
 .tatryBorderLabel.isSouth{fill:rgba(226,204,168,.42)}
 .summitPoint{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:8px;border:0;background:transparent;color:var(--text);cursor:pointer;transition:.22s;padding:5px 7px;border-radius:12px;z-index:2}
-.summitPoint .dot{width:8px;height:8px;border-radius:50%;background:rgba(249,229,196,.98);box-shadow:0 0 0 1px rgba(255,244,218,.36),0 0 0 5px rgba(246,222,182,.08),0 0 16px rgba(246,219,172,.48),0 0 30px rgba(245,218,170,.24),0 4px 8px rgba(0,0,0,.38)}
-.summitPoint .leader{position:absolute;left:10px;top:50%;width:var(--leader-length,10px);height:1px;background:linear-gradient(90deg,rgba(242,221,188,.42),rgba(242,221,188,.05));transform-origin:left center;transform:rotate(var(--leader-angle,0rad));pointer-events:none;opacity:.72;filter:drop-shadow(0 0 3px rgba(246,220,178,.16))}
-.summitPoint .label{font-size:10.8px;line-height:1.08;background:linear-gradient(168deg,rgba(12,10,8,.88),rgba(17,13,10,.66));border:1px solid rgba(232,215,184,.24);padding:5px 10px;border-radius:10px;white-space:nowrap;letter-spacing:.024em;max-width:min(30vw,188px);overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 0 rgba(0,0,0,.56);box-shadow:0 7px 14px rgba(0,0,0,.24),inset 0 0 0 1px rgba(255,239,210,.04)}
+.summitPoint .dot{width:7px;height:7px;border-radius:50%;background:rgba(249,229,196,.96);box-shadow:0 0 0 1px rgba(255,244,218,.32),0 0 0 4px rgba(246,222,182,.07),0 0 12px rgba(246,219,172,.42),0 0 22px rgba(245,218,170,.2),0 3px 7px rgba(0,0,0,.34)}
+.summitPoint .leader{position:absolute;left:9px;top:50%;width:var(--leader-length,10px);height:1px;background:linear-gradient(90deg,rgba(242,221,188,.36),rgba(242,221,188,.03));transform-origin:left center;transform:rotate(var(--leader-angle,0rad));pointer-events:none;opacity:.62;filter:drop-shadow(0 0 2px rgba(246,220,178,.12))}
+.summitPoint .label{font-size:10.5px;line-height:1.08;background:linear-gradient(168deg,rgba(11,9,7,.84),rgba(15,12,9,.58));border:1px solid rgba(232,215,184,.2);padding:4px 9px;border-radius:10px;white-space:nowrap;letter-spacing:.022em;max-width:min(30vw,182px);overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 0 rgba(0,0,0,.5);box-shadow:0 6px 13px rgba(0,0,0,.22),inset 0 0 0 1px rgba(255,239,210,.03)}
 .summitPoint .label.anchorwest{text-align:right}
 .summitPoint .label.anchornorth,.summitPoint .label.anchorsouth{text-align:center}
 .summitPoint:hover,.summitPoint:focus-visible{transform:translate(-50%,-50%) scale(1.04);background:rgba(40,32,24,.24)}
@@ -45,7 +45,7 @@
 .summitPoint.pointTypetrail .dot{width:12px;height:6px;border-radius:999px;background:rgba(222,198,155,.92)}
 .summitPoint.pointTypecity .dot{width:8px;height:8px;box-shadow:0 0 0 2px rgba(245,224,186,.18),0 0 8px rgba(244,220,183,.2)}
 .atlasCrumbTrail{display:flex;align-items:stretch;gap:12px;flex-wrap:wrap}
-.atlasCrumb{display:flex;align-items:center;gap:11px;border:1px solid rgba(230,212,180,.2);background:linear-gradient(160deg,rgba(15,13,11,.9),rgba(12,10,8,.78));border-radius:14px;padding:10px 13px;color:var(--text);cursor:pointer;min-width:162px;text-align:left;transition:.2s;position:relative}
+.atlasCrumb{display:flex;align-items:center;gap:12px;border:1px solid rgba(230,212,180,.18);background:linear-gradient(160deg,rgba(14,12,10,.94),rgba(11,10,8,.8));border-radius:14px;padding:11px 14px;color:var(--text);cursor:pointer;min-width:162px;text-align:left;transition:.2s;position:relative}
 .atlasCrumb::after{content:'';position:absolute;right:-7px;top:50%;width:10px;height:10px;border-top:1px solid rgba(230,212,180,.24);border-right:1px solid rgba(230,212,180,.24);transform:translateY(-50%) rotate(45deg);background:rgba(11,10,9,.68)}
 .atlasCrumb:last-child::after{display:none}
 .atlasCrumb:hover,.atlasCrumb:focus-visible{border-color:rgba(245,224,186,.6);transform:translateY(-1px)}
@@ -54,17 +54,17 @@
 .atlasCrumbIcon svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.35;stroke-linecap:round;stroke-linejoin:round}
 .atlasCrumbIcon svg path:first-child{fill:rgba(239,220,185,.12)}
 .atlasCrumbBody{display:flex;flex-direction:column;gap:2px}
-.atlasCrumbLevel{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.atlasCrumbName{font-size:13px;font-weight:600;letter-spacing:.01em}
-.atlasDetailCard{background:linear-gradient(165deg,rgba(31,27,22,.92),rgba(14,11,9,.96));border:1px solid rgba(227,206,171,.22);box-shadow:0 16px 34px rgba(0,0,0,.34);padding:16px}
+.atlasCrumbLevel{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(222,203,173,.7)}
+.atlasCrumbName{font-size:13.4px;font-weight:600;letter-spacing:.012em}
+.atlasDetailCard{background:linear-gradient(166deg,rgba(29,25,20,.92),rgba(12,10,8,.97));border:1px solid rgba(227,206,171,.2);box-shadow:inset 0 0 0 1px rgba(255,236,204,.03),0 16px 34px rgba(0,0,0,.38);padding:18px 17px}
 .atlasDetailCard h3{font-size:clamp(1.4rem,2vw,1.75rem)}
-.atlasLead{margin:0 0 12px;font-size:14px;line-height:1.5}
+.atlasLead{margin:0 0 14px;font-size:14px;line-height:1.56;color:rgba(236,219,191,.88)}
 .atlasPointType{display:inline-flex;align-items:center;gap:6px;margin:0 0 4px;padding:4px 10px;border:1px solid rgba(227,206,171,.25);border-radius:999px;font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:rgba(239,220,188,.86);background:rgba(18,15,13,.72)}
 .atlasEyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
 .atlasLevelLabel{margin:0 0 8px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(239,220,188,.9)}
-.atlasTagRow{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}
+.atlasTagRow{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0 12px}
 .atlasTag{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:5px 9px;border:1px solid rgba(224,204,170,.24);border-radius:999px;background:rgba(20,17,14,.64)}
-.atlasMeta{color:var(--muted);font-size:13px;line-height:1.45;margin:7px 0}
+.atlasMeta{color:rgba(213,196,170,.86);font-size:12.8px;line-height:1.48;margin:8px 0}
 .atlasMeta+.atlasMeta{padding-top:8px;border-top:1px solid rgba(232,212,175,.11)}
 .atlasCta{display:inline-flex;margin-top:6px;border-color:rgba(245,220,175,.75);box-shadow:0 8px 26px rgba(233,200,140,.2)}
 .atlasSoon{margin-top:10px;color:rgba(222,205,177,.82);font-size:14px}
