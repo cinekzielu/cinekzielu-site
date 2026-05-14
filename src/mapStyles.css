@@ -1,5 +1,5 @@
 .cinematicAtlas.atlasLayout{grid-template-columns:minmax(0,1.72fr) minmax(260px,.52fr);align-items:stretch;gap:16px}
-.cinematicAtlas .atlasMapWrap{background:radial-gradient(circle at 18% 8%, rgba(204,166,108,.14), transparent 40%),radial-gradient(circle at 74% 84%, rgba(130,107,77,.12), transparent 48%),linear-gradient(164deg,#171411,#090806);overflow:hidden;box-shadow:inset 0 0 0 1px rgba(230,214,184,.1),inset 0 18px 44px rgba(255,232,194,.03),0 26px 54px rgba(0,0,0,.42);padding:15px}
+.cinematicAtlas .atlasMapWrap{background:radial-gradient(circle at 24% 10%, rgba(221,184,126,.16), transparent 34%),radial-gradient(circle at 76% 76%, rgba(128,101,72,.1), transparent 52%),linear-gradient(166deg,#181511,#080705);overflow:hidden;box-shadow:inset 0 0 0 1px rgba(230,214,184,.08),inset 0 36px 84px rgba(255,232,194,.025),inset 0 -90px 120px rgba(0,0,0,.5),0 30px 60px rgba(0,0,0,.48);padding:15px}
 .cinematicStage{position:relative;isolation:isolate;box-shadow:inset 0 0 0 1px rgba(238,216,180,.1),inset 0 -76px 130px rgba(0,0,0,.34),0 6px 20px rgba(0,0,0,.2)}
 .cinematicStage::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(224,205,167,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(224,205,167,.04) 1px,transparent 1px);background-size:46px 46px;opacity:.19;pointer-events:none}
 .cinematicStage::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 35% 30%, rgba(229,206,162,.1), transparent 44%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.045'/%3E%3C/svg%3E");mix-blend-mode:soft-light;pointer-events:none}
@@ -20,20 +20,20 @@
 .atlasLatLine{fill:none;stroke:rgba(236,214,174,.2);stroke-width:1;stroke-dasharray:8 8;pointer-events:none}
 .summitLayer{position:relative;min-height:460px;animation:atlasFade .5s ease;background:radial-gradient(circle at 72% 18%, rgba(212,176,118,.09), transparent 38%),radial-gradient(circle at 16% 68%, rgba(170,142,96,.08), transparent 44%)}
 .tatryLayer{padding:12px 12px 6px}
-.tatryLayer::before{content:'';position:absolute;inset:9% 5% 15%;border:1px solid rgba(227,206,171,.08);pointer-events:none;background:radial-gradient(circle at 32% 36%, rgba(235,214,178,.08), transparent 56%),radial-gradient(circle at 74% 52%, rgba(235,214,178,.05), transparent 55%),linear-gradient(140deg,rgba(244,223,185,.06),transparent 62%),linear-gradient(318deg,rgba(9,8,7,.44),transparent 48%);box-shadow:inset 0 0 0 1px rgba(10,9,8,.42)}
+.tatryLayer::before{content:'';position:absolute;inset:8% 4.5% 14%;border:1px solid rgba(227,206,171,.06);pointer-events:none;background:radial-gradient(circle at 36% 34%, rgba(235,214,178,.11), transparent 52%),radial-gradient(circle at 70% 58%, rgba(235,214,178,.045), transparent 58%),linear-gradient(145deg,rgba(244,223,185,.08),transparent 60%),linear-gradient(322deg,rgba(9,8,7,.5),transparent 44%);box-shadow:inset 0 0 0 1px rgba(10,9,8,.52),inset 0 -24px 48px rgba(0,0,0,.28)}
 .tatryStructure{position:absolute;inset:9% 5% 14%;width:90%;height:76%;opacity:.97;pointer-events:none;filter:drop-shadow(0 14px 20px rgba(0,0,0,.24)) drop-shadow(0 0 14px rgba(234,209,166,.08))}
-.tatryRegionContour{fill:rgba(166,142,109,.12);stroke:rgba(239,219,184,.26);stroke-width:.9;stroke-linecap:round;stroke-linejoin:round}
-.tatryReliefBand{fill:none;stroke:rgba(236,214,178,.27);stroke-width:.46;stroke-linecap:round;opacity:.88}
-.tatryTopoLine{fill:none;stroke:rgba(226,203,167,.1);stroke-width:.24;stroke-linecap:round;stroke-dasharray:.9 2.4;opacity:.6}
-.tatryRidgeLine{fill:none;stroke:rgba(246,227,196,.5);stroke-width:.64;stroke-linecap:round;stroke-dasharray:1 2.1;opacity:.96;filter:drop-shadow(0 0 2px rgba(246,224,188,.16))}
-.tatryValleyLine{fill:none;stroke:rgba(214,191,156,.2);stroke-width:.34;stroke-linecap:round;stroke-dasharray:.9 2.8;opacity:.7}
-.tatryBorder{fill:none;stroke:rgba(244,226,195,.2);stroke-width:.38;stroke-dasharray:1.2 4.1;opacity:.52}
+.tatryRegionContour{fill:rgba(160,135,102,.1);stroke:rgba(239,219,184,.16);stroke-width:.72;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 10px 12px rgba(0,0,0,.24))}
+.tatryReliefBand{fill:none;stroke:rgba(236,214,178,.24);stroke-width:.42;stroke-linecap:round;opacity:.7}
+.tatryTopoLine{fill:none;stroke:rgba(226,203,167,.08);stroke-width:.22;stroke-linecap:round;stroke-dasharray:.9 3.2;opacity:.42}
+.tatryRidgeLine{fill:none;stroke:rgba(246,227,196,.48);stroke-width:.68;stroke-linecap:round;stroke-dasharray:1.2 2.8;opacity:.88;filter:drop-shadow(0 0 3px rgba(246,224,188,.18))}
+.tatryValleyLine{fill:none;stroke:rgba(214,191,156,.14);stroke-width:.3;stroke-linecap:round;stroke-dasharray:.9 3.4;opacity:.52}
+.tatryBorder{fill:none;stroke:rgba(244,226,195,.12);stroke-width:.32;stroke-dasharray:1 4.4;opacity:.34}
 .tatryBorderLabel{fill:rgba(238,220,191,.52);font-size:3px;letter-spacing:.18em}
 .tatryBorderLabel.isSouth{fill:rgba(226,204,168,.42)}
 .summitPoint{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:8px;border:0;background:transparent;color:var(--text);cursor:pointer;transition:.22s;padding:5px 7px;border-radius:12px;z-index:2}
-.summitPoint .dot{width:7px;height:7px;border-radius:50%;background:rgba(250,233,201,.98);box-shadow:0 0 0 1px rgba(255,247,226,.46),0 0 0 5px rgba(246,222,182,.1),0 0 16px rgba(246,219,172,.52),0 0 30px rgba(245,218,170,.26),0 3px 7px rgba(0,0,0,.34)}
+.summitPoint .dot{width:7px;height:7px;border-radius:50%;background:rgba(250,233,201,.98);box-shadow:0 0 0 1px rgba(255,247,226,.36),0 0 0 4px rgba(246,222,182,.08),0 0 14px rgba(246,219,172,.56),0 0 26px rgba(245,218,170,.24),0 3px 7px rgba(0,0,0,.3)}
 .summitPoint .leader{position:absolute;left:9px;top:50%;width:var(--leader-length,10px);height:1px;background:linear-gradient(90deg,rgba(245,225,194,.46),rgba(242,221,188,.04));transform-origin:left center;transform:rotate(var(--leader-angle,0rad));pointer-events:none;opacity:.72;filter:drop-shadow(0 0 3px rgba(246,220,178,.16))}
-.summitPoint .label{font-size:10.4px;line-height:1.08;background:linear-gradient(168deg,rgba(10,8,7,.76),rgba(14,11,9,.5));border:1px solid rgba(236,219,188,.25);padding:4px 9px;border-radius:9px;white-space:nowrap;letter-spacing:.018em;max-width:min(30vw,182px);overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 0 rgba(0,0,0,.5);box-shadow:0 5px 10px rgba(0,0,0,.2),inset 0 0 0 1px rgba(255,239,210,.04)}
+.summitPoint .label{font-size:10px;line-height:1.06;background:linear-gradient(168deg,rgba(10,8,7,.58),rgba(14,11,9,.36));border:1px solid rgba(236,219,188,.16);padding:3px 7px;border-radius:7px;white-space:nowrap;letter-spacing:.026em;max-width:min(28vw,170px);overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 0 rgba(0,0,0,.42);box-shadow:0 3px 7px rgba(0,0,0,.14),inset 0 0 0 1px rgba(255,239,210,.03);transition:opacity .2s ease,border-color .2s ease,background .2s ease}
 .summitPoint .label.anchorwest{text-align:right}
 .summitPoint .label.anchornorth,.summitPoint .label.anchorsouth{text-align:center}
 .summitPoint:hover,.summitPoint:focus-visible{transform:translate(-50%,-50%) scale(1.04);background:rgba(40,32,24,.24)}
@@ -101,3 +101,10 @@
   .tatryControlButton{padding:7px 10px}
   .tatryScene{min-height:320px}
 }
+
+.summitPoint .label.isHidden{opacity:0;pointer-events:none}
+.summitPoint.isHovered .label.isHidden,.summitPoint.isActive .label.isHidden{opacity:.95}
+.summitPoint.isSecondaryLabel .dot{width:6px;height:6px;opacity:.78}
+.summitPoint.isFeaturedLabel .dot{width:10px;height:10px;box-shadow:0 0 0 1px rgba(255,247,226,.42),0 0 0 6px rgba(246,222,182,.1),0 0 18px rgba(246,219,172,.64),0 0 34px rgba(245,218,170,.34)}
+.tatryControlButton{border:1px solid rgba(233,213,177,.18);background:rgba(13,10,8,.58);color:rgba(244,226,194,.86);border-radius:10px;padding:6px 10px;font-size:13px;line-height:1;cursor:pointer;backdrop-filter:blur(3px);transition:.2s}
+.tatryControlButton:hover,.tatryControlButton:focus-visible{border-color:rgba(246,225,189,.36);background:rgba(26,20,15,.72)}
