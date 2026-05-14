@@ -1,6 +1,6 @@
-.cinematicAtlas.atlasLayout{grid-template-columns:minmax(0,1.72fr) minmax(260px,.52fr);align-items:stretch;gap:16px}
-.cinematicAtlas .atlasMapWrap{background:radial-gradient(circle at 24% 10%, rgba(221,184,126,.16), transparent 34%),radial-gradient(circle at 76% 76%, rgba(128,101,72,.1), transparent 52%),linear-gradient(166deg,#181511,#080705);overflow:hidden;box-shadow:inset 0 0 0 1px rgba(230,214,184,.08),inset 0 36px 84px rgba(255,232,194,.025),inset 0 -90px 120px rgba(0,0,0,.5),0 30px 60px rgba(0,0,0,.48);padding:15px}
-.cinematicStage{position:relative;isolation:isolate;box-shadow:inset 0 0 0 1px rgba(238,216,180,.1),inset 0 -76px 130px rgba(0,0,0,.34),0 6px 20px rgba(0,0,0,.2)}
+.cinematicAtlas.atlasLayout{grid-template-columns:minmax(0,1.7fr) minmax(272px,.5fr);align-items:stretch;gap:18px}
+.cinematicAtlas .atlasMapWrap{background:radial-gradient(circle at 22% 8%, rgba(224,188,132,.18), transparent 36%),radial-gradient(circle at 80% 78%, rgba(136,108,77,.12), transparent 54%),linear-gradient(164deg,#1b1713,#080706);overflow:hidden;border:1px solid rgba(233,214,181,.12);border-radius:18px;box-shadow:inset 0 0 0 1px rgba(252,235,205,.03),inset 0 38px 88px rgba(255,235,198,.03),inset 0 -100px 140px rgba(0,0,0,.52),0 28px 58px rgba(0,0,0,.52);padding:18px 18px 14px}
+.cinematicStage{position:relative;isolation:isolate;border-radius:14px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(242,220,184,.13),inset 0 -86px 140px rgba(0,0,0,.38),inset 0 24px 56px rgba(255,236,205,.03),0 8px 24px rgba(0,0,0,.24)}
 .cinematicStage::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(224,205,167,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(224,205,167,.04) 1px,transparent 1px);background-size:46px 46px;opacity:.19;pointer-events:none}
 .cinematicStage::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 35% 30%, rgba(229,206,162,.1), transparent 44%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.045'/%3E%3C/svg%3E");mix-blend-mode:soft-light;pointer-events:none}
 .atlasSvg{width:100%;height:100%;min-height:470px;animation:atlasFade .55s ease}
@@ -18,10 +18,10 @@
 .atlasTatryGlow:hover{fill:rgba(212,174,117,.2);stroke:rgba(248,232,201,.84)}
 .atlasTatryRing{fill:none;stroke:rgba(239,220,186,.35);stroke-width:1;stroke-dasharray:4 6;opacity:.78;pointer-events:none}
 .atlasLatLine{fill:none;stroke:rgba(236,214,174,.2);stroke-width:1;stroke-dasharray:8 8;pointer-events:none}
-.summitLayer{position:relative;min-height:460px;animation:atlasFade .5s ease;background:radial-gradient(circle at 72% 18%, rgba(212,176,118,.09), transparent 38%),radial-gradient(circle at 16% 68%, rgba(170,142,96,.08), transparent 44%)}
-.tatryLayer{padding:12px 12px 6px}
-.tatryLayer::before{content:'';position:absolute;inset:8% 4.5% 14%;border:1px solid rgba(227,206,171,.06);pointer-events:none;background:radial-gradient(circle at 36% 34%, rgba(235,214,178,.11), transparent 52%),radial-gradient(circle at 70% 58%, rgba(235,214,178,.045), transparent 58%),linear-gradient(145deg,rgba(244,223,185,.08),transparent 60%),linear-gradient(322deg,rgba(9,8,7,.5),transparent 44%);box-shadow:inset 0 0 0 1px rgba(10,9,8,.52),inset 0 -24px 48px rgba(0,0,0,.28)}
-.tatryStructure{position:absolute;inset:9% 5% 14%;width:90%;height:76%;opacity:.97;pointer-events:none;filter:drop-shadow(0 14px 20px rgba(0,0,0,.24)) drop-shadow(0 0 14px rgba(234,209,166,.08))}
+.summitLayer{position:relative;min-height:460px;animation:atlasFade .5s ease;background:radial-gradient(circle at 70% 16%, rgba(215,180,121,.1), transparent 40%),radial-gradient(circle at 18% 72%, rgba(172,145,100,.09), transparent 46%),linear-gradient(180deg,rgba(7,6,6,.22),rgba(0,0,0,.38))}
+.tatryLayer{padding:14px 14px 10px}
+.tatryLayer::before{content:'';position:absolute;inset:7% 4% 11%;border:1px solid rgba(229,207,171,.08);border-radius:10px;pointer-events:none;background:radial-gradient(circle at 34% 30%, rgba(238,216,180,.12), transparent 54%),radial-gradient(circle at 72% 62%, rgba(236,214,178,.05), transparent 58%),linear-gradient(148deg,rgba(245,224,186,.09),transparent 60%),linear-gradient(322deg,rgba(8,7,6,.52),transparent 44%);box-shadow:inset 0 0 0 1px rgba(7,6,6,.56),inset 0 -30px 56px rgba(0,0,0,.32)}
+.tatryStructure{position:absolute;inset:8% 4.8% 10%;width:90.4%;height:82%;opacity:.98;pointer-events:none;filter:drop-shadow(0 16px 22px rgba(0,0,0,.25)) drop-shadow(0 0 14px rgba(234,209,166,.1))}
 .tatryRegionContour{fill:rgba(160,135,102,.1);stroke:rgba(239,219,184,.16);stroke-width:.72;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 10px 12px rgba(0,0,0,.24))}
 .tatryReliefBand{fill:none;stroke:rgba(236,214,178,.24);stroke-width:.42;stroke-linecap:round;opacity:.7}
 .tatryTopoLine{fill:none;stroke:rgba(226,203,167,.08);stroke-width:.22;stroke-linecap:round;stroke-dasharray:.9 3.2;opacity:.42}
@@ -31,9 +31,9 @@
 .tatryBorderLabel{fill:rgba(238,220,191,.52);font-size:3px;letter-spacing:.18em}
 .tatryBorderLabel.isSouth{fill:rgba(226,204,168,.42)}
 .summitPoint{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:8px;border:0;background:transparent;color:var(--text);transition:.22s;z-index:2;pointer-events:none}
-.summitPoint .dot{width:7px;height:7px;border-radius:50%;background:rgba(250,233,201,.98);box-shadow:0 0 0 1px rgba(255,247,226,.36),0 0 0 4px rgba(246,222,182,.08),0 0 14px rgba(246,219,172,.56),0 0 26px rgba(245,218,170,.24),0 3px 7px rgba(0,0,0,.3)}
-.summitPoint .leader{position:absolute;left:9px;top:50%;width:var(--leader-length,10px);height:1px;background:linear-gradient(90deg,rgba(245,225,194,.46),rgba(242,221,188,.04));transform-origin:left center;transform:rotate(var(--leader-angle,0rad));pointer-events:none;opacity:.72;filter:drop-shadow(0 0 3px rgba(246,220,178,.16))}
-.summitPoint .label{font-size:10px;line-height:1.06;background:linear-gradient(168deg,rgba(10,8,7,.58),rgba(14,11,9,.36));border:1px solid rgba(236,219,188,.16);padding:3px 7px;border-radius:7px;white-space:nowrap;letter-spacing:.026em;max-width:min(28vw,170px);overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 0 rgba(0,0,0,.42);box-shadow:0 3px 7px rgba(0,0,0,.14),inset 0 0 0 1px rgba(255,239,210,.03);transition:opacity .2s ease,border-color .2s ease,background .2s ease}
+.summitPoint .dot{width:7px;height:7px;border-radius:50%;background:rgba(250,233,201,.99);box-shadow:0 0 0 1px rgba(255,247,226,.4),0 0 0 5px rgba(246,222,182,.1),0 0 14px rgba(246,219,172,.6),0 0 24px rgba(245,218,170,.26),0 3px 8px rgba(0,0,0,.34)}
+.summitPoint .leader{position:absolute;left:9px;top:50%;width:var(--leader-length,10px);height:1px;background:linear-gradient(90deg,rgba(245,225,194,.52),rgba(242,221,188,.06));transform-origin:left center;transform:rotate(var(--leader-angle,0rad));pointer-events:none;opacity:.76;filter:drop-shadow(0 0 3px rgba(246,220,178,.2))}
+.summitPoint .label{font-size:10px;line-height:1.08;background:linear-gradient(170deg,rgba(10,8,7,.62),rgba(14,11,9,.42));border:1px solid rgba(236,219,188,.2);padding:3px 8px;border-radius:8px;white-space:nowrap;letter-spacing:.026em;max-width:min(28vw,176px);overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 0 rgba(0,0,0,.46);box-shadow:0 4px 9px rgba(0,0,0,.17),inset 0 0 0 1px rgba(255,239,210,.04);transition:opacity .2s ease,border-color .2s ease,background .2s ease}
 .summitPoint .label.anchorwest{text-align:right}
 .summitPoint .label.anchornorth,.summitPoint .label.anchorsouth{text-align:center}
 .summitPoint:hover,.summitPoint:focus-within{transform:translate(-50%,-50%) scale(1.04)}
@@ -85,31 +85,17 @@
 .summitTiersecondary .label{opacity:.92}
 .summitTiersecondary .dot{opacity:.9}
 
-.tatryControls{display:none}
-.tatryControlButton{border:1px solid rgba(233,213,177,.28);background:rgba(12,10,8,.76);color:rgba(244,226,194,.92);border-radius:10px;padding:6px 10px;font-size:13px;line-height:1;cursor:pointer;backdrop-filter:blur(4px);transition:.2s}
-.tatryControlButton:hover,.tatryControlButton:focus-visible{border-color:rgba(246,225,189,.66);background:rgba(25,19,14,.88)}
-.tatryControlButton.isReset{font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 8px}
-.tatryControlButton:disabled{opacity:.45;cursor:default}
 .tatryViewport{position:relative;min-height:inherit;overflow:hidden;touch-action:auto}
-.tatryViewport.isZoomed{cursor:grab}
-.tatryViewport.isDragging{cursor:grabbing}
-.tatryScene{position:relative;min-height:460px;transform-origin:50% 50%;transition:transform .22s ease}
-.tatryViewport.isDragging .tatryScene{transition:none}
+.tatryScene{position:relative;min-height:460px;transform-origin:50% 50%}
 
-@media (max-width:980px){
-  .tatryControls{top:10px;right:10px}
-  .tatryControlButton{padding:7px 10px}
-  .tatryScene{min-height:320px}
-}
+@media (max-width:980px){.tatryScene{min-height:320px}}
 
 .summitPoint .label.isHidden{opacity:0;pointer-events:none}
 .summitPoint.isHovered .label.isHidden,.summitPoint.isActive .label.isHidden{opacity:.95}
 .summitPoint.isSecondaryLabel .dot{width:6px;height:6px;opacity:.78}
-.summitPoint.isFeaturedLabel .dot{width:10px;height:10px;box-shadow:0 0 0 1px rgba(255,247,226,.42),0 0 0 6px rgba(246,222,182,.1),0 0 18px rgba(246,219,172,.64),0 0 34px rgba(245,218,170,.34)}
-.tatryControlButton{border:1px solid rgba(233,213,177,.18);background:rgba(13,10,8,.58);color:rgba(244,226,194,.86);border-radius:10px;padding:6px 10px;font-size:13px;line-height:1;cursor:pointer;backdrop-filter:blur(3px);transition:.2s}
-.tatryControlButton:hover,.tatryControlButton:focus-visible{border-color:rgba(246,225,189,.36);background:rgba(26,20,15,.72)}
+.summitPoint.isFeaturedLabel .dot{width:10px;height:10px;box-shadow:0 0 0 1px rgba(255,247,226,.44),0 0 0 6px rgba(246,222,182,.12),0 0 19px rgba(246,219,172,.66),0 0 32px rgba(245,218,170,.32)}
 
-.summitHitArea{position:relative;display:grid;place-items:center;width:20px;height:20px;border:0;border-radius:50%;background:transparent;cursor:pointer;pointer-events:auto;padding:0}
+.summitHitArea{position:relative;display:grid;place-items:center;width:22px;height:22px;border:0;border-radius:50%;background:transparent;cursor:pointer;pointer-events:auto;padding:0}
 .summitHitArea:focus-visible{outline:1px solid rgba(246,224,186,.72);outline-offset:2px}
 .summitPoint .label{pointer-events:auto;cursor:pointer;border:0;color:inherit}
 
