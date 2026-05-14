@@ -1,7 +1,9 @@
 export const tatryMapBasePlaceholder = {
   meta: {
     projectionHint: 'normalized-viewport',
-    source: 'reference-inspired-manual-v3',
+    source: 'reference-inspired-manual-v4',
+    dataModel: 'terrain-base-layers',
+    replacementReadyFor: ['dem-raster', 'heightmap-derived-contours', 'ridge-extraction', 'hydro-valley-lines', 'official-border-geometry'],
   },
   viewBox: '0 0 100 100',
   layers: {
@@ -10,7 +12,7 @@ export const tatryMapBasePlaceholder = {
       d: 'M4.3 62.3 L6.8 58.1 L10.3 54.7 L14.7 52.1 L19.6 50.3 L24.2 49.2 L28.7 48.7 L32.8 48.5 L36.6 47.8 L40.1 46.3 L43.6 44.4 L47.1 42.2 L50.6 40.1 L54.1 38.2 L57.9 36.9 L61.8 36.2 L65.7 35.9 L69.4 35.5 L72.6 34.5 L75.6 32.9 L78.4 30.9 L81.2 29.1 L83.8 28.2 L86.1 28.7 L88 30 L89.4 32.2 L90.2 35.2 L90.3 38.6 L89.6 42.1 L88.2 45.3 L86.1 48.2 L83.4 50.6 L80.2 52.5 L76.9 53.9 L73.8 55.2 L71 56.8 L68.4 58.9 L65.7 61.4 L62.8 64.1 L59.3 66.4 L55.4 68.3 L50.9 69.9 L46 71.3 L40.8 72.6 L35.4 73.6 L29.8 74.1 L24.4 73.7 L19.1 72.2 L14.3 69.9 L10.4 67.2 L7.4 64.8 L5.2 63 L4.3 62.3 Z',
     },
     relief: {
-      bands: [
+      shading: [
         { id: 'relief-band-northwest', d: 'M6.9 58.6 L10.4 55.8 L14.7 53.6 L19.3 52.1 L24 51.1 L28.3 50.5 L32.1 50 L35.8 49.1 L39.5 47.6 L43.3 45.8 L47.1 43.6 L50.8 41.5 L54.4 39.8 L57.9 38.5 L61.5 37.7 L65.2 37.3 L68.6 36.9 L71.6 36 L74.5 34.6 L77.2 32.8 L79.6 31.1' },
         { id: 'relief-band-west-mass', d: 'M7.7 61.1 L11.6 59.4 L15.9 58.1 L20.4 57.2 L24.9 56.5 L29.2 55.8 L33.3 54.8 L37.2 53.3 L40.9 51.4 L44.5 49.1 L47.9 46.7 L51.1 44.5 L54.3 42.7 L57.3 40.8 L60.2 38.8 L62.8 36.6' },
         { id: 'relief-band-main-belt', d: 'M8.6 63.4 L12.5 61.1 L16.9 59.3 L21.6 57.9 L26.2 57 L30.5 56.3 L34.7 55.5 L38.8 54 L42.8 52 L46.6 49.6 L50.2 47.1 L53.8 44.9 L57.4 43.2 L61.2 42 L65 41 L68.5 39.6 L71.6 37.8 L74.4 35.7 L77.1 33.7 L79.6 31.9' },
@@ -19,11 +21,10 @@ export const tatryMapBasePlaceholder = {
         { id: 'relief-band-deep-south', d: 'M13.7 70.5 L18.3 69.4 L23 68.6 L27.7 67.9 L32.3 67.1 L36.5 65.8 L40.3 64.2 L43.8 62 L47 59.5 L50 57 L52.8 54.4 L55.4 51.8 L57.9 49.1 L60.2 46.3 L62.4 43.5 L64.4 40.8' },
         { id: 'relief-band-east-basin', d: 'M28.7 69.3 L33.2 68.7 L37.4 67.7 L41.3 66.2 L44.8 64.2 L48 61.8 L51 59.2 L53.8 56.6 L56.4 53.9 L58.9 51.2 L61.2 48.4 L63.3 45.5 L65.2 42.6' },
       ],
-      topoHints: [],
+      contours: [],
     },
     ridges: [
       { id: 'main-ridge', d: 'M6.4 61.2 L10.1 58.4 L14.4 55.9 L18.9 54.1 L23.5 52.9 L27.8 52.1 L31.8 51.3 L35.9 50.1 L40.1 48.6 L44.2 46.5 L48.2 44.2 L52 42 L55.8 40.3 L59.8 39.2 L63.8 38.7 L67.5 38.2 L70.9 37.1 L74 35.4 L76.9 33.3 L79.6 31.3 L82.2 29.8 L84.6 28.9' },
-      { id: 'gerlach-rysy-spine', d: 'M39.7 61.6 L42.8 59.7 L45.7 57.4 L48.5 54.9 L51.2 52.3 L53.8 49.6 L56.2 46.8 L58.6 44 L60.8 41.1' },
     ],
     valleys: [
       { id: 'koscieliska', d: 'M23.8 63.1 L26.8 61.9 L29.8 60.5 L32.6 58.9 L35.1 57 L37.4 54.9 L39.4 52.8' },
