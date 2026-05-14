@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { travelAtlasData } from '../data/travelData'
 import { resolveTatryPointPosition } from '../data/atlasGeo'
-import { tatryMapBasePlaceholder } from '../data/tatryMapBase'
+import tatryHillshadeDark from '../assets/maps/tatry-hillshade-dark.png.png'
 import '../mapStyles.css'
 
 const worldShapes = [
@@ -33,33 +33,11 @@ const europeCountries = [
 
 
 
-const TatryMapBase = ({ baseData }) => {
-  const layers = baseData.layers || {}
-  const contourPath = layers.contour?.d || baseData.regionContour
-  const reliefShading = layers.relief?.shading || layers.relief?.bands || baseData.reliefBands || []
-  const reliefContours = layers.relief?.contours || layers.relief?.topoHints || baseData.topoLines || []
-  const ridgeLines = layers.ridges || baseData.ridgeLines || []
-  const valleyLines = layers.valleys || (baseData.valleyLines || []).map((d) => ({ id: d, d }))
-  const border = layers.border || baseData.borders?.[0]
-
-  return (
-    <svg className="tatryStructure" viewBox={baseData.viewBox} preserveAspectRatio="none" aria-hidden="true">
-      {contourPath ? <path d={contourPath} className="tatryRegionContour" /> : null}
-      {reliefShading.map((band) => <path key={band.id || band.d || band} d={band.d || band} className="tatryReliefBand" />)}
-      {reliefContours.map((line) => <path key={line.id || line.d || line} d={line.d || line} className="tatryTopoLine" />)}
-      {ridgeLines.map((line) => <path key={line.id} d={line.d} className="tatryRidgeLine" />)}
-      {valleyLines.map((line) => <path key={line.id || line.d} d={line.d || line} className="tatryValleyLine" />)}
-      {border ? (
-        <g key={border.id}>
-          <path d={border.d} className="tatryBorder" />
-          {border.labels?.map((label) => (
-            <text key={`${border.id}-${label.text}-${label.y}`} x={label.x} y={label.y} className={`tatryBorderLabel ${label.variant === 'south' ? 'isSouth' : ''}`} textAnchor={label.anchor || 'start'}>{label.text}</text>
-          ))}
-        </g>
-      ) : null}
-    </svg>
-  )
-}
+const TatryMapBase = () => (
+  <div className="tatryBaseMap" aria-hidden="true">
+    <img src={tatryHillshadeDark} alt="" className="tatryBaseMapImage" />
+  </div>
+)
 
 const levelNames = ['Świat', 'Kontynent', 'Kraj', 'Region specjalny', 'Szczyt']
 const levelIcons = {
@@ -355,7 +333,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
             <div className="summitLayer tatryLayer">
               <div className="tatryViewport">
               <div className="tatryScene">
-              <TatryMapBase baseData={tatryMapBasePlaceholder} />
+              <TatryMapBase />
               {tatryPointsWithLeaders.map((summit) => (
                 <div
                   key={summit.id}
