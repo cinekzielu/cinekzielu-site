@@ -23,19 +23,19 @@ const worldLabels = [
 ]
 
 const europeCountryMarkers = [
-  { id: 'poland', name: 'Polska', flag: '🇵🇱', x: 298, y: 144 },
-  { id: 'slovakia', name: 'Słowacja', flag: '🇸🇰', x: 296, y: 165 },
-  { id: 'austria', name: 'Austria', flag: '🇦🇹', x: 275, y: 179 },
-  { id: 'switzerland', name: 'Szwajcaria', flag: '🇨🇭', x: 245, y: 186 },
-  { id: 'slovenia', name: 'Słowenia', flag: '🇸🇮', x: 284, y: 197 },
-  { id: 'germany', name: 'Niemcy', flag: '🇩🇪', x: 264, y: 144 },
-  { id: 'italy', name: 'Włochy', flag: '🇮🇹', x: 258, y: 220 },
-  { id: 'france', name: 'Francja', flag: '🇫🇷', x: 220, y: 178 },
-  { id: 'spain', name: 'Hiszpania', flag: '🇪🇸', x: 174, y: 222 },
-  { id: 'norway', name: 'Norwegia', flag: '🇳🇴', x: 248, y: 94 },
+  { id: 'poland', name: 'Polska', flag: '🇵🇱', x: 323, y: 137, chipWidth: 104 },
+  { id: 'slovakia', name: 'Słowacja', flag: '🇸🇰', x: 321, y: 164, chipWidth: 112 },
+  { id: 'austria', name: 'Austria', flag: '🇦🇹', x: 296, y: 179, chipWidth: 104 },
+  { id: 'switzerland', name: 'Szwajcaria', flag: '🇨🇭', x: 262, y: 187, chipWidth: 124 },
+  { id: 'slovenia', name: 'Słowenia', flag: '🇸🇮', x: 310, y: 198, chipWidth: 112 },
+  { id: 'germany', name: 'Niemcy', flag: '🇩🇪', x: 286, y: 140, chipWidth: 102 },
+  { id: 'italy', name: 'Włochy', flag: '🇮🇹', x: 283, y: 236, chipWidth: 98 },
+  { id: 'france', name: 'Francja', flag: '🇫🇷', x: 225, y: 178, chipWidth: 108 },
+  { id: 'spain', name: 'Hiszpania', flag: '🇪🇸', x: 156, y: 230, chipWidth: 114 },
+  { id: 'norway', name: 'Norwegia', flag: '🇳🇴', x: 255, y: 85, chipWidth: 116 },
 ]
 
-const tatryMarkerPosition = { x: 298, y: 156 }
+const tatryMarkerPosition = { x: 332, y: 154 }
 
 
 const TatryMapBase = () => (
@@ -315,28 +315,28 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
           {activeId === 'europe' && (
             <svg viewBox="0 0 560 360" className="atlasSvg atlasSvgInteractive">
               <defs>
-                <linearGradient id="europeMassFill" x1="96" y1="32" x2="460" y2="310" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="rgba(120,95,64,.3)" />
-                  <stop offset="48%" stopColor="rgba(77,61,42,.2)" />
-                  <stop offset="100%" stopColor="rgba(38,30,22,.1)" />
+                <linearGradient id="europeMassFill" x1="96" y1="38" x2="470" y2="320" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stopColor="rgba(149,119,81,.38)" />
+                  <stop offset="46%" stopColor="rgba(86,68,48,.28)" />
+                  <stop offset="100%" stopColor="rgba(38,30,21,.16)" />
                 </linearGradient>
-                <radialGradient id="europeHighlight" cx="53%" cy="42%" r="62%">
-                  <stop offset="0%" stopColor="rgba(242,221,181,.16)" />
+                <radialGradient id="europeHighlight" cx="54%" cy="44%" r="68%">
+                  <stop offset="0%" stopColor="rgba(242,221,181,.2)" />
                   <stop offset="100%" stopColor="rgba(242,221,181,0)" />
                 </radialGradient>
               </defs>
               <rect x="22" y="20" width="516" height="318" rx="20" className="atlasEuropeFrame" />
-              <path d="M110 88l20-12 26 4 20 24 18 16 40-10 10-18 20-8 20 10 12 18 22 6 28 18 28-2 20-20 24 6 10 20-8 24 10 22 24 16 14 24-6 22-26 10-34-2-24 10-24-8-14 12-30-8-18 10-8 20-30 8-28-10-20-24-22 2-14-18-26-8-16-20-26-6-10-20 18-20 14-30-8-24 16-20z" className="atlasEuropeMass" />
-              <path d="M108 88l28-20 34 2 26 26 34-4 16-18 32-8 18 12 16 14 20 2 24 12 26 0 20-16 22 2 20 18 4 28 20 14 14 26-2 26 8 14 18 8 12 22-8 30-24 16-32 4-20 14-24 0-14 14-24-8-20 10-12 20-22 10-40 0-18-16-24-8-10-16-24-8-20-18-24-6-14-20 6-28 12-18-10-24z" className="atlasOutline isDimmed atlasEuropeSilhouette" />
-              <path d="M140 120l12 14 30-4 22 12 16 20 36-8 18 10 20-6 22 12 36-6 24 8 18 22 24-2 10 14M136 162l20 10 34 0 22 16 24 0 20 14 34-4 26 8 20 20 28-2M158 214l24-2 30 10 30 0 18 14 30 4 26 12 22-8 30 4M222 94l16 10 10 22 24 10 24-2 18 14 16 20 22 12M302 84l20 18 10 20 24 12 12 22 20 12 14 24" className="atlasEuropeGuideLines" />
-              <ellipse cx="296" cy="178" rx="185" ry="118" className="atlasEuropeHighlight" />
+              <path d="M88 76l24-10 34 2 26 20 18 22 22 6 22-10 18-22 24-18 26 2 20 18 26 8 24 18 20 0 22-16 20 6 12 16 18 8 14 20-4 16 12 18 22 8 18 22 4 24-16 24-26 14-34 2-26 10-26-4-18 8-14 16-22 2-22-10-18 6-10 18-18 10-32 4-26-8-18-20-22-6-16-14-24-6-20-18-24-8-12-22 4-30 14-20 16-22-8-24z" className="atlasEuropeMass" />
+              <path d="M84 78l28-18 38 2 30 20 20 24 20 6 20-10 20-22 24-16 30 2 20 14 24 8 24 16 26 0 20-14 24 6 16 16 18 8 14 20-2 16 12 18 18 8 20 20 10 26-14 28-22 16-30 8-30 4-24 8-24 0-18 12-16 14-20 0-22-8-18 6-12 16-20 10-32 8-28-6-20-18-22-8-14-14-22-8-20-16-24-8-14-20 0-30 12-24 14-18-10-26z" className="atlasOutline isDimmed atlasEuropeSilhouette" />
+              <path d="M121 97l14 8 20 20 32 6 20-6 20-20 20-8 18 16 22 10 24 2 20 14 26 6 18 16 20 0 16 10M106 142l22 10 30 2 26 10 30 0 24 8 28 2 26 8 26 2 26 14 30 4M96 190l30 8 32-2 30 10 32 4 28 10 30 8 30 0 24 10 28 2M138 232l26 2 24 10 26 0 22 10 22 8 28 2 22 10 28 2M258 90l10 18 2 24 16 18 20 12 20 4 22 10 16 20M338 86l12 16 8 20 18 12 18 12 12 18 18 8 12 20" className="atlasEuropeGuideLines" />
+              <ellipse cx="292" cy="176" rx="198" ry="126" className="atlasEuropeHighlight" />
               {europeCountryMarkers.map((country) => {
                 const data = atlasLookups.countries[country.id]
                 const isTatryBorderCountry = country.id === 'poland' || country.id === 'slovakia'
                 return (
                   <g key={country.id} className={`atlasCountryMarker ${isTatryBorderCountry ? 'isTatryBorderCountry' : ''}`}>
                     <circle cx={country.x - 9} cy={country.y - 2} r="3.2" className={`atlasCountryDot ${data?.visited ? 'isVisited' : 'isMuted'}`} />
-                    <foreignObject x={country.x} y={country.y - 14} width="98" height="26">
+                    <foreignObject x={country.x} y={country.y - 14} width={country.chipWidth || 104} height="26">
                       <button type="button" className="atlasCountryChip" onClick={() => data && setAtlasPath((prev) => [...prev, data.id])}>
                         <span>{country.flag}</span>
                         <span>{country.name}</span>
