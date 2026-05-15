@@ -22,16 +22,20 @@ const worldLabels = [
   { id: 'oceania', label: 'Oceania', x: 490, y: 236 },
 ]
 
-const europeCountries = [
-  { id: 'germany', label: 'DE', labelX: 244, labelY: 132, d: 'M220 102l22-8 20 6 12 14-2 20-12 16-20 6-16-8-8-18 4-18z' },
-  { id: 'poland', label: 'PL', labelX: 296, labelY: 126, d: 'M270 98l30-4 24 8 10 16-4 22-16 18-24 2-20-12-6-20 6-18z' },
-  { id: 'slovakia', label: 'SK', labelX: 296, labelY: 178, d: 'M274 166l34-2 18 6 0 10-20 10-34 2-14-10z' },
-  { id: 'switzerland', label: 'CH', labelX: 236, labelY: 178, d: 'M214 166l22-6 18 2 4 10-10 12-22 4-16-8z' },
-  { id: 'austria', label: 'AT', labelX: 264, labelY: 198, d: 'M238 184l28-6 30 4 10 10-10 12-28 6-24-2-12-10z' },
-  { id: 'slovenia', label: 'SI', labelX: 258, labelY: 218, d: 'M244 212l18-2 12 6 0 8-16 6-14-4z' },
+const europeCountryMarkers = [
+  { id: 'poland', name: 'Polska', flag: '🇵🇱', x: 298, y: 144 },
+  { id: 'slovakia', name: 'Słowacja', flag: '🇸🇰', x: 296, y: 165 },
+  { id: 'austria', name: 'Austria', flag: '🇦🇹', x: 275, y: 179 },
+  { id: 'switzerland', name: 'Szwajcaria', flag: '🇨🇭', x: 245, y: 186 },
+  { id: 'slovenia', name: 'Słowenia', flag: '🇸🇮', x: 284, y: 197 },
+  { id: 'germany', name: 'Niemcy', flag: '🇩🇪', x: 264, y: 144 },
+  { id: 'italy', name: 'Włochy', flag: '🇮🇹', x: 258, y: 220 },
+  { id: 'france', name: 'Francja', flag: '🇫🇷', x: 220, y: 178 },
+  { id: 'spain', name: 'Hiszpania', flag: '🇪🇸', x: 174, y: 222 },
+  { id: 'norway', name: 'Norwegia', flag: '🇳🇴', x: 248, y: 94 },
 ]
 
-const tatryMarkerPosition = { x: 303, y: 171 }
+const tatryMarkerPosition = { x: 298, y: 156 }
 
 
 const TatryMapBase = () => (
@@ -311,25 +315,33 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
           {activeId === 'europe' && (
             <svg viewBox="0 0 560 360" className="atlasSvg atlasSvgInteractive">
               <defs>
-                <linearGradient id="europeMassFill" x1="188" y1="48" x2="406" y2="328" gradientUnits="userSpaceOnUse">
+                <linearGradient id="europeMassFill" x1="96" y1="32" x2="460" y2="310" gradientUnits="userSpaceOnUse">
                   <stop offset="0%" stopColor="rgba(120,95,64,.3)" />
                   <stop offset="48%" stopColor="rgba(77,61,42,.2)" />
                   <stop offset="100%" stopColor="rgba(38,30,22,.1)" />
                 </linearGradient>
+                <radialGradient id="europeHighlight" cx="53%" cy="42%" r="62%">
+                  <stop offset="0%" stopColor="rgba(242,221,181,.16)" />
+                  <stop offset="100%" stopColor="rgba(242,221,181,0)" />
+                </radialGradient>
               </defs>
               <rect x="22" y="20" width="516" height="318" rx="20" className="atlasEuropeFrame" />
-              <path d="M160 72l38-22 58-20 72-6 78 8 66 20 44 30 22 36 6 44-8 50-24 42-46 38-62 24-74 10-76-6-60-20-44-34-26-44-8-44 12-36 30-30z" className="atlasEuropeMass" />
-              <path d="M174 66l86-24 74-2 70 14 54 40 8 58-18 58-46 52-70 34-86 4-72-28-48-54-4-58 20-36z" className="atlasOutline isDimmed atlasEuropeSilhouette" />
-              <path d="M164 136h220M188 180h236M208 222h198" className="atlasEuropeGuideLines" />
-              {europeCountries.map((country) => {
+              <path d="M110 88l20-12 26 4 20 24 18 16 40-10 10-18 20-8 20 10 12 18 22 6 28 18 28-2 20-20 24 6 10 20-8 24 10 22 24 16 14 24-6 22-26 10-34-2-24 10-24-8-14 12-30-8-18 10-8 20-30 8-28-10-20-24-22 2-14-18-26-8-16-20-26-6-10-20 18-20 14-30-8-24 16-20z" className="atlasEuropeMass" />
+              <path d="M108 88l28-20 34 2 26 26 34-4 16-18 32-8 18 12 16 14 20 2 24 12 26 0 20-16 22 2 20 18 4 28 20 14 14 26-2 26 8 14 18 8 12 22-8 30-24 16-32 4-20 14-24 0-14 14-24-8-20 10-12 20-22 10-40 0-18-16-24-8-10-16-24-8-20-18-24-6-14-20 6-28 12-18-10-24z" className="atlasOutline isDimmed atlasEuropeSilhouette" />
+              <path d="M140 120l12 14 30-4 22 12 16 20 36-8 18 10 20-6 22 12 36-6 24 8 18 22 24-2 10 14M136 162l20 10 34 0 22 16 24 0 20 14 34-4 26 8 20 20 28-2M158 214l24-2 30 10 30 0 18 14 30 4 26 12 22-8 30 4M222 94l16 10 10 22 24 10 24-2 18 14 16 20 22 12M302 84l20 18 10 20 24 12 12 22 20 12 14 24" className="atlasEuropeGuideLines" />
+              <ellipse cx="296" cy="178" rx="185" ry="118" className="atlasEuropeHighlight" />
+              {europeCountryMarkers.map((country) => {
                 const data = atlasLookups.countries[country.id]
                 const isTatryBorderCountry = country.id === 'poland' || country.id === 'slovakia'
                 return (
-                  <g key={country.id}>
-                    <path d={country.d} className={`atlasOutline atlasCountry ${data?.visited ? 'isVisited' : 'isMuted'} ${isTatryBorderCountry ? 'isTatryBorderCountry' : ''}`} onClick={() => data && setAtlasPath((prev) => [...prev, data.id])} />
-                    <text x={country.labelX} y={country.labelY} className={`atlasCountryLabel ${isTatryBorderCountry ? 'isTatryBorderCountryLabel' : ''}`}>
-                      {country.label}
-                    </text>
+                  <g key={country.id} className={`atlasCountryMarker ${isTatryBorderCountry ? 'isTatryBorderCountry' : ''}`}>
+                    <circle cx={country.x - 9} cy={country.y - 2} r="3.2" className={`atlasCountryDot ${data?.visited ? 'isVisited' : 'isMuted'}`} />
+                    <foreignObject x={country.x} y={country.y - 14} width="98" height="26">
+                      <button type="button" className="atlasCountryChip" onClick={() => data && setAtlasPath((prev) => [...prev, data.id])}>
+                        <span>{country.flag}</span>
+                        <span>{country.name}</span>
+                      </button>
+                    </foreignObject>
                   </g>
                 )
               })}
@@ -403,8 +415,8 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
         {nodeType && <p className="atlasPointType">{typeLabelMap[nodeType] || 'Punkt atlasu'}</p>}
         <div className="atlasTagRow">{tags.map((tag) => <span key={tag} className="atlasTag">{tag}</span>)}</div>
         {activeNode.countryIds && <p className="atlasMeta">Kraje: {activeNode.countryIds.map((id) => atlasLookups.countries[id]?.name).filter(Boolean).join(', ')}</p>}
-        {activeId === 'europe' && <p className="atlasMeta">Europa to główny kontynent wypraw. <strong>Tatry</strong> pozostają regionem specjalnym między Polską i Słowacją — kliknięcie schodzi poziom niżej w atlasie.</p>}
-        {activeId === 'tatry' && <p className="atlasMeta">Widok Tatr działa teraz w układzie hybrydowym: osobna baza mapy (placeholder pod docelowe geodata) oraz niezależny overlay interaktywnych szczytów.</p>}
+        {activeId === 'europe' && <p className="atlasMeta">Europa to kontynent wypraw — od Skandynawii i Alp po Bałkany i Tatry. Kraje są zaznaczone subtelnymi markerami flagowymi.</p>}
+        {activeId === 'tatry' && <p className="atlasMeta">Tatry to region graniczny Polski i Słowacji — wspólna oś wypraw z przejściem do szczegółowego widoku szczytów.</p>}
         {atlasLevel === 1 && countriesForContinent.length > 0 && <p className="atlasMeta">Widoczne kraje: {countriesForContinent.map((country) => country.name).join(', ')}</p>}
         {activeFilm && (
           <a className="smallButton atlasCta" href={activeFilm.url} target="_blank" rel="noreferrer">
