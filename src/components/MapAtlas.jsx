@@ -5,12 +5,12 @@ import tatryHillshadeDark from '../assets/maps/tatry-hillshade-dark.png.png'
 import '../mapStyles.css'
 
 const worldShapes = [
-  { id: 'north-america', d: 'M50 92l18-18 30-16 36-10 40 2 32 12 20 18 4 22-14 14-22 6-12 10-16 4-18-2-16 8-18 4-18-8-20-12-16-20 0-14 10-10z' },
-  { id: 'south-america', d: 'M162 172l18 8 16 18 10 20 2 24-4 28-10 26-14 22-10 12-10-4 0-18-8-18 2-24 10-22 8-18 0-14z' },
-  { id: 'europe', d: 'M266 86l14-10 20-4 18 4 14 10 2 12-8 10-14 4-14 4-8 8-12-2-12-10-2-12z' },
-  { id: 'africa', d: 'M282 126l18 6 18 16 12 24 2 30-8 34-14 30-14 20-12 10-10-10-2-22 2-26 8-28 10-22 8-16z' },
-  { id: 'asia', d: 'M320 86l34-14 44-8 54 0 46 10 34 18 20 22 8 20-6 22-16 16-24 12-20 2-14 8-22 4-30-2-24-10-18-16-12-22-6-20 6-20z' },
-  { id: 'oceania', d: 'M454 246l16-6 22 2 20 10 10 12-4 12-14 10-20 4-18-4-14-12z' },
+  { id: 'north-america', d: 'M44 106l24-26 38-18 52-14 52 2 42 18 24 22 2 24-20 16-26 8-14 16-26 6-28-2-22 10-24 6-20-10-18-16-16-22 0-18z' },
+  { id: 'south-america', d: 'M170 186l18 10 16 18 10 20 0 28-8 32-10 30-14 22-10 12-10-6 0-18-8-18 0-24 8-20 8-22 6-18 0-16z' },
+  { id: 'europe', d: 'M266 94l14-12 22-5 22 4 16 10 2 12-8 12-14 6-16 4-10 8-14-2-12-10-2-12z' },
+  { id: 'africa', d: 'M286 132l20 8 20 18 10 22 2 30-8 34-14 30-14 22-12 10-10-10-2-20 2-30 8-26 10-24 8-18z' },
+  { id: 'asia', d: 'M328 88l36-16 46-8 56 0 48 10 34 18 20 20 8 18-6 22-18 18-24 12-20 4-16 8-24 4-30-2-24-10-18-16-14-24-6-20 8-18z' },
+  { id: 'oceania', d: 'M454 248l16-8 24 2 20 8 10 12-4 12-14 10-20 4-18-4-14-12z' },
 ]
 
 const worldLabels = [
@@ -263,7 +263,10 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
   const nodeType = activeNode.atlasType || activeNode.type || null
   const typeLabelMap = { summit: 'Szczyt', trail: 'Szlak / przejście', viewpoint: 'Punkt widokowy', place: 'Miejsce', city: 'Miasto', hut: 'Schronisko', region: 'Region', country: 'Kraj', continent: 'Kontynent' }
 
-  const tags = [activeNode.visited ? 'odwiedzone' : 'w planach', activeFilm ? 'film' : null, activeNode.gallery?.length ? 'galeria' : 'galeria wkrótce'].filter(Boolean)
+  const isWorldView = activeId === 'world'
+  const tags = isWorldView
+    ? ['Europa aktywna', 'kolejne regiony w planach', 'galerie wkrótce']
+    : [activeNode.visited ? 'odwiedzone' : 'w planach', activeFilm ? 'film' : null, activeNode.gallery?.length ? 'galeria' : 'galeria wkrótce'].filter(Boolean)
   const tatryPointsWithLeaders = getTatryCollisionLayout(tatryPoints).map((point) => {
     const offsetX = point.labelOffset?.x ?? 0
     const offsetY = point.labelOffset?.y ?? 0
@@ -299,13 +302,23 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
         <div className="atlasStage cinematicStage" ref={stageRef}>
           {activeId === 'world' && (
             <svg viewBox="0 0 560 360" className="atlasSvg atlasSvgInteractive">
+              <defs>
+                <radialGradient id="worldEuropeGlow" cx="52%" cy="42%" r="30%">
+                  <stop offset="0%" stopColor="rgba(245,225,188,.32)" />
+                  <stop offset="100%" stopColor="rgba(245,225,188,0)" />
+                </radialGradient>
+              </defs>
               <path d="M38 178h484" className="atlasLatLine" />
+              <ellipse cx="292" cy="108" rx="76" ry="42" className="atlasEuropeFocusGlow" />
               {worldShapes.map((shape) => {
                 const continent = continents.find((c) => c.id === shape.id)
-                return <path key={shape.id} d={shape.d} className={`atlasOutline ${continent?.visited ? 'isVisited' : 'isMuted'}`} onClick={() => continent && setAtlasPath((prev) => [...prev, continent.id])} />
+                const isEurope = shape.id === 'europe'
+                return <path key={shape.id} d={shape.d} className={`atlasOutline ${continent?.visited ? 'isVisited' : 'isMuted'} ${isEurope ? 'isAtlasActive' : ''}`} onClick={() => continent && setAtlasPath((prev) => [...prev, continent.id])} />
               })}
+              <circle cx="290" cy="108" r="14" className="atlasEuropePulseRing" />
+              <circle cx="290" cy="108" r="5" className="atlasEuropePulseDot" />
               {worldLabels.map((region) => (
-                <text key={region.id} x={region.x} y={region.y} className={`atlasWorldLabel ${activeId === 'world' && region.id === 'europe' ? 'isActive' : ''}`}>
+                <text key={region.id} data-id={region.id} x={region.x} y={region.y} className={`atlasWorldLabel ${activeId === 'world' && region.id === 'europe' ? 'isActive' : ''}`}>
                   {region.label}
                 </text>
               ))}
@@ -408,10 +421,11 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
       </div>
 
       <article className="mapCard isActiveRegion atlasDetailCard">
-        <p className="atlasEyebrow">Atlas entry</p>
+        <p className="atlasEyebrow">{isWorldView ? 'Atlas signature view' : 'Atlas entry'}</p>
         <p className="atlasLevelLabel">{levelNames[atlasLevel] || `Poziom ${atlasLevel}`}</p>
         <h3>{activeNode.name}</h3>
-        <p className="atlasLead">{activeNode.description}</p>
+        <p className="atlasLead">{isWorldView ? 'Wybierz kontynent, aby odkrywać wyprawy, regiony i szczyty.' : activeNode.description}</p>
+        {isWorldView && <p className="atlasPointType">ŚWIAT</p>}
         {nodeType && <p className="atlasPointType">{typeLabelMap[nodeType] || 'Punkt atlasu'}</p>}
         <div className="atlasTagRow">{tags.map((tag) => <span key={tag} className="atlasTag">{tag}</span>)}</div>
         {activeNode.countryIds && <p className="atlasMeta">Kraje: {activeNode.countryIds.map((id) => atlasLookups.countries[id]?.name).filter(Boolean).join(', ')}</p>}
