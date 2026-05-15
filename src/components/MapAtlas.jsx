@@ -4,7 +4,7 @@ import { resolveTatryPointPosition } from '../data/atlasGeo'
 import tatryHillshadeDark from '../assets/maps/tatry-hillshade-dark.png.png'
 import '../mapStyles.css'
 
-const worldAtlasBaseAsset = null // future: import '../assets/maps/world-atlas-dark.webp'
+import worldAtlasBaseAsset from '../assets/maps/world-atlas-dark.webp'
 
 const worldShapes = [
   { id: 'north-america', d: 'M44 106l24-26 38-18 52-14 52 2 42 18 24 22 2 24-20 16-26 8-14 16-26 6-28-2-22 10-24 6-20-10-18-16-16-22 0-18z' },
@@ -324,7 +324,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
 
         <div className="atlasStage cinematicStage" ref={stageRef}>
           {activeId === 'world' && (
-            <svg viewBox="0 0 560 360" className="atlasSvg atlasSvgInteractive">
+            <svg viewBox="0 0 560 360" className="atlasSvg atlasSvgInteractive atlasWorldSvg">
               <defs>
                 <radialGradient id="worldEuropeGlow" cx="52%" cy="42%" r="30%">
                   <stop offset="0%" stopColor="rgba(245,225,188,.24)" />
@@ -338,7 +338,10 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
               <path d="M38 178h484" className="atlasLatLine" />
               <g className="worldBase" aria-hidden="true">
                 {worldAtlasBaseAsset ? (
-                  <image href={worldAtlasBaseAsset} x="0" y="0" width="560" height="360" preserveAspectRatio="xMidYMid slice" className="worldBaseImage" />
+                  <>
+                    <image href={worldAtlasBaseAsset} x="10" y="10" width="540" height="340" preserveAspectRatio="xMidYMid slice" className="worldBaseImage" />
+                    <rect x="10" y="10" width="540" height="340" rx="18" className="worldBaseFrame" />
+                  </>
                 ) : (
                   <>
                     <rect x="10" y="10" width="540" height="340" rx="18" className="worldBoardFrame" />
@@ -374,7 +377,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
           )}
 
           {activeId === 'europe' && (
-            <svg viewBox="0 0 560 360" className="atlasSvg atlasSvgInteractive">
+            <svg viewBox="0 0 560 360" className="atlasSvg atlasSvgInteractive atlasWorldSvg">
               <defs>
                 <linearGradient id="europeMassFill" x1="96" y1="38" x2="470" y2="320" gradientUnits="userSpaceOnUse">
                   <stop offset="0%" stopColor="rgba(149,119,81,.38)" />
@@ -459,7 +462,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
           )}
 
           {activeId === 'africa' && (
-            <svg viewBox="0 0 560 360" className="atlasSvg atlasSvgInteractive">
+            <svg viewBox="0 0 560 360" className="atlasSvg atlasSvgInteractive atlasWorldSvg">
               <path d="M264 44l50 12 46 56 12 58-18 88-44 52-54-20-22-72 10-84z" className="atlasOutline isVisited" />
             </svg>
           )}
