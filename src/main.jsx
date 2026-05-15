@@ -136,8 +136,8 @@ const blogPosts = [
 ]
 
 const mobileNavLinks = [
-  { href: '#films', label: 'Filmy' },
   { href: '#map', label: 'Mapa' },
+  { href: '#films', label: 'Filmy' },
   { href: '#expeditions', label: 'Wyprawy' },
   { href: '#gallery', label: 'Galeria' },
   { href: '#about', label: 'O mnie' },
