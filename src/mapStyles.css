@@ -31,6 +31,14 @@
 .atlasEuropeFocusGlow{fill:url(#worldEuropeGlow);pointer-events:none;opacity:.9}
 .atlasEuropePulseRing{fill:none;stroke:rgba(246,226,190,.72);stroke-width:1.2;stroke-dasharray:4 5;filter:drop-shadow(0 0 10px rgba(245,217,163,.5));opacity:.95;animation:atlasPulse 3.4s ease-in-out infinite}
 .atlasEuropePulseDot{fill:rgba(248,230,199,.98);filter:drop-shadow(0 0 8px rgba(245,218,166,.62))}
+.worldBase{pointer-events:none}
+.worldBaseImage{opacity:.82;filter:contrast(1.06) brightness(.78) saturate(.88)}
+.worldPlaceholderSvg{fill:rgba(205,170,118,.07);stroke:rgba(231,212,177,.14);stroke-width:1}
+.continentOverlay{transition:fill .24s ease,stroke .24s ease,filter .24s ease,opacity .24s ease}
+.continentOverlay.isHovered{stroke:rgba(248,229,192,.9);fill:rgba(200,162,108,.24);filter:drop-shadow(0 0 12px rgba(243,213,157,.32))}
+.continentMarker{transition:fill .2s ease,opacity .2s ease,text-shadow .2s ease}
+.continentMarker.isActive{fill:rgba(249,230,196,.96);text-shadow:0 0 8px rgba(245,214,159,.34)}
+.continentMarker.isHovered{fill:rgba(252,236,207,.98);text-shadow:0 0 10px rgba(245,214,159,.42)}
 .atlasTatryMarker{cursor:pointer}
 .atlasTatryMarker:focus-visible{outline:none}
 .atlasTatryMarker .atlasTatryGlow{fill:rgba(208,168,105,.2);stroke:rgba(245,226,189,.75);stroke-width:1.2;stroke-dasharray:3 5;filter:drop-shadow(0 0 10px rgba(244,214,157,.34));transition:all .3s ease}

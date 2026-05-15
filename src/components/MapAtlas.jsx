@@ -4,6 +4,8 @@ import { resolveTatryPointPosition } from '../data/atlasGeo'
 import tatryHillshadeDark from '../assets/maps/tatry-hillshade-dark.png.png'
 import '../mapStyles.css'
 
+const worldAtlasBaseAsset = null // future: import '../assets/maps/world-atlas-dark.webp'
+
 const worldShapes = [
   { id: 'north-america', d: 'M44 106l24-26 38-18 52-14 52 2 42 18 24 22 2 24-20 16-26 8-14 16-26 6-28-2-22 10-24 6-20-10-18-16-16-22 0-18z' },
   { id: 'south-america', d: 'M170 186l18 10 16 18 10 20 0 28-8 32-10 30-14 22-10 12-10-6 0-18-8-18 0-24 8-20 8-22 6-18 0-16z' },
@@ -13,13 +15,13 @@ const worldShapes = [
   { id: 'oceania', d: 'M454 248l16-8 24 2 20 8 10 12-4 12-14 10-20 4-18-4-14-12z' },
 ]
 
-const worldLabels = [
-  { id: 'europe', label: 'Europa', x: 286, y: 72 },
-  { id: 'asia', label: 'Azja', x: 402, y: 76 },
-  { id: 'africa', label: 'Afryka', x: 302, y: 120 },
-  { id: 'north-america', label: 'Ameryka Północna', x: 132, y: 44 },
-  { id: 'south-america', label: 'Ameryka Południowa', x: 188, y: 158 },
-  { id: 'oceania', label: 'Oceania', x: 490, y: 236 },
+const continentMeta = [
+  { id: 'europe', shapeId: 'europe', label: 'Europa', type: 'continent', status: 'active', description: 'Aktywny kierunek atlasu. Wejście do krajów, regionów i szczytów.', position: { x: 286, y: 72 }, routeTarget: 'europe', panelTags: ['active', 'wyprawy', 'film + galerie'] },
+  { id: 'asia', shapeId: 'asia', label: 'Azja', type: 'continent', status: 'planned', description: 'Kontynent przygotowany pod kolejne wyprawy i nowe wpisy w atlasie.', position: { x: 402, y: 76 }, routeTarget: null, panelTags: ['planned', 'future direction'] },
+  { id: 'africa', shapeId: 'africa', label: 'Afryka', type: 'continent', status: 'planned', description: 'Kolejny etap rozwoju atlasu. Warstwa gotowa pod dalsze kierunki.', position: { x: 302, y: 120 }, routeTarget: null, panelTags: ['planned', 'future expansion'] },
+  { id: 'northAmerica', shapeId: 'north-america', label: 'Ameryka Północna', type: 'continent', status: 'planned', description: 'Kontynent dodany jako gotowy overlay i marker pod przyszłe treści.', position: { x: 132, y: 44 }, routeTarget: null, panelTags: ['planned', 'future direction'] },
+  { id: 'southAmerica', shapeId: 'south-america', label: 'Ameryka Południowa', type: 'continent', status: 'planned', description: 'Warstwa przygotowana pod kolejne wyprawy i panel kontynentu.', position: { x: 188, y: 158 }, routeTarget: null, panelTags: ['planned', 'future direction'] },
+  { id: 'oceania', shapeId: 'oceania', label: 'Oceania', type: 'continent', status: 'planned', description: 'Kierunek zaplanowany w atlasie — aktywacja po dodaniu materiałów.', position: { x: 490, y: 236 }, routeTarget: null, panelTags: ['planned', 'future direction'] },
 ]
 
 const europeCountryMarkers = [
@@ -231,6 +233,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
   const activeId = atlasPath[atlasPath.length - 1]
   const stageRef = useRef(null)
   const [hoveredSummitId, setHoveredSummitId] = useState(null)
+  const [hoveredContinent, setHoveredContinent] = useState(null)
   const continents = travelAtlasData.continents
   const getNodeName = (id) =>
     id === 'world'
@@ -264,6 +267,17 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
   const typeLabelMap = { summit: 'Szczyt', trail: 'Szlak / przejście', viewpoint: 'Punkt widokowy', place: 'Miejsce', city: 'Miasto', hut: 'Schronisko', region: 'Region', country: 'Kraj', continent: 'Kontynent' }
 
   const isWorldView = activeId === 'world'
+  const hoveredContinentMeta = isWorldView ? continentMeta.find((item) => item.id === hoveredContinent) || null : null
+  const worldPanel = hoveredContinentMeta
+    ? {
+      name: hoveredContinentMeta.label,
+      description: hoveredContinentMeta.description,
+      typeLabel: 'Kontynent',
+      tags: hoveredContinentMeta.panelTags,
+      isEurope: hoveredContinentMeta.id === 'europe',
+      status: hoveredContinentMeta.status,
+    }
+    : null
   const tags = isWorldView
     ? ['Europa aktywna', 'kolejne regiony w planach', 'galerie wkrótce']
     : [activeNode.visited ? 'odwiedzone' : 'w planach', activeFilm ? 'film' : null, activeNode.gallery?.length ? 'galeria' : 'galeria wkrótce'].filter(Boolean)
@@ -309,19 +323,34 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                 </radialGradient>
               </defs>
               <path d="M38 178h484" className="atlasLatLine" />
-              <ellipse cx="292" cy="108" rx="76" ry="42" className="atlasEuropeFocusGlow" />
+              <g className="worldBase" aria-hidden="true">
+                {worldAtlasBaseAsset ? (
+                  <image href={worldAtlasBaseAsset} x="0" y="0" width="560" height="360" preserveAspectRatio="xMidYMid slice" className="worldBaseImage" />
+                ) : (
+                  <>
+                    <ellipse cx="292" cy="108" rx="76" ry="42" className="atlasEuropeFocusGlow worldPlaceholderSvg" />
+                    <rect x="10" y="10" width="540" height="340" rx="18" className="worldPlaceholderSvg" />
+                  </>
+                )}
+              </g>
+              <g className="continentOverlays">
               {worldShapes.map((shape) => {
-                const continent = continents.find((c) => c.id === shape.id)
-                const isEurope = shape.id === 'europe'
-                return <path key={shape.id} d={shape.d} className={`atlasOutline ${continent?.visited ? 'isVisited' : 'isMuted'} ${isEurope ? 'isAtlasActive' : ''}`} onClick={() => continent && setAtlasPath((prev) => [...prev, continent.id])} />
+                const meta = continentMeta.find((item) => item.shapeId === shape.id)
+                const continent = continents.find((c) => c.id === meta?.routeTarget)
+                const isEurope = meta?.id === 'europe'
+                const isHovered = hoveredContinent === meta?.id
+                return <path key={shape.id} d={shape.d} className={`atlasOutline continentOverlay ${continent?.visited ? 'isVisited' : 'isMuted'} ${isEurope ? 'isAtlasActive' : ''} ${isHovered ? 'isHovered' : ''}`} onMouseEnter={() => meta && setHoveredContinent(meta.id)} onMouseLeave={() => setHoveredContinent(null)} onFocus={() => meta && setHoveredContinent(meta.id)} onBlur={() => setHoveredContinent(null)} onClick={() => continent && setAtlasPath((prev) => [...prev, continent.id])} />
               })}
+              </g>
               <circle cx="290" cy="108" r="14" className="atlasEuropePulseRing" />
               <circle cx="290" cy="108" r="5" className="atlasEuropePulseDot" />
-              {worldLabels.map((region) => (
-                <text key={region.id} data-id={region.id} x={region.x} y={region.y} className={`atlasWorldLabel ${activeId === 'world' && region.id === 'europe' ? 'isActive' : ''}`}>
+              <g className="continentMarkers">
+              {continentMeta.map((region) => (
+                <text key={region.id} data-id={region.shapeId} x={region.position.x} y={region.position.y} className={`atlasWorldLabel continentMarker ${region.id === 'europe' ? 'isActive' : ''} ${hoveredContinent === region.id ? 'isHovered' : ''}`}>
                   {region.label}
                 </text>
               ))}
+              </g>
             </svg>
           )}
 
@@ -423,11 +452,12 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
       <article className="mapCard isActiveRegion atlasDetailCard">
         <p className="atlasEyebrow">{isWorldView ? 'Atlas signature view' : 'Atlas entry'}</p>
         <p className="atlasLevelLabel">{levelNames[atlasLevel] || `Poziom ${atlasLevel}`}</p>
-        <h3>{activeNode.name}</h3>
-        <p className="atlasLead">{isWorldView ? 'Wybierz kontynent, aby odkrywać wyprawy, regiony i szczyty.' : activeNode.description}</p>
-        {isWorldView && <p className="atlasPointType">ŚWIAT</p>}
+        <h3>{isWorldView && worldPanel ? worldPanel.name : activeNode.name}</h3>
+        <p className="atlasLead">{isWorldView ? (worldPanel?.description || 'Wybierz kontynent, aby odkrywać wyprawy, regiony i szczyty.') : activeNode.description}</p>
+        {isWorldView && <p className="atlasPointType">{worldPanel?.typeLabel || 'Świat'}</p>}
         {nodeType && <p className="atlasPointType">{typeLabelMap[nodeType] || 'Punkt atlasu'}</p>}
-        <div className="atlasTagRow">{tags.map((tag) => <span key={tag} className="atlasTag">{tag}</span>)}</div>
+        <div className="atlasTagRow">{(worldPanel?.tags || tags).map((tag) => <span key={tag} className="atlasTag">{tag}</span>)}</div>
+        {worldPanel?.isEurope && <p className="atlasMeta">Europa jest aktywnym kierunkiem i prowadzi do kolejnego poziomu atlasu.</p>}
         {activeNode.countryIds && <p className="atlasMeta">Kraje: {activeNode.countryIds.map((id) => atlasLookups.countries[id]?.name).filter(Boolean).join(', ')}</p>}
         {activeId === 'europe' && <p className="atlasMeta">Europa to kontynent wypraw — od Skandynawii i Alp po Bałkany i Tatry. Kraje są zaznaczone subtelnymi markerami flagowymi.</p>}
         {activeId === 'tatry' && <p className="atlasMeta">Tatry to region graniczny Polski i Słowacji — wspólna oś wypraw z przejściem do szczegółowego widoku szczytów.</p>}
