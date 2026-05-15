@@ -28,6 +28,9 @@
 .atlasCountryMarker.isTatryBorderCountry .atlasCountryChip{border-color:rgba(247,226,188,.58);background:linear-gradient(165deg,rgba(45,35,24,.92),rgba(24,19,15,.84))}
 .atlasWorldLabel{fill:rgba(236,216,180,.66);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;pointer-events:none}
 .atlasWorldLabel.isActive{fill:rgba(249,230,196,.96)}
+.atlasEuropeFocusGlow{fill:url(#worldEuropeGlow);pointer-events:none;opacity:.9}
+.atlasEuropePulseRing{fill:none;stroke:rgba(246,226,190,.72);stroke-width:1.2;stroke-dasharray:4 5;filter:drop-shadow(0 0 10px rgba(245,217,163,.5));opacity:.95;animation:atlasPulse 3.4s ease-in-out infinite}
+.atlasEuropePulseDot{fill:rgba(248,230,199,.98);filter:drop-shadow(0 0 8px rgba(245,218,166,.62))}
 .atlasTatryMarker{cursor:pointer}
 .atlasTatryMarker:focus-visible{outline:none}
 .atlasTatryMarker .atlasTatryGlow{fill:rgba(208,168,105,.2);stroke:rgba(245,226,189,.75);stroke-width:1.2;stroke-dasharray:3 5;filter:drop-shadow(0 0 10px rgba(244,214,157,.34));transition:all .3s ease}
@@ -91,10 +94,11 @@
 @keyframes atlasFade{from{opacity:0;transform:scale(.985)}to{opacity:1;transform:scale(1)}}
 @keyframes atlasZoom{from{opacity:0;transform:scale(1.03)}to{opacity:1;transform:scale(1)}}
 @keyframes atlasZoomIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+@keyframes atlasPulse{0%,100%{transform:scale(1);opacity:.82}50%{transform:scale(1.08);opacity:1}}
 @media (max-width:980px){.cinematicAtlas.atlasLayout{grid-template-columns:1fr}.atlasSvg,.summitLayer{min-height:320px}.atlasStage{min-height:360px}.tatryLayer{padding:10px 8px 5px}.tatryLayer::before{inset:8% 3.6% 12%}.tatryStructure{inset:7.5% 3.4% 11%;width:93.2%;height:81.5%}.summitPoint .leader{opacity:.72}.summitPoint .dot{width:10px;height:10px}.summitPoint .label{font-size:10.7px;padding:5px 8px;max-width:54vw}.atlasCrumb{min-width:0;flex:1 1 calc(50% - 8px)}.atlasCrumb::after{display:none}.atlasDetailCard{padding:16px}}
 
 .atlasInlineLabel{fill:rgba(246,227,195,.9);font-size:10px;letter-spacing:.14em;text-transform:uppercase;pointer-events:none}
-@media (max-width:620px){.atlasInlineLabel{font-size:9px}.atlasCountryLabel{font-size:8.1px;letter-spacing:.1em}.atlasCountryLabel.isTatryBorderCountryLabel{font-size:8.4px}}
+@media (max-width:620px){.atlasInlineLabel{font-size:9px}.atlasCountryLabel{font-size:8.1px;letter-spacing:.1em}.atlasCountryLabel.isTatryBorderCountryLabel{font-size:8.4px}.atlasWorldLabel{font-size:7.6px}.atlasWorldLabel[data-id="north-america"],.atlasWorldLabel[data-id="south-america"]{display:none}}
 
 .summitTierfeatured .dot{width:11px;height:11px;background:rgba(251,233,200,.99)}
 .summitTierfeatured .label{border-color:rgba(248,228,190,.74);box-shadow:0 10px 18px rgba(0,0,0,.3),0 0 18px rgba(247,223,183,.11),inset 0 0 0 1px rgba(255,241,214,.06)}

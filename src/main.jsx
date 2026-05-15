@@ -467,6 +467,8 @@ function App() {
         </div>
       </section>
 
+      <section id="map" className="section sectionDarker reveal"><div className="container"><SectionHeader label="Mapa wypraw" title="Interaktywna mapa wypraw" text="Hierarchia: Świat → kontynent → kraj/region → Tatry/szczyty." /><MapAtlas atlasPath={atlasPath} setAtlasPath={setAtlasPath} activeNode={activeNode} atlasLookups={atlasLookups} /></div></section>
+
       <section id="films" className="section sectionDark reveal">
         <div className="container">
           <SectionHeader
@@ -499,8 +501,6 @@ function App() {
           </div>
         </div>
       </section>
-
-      <section id="map" className="section sectionDarker reveal"><div className="container"><SectionHeader label="Mapa wypraw" title="Interaktywna mapa wypraw" text="Hierarchia: Świat → kontynent → kraj/region → Tatry/szczyty." /><MapAtlas atlasPath={atlasPath} setAtlasPath={setAtlasPath} activeNode={activeNode} atlasLookups={atlasLookups} /></div></section>
 
       <section id="expeditions" className="section sectionDark reveal">
         <div className="container">
