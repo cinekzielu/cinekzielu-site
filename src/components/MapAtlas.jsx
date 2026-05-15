@@ -23,16 +23,16 @@ const worldLabels = [
 ]
 
 const europeCountryMarkers = [
-  { id: 'poland', name: 'Polska', flag: '🇵🇱', x: 323, y: 137, chipWidth: 104 },
-  { id: 'slovakia', name: 'Słowacja', flag: '🇸🇰', x: 321, y: 164, chipWidth: 112 },
-  { id: 'austria', name: 'Austria', flag: '🇦🇹', x: 296, y: 179, chipWidth: 104 },
-  { id: 'switzerland', name: 'Szwajcaria', flag: '🇨🇭', x: 262, y: 187, chipWidth: 124 },
-  { id: 'slovenia', name: 'Słowenia', flag: '🇸🇮', x: 310, y: 198, chipWidth: 112 },
-  { id: 'germany', name: 'Niemcy', flag: '🇩🇪', x: 286, y: 140, chipWidth: 102 },
-  { id: 'italy', name: 'Włochy', flag: '🇮🇹', x: 283, y: 236, chipWidth: 98 },
-  { id: 'france', name: 'Francja', flag: '🇫🇷', x: 225, y: 178, chipWidth: 108 },
-  { id: 'spain', name: 'Hiszpania', flag: '🇪🇸', x: 156, y: 230, chipWidth: 114 },
-  { id: 'norway', name: 'Norwegia', flag: '🇳🇴', x: 255, y: 85, chipWidth: 116 },
+  { id: 'poland', name: 'Polska', flag: '🇵🇱', x: 334, y: 126, chipWidth: 104 },
+  { id: 'slovakia', name: 'Słowacja', flag: '🇸🇰', x: 342, y: 160, chipWidth: 112 },
+  { id: 'austria', name: 'Austria', flag: '🇦🇹', x: 297, y: 197, chipWidth: 104 },
+  { id: 'switzerland', name: 'Szwajcaria', flag: '🇨🇭', x: 236, y: 195, chipWidth: 124 },
+  { id: 'slovenia', name: 'Słowenia', flag: '🇸🇮', x: 330, y: 215, chipWidth: 112 },
+  { id: 'germany', name: 'Niemcy', flag: '🇩🇪', x: 271, y: 130, chipWidth: 102 },
+  { id: 'italy', name: 'Włochy', flag: '🇮🇹', x: 271, y: 252, chipWidth: 98 },
+  { id: 'france', name: 'Francja', flag: '🇫🇷', x: 200, y: 176, chipWidth: 108 },
+  { id: 'spain', name: 'Hiszpania', flag: '🇪🇸', x: 131, y: 236, chipWidth: 114 },
+  { id: 'norway', name: 'Norwegia', flag: '🇳🇴', x: 240, y: 72, chipWidth: 116 },
 ]
 
 const tatryMarkerPosition = { x: 332, y: 154 }
@@ -321,7 +321,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                   <stop offset="100%" stopColor="rgba(38,30,21,.16)" />
                 </linearGradient>
                 <radialGradient id="europeHighlight" cx="54%" cy="44%" r="68%">
-                  <stop offset="0%" stopColor="rgba(242,221,181,.2)" />
+                  <stop offset="0%" stopColor="rgba(242,221,181,.12)" />
                   <stop offset="100%" stopColor="rgba(242,221,181,0)" />
                 </radialGradient>
               </defs>
@@ -329,7 +329,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
               <path d="M88 76l24-10 34 2 26 20 18 22 22 6 22-10 18-22 24-18 26 2 20 18 26 8 24 18 20 0 22-16 20 6 12 16 18 8 14 20-4 16 12 18 22 8 18 22 4 24-16 24-26 14-34 2-26 10-26-4-18 8-14 16-22 2-22-10-18 6-10 18-18 10-32 4-26-8-18-20-22-6-16-14-24-6-20-18-24-8-12-22 4-30 14-20 16-22-8-24z" className="atlasEuropeMass" />
               <path d="M84 78l28-18 38 2 30 20 20 24 20 6 20-10 20-22 24-16 30 2 20 14 24 8 24 16 26 0 20-14 24 6 16 16 18 8 14 20-2 16 12 18 18 8 20 20 10 26-14 28-22 16-30 8-30 4-24 8-24 0-18 12-16 14-20 0-22-8-18 6-12 16-20 10-32 8-28-6-20-18-22-8-14-14-22-8-20-16-24-8-14-20 0-30 12-24 14-18-10-26z" className="atlasOutline isDimmed atlasEuropeSilhouette" />
               <path d="M121 97l14 8 20 20 32 6 20-6 20-20 20-8 18 16 22 10 24 2 20 14 26 6 18 16 20 0 16 10M106 142l22 10 30 2 26 10 30 0 24 8 28 2 26 8 26 2 26 14 30 4M96 190l30 8 32-2 30 10 32 4 28 10 30 8 30 0 24 10 28 2M138 232l26 2 24 10 26 0 22 10 22 8 28 2 22 10 28 2M258 90l10 18 2 24 16 18 20 12 20 4 22 10 16 20M338 86l12 16 8 20 18 12 18 12 12 18 18 8 12 20" className="atlasEuropeGuideLines" />
-              <ellipse cx="292" cy="176" rx="198" ry="126" className="atlasEuropeHighlight" />
+              <ellipse cx="286" cy="176" rx="168" ry="102" className="atlasEuropeHighlight" />
               {europeCountryMarkers.map((country) => {
                 const data = atlasLookups.countries[country.id]
                 const isTatryBorderCountry = country.id === 'poland' || country.id === 'slovakia'

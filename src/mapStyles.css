@@ -12,10 +12,10 @@
 .atlasOutline.isAtlasActive{stroke:rgba(250,233,198,.95);stroke-width:2;filter:drop-shadow(0 0 14px rgba(246,219,165,.45));fill:rgba(196,158,104,.26)}
 .atlasCountry{fill:rgba(117,99,71,.1)}
 .atlasCountryLabel{fill:rgba(244,227,198,.82);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;pointer-events:none}
-.atlasEuropeFrame{fill:rgba(8,7,6,.45);stroke:rgba(233,213,178,.26);stroke-width:1;filter:drop-shadow(0 14px 30px rgba(0,0,0,.34));pointer-events:none}
-.atlasEuropeMass{fill:url(#europeMassFill);stroke:rgba(233,212,175,.34);stroke-width:1.2;pointer-events:none;filter:drop-shadow(0 0 14px rgba(228,194,134,.16))}
+.atlasEuropeFrame{fill:rgba(8,7,6,.36);stroke:rgba(233,213,178,.26);stroke-width:1;filter:drop-shadow(0 14px 30px rgba(0,0,0,.34));pointer-events:none}
+.atlasEuropeMass{fill:url(#europeMassFill);stroke:rgba(233,212,175,.26);stroke-width:1.2;pointer-events:none;filter:drop-shadow(0 0 10px rgba(228,194,134,.1));opacity:.74}
 .atlasEuropeSilhouette{stroke-width:1.1;opacity:.92}
-.atlasEuropeGuideLines{fill:none;stroke:rgba(232,212,174,.22);stroke-width:.85;pointer-events:none}
+.atlasEuropeGuideLines{fill:none;stroke:rgba(232,212,174,.16);stroke-width:.85;pointer-events:none}
 .atlasEuropeHighlight{fill:url(#europeHighlight);pointer-events:none}
 .atlasCountry.isTatryBorderCountry{fill:rgba(176,140,88,.18)!important;stroke:rgba(248,227,189,.64)!important;filter:drop-shadow(0 0 10px rgba(243,214,160,.24))}
 .atlasCountryLabel.isTatryBorderCountryLabel{fill:rgba(250,231,197,.96);font-size:9.2px}
