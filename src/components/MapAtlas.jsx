@@ -7,12 +7,12 @@ import '../mapStyles.css'
 import worldAtlasBaseAsset from '../assets/maps/world-atlas-dark.webp'
 
 const worldShapes = [
-  { id: 'north-america', d: 'M44 106l24-26 38-18 52-14 52 2 42 18 24 22 2 24-20 16-26 8-14 16-26 6-28-2-22 10-24 6-20-10-18-16-16-22 0-18z' },
-  { id: 'south-america', d: 'M170 186l18 10 16 18 10 20 0 28-8 32-10 30-14 22-10 12-10-6 0-18-8-18 0-24 8-20 8-22 6-18 0-16z' },
-  { id: 'europe', d: 'M266 94l14-12 22-5 22 4 16 10 2 12-8 12-14 6-16 4-10 8-14-2-12-10-2-12z' },
-  { id: 'africa', d: 'M286 132l20 8 20 18 10 22 2 30-8 34-14 30-14 22-12 10-10-10-2-20 2-30 8-26 10-24 8-18z' },
-  { id: 'asia', d: 'M328 88l36-16 46-8 56 0 48 10 34 18 20 20 8 18-6 22-18 18-24 12-20 4-16 8-24 4-30-2-24-10-18-16-14-24-6-20 8-18z' },
-  { id: 'oceania', d: 'M454 248l16-8 24 2 20 8 10 12-4 12-14 10-20 4-18-4-14-12z' },
+  { id: 'north-america', d: 'M52 100l20-22 40-22 48-16 54 2 40 12 26 18 6 18-12 16-20 12-26 6-20 14-24 6-22-2-16 10-20 6-20-6-14-14-14-20z' },
+  { id: 'south-america', d: 'M156 176l20 12 18 18 10 24 2 30-8 32-12 30-16 24-14 14-8-8 2-20-8-20 0-24 8-22 8-22 8-20 0-18z' },
+  { id: 'europe', d: 'M254 86l16-10 22-4 22 6 14 10 0 10-10 10-14 6-14 4-12 10-14 0-10-8-2-12z' },
+  { id: 'africa', d: 'M270 126l20 8 20 18 14 24 2 34-8 32-14 30-16 24-14 12-10-10-2-20 2-28 8-26 10-24 8-18z' },
+  { id: 'asia', d: 'M304 76l36-14 46-8 58-2 56 8 38 16 24 20 10 22-8 24-22 18-24 10-24 6-20 10-24 4-28-2-22-8-20-16-16-20-10-22 4-22z' },
+  { id: 'oceania', d: 'M446 230l18-8 24 0 22 8 12 12-2 12-14 10-20 6-20-4-16-12z' },
 ]
 
 const continentMeta = [
@@ -361,8 +361,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                 return <path key={shape.id} d={shape.d} className={`atlasOutline continentOverlay ${continent?.visited ? 'isVisited' : 'isMuted'} ${isEurope ? 'isAtlasActive' : ''} ${isHovered ? 'isHovered' : ''}`} onMouseEnter={() => meta && setHoveredContinent(meta.id)} onMouseLeave={() => setHoveredContinent(null)} onFocus={() => meta && setHoveredContinent(meta.id)} onBlur={() => setHoveredContinent(null)} onClick={() => meta?.status === 'active' && continent && setAtlasPath((prev) => [...prev, continent.id])} />
               })}
               </g>
-              <ellipse cx="290" cy="112" rx="26" ry="16" className="continentFocusAura" />
-              <circle cx="290" cy="108" r="3.6" className="atlasEuropePulseDot" />
+              <circle cx="286" cy="104" r="2.8" className="atlasEuropePulseDot" />
               <g className="continentMarkers">
               {continentMeta.map((region) => (
                 <g key={region.id} className={`continentMarkerChip ${region.id === 'europe' ? 'isActive' : ''} ${hoveredContinent === region.id ? 'isHovered' : ''}`}>
