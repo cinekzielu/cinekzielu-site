@@ -1,15 +1,15 @@
-.cinematicAtlas.atlasLayout{grid-template-columns:minmax(0,1.7fr) minmax(272px,.5fr);align-items:stretch;gap:18px}
+.cinematicAtlas.atlasLayout{grid-template-columns:minmax(0,2.15fr) minmax(256px,.44fr);align-items:stretch;gap:14px}
 .cinematicAtlas .atlasMapWrap{background:radial-gradient(circle at 22% 8%, rgba(224,188,132,.18), transparent 36%),radial-gradient(circle at 80% 78%, rgba(136,108,77,.12), transparent 54%),linear-gradient(164deg,#1b1713,#080706);overflow:hidden;border:1px solid rgba(233,214,181,.12);border-radius:18px;box-shadow:inset 0 0 0 1px rgba(252,235,205,.03),inset 0 38px 88px rgba(255,235,198,.03),inset 0 -100px 140px rgba(0,0,0,.52),0 28px 58px rgba(0,0,0,.52);padding:18px 18px 14px}
-.cinematicStage{position:relative;isolation:isolate;border-radius:14px;overflow:hidden;min-height:520px;box-shadow:inset 0 0 0 1px rgba(242,220,184,.13),inset 0 -86px 140px rgba(0,0,0,.38),inset 0 24px 56px rgba(255,236,205,.03),0 8px 24px rgba(0,0,0,.24)}
+.cinematicStage{position:relative;isolation:isolate;border-radius:14px;overflow:hidden;min-height:620px;box-shadow:inset 0 0 0 1px rgba(242,220,184,.13),inset 0 -86px 140px rgba(0,0,0,.38),inset 0 24px 56px rgba(255,236,205,.03),0 8px 24px rgba(0,0,0,.24)}
 .cinematicStage::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(224,205,167,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(224,205,167,.04) 1px,transparent 1px);background-size:46px 46px;opacity:.19;pointer-events:none}
 .cinematicStage::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 35% 30%, rgba(229,206,162,.1), transparent 44%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.045'/%3E%3C/svg%3E");mix-blend-mode:soft-light;pointer-events:none}
-.atlasSvg{width:100%;height:100%;min-height:520px;animation:atlasFade .55s ease}
-.atlasOutline{fill:rgba(145,120,84,.08);stroke:rgba(230,215,184,.28);stroke-width:1.35;cursor:pointer;transition:all .3s ease;transform-origin:center;vector-effect:non-scaling-stroke}
-.atlasOutline:hover,.atlasOutline:focus-visible{stroke:rgba(240,222,190,.72);filter:drop-shadow(0 0 6px rgba(240,222,190,.25));fill:rgba(185,150,100,.2)}
+.atlasSvg{width:100%;height:100%;min-height:620px;animation:atlasFade .55s ease}
+.atlasOutline{fill:rgba(145,120,84,.08);stroke:rgba(230,215,184,.24);stroke-width:1.2;cursor:pointer;transition:all .26s ease;transform-origin:center;vector-effect:non-scaling-stroke}
+.atlasOutline:hover,.atlasOutline:focus-visible{stroke:rgba(240,222,190,.62);filter:drop-shadow(0 0 5px rgba(240,222,190,.18));fill:rgba(185,150,100,.14)}
 .atlasOutline.isVisited{fill:rgba(175,142,94,.17);stroke:rgba(240,220,182,.55);filter:drop-shadow(0 0 8px rgba(244,218,174,.28))}
 .atlasOutline.isMuted{fill:rgba(80,70,52,.05);stroke:rgba(211,190,154,.16)}
 .atlasOutline.isDimmed{fill:transparent;stroke:rgba(235,214,175,.18)}
-.atlasOutline.isAtlasActive{stroke:rgba(250,233,198,.95);stroke-width:2;filter:drop-shadow(0 0 14px rgba(246,219,165,.45));fill:rgba(196,158,104,.26)}
+.atlasOutline.isAtlasActive{stroke:rgba(250,233,198,.88);stroke-width:1.6;filter:drop-shadow(0 0 8px rgba(246,219,165,.26));fill:rgba(196,158,104,.2)}
 .atlasCountry{fill:rgba(117,99,71,.1)}
 .atlasCountryLabel{fill:rgba(244,227,198,.82);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;pointer-events:none}
 .atlasEuropeFrame{fill:rgba(8,7,6,.36);stroke:rgba(233,213,178,.26);stroke-width:1;filter:drop-shadow(0 14px 30px rgba(0,0,0,.34));pointer-events:none}
@@ -33,16 +33,16 @@
 .worldBoardInset{fill:url(#worldBoardGlow);stroke:rgba(233,214,180,.1);stroke-width:.9}
 .worldBoardAtmosphere{fill:rgba(226,198,151,.04);filter:blur(1px)}
 .worldContourLines{fill:none;stroke:rgba(236,217,183,.08);stroke-width:.8;stroke-linecap:round;stroke-dasharray:2 7}
-.continentFocusAura{fill:rgba(237,206,153,.08);stroke:rgba(245,223,183,.2);stroke-width:.7;filter:drop-shadow(0 0 5px rgba(245,217,163,.28));pointer-events:none}
-.atlasEuropePulseDot{fill:rgba(248,230,199,.92);filter:drop-shadow(0 0 5px rgba(245,218,166,.32));pointer-events:none}
+.continentFocusAura{display:none}
+.atlasEuropePulseDot{fill:rgba(248,230,199,.84);filter:drop-shadow(0 0 3px rgba(245,218,166,.2));pointer-events:none}
 .worldBoardFrame,.worldBoardInset,.worldBoardAtmosphere,.worldContourLines,.worldPlaceholderSvg,.worldBaseImage,.worldBaseFrame,.atlasEuropeFocusGlow,.continentFocusAura,.atlasEuropePulseDot{pointer-events:none}
 .worldBase{pointer-events:none}
-.worldBaseImage{opacity:.9;filter:contrast(1.08) brightness(.76) saturate(.84)}
+.worldBaseImage{opacity:.94;filter:contrast(1.06) brightness(.74) saturate(.82)}
 .worldBaseFrame{fill:none;stroke:rgba(231,210,172,.34);stroke-width:1.05;filter:drop-shadow(0 14px 30px rgba(0,0,0,.34));pointer-events:none}
 .worldPlaceholderSvg{fill:rgba(205,170,118,.05);stroke:rgba(231,212,177,.17);stroke-width:1}
 .continentOverlay{transition:fill .24s ease,stroke .24s ease,filter .24s ease,opacity .24s ease}
-.continentOverlay.isAtlasActive{stroke-width:1.7;fill:rgba(191,154,102,.19)}
-.continentOverlay.isHovered{stroke:rgba(248,229,192,.82);fill:rgba(204,166,110,.18);filter:drop-shadow(0 0 10px rgba(243,213,157,.27))}
+.continentOverlay.isAtlasActive{stroke-width:1.45;fill:rgba(191,154,102,.14)}
+.continentOverlay.isHovered{stroke:rgba(248,229,192,.74);fill:rgba(204,166,110,.14);filter:drop-shadow(0 0 7px rgba(243,213,157,.2))}
 .continentMarker{transition:fill .2s ease,opacity .2s ease,text-shadow .2s ease}
 .continentMarker.isActive{fill:rgba(249,230,196,.96);text-shadow:0 0 8px rgba(245,214,159,.34)}
 .continentMarker.isHovered{fill:rgba(252,236,207,.98);text-shadow:0 0 10px rgba(245,214,159,.42)}
@@ -111,7 +111,7 @@
 @keyframes atlasFade{from{opacity:0;transform:scale(.985)}to{opacity:1;transform:scale(1)}}
 @keyframes atlasZoom{from{opacity:0;transform:scale(1.03)}to{opacity:1;transform:scale(1)}}
 @keyframes atlasZoomIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
-@media (max-width:980px){.cinematicAtlas.atlasLayout{grid-template-columns:1fr}.atlasSvg,.summitLayer{min-height:320px}.atlasStage{min-height:360px}.tatryLayer{padding:10px 8px 5px}.tatryLayer::before{inset:8% 3.6% 12%}.tatryStructure{inset:7.5% 3.4% 11%;width:93.2%;height:81.5%}.summitPoint .leader{opacity:.72}.summitPoint .dot{width:10px;height:10px}.summitPoint .label{font-size:10.7px;padding:5px 8px;max-width:54vw}.atlasCrumb{min-width:0;flex:1 1 calc(50% - 8px)}.atlasCrumb::after{display:none}.atlasDetailCard{padding:16px}}
+@media (max-width:980px){.cinematicAtlas.atlasLayout{grid-template-columns:1fr}.atlasSvg,.summitLayer{min-height:360px}.atlasStage{min-height:400px}.tatryLayer{padding:10px 8px 5px}.tatryLayer::before{inset:8% 3.6% 12%}.tatryStructure{inset:7.5% 3.4% 11%;width:93.2%;height:81.5%}.summitPoint .leader{opacity:.72}.summitPoint .dot{width:10px;height:10px}.summitPoint .label{font-size:10.7px;padding:5px 8px;max-width:54vw}.atlasCrumb{min-width:0;flex:1 1 calc(50% - 8px)}.atlasCrumb::after{display:none}.atlasDetailCard{padding:16px}}
 
 .atlasInlineLabel{fill:rgba(246,227,195,.9);font-size:10px;letter-spacing:.14em;text-transform:uppercase;pointer-events:none}
 @media (max-width:620px){.atlasInlineLabel{font-size:9px}.atlasCountryLabel{font-size:8.1px;letter-spacing:.1em}.atlasCountryLabel.isTatryBorderCountryLabel{font-size:8.4px}.atlasWorldLabel{font-size:7.4px}.continentMarkerChip:not(.isActive){display:none}}
