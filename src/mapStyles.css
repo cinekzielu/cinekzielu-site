@@ -28,13 +28,14 @@
 .atlasCountryMarker.isTatryBorderCountry .atlasCountryChip{border-color:rgba(247,226,188,.58);background:linear-gradient(165deg,rgba(45,35,24,.92),rgba(24,19,15,.84))}
 .atlasWorldLabel{fill:rgba(236,216,180,.66);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;pointer-events:none}
 .atlasWorldLabel.isActive{fill:rgba(249,230,196,.96)}
-.atlasEuropeFocusGlow{fill:url(#worldEuropeGlow);pointer-events:none;opacity:.9}
+.atlasEuropeFocusGlow{fill:url(#worldEuropeGlow);pointer-events:none;opacity:.38}
 .worldBoardFrame{fill:rgba(14,12,10,.68);stroke:rgba(231,210,172,.22);stroke-width:1.05}
 .worldBoardInset{fill:url(#worldBoardGlow);stroke:rgba(233,214,180,.1);stroke-width:.9}
 .worldBoardAtmosphere{fill:rgba(226,198,151,.04);filter:blur(1px)}
 .worldContourLines{fill:none;stroke:rgba(236,217,183,.08);stroke-width:.8;stroke-linecap:round;stroke-dasharray:2 7}
-.continentFocusAura{fill:rgba(237,206,153,.12);stroke:rgba(245,223,183,.3);stroke-width:.8;filter:drop-shadow(0 0 8px rgba(245,217,163,.38));pointer-events:none}
-.atlasEuropePulseDot{fill:rgba(248,230,199,.94);filter:drop-shadow(0 0 7px rgba(245,218,166,.45))}
+.continentFocusAura{fill:rgba(237,206,153,.08);stroke:rgba(245,223,183,.2);stroke-width:.7;filter:drop-shadow(0 0 5px rgba(245,217,163,.28));pointer-events:none}
+.atlasEuropePulseDot{fill:rgba(248,230,199,.92);filter:drop-shadow(0 0 5px rgba(245,218,166,.32));pointer-events:none}
+.worldBoardFrame,.worldBoardInset,.worldBoardAtmosphere,.worldContourLines,.worldPlaceholderSvg,.worldBaseImage,.atlasEuropeFocusGlow,.continentFocusAura,.atlasEuropePulseDot{pointer-events:none}
 .worldBase{pointer-events:none}
 .worldBaseImage{opacity:.82;filter:contrast(1.06) brightness(.78) saturate(.88)}
 .worldPlaceholderSvg{fill:rgba(205,170,118,.05);stroke:rgba(231,212,177,.17);stroke-width:1}

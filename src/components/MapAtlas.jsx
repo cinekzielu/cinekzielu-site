@@ -344,7 +344,6 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                     <rect x="10" y="10" width="540" height="340" rx="18" className="worldBoardFrame" />
                     <rect x="18" y="18" width="524" height="324" rx="14" className="worldBoardInset" />
                     <ellipse cx="282" cy="178" rx="228" ry="126" className="worldBoardAtmosphere" />
-                    <ellipse cx="292" cy="108" rx="76" ry="42" className="atlasEuropeFocusGlow worldPlaceholderSvg" />
                     <path d="M38 98h484M38 258h484M72 54v252M190 42v272M290 34v286M390 42v272M488 54v252" className="worldContourLines" />
                     <rect x="10" y="10" width="540" height="340" rx="18" className="worldPlaceholderSvg" />
                   </>
