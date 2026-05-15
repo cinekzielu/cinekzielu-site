@@ -103,16 +103,16 @@
 
 /* ETAP 11.0: DEM hillshade base for Tatry */
 .tatryLayer{padding:12px 12px 8px}
-.tatryLayer::before{inset:4.5% 2.8% 7.8%;border:1px solid rgba(229,207,171,.1);border-radius:10px;background:linear-gradient(180deg,rgba(6,6,6,.1),rgba(0,0,0,.32));box-shadow:inset 0 0 0 1px rgba(7,6,6,.42),inset 0 -20px 44px rgba(0,0,0,.34)}
-.tatryBaseMap{position:absolute;inset:3.8% 2.1% 5.2%;border-radius:8px;overflow:hidden;pointer-events:none;z-index:1;background:linear-gradient(180deg,rgba(8,8,8,.18),rgba(0,0,0,.42))}
-.tatryBaseMapImage{width:100%;height:100%;object-fit:cover;object-position:51% 44%;transform:scale(1.08);transform-origin:center;opacity:.72;filter:contrast(1.22) brightness(.72) saturate(.7);mix-blend-mode:screen}
-.tatryBaseMap::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 52% 46%, rgba(244,226,191,.18), rgba(0,0,0,0) 48%),linear-gradient(180deg,rgba(0,0,0,.14),rgba(0,0,0,.42));pointer-events:none}
-.tatryBaseMap::after{content:'';position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(244,228,197,.08),inset 0 0 90px rgba(0,0,0,.44);pointer-events:none}
+.tatryLayer::before{inset:4.2% 2.6% 7.2%;border:1px solid rgba(229,207,171,.09);border-radius:10px;background:linear-gradient(180deg,rgba(5,5,5,.16),rgba(0,0,0,.44));box-shadow:inset 0 0 0 1px rgba(7,6,6,.48),inset 0 -26px 54px rgba(0,0,0,.4)}
+.tatryBaseMap{position:absolute;inset:3.1% 1.9% 4.8%;border-radius:8px;overflow:hidden;pointer-events:none;z-index:1;background:radial-gradient(circle at 50% 34%,rgba(18,16,14,.28),rgba(2,2,2,.62) 68%),linear-gradient(180deg,rgba(7,7,7,.34),rgba(0,0,0,.58))}
+.tatryBaseMapImage{width:100%;height:100%;object-fit:cover;object-position:52% 38%;opacity:.56;filter:contrast(1.14) brightness(.56) saturate(.62);mix-blend-mode:lighten}
+.tatryBaseMap::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 36%, rgba(208,188,154,.12), rgba(0,0,0,0) 42%),linear-gradient(180deg,rgba(3,3,3,.24),rgba(0,0,0,.56));pointer-events:none}
+.tatryBaseMap::after{content:'';position:absolute;inset:0;background:radial-gradient(120% 72% at 50% -10%, rgba(0,0,0,.3), transparent 48%),radial-gradient(120% 90% at 50% 112%, rgba(0,0,0,.64), transparent 56%),linear-gradient(90deg, rgba(0,0,0,.36), transparent 14%, transparent 86%, rgba(0,0,0,.4));box-shadow:inset 0 0 0 1px rgba(244,228,197,.07),inset 0 0 100px rgba(0,0,0,.52);pointer-events:none}
 .tatryStructure,.tatryRegionContour,.tatryReliefBand,.tatryTopoLine,.tatryRidgeLine,.tatryValleyLine,.tatryBorder,.tatryBorderLabel{display:none}
 .summitPoint{z-index:2}
 @media (max-width:980px){
   .tatryLayer{padding:9px 8px 5px}
-  .tatryLayer::before{inset:7% 3.3% 11%}
-  .tatryBaseMap{inset:7.3% 3.4% 11.1%}
-  .tatryBaseMapImage{transform:scale(1.12);object-position:52% 45%}
+  .tatryLayer::before{inset:6.6% 3.1% 10.2%}
+  .tatryBaseMap{inset:6.7% 3.1% 10.4%}
+  .tatryBaseMapImage{object-position:53% 39%}
 }
