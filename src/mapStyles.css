@@ -37,16 +37,19 @@
 .atlasEuropePulseDot{fill:rgba(247,227,194,.86);filter:drop-shadow(0 0 4px rgba(246,219,164,.24));opacity:.96;transition:opacity .24s ease,filter .24s ease;pointer-events:none}
 .atlasEuropePulseDot.isSubdued{opacity:.54;filter:drop-shadow(0 0 2px rgba(246,219,164,.14))}
 .worldBoardFrame,.worldBoardInset,.worldBoardAtmosphere,.worldContourLines,.worldPlaceholderSvg,.worldBaseImage,.worldBaseFrame,.atlasEuropeFocusGlow,.continentFocusAura,.atlasEuropePulseDot{pointer-events:none}
-.worldBase{pointer-events:none}
+.worldBase{pointer-events:none;z-index:1}
 .worldBaseImage{opacity:.94;filter:contrast(1.06) brightness(.74) saturate(.82)}
 .worldBaseFrame{fill:none;stroke:rgba(231,210,172,.34);stroke-width:1.05;filter:drop-shadow(0 14px 30px rgba(0,0,0,.34));pointer-events:none}
 .worldPlaceholderSvg{fill:rgba(205,170,118,.05);stroke:rgba(231,212,177,.17);stroke-width:1}
-.worldContinentsOverlaySvg{overflow:visible}
-.continentOverlay{fill:rgba(152,126,88,0);fill-opacity:0;stroke:rgba(231,214,183,0);stroke-opacity:0;stroke-width:1.06;transition:fill .22s ease,stroke .22s ease,filter .22s ease,opacity .22s ease}
-.continentOverlay.isAtlasActive{fill:rgba(196,160,107,.09);fill-opacity:1;stroke:rgba(249,230,196,.52);stroke-opacity:1;stroke-width:1.2;filter:drop-shadow(0 0 6px rgba(245,214,154,.14))}
-.continentOverlay.isAtlasActive.isHovered{fill:rgba(203,166,112,.12);stroke:rgba(251,234,204,.68);filter:drop-shadow(0 0 8px rgba(245,216,160,.2))}
-.continentOverlay.isHovered{stroke:rgba(247,229,195,.56);stroke-opacity:1;fill:rgba(202,164,110,.12);fill-opacity:1;filter:drop-shadow(0 0 8px rgba(244,216,160,.18))}
+.worldContinentsOverlaySvg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:auto;z-index:2}
+.continentOverlayGroup{pointer-events:auto;cursor:pointer}
+.continentOverlay{fill:rgba(220,180,90,.12);stroke:rgba(245,210,140,.35);stroke-width:1.5;transition:fill .22s ease,stroke .22s ease,filter .22s ease,opacity .22s ease;pointer-events:auto}
+.continentOverlay.isAtlasActive{fill:rgba(220,180,90,.12);stroke:rgba(245,210,140,.35);stroke-width:1.5}
+.continentOverlay.isAtlasActive.isHovered{fill:rgba(230,190,110,.26);stroke:rgba(255,225,160,.85);filter:drop-shadow(0 0 8px rgba(245,216,160,.28))}
+.continentOverlay.isHovered{fill:rgba(230,190,110,.26);stroke:rgba(255,225,160,.85);filter:drop-shadow(0 0 8px rgba(245,216,160,.28))}
 .continentOverlay.isAtlasActive:not(.isHovered){opacity:.92}
+.continentOverlays{pointer-events:auto;z-index:2}
+.continentMarkers{z-index:3;pointer-events:auto}
 .continentOverlays:has(.continentOverlay.isHovered) .continentOverlay.isAtlasActive:not(.isHovered){opacity:.72}
 .continentMarker{transition:fill .2s ease,opacity .2s ease,text-shadow .2s ease}
 .continentMarker.isActive{fill:rgba(248,229,196,.9);text-shadow:0 0 5px rgba(245,214,159,.25)}
