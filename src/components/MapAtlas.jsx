@@ -1,10 +1,11 @@
-import React, { useRef, useState } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 import { travelAtlasData } from '../data/travelData'
 import { resolveTatryPointPosition } from '../data/atlasGeo'
 import tatryHillshadeDark from '../assets/maps/tatry-hillshade-dark.png.png'
 import '../mapStyles.css'
 
 import worldAtlasBaseAsset from '../assets/maps/world-atlas-dark.webp'
+import worldContinentOverlaysSvgRaw from '../assets/maps/world-continent-overlays.svg?raw'
 
 const worldShapes = [
   { id: 'north-america', d: 'M52 100l20-22 40-22 48-16 54 2 40 12 26 18 6 18-12 16-20 12-26 6-20 14-24 6-22-2-16 10-20 6-20-6-14-14-14-20z' },
@@ -15,6 +16,35 @@ const worldShapes = [
   { id: 'oceania', d: 'M446 230l18-8 24 0 22 8 12 12-2 12-14 10-20 6-20-4-16-12z' },
 ]
 
+
+
+const worldOverlayShapeIds = ['europe', 'asia', 'africa', 'north-america', 'south-america', 'oceania']
+
+const parseWorldOverlayShapes = (svgRaw) => {
+  if (!svgRaw) return null
+
+  try {
+    const parser = new DOMParser()
+    const doc = parser.parseFromString(svgRaw, 'image/svg+xml')
+    const svgRoot = doc.querySelector('svg')
+
+    if (!svgRoot) return null
+
+    const viewBox = svgRoot.getAttribute('viewBox') || '0 0 560 360'
+    const shapes = worldOverlayShapeIds
+      .map((id) => {
+        const node = doc.querySelector(`[id="${id}"]`) || doc.querySelector(`[inkscape\:label="${id}"]`)
+        const d = node?.getAttribute('d')
+        if (!d) return null
+        return { id, d }
+      })
+      .filter(Boolean)
+
+    return shapes.length ? { viewBox, shapes } : null
+  } catch (error) {
+    return null
+  }
+}
 const continentMeta = [
   { id: 'europe', shapeId: 'europe', label: 'Europa', type: 'Kontynent', status: 'active', description: 'Aktywny kierunek atlasu. Wejście do krajów, regionów i szczytów.', position: { x: 283, y: 76 }, routePath: ['world', 'europe'], panelTags: ['active', 'wyprawy', 'film + galerie'] },
   { id: 'asia', shapeId: 'asia', label: 'Azja', type: 'Kontynent', status: 'planned', description: 'Kontynent przygotowany pod kolejne wyprawy i nowe wpisy w atlasie.', position: { x: 404, y: 93 }, routePath: null, panelTags: ['planned', 'future direction'] },
@@ -235,6 +265,9 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
   const [hoveredSummitId, setHoveredSummitId] = useState(null)
   const [hoveredContinent, setHoveredContinent] = useState(null)
   const continents = travelAtlasData.continents
+  const parsedOverlay = useMemo(() => parseWorldOverlayShapes(worldContinentOverlaysSvgRaw), [])
+  const overlayShapes = parsedOverlay?.shapes?.length ? parsedOverlay.shapes : worldShapes
+  const overlayViewBox = parsedOverlay?.viewBox || '0 0 560 360'
   const continentMetaByShapeId = new Map(continentMeta.map((item) => [item.shapeId, item]))
   const getNodeName = (id) =>
     id === 'world'
@@ -353,13 +386,15 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                 )}
               </g>
               <g className="continentOverlays">
-              {worldShapes.map((shape) => {
+                <svg className="worldContinentsOverlaySvg" x="10" y="10" width="540" height="340" viewBox={overlayViewBox} preserveAspectRatio="none" aria-hidden="true">
+              {overlayShapes.map((shape) => {
                 const meta = continentMetaByShapeId.get(shape.id)
                 const continent = continents.find((c) => c.id === meta?.routePath?.[1])
                 const isEurope = meta?.id === 'europe'
                 const isHovered = hoveredContinent === meta?.id
                 return <path key={shape.id} d={shape.d} className={`atlasOutline continentOverlay ${continent?.visited ? 'isVisited' : 'isMuted'} ${isEurope ? 'isAtlasActive' : ''} ${isHovered ? 'isHovered' : ''}`} onMouseEnter={() => meta && setHoveredContinent(meta.id)} onMouseLeave={() => setHoveredContinent(null)} onFocus={() => meta && setHoveredContinent(meta.id)} onBlur={() => setHoveredContinent(null)} onClick={() => meta?.status === 'active' && continent && setAtlasPath((prev) => [...prev, continent.id])} />
               })}
+                </svg>
               </g>
               <circle cx="286" cy="104" r="2.35" className={`atlasEuropePulseDot ${hoveredContinent && hoveredContinent !== 'europe' ? 'isSubdued' : ''}`} />
               <g className="continentMarkers">
