@@ -26,8 +26,8 @@
 .atlasCountryChip{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:999px;border:1px solid rgba(236,218,186,.3);background:linear-gradient(165deg,rgba(14,12,10,.96),rgba(30,24,19,.84));color:rgba(246,228,198,.92);font-size:10px;line-height:1;letter-spacing:.04em;white-space:nowrap;cursor:pointer;box-shadow:0 8px 16px rgba(0,0,0,.26),0 0 12px rgba(231,193,129,.09),inset 0 0 0 1px rgba(255,237,208,.03);transition:border-color .2s ease,transform .2s ease}
 .atlasCountryChip:hover,.atlasCountryChip:focus-visible{border-color:rgba(248,228,190,.72);transform:translateY(-1px)}
 .atlasCountryMarker.isTatryBorderCountry .atlasCountryChip{border-color:rgba(247,226,188,.58);background:linear-gradient(165deg,rgba(45,35,24,.92),rgba(24,19,15,.84))}
-.atlasWorldLabel{fill:rgba(238,219,185,.58);font-size:8.15px;font-weight:520;letter-spacing:.105em;text-transform:uppercase;pointer-events:none;paint-order:stroke;stroke:rgba(7,6,5,.42);stroke-width:.55px;stroke-linejoin:round}
-.atlasWorldLabel.isActive{fill:rgba(248,230,198,.86)}
+.atlasWorldLabel{fill:rgba(222,200,164,.72);font-size:8.35px;font-weight:540;letter-spacing:.11em;text-transform:uppercase;pointer-events:none;paint-order:stroke;stroke:rgba(7,6,5,.52);stroke-width:.6px;stroke-linejoin:round}
+.atlasWorldLabel.isActive{fill:rgba(245,226,192,.9)}
 .atlasEuropeFocusGlow{fill:url(#worldEuropeGlow);pointer-events:none;opacity:.38}
 .worldBoardFrame{fill:rgba(14,12,10,.68);stroke:rgba(231,210,172,.22);stroke-width:1.05}
 .worldBoardInset{fill:url(#worldBoardGlow);stroke:rgba(233,214,180,.1);stroke-width:.9}
@@ -43,10 +43,10 @@
 .worldPlaceholderSvg{fill:rgba(205,170,118,.05);stroke:rgba(231,212,177,.17);stroke-width:1}
 .worldContinentsOverlaySvg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:auto;z-index:2}
 .continentOverlayGroup{pointer-events:auto;cursor:pointer}
-.continentOverlay{fill:rgba(218,174,90,.14);fill-opacity:0;stroke:rgba(244,210,145,.56);stroke-opacity:0;stroke-width:1.2;transition:fill .22s ease,fill-opacity .22s ease,stroke .22s ease,stroke-opacity .22s ease,filter .22s ease,opacity .22s ease;pointer-events:auto}
-.continentOverlay.isAtlasActive{fill:rgba(218,174,90,.11);fill-opacity:.3;stroke:rgba(244,210,145,.5);stroke-opacity:.62;stroke-width:1.25;filter:drop-shadow(0 0 3px rgba(239,208,151,.16))}
+.continentOverlay{fill:rgba(218,174,90,.036);fill-opacity:1;stroke:rgba(244,210,145,.16);stroke-opacity:1;stroke-width:1.14;transition:fill .22s ease,fill-opacity .22s ease,stroke .22s ease,stroke-opacity .22s ease,filter .22s ease,opacity .22s ease;pointer-events:auto}
+.continentOverlay.isAtlasActive{fill:rgba(218,174,90,.1);fill-opacity:1;stroke:rgba(244,210,145,.42);stroke-opacity:1;stroke-width:1.24;filter:drop-shadow(0 0 4px rgba(239,208,151,.2))}
 .continentOverlay.isAtlasActive.isHovered{fill:rgba(218,174,90,.16);fill-opacity:1;stroke:rgba(244,210,145,.65);stroke-opacity:1;filter:drop-shadow(0 0 5px rgba(239,208,151,.22))}
-.continentOverlay.isHovered{fill:rgba(218,174,90,.13);fill-opacity:1;stroke:rgba(244,210,145,.58);stroke-opacity:1;filter:drop-shadow(0 0 4px rgba(239,208,151,.2))}
+.continentOverlay.isHovered{fill:rgba(218,174,90,.15);fill-opacity:1;stroke:rgba(244,210,145,.6);stroke-opacity:1;filter:drop-shadow(0 0 5px rgba(239,208,151,.24))}
 .continentOverlay.isAtlasActive:not(.isHovered){opacity:.86}
 .continentOverlays{pointer-events:auto;z-index:2}
 .continentMarkers{z-index:3;pointer-events:auto}
@@ -54,7 +54,7 @@
 .continentMarker{transition:fill .2s ease,opacity .2s ease,text-shadow .2s ease}
 .continentMarker.isActive{fill:rgba(248,229,196,.9);text-shadow:0 0 5px rgba(245,214,159,.25)}
 .continentMarker.isHovered{fill:rgba(251,235,205,.94);text-shadow:0 0 7px rgba(245,214,159,.3)}
-.continentMarkerChip .continentMarkerDot{fill:rgba(220,196,156,.52);stroke:rgba(10,8,6,.72);stroke-width:.72;filter:drop-shadow(0 0 2px rgba(239,208,151,.16))}
+.continentMarkerChip .continentMarkerDot{fill:rgba(213,188,147,.44);stroke:rgba(10,8,6,.68);stroke-width:.68;filter:drop-shadow(0 0 1.5px rgba(239,208,151,.12))}
 .continentMarkerChip.isActive .continentMarkerDot{fill:rgba(247,224,187,.86);stroke:rgba(16,12,9,.76);filter:drop-shadow(0 0 4px rgba(242,212,157,.3))}
 .continentMarkerChip.isHovered .continentMarkerDot{fill:rgba(249,229,195,.9);filter:drop-shadow(0 0 6px rgba(243,213,157,.34))}
 .atlasTatryMarker{cursor:pointer}
