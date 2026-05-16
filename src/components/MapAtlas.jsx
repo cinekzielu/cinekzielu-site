@@ -83,7 +83,9 @@ const parseWorldOverlayShapes = (svgRaw) => {
       .map((continent) => ({ ...continent, paths: [...new Set(continent.paths)] }))
 
     const detectedIds = continents.map((continent) => continent.id)
-    console.info('[world overlay] manual continents detected:', detectedIds)
+    if (import.meta.env.DEV) {
+      console.info('[world overlay] manual continents detected:', detectedIds)
+    }
 
     return { viewBox, continents, detectedIds }
   } catch (error) {
