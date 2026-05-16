@@ -16,12 +16,12 @@ const worldShapes = [
 ]
 
 const continentMeta = [
-  { id: 'europe', shapeId: 'europe', label: 'Europa', type: 'Kontynent', status: 'active', description: 'Aktywny kierunek atlasu. Wejście do krajów, regionów i szczytów.', position: { x: 286, y: 78 }, routePath: ['world', 'europe'], panelTags: ['active', 'wyprawy', 'film + galerie'] },
-  { id: 'asia', shapeId: 'asia', label: 'Azja', type: 'Kontynent', status: 'planned', description: 'Kontynent przygotowany pod kolejne wyprawy i nowe wpisy w atlasie.', position: { x: 392, y: 96 }, routePath: null, panelTags: ['planned', 'future direction'] },
-  { id: 'africa', shapeId: 'africa', label: 'Afryka', type: 'Kontynent', status: 'planned', description: 'Kolejny etap rozwoju atlasu. Warstwa gotowa pod dalsze kierunki.', position: { x: 308, y: 158 }, routePath: null, panelTags: ['planned', 'future expansion'] },
-  { id: 'northAmerica', shapeId: 'north-america', label: 'Ameryka Płn.', type: 'Kontynent', status: 'planned', description: 'Kontynent dodany jako gotowy overlay i marker pod przyszłe treści.', position: { x: 134, y: 88 }, routePath: null, panelTags: ['planned', 'future direction'] },
-  { id: 'southAmerica', shapeId: 'south-america', label: 'Ameryka Płd.', type: 'Kontynent', status: 'planned', description: 'Warstwa przygotowana pod kolejne wyprawy i panel kontynentu.', position: { x: 182, y: 216 }, routePath: null, panelTags: ['planned', 'future direction'] },
-  { id: 'oceania', shapeId: 'oceania', label: 'Oceania', type: 'Kontynent', status: 'locked', description: 'Kierunek zaplanowany w atlasie — aktywacja po dodaniu materiałów.', position: { x: 482, y: 258 }, routePath: null, panelTags: ['locked', 'future direction'] },
+  { id: 'europe', shapeId: 'europe', label: 'Europa', type: 'Kontynent', status: 'active', description: 'Aktywny kierunek atlasu. Wejście do krajów, regionów i szczytów.', position: { x: 283, y: 76 }, routePath: ['world', 'europe'], panelTags: ['active', 'wyprawy', 'film + galerie'] },
+  { id: 'asia', shapeId: 'asia', label: 'Azja', type: 'Kontynent', status: 'planned', description: 'Kontynent przygotowany pod kolejne wyprawy i nowe wpisy w atlasie.', position: { x: 404, y: 93 }, routePath: null, panelTags: ['planned', 'future direction'] },
+  { id: 'africa', shapeId: 'africa', label: 'Afryka', type: 'Kontynent', status: 'planned', description: 'Kolejny etap rozwoju atlasu. Warstwa gotowa pod dalsze kierunki.', position: { x: 302, y: 168 }, routePath: null, panelTags: ['planned', 'future expansion'] },
+  { id: 'northAmerica', shapeId: 'north-america', label: 'Ameryka Płn.', type: 'Kontynent', status: 'planned', description: 'Kontynent dodany jako gotowy overlay i marker pod przyszłe treści.', position: { x: 124, y: 98 }, routePath: null, panelTags: ['planned', 'future direction'] },
+  { id: 'southAmerica', shapeId: 'south-america', label: 'Ameryka Płd.', type: 'Kontynent', status: 'planned', description: 'Warstwa przygotowana pod kolejne wyprawy i panel kontynentu.', position: { x: 182, y: 236 }, routePath: null, panelTags: ['planned', 'future direction'] },
+  { id: 'oceania', shapeId: 'oceania', label: 'Oceania', type: 'Kontynent', status: 'locked', description: 'Kierunek zaplanowany w atlasie — aktywacja po dodaniu materiałów.', position: { x: 474, y: 252 }, routePath: null, panelTags: ['locked', 'future direction'] },
 ]
 
 const europeCountryMarkers = [
@@ -361,7 +361,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                 return <path key={shape.id} d={shape.d} className={`atlasOutline continentOverlay ${continent?.visited ? 'isVisited' : 'isMuted'} ${isEurope ? 'isAtlasActive' : ''} ${isHovered ? 'isHovered' : ''}`} onMouseEnter={() => meta && setHoveredContinent(meta.id)} onMouseLeave={() => setHoveredContinent(null)} onFocus={() => meta && setHoveredContinent(meta.id)} onBlur={() => setHoveredContinent(null)} onClick={() => meta?.status === 'active' && continent && setAtlasPath((prev) => [...prev, continent.id])} />
               })}
               </g>
-              <circle cx="286" cy="104" r="2.8" className="atlasEuropePulseDot" />
+              <circle cx="286" cy="104" r="2.35" className={`atlasEuropePulseDot ${hoveredContinent && hoveredContinent !== 'europe' ? 'isSubdued' : ''}`} />
               <g className="continentMarkers">
               {continentMeta.map((region) => (
                 <g key={region.id} className={`continentMarkerChip ${region.id === 'europe' ? 'isActive' : ''} ${hoveredContinent === region.id ? 'isHovered' : ''}`}>
