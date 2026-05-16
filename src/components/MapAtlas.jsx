@@ -93,12 +93,12 @@ const parseWorldOverlayShapes = (svgRaw) => {
   }
 }
 const continentMeta = [
-  { id: 'europe', shapeId: 'europe', label: 'Europa', type: 'Kontynent', status: 'active', description: 'Aktywny kierunek atlasu. Wejście do krajów, regionów i szczytów.', position: { x: 292, y: 90 }, routePath: ['world', 'europe'], panelTags: ['active', 'wyprawy', 'film + galerie'] },
+  { id: 'europe', shapeId: 'europe', label: 'Europa', type: 'Kontynent', status: 'active', description: 'Aktywny kierunek atlasu. Wejście do krajów, regionów i szczytów.', position: { x: 294, y: 107 }, routePath: ['world', 'europe'], panelTags: ['active', 'wyprawy', 'film + galerie'] },
   { id: 'asia', shapeId: 'asia', label: 'Azja', type: 'Kontynent', status: 'planned', description: 'Kontynent przygotowany pod kolejne wyprawy i nowe wpisy w atlasie.', position: { x: 410, y: 116 }, routePath: null, panelTags: ['planned', 'future direction'] },
-  { id: 'africa', shapeId: 'africa', label: 'Afryka', type: 'Kontynent', status: 'planned', description: 'Kolejny etap rozwoju atlasu. Warstwa gotowa pod dalsze kierunki.', position: { x: 294, y: 176 }, routePath: null, panelTags: ['planned', 'future expansion'] },
-  { id: 'northAmerica', shapeId: 'north-america', label: 'Ameryka Płn.', type: 'Kontynent', status: 'planned', description: 'Kontynent dodany jako gotowy overlay i marker pod przyszłe treści.', position: { x: 134, y: 112 }, routePath: null, panelTags: ['planned', 'future direction'] },
-  { id: 'southAmerica', shapeId: 'south-america', label: 'Ameryka Płd.', type: 'Kontynent', status: 'planned', description: 'Warstwa przygotowana pod kolejne wyprawy i panel kontynentu.', position: { x: 188, y: 248 }, routePath: null, panelTags: ['planned', 'future direction'] },
-  { id: 'oceania', shapeId: 'oceania', label: 'Oceania', type: 'Kontynent', status: 'locked', description: 'Kierunek zaplanowany w atlasie — aktywacja po dodaniu materiałów.', position: { x: 468, y: 262 }, routePath: null, panelTags: ['locked', 'future direction'] },
+  { id: 'africa', shapeId: 'africa', label: 'Afryka', type: 'Kontynent', status: 'planned', description: 'Kolejny etap rozwoju atlasu. Warstwa gotowa pod dalsze kierunki.', position: { x: 294, y: 184 }, routePath: null, panelTags: ['planned', 'future expansion'] },
+  { id: 'northAmerica', shapeId: 'north-america', label: 'Ameryka Płn.', type: 'Kontynent', status: 'planned', description: 'Kontynent dodany jako gotowy overlay i marker pod przyszłe treści.', position: { x: 122, y: 116 }, routePath: null, panelTags: ['planned', 'future direction'] },
+  { id: 'southAmerica', shapeId: 'south-america', label: 'Ameryka Płd.', type: 'Kontynent', status: 'planned', description: 'Warstwa przygotowana pod kolejne wyprawy i panel kontynentu.', position: { x: 180, y: 248 }, routePath: null, panelTags: ['planned', 'future direction'] },
+  { id: 'oceania', shapeId: 'oceania', label: 'Oceania', type: 'Kontynent', status: 'locked', description: 'Kierunek zaplanowany w atlasie — aktywacja po dodaniu materiałów.', position: { x: 476, y: 270 }, routePath: null, panelTags: ['locked', 'future direction'] },
 ]
 
 const europeCountryMarkers = [
@@ -451,13 +451,10 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
               })}
                 </svg>
               </g>
-              <circle cx="286" cy="104" r="2.35" className={`atlasEuropePulseDot ${hoveredContinent && hoveredContinent !== 'europe' ? 'isSubdued' : ''}`} />
               <g className="continentMarkers">
               {continentMeta.map((region) => (
                 <g key={region.id} className={`continentMarkerChip ${region.id === 'europe' ? 'isActive' : ''} ${hoveredContinent === region.id ? 'isHovered' : ''}`}>
-                  {region.id !== 'europe' && (
-                    <circle cx={region.position.x - 8} cy={region.position.y - 4} r={2.1} className="continentMarkerDot" />
-                  )}
+                  <circle cx={region.position.x - 8} cy={region.position.y - 4} r={2.1} className={`continentMarkerDot ${region.id === 'europe' ? `atlasEuropePulseDot ${hoveredContinent && hoveredContinent !== 'europe' ? 'isSubdued' : ''}` : ''}`} />
                   <text data-id={region.shapeId} x={region.position.x} y={region.position.y} className={`atlasWorldLabel continentMarker ${region.id === 'europe' ? 'isActive' : ''} ${hoveredContinent === region.id ? 'isHovered' : ''}`}>
                     {region.label}
                   </text>
