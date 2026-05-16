@@ -20,6 +20,25 @@ const worldShapes = [
 
 const worldOverlayShapeIds = ['europe', 'asia', 'africa', 'north-america', 'south-america', 'oceania']
 
+const findContinentId = (node) => {
+  if (!node) return null
+
+  const candidates = [
+    node.getAttribute('id'),
+    node.getAttribute('inkscape:label'),
+    node.getAttribute('label'),
+    node.getAttribute('data-name'),
+    node.getAttribute('data-continent'),
+  ]
+
+  const normalized = candidates
+    .filter(Boolean)
+    .map((value) => value.trim().toLowerCase().replace(/\s+/g, '-'))
+    .find((value) => worldOverlayShapeIds.includes(value))
+
+  return normalized || null
+}
+
 const parseWorldOverlayShapes = (svgRaw) => {
   if (!svgRaw) return null
 
@@ -31,18 +50,44 @@ const parseWorldOverlayShapes = (svgRaw) => {
     if (!svgRoot) return null
 
     const viewBox = svgRoot.getAttribute('viewBox') || '0 0 560 360'
-    const shapes = worldOverlayShapeIds
-      .map((id) => {
-        const node = doc.querySelector(`[id="${id}"]`) || doc.querySelector(`[inkscape\:label="${id}"]`)
-        const d = node?.getAttribute('d')
-        if (!d) return null
-        return { id, d }
-      })
-      .filter(Boolean)
+    const continentsMap = new Map()
 
-    return shapes.length ? { viewBox, shapes } : null
+    const ensureContinent = (id) => {
+      if (!continentsMap.has(id)) {
+        continentsMap.set(id, { id, paths: [] })
+      }
+      return continentsMap.get(id)
+    }
+
+    doc.querySelectorAll('g, path').forEach((node) => {
+      const continentId = findContinentId(node)
+      if (!continentId) return
+
+      const continent = ensureContinent(continentId)
+      if (node.tagName.toLowerCase() === 'path') {
+        const d = node.getAttribute('d')
+        if (d) continent.paths.push(d)
+      }
+
+      if (node.tagName.toLowerCase() === 'g') {
+        node.querySelectorAll('path').forEach((pathNode) => {
+          const d = pathNode.getAttribute('d')
+          if (d) continent.paths.push(d)
+        })
+      }
+    })
+
+    const continents = worldOverlayShapeIds
+      .map((id) => continentsMap.get(id))
+      .filter((continent) => continent && continent.paths.length > 0)
+      .map((continent) => ({ ...continent, paths: [...new Set(continent.paths)] }))
+
+    const detectedIds = continents.map((continent) => continent.id)
+    console.info('[world overlay] manual continents detected:', detectedIds)
+
+    return { viewBox, continents, detectedIds }
   } catch (error) {
-    return null
+    return { viewBox: '0 0 560 360', continents: [], detectedIds: [] }
   }
 }
 const continentMeta = [
@@ -266,7 +311,9 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
   const [hoveredContinent, setHoveredContinent] = useState(null)
   const continents = travelAtlasData.continents
   const parsedOverlay = useMemo(() => parseWorldOverlayShapes(worldContinentOverlaysSvgRaw), [])
-  const overlayShapes = parsedOverlay?.shapes?.length ? parsedOverlay.shapes : worldShapes
+  const manualContinents = parsedOverlay?.continents || []
+  const isUsingManualWorldOverlay = manualContinents.length > 0
+  const overlayShapes = isUsingManualWorldOverlay ? manualContinents : worldShapes.map((shape) => ({ id: shape.id, paths: [shape.d] }))
   const overlayViewBox = parsedOverlay?.viewBox || '0 0 560 360'
   const continentMetaByShapeId = new Map(continentMeta.map((item) => [item.shapeId, item]))
   const getNodeName = (id) =>
@@ -386,13 +433,19 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                 )}
               </g>
               <g className="continentOverlays">
-                <svg className="worldContinentsOverlaySvg" x="10" y="10" width="540" height="340" viewBox={overlayViewBox} preserveAspectRatio="none" aria-hidden="true">
+                <svg className="worldContinentsOverlaySvg" x="10" y="10" width="540" height="340" viewBox={overlayViewBox} preserveAspectRatio="xMidYMid slice" aria-hidden="true">
               {overlayShapes.map((shape) => {
                 const meta = continentMetaByShapeId.get(shape.id)
                 const continent = continents.find((c) => c.id === meta?.routePath?.[1])
                 const isEurope = meta?.id === 'europe'
                 const isHovered = hoveredContinent === meta?.id
-                return <path key={shape.id} d={shape.d} className={`atlasOutline continentOverlay ${continent?.visited ? 'isVisited' : 'isMuted'} ${isEurope ? 'isAtlasActive' : ''} ${isHovered ? 'isHovered' : ''}`} onMouseEnter={() => meta && setHoveredContinent(meta.id)} onMouseLeave={() => setHoveredContinent(null)} onFocus={() => meta && setHoveredContinent(meta.id)} onBlur={() => setHoveredContinent(null)} onClick={() => meta?.status === 'active' && continent && setAtlasPath((prev) => [...prev, continent.id])} />
+                return (
+                  <g key={shape.id} className="continentOverlayGroup" onMouseEnter={() => meta && setHoveredContinent(meta.id)} onMouseLeave={() => setHoveredContinent(null)} onFocus={() => meta && setHoveredContinent(meta.id)} onBlur={() => setHoveredContinent(null)} onClick={() => meta?.status === 'active' && continent && setAtlasPath((prev) => [...prev, continent.id])}>
+                    {shape.paths.map((d, index) => (
+                      <path key={`${shape.id}-${index}`} d={d} className={`atlasOutline continentOverlay ${continent?.visited ? 'isVisited' : 'isMuted'} ${isEurope ? 'isAtlasActive' : ''} ${isHovered ? 'isHovered' : ''}`} />
+                    ))}
+                  </g>
+                )
               })}
                 </svg>
               </g>
