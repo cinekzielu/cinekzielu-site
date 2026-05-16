@@ -138,7 +138,7 @@ img {
   grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
   gap: clamp(52px, 4.4vw, 88px);
   align-items: center;
-  padding: 76px 0 100px;
+  padding: 74px 0 94px;
 }
 
 .heroText {
@@ -285,10 +285,19 @@ img {
 }
 
 .section {
-  padding: 88px 0;
+  padding: 82px 0;
   position: relative;
 }
 
+
+#map.section {
+  padding-top: 72px;
+  padding-bottom: 74px;
+}
+
+#map.section .sectionHeader {
+  margin-bottom: 30px;
+}
 .sectionDark {
   background: rgba(11, 10, 9, 0.35);
   border-bottom: 1px solid var(--line);
