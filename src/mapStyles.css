@@ -22,6 +22,12 @@
 .atlasCountry.isTatryBorderCountry{fill:rgba(176,140,88,.18)!important;stroke:rgba(248,227,189,.64)!important;filter:drop-shadow(0 0 10px rgba(243,214,160,.24))}
 .atlasCountryLabel.isTatryBorderCountryLabel{fill:rgba(250,231,197,.96);font-size:9.2px}
 .atlasCountryMarker{isolation:isolate}
+.europeCountryOverlaySvg{overflow:visible}
+.europeCountryOverlayGroup{cursor:pointer}
+.europeCountryOverlayPath{fill:rgba(240,216,176,.06);stroke:rgba(240,216,176,.22);stroke-width:.9;transition:fill .22s ease,stroke .22s ease,filter .22s ease,opacity .22s ease}
+.europeCountryOverlayGroup.isHovered .europeCountryOverlayPath,.europeCountryOverlayGroup.isSelected .europeCountryOverlayPath{fill:rgba(246,225,188,.2);stroke:rgba(250,233,204,.72);filter:drop-shadow(0 0 8px rgba(244,218,170,.26))}
+.europeCountryOverlayPath.statusactive,.europeCountryOverlayPath.statusvisited{fill:rgba(246,226,194,.09)}
+.europeCountryOverlayPath.statusfuture{opacity:.82}
 .atlasCountryDot{fill:rgba(231,209,172,.9);stroke:rgba(18,14,11,.8);stroke-width:.9;filter:drop-shadow(0 0 9px rgba(244,220,178,.42))}
 .atlasCountryDot.isMuted{opacity:.72}
 .atlasCountryDot.isVisited{fill:rgba(245,224,188,.98)}
