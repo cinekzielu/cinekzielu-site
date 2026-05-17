@@ -469,10 +469,12 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
               {europeAtlasNodes.filter((node) => node.type !== 'continent' && node.id !== 'tatry').map((node) => {
                 const isTatryBorderCountry = node.id === 'poland' || node.id === 'slovakia'
                 const isHovered = hoveredEuropeNodeId === node.id
+                const labelOffsetX = node.labelOffset?.x ?? 0
+                const labelOffsetY = node.labelOffset?.y ?? 0
                 return (
                   <g key={node.id} className={`atlasCountryMarker ${isTatryBorderCountry ? 'isTatryBorderCountry' : ''} ${isHovered ? 'isHovered' : ''}`}>
                     <circle cx={node.position.x - 9} cy={node.position.y - 2} r="3.2" className={`atlasCountryDot ${node.status === 'visited' || node.status === 'active' ? 'isVisited' : 'isMuted'}`} />
-                    <foreignObject x={node.position.x} y={node.position.y - 14} width={node.position.chipWidth || 104} height="26">
+                    <foreignObject x={node.position.x + labelOffsetX} y={node.position.y - 14 + labelOffsetY} width={node.position.chipWidth || 104} height="26">
                       <button type="button" className="atlasCountryChip" onMouseEnter={() => setHoveredEuropeNodeId(node.id)} onMouseLeave={() => setHoveredEuropeNodeId(null)} onFocus={() => setHoveredEuropeNodeId(node.id)} onBlur={() => setHoveredEuropeNodeId(null)} onClick={() => setSelectedEuropeNodeId(node.id)}>
                         <span>{node.code}</span>
                         <span>{node.label}</span>
