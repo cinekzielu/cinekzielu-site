@@ -7,6 +7,7 @@ import '../mapStyles.css'
 import worldAtlasBaseAsset from '../assets/maps/world-atlas-dark.webp'
 import europeAtlasDarkAsset from '../assets/maps/europe-atlas-dark.webp'
 import worldContinentOverlaysSvgRaw from '../assets/maps/world-continent-overlays.svg?raw'
+import europeCountryOverlaysSvgRaw from '../assets/maps/europe-country-overlays.svg?raw'
 import { europeAtlasNodes, europeDefaultNodeId } from '../data/europeAtlasData'
 
 const worldShapes = [
@@ -104,24 +105,37 @@ const parseEuropeOverlayShapes = (svgRaw) => {
     if (!svgRoot) return null
     const viewBox = svgRoot.getAttribute('viewBox') || '0 0 560 360'
     const nodes = new Map()
-    doc.querySelectorAll('path, g').forEach((node) => {
+    const supportedShapeTags = new Set(['path', 'ellipse', 'circle', 'rect', 'polygon', 'polyline'])
+    const collectShapeElement = (shapeNode) => {
+      const tag = shapeNode.tagName.toLowerCase()
+      if (!supportedShapeTags.has(tag)) return null
+      const attrs = {}
+      for (const attr of shapeNode.getAttributeNames()) {
+        const value = shapeNode.getAttribute(attr)
+        if (value != null) attrs[attr] = value
+      }
+      return { tag, attrs }
+    }
+    doc.querySelectorAll('path, ellipse, circle, rect, polygon, polyline, g').forEach((node) => {
       const tag = node.tagName.toLowerCase()
-      const rawId = node.getAttribute('id') || node.getAttribute('inkscape:label') || node.getAttribute('label') || node.getAttribute('data-id')
+      const rawId = node.getAttribute('id') || node.getAttribute('inkscape:label') || node.getAttribute('label') || node.getAttribute('data-id') || node.getAttribute('data-name')
       if (!rawId) return
       const id = rawId.trim().toLowerCase()
       if (!nodes.has(id)) nodes.set(id, [])
       const bucket = nodes.get(id)
-      if (tag === 'path') {
-        const d = node.getAttribute('d')
-        if (d) bucket.push(d)
+      if (tag !== 'g') {
+        const element = collectShapeElement(node)
+        if (element) bucket.push(element)
       } else {
-        node.querySelectorAll('path').forEach((pathNode) => {
-          const d = pathNode.getAttribute('d')
-          if (d) bucket.push(d)
+        node.querySelectorAll('path, ellipse, circle, rect, polygon, polyline').forEach((shapeNode) => {
+          const element = collectShapeElement(shapeNode)
+          if (element) bucket.push(element)
         })
       }
     })
-    const shapes = [...nodes.entries()].map(([id, paths]) => ({ id, paths: [...new Set(paths)] })).filter((shape) => shape.paths.length)
+    const shapes = [...nodes.entries()]
+      .map(([id, elements]) => ({ id, elements }))
+      .filter((shape) => shape.elements.length)
     return { viewBox, shapes }
   } catch (error) {
     return { viewBox: '0 0 560 360', shapes: [] }
@@ -395,20 +409,9 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
     }
   const europeNodeMap = new Map(europeAtlasNodes.map((node) => [node.id, node]))
   const europeAtlasImageSrc = europeAtlasDarkAsset
-  const europeOverlaySvgSrc = '/assets/maps/europe-country-overlays.svg'
   useEffect(() => {
-    let mounted = true
-    fetch(europeOverlaySvgSrc)
-      .then((response) => (response.ok ? response.text() : null))
-      .then((raw) => {
-        if (!mounted || !raw) return
-        setEuropeOverlayData(parseEuropeOverlayShapes(raw))
-      })
-      .catch(() => {
-        if (mounted) setEuropeOverlayData(null)
-      })
-    return () => { mounted = false }
-  }, [europeOverlaySvgSrc])
+    setEuropeOverlayData(parseEuropeOverlayShapes(europeCountryOverlaysSvgRaw))
+  }, [])
   const activeEuropeNode = europeNodeMap.get(hoveredEuropeNodeId || selectedEuropeNodeId || europeDefaultNodeId) || europeNodeMap.get(europeDefaultNodeId)
   const europePanel = activeId === 'europe' ? activeEuropeNode : null
 
@@ -515,7 +518,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
               {europeOverlayData?.shapes?.length > 0 && (
                 <svg x="22" y="20" width="516" height="318" viewBox={europeOverlayData.viewBox} preserveAspectRatio="xMidYMid slice" className="europeCountryOverlaySvg">
                   {europeOverlayData.shapes.map((shape) => {
-                    const node = europeNodeMap.get(shape.id)
+                    const node = europeNodeMap.get(shape.id) || [...europeNodeMap.values()].find((atlasNode) => atlasNode.svgId === shape.id)
                     if (!node) return null
                     const isHovered = hoveredEuropeNodeId === node.id
                     const isSelected = selectedEuropeNodeId === node.id
@@ -533,7 +536,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                           if (isTatryTarget && tatryRegion) setAtlasPath((prev) => [...prev, tatryRegion.id])
                         }}
                       >
-                        {shape.paths.map((d, index) => <path key={`${shape.id}-${index}`} d={d} className={`europeCountryOverlayPath status${node.status || 'planned'}`} />)}
+                        {shape.elements.map((element, index) => React.createElement(element.tag, { key: `${shape.id}-${index}`, ...element.attrs, className: `europeCountryOverlayPath status${node.status || 'planned'}` }))}
                       </g>
                     )
                   })}
