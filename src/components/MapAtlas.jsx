@@ -103,41 +103,61 @@ const parseEuropeOverlayShapes = (svgRaw) => {
     const doc = parser.parseFromString(svgRaw, 'image/svg+xml')
     const svgRoot = doc.querySelector('svg')
     if (!svgRoot) return null
-    const viewBox = svgRoot.getAttribute('viewBox') || '0 0 560 360'
-    const nodes = new Map()
-    const supportedShapeTags = new Set(['path', 'ellipse', 'circle', 'rect', 'polygon', 'polyline'])
-    const collectShapeElement = (shapeNode) => {
-      const tag = shapeNode.tagName.toLowerCase()
-      if (!supportedShapeTags.has(tag)) return null
-      const attrs = {}
-      for (const attr of shapeNode.getAttributeNames()) {
-        const value = shapeNode.getAttribute(attr)
-        if (value != null) attrs[attr] = value
-      }
-      return { tag, attrs }
+
+    if (doc.querySelector('parsererror')) {
+      if (import.meta.env.DEV) console.warn('[europe overlay] SVG parsererror detected, skipping overlay')
+      return { viewBox: '0 0 560 360', shapes: [] }
     }
-    doc.querySelectorAll('path, ellipse, circle, rect, polygon, polyline, g').forEach((node) => {
-      const tag = node.tagName.toLowerCase()
-      const rawId = node.getAttribute('id') || node.getAttribute('inkscape:label') || node.getAttribute('label') || node.getAttribute('data-id') || node.getAttribute('data-name')
-      if (!rawId) return
+
+    const viewBox = svgRoot.getAttribute('viewBox') || '0 0 560 360'
+
+    const getNodeOverlayId = (node) => {
+      const rawId = node.getAttribute('id')
+        || node.getAttribute('inkscape:label')
+        || node.getAttribute('label')
+        || node.getAttribute('data-id')
+        || node.getAttribute('data-name')
+
+      if (!rawId) return null
       const id = rawId.trim().toLowerCase()
+      return id || null
+    }
+
+    const nodes = new Map()
+    const addShape = (id, paths) => {
+      const cleanPaths = (paths || []).map((d) => d?.trim()).filter(Boolean)
+      if (!id || cleanPaths.length === 0) return
       if (!nodes.has(id)) nodes.set(id, [])
-      const bucket = nodes.get(id)
-      if (tag !== 'g') {
-        const element = collectShapeElement(node)
-        if (element) bucket.push(element)
-      } else {
-        node.querySelectorAll('path, ellipse, circle, rect, polygon, polyline').forEach((shapeNode) => {
-          const element = collectShapeElement(shapeNode)
-          if (element) bucket.push(element)
-        })
-      }
+      nodes.get(id).push(...cleanPaths)
+    }
+
+    doc.querySelectorAll('g').forEach((groupNode) => {
+      const id = getNodeOverlayId(groupNode)
+      if (!id) return
+      const groupPaths = [...groupNode.querySelectorAll('path')]
+        .map((pathNode) => pathNode.getAttribute('d'))
+        .filter(Boolean)
+      addShape(id, groupPaths)
     })
+
+    doc.querySelectorAll('path').forEach((pathNode) => {
+      const id = getNodeOverlayId(pathNode)
+      const d = pathNode.getAttribute('d')
+      if (!id || !d) return
+      addShape(id, [d])
+    })
+
     const shapes = [...nodes.entries()]
-      .map(([id, elements]) => ({ id, elements }))
-      .filter((shape) => shape.elements.length)
+      .map(([id, paths]) => ({ id, paths: [...new Set(paths)] }))
+      .filter((shape) => shape.paths.length > 0)
+
+    if (import.meta.env.DEV && shapes.length === 0) {
+      console.warn('[europe overlay] no supported path overlays detected')
+    }
+
     return { viewBox, shapes }
   } catch (error) {
+    if (import.meta.env.DEV) console.warn('[europe overlay] parse failed', error)
     return { viewBox: '0 0 560 360', shapes: [] }
   }
 }
@@ -533,10 +553,16 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                         onBlur={() => setHoveredEuropeNodeId(null)}
                         onClick={() => {
                           setSelectedEuropeNodeId(node.id)
-                          if (isTatryTarget && tatryRegion) setAtlasPath((prev) => [...prev, tatryRegion.id])
+                          if (node.routeTarget === 'tatry' && tatryRegion) {
+                            setAtlasPath((prev) => [...prev, tatryRegion.id])
+                          } else if (isTatryTarget && tatryRegion) {
+                            setAtlasPath((prev) => [...prev, tatryRegion.id])
+                          }
                         }}
                       >
-                        {shape.elements.map((element, index) => React.createElement(element.tag, { key: `${shape.id}-${index}`, ...element.attrs, className: `europeCountryOverlayPath status${node.status || 'planned'}` }))}
+                        {shape.paths.map((d, index) => (
+                          <path key={`${shape.id}-${index}`} d={d} className={`europeCountryOverlayPath status${node.status || 'planned'}`} />
+                        ))}
                       </g>
                     )
                   })}
