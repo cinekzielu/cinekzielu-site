@@ -366,7 +366,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
   const [hoveredSummitId, setHoveredSummitId] = useState(null)
   const [hoveredContinent, setHoveredContinent] = useState(null)
   const [hoveredEuropeNodeId, setHoveredEuropeNodeId] = useState(null)
-  const [selectedEuropeNodeId, setSelectedEuropeNodeId] = useState(europeDefaultNodeId)
+  const [selectedEuropeNodeId, setSelectedEuropeNodeId] = useState(null)
   const [europeAtlasImageLoaded, setEuropeAtlasImageLoaded] = useState(true)
   const [europeOverlayData, setEuropeOverlayData] = useState(null)
   const continents = travelAtlasData.continents
@@ -505,12 +505,11 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
               {overlayShapes.map((shape) => {
                 const meta = continentMetaByShapeId.get(shape.id)
                 const continent = continents.find((c) => c.id === meta?.routePath?.[1])
-                const isEurope = meta?.id === 'europe'
                 const isHovered = hoveredContinent === meta?.id
                 return (
                   <g key={shape.id} className="continentOverlayGroup" onMouseEnter={() => meta && setHoveredContinent(meta.id)} onMouseLeave={() => setHoveredContinent(null)} onFocus={() => meta && setHoveredContinent(meta.id)} onBlur={() => setHoveredContinent(null)} onClick={() => meta?.status === 'active' && continent && setAtlasPath((prev) => [...prev, continent.id])}>
                     {shape.paths.map((d, index) => (
-                      <path key={`${shape.id}-${index}`} d={d} className={`atlasOutline continentOverlay ${continent?.visited ? 'isVisited' : 'isMuted'} ${isEurope ? 'isAtlasActive' : ''} ${isHovered ? 'isHovered' : ''}`} />
+                      <path key={`${shape.id}-${index}`} d={d} className={`atlasOutline continentOverlay ${continent?.visited ? 'isVisited' : 'isMuted'} ${isHovered ? 'isHovered' : ''}`} />
                     ))}
                   </g>
                 )
@@ -519,9 +518,9 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
               </g>
               <g className="continentMarkers">
               {continentMeta.map((region) => (
-                <g key={region.id} className={`continentMarkerChip ${region.id === 'europe' ? 'isActive' : ''} ${hoveredContinent === region.id ? 'isHovered' : ''}`}>
-                  <circle cx={region.position.x - 8} cy={region.position.y - 4} r={2.1} className={`continentMarkerDot ${region.id === 'europe' ? `atlasEuropePulseDot ${hoveredContinent && hoveredContinent !== 'europe' ? 'isSubdued' : ''}` : ''}`} />
-                  <text data-id={region.shapeId} x={region.position.x} y={region.position.y} className={`atlasWorldLabel continentMarker ${region.id === 'europe' ? 'isActive' : ''} ${hoveredContinent === region.id ? 'isHovered' : ''}`}>
+                <g key={region.id} className={`continentMarkerChip ${hoveredContinent === region.id ? 'isHovered' : ''}`}>
+                  <circle cx={region.position.x - 8} cy={region.position.y - 4} r={2.1} className="continentMarkerDot" />
+                  <text data-id={region.shapeId} x={region.position.x} y={region.position.y} className={`atlasWorldLabel continentMarker ${hoveredContinent === region.id ? 'isHovered' : ''}`}>
                     {region.label}
                   </text>
                 </g>
@@ -542,12 +541,11 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                     if (!node) return null
                     const isHovered = hoveredEuropeNodeId === node.id
                     const isSelected = selectedEuropeNodeId === node.id
-                    const isActive = node.status === 'active' || node.id === 'tatry'
                     const isTatryTarget = node.routeTarget === 'tatry' || node.id === 'tatry-region'
                     return (
                       <g
                         key={shape.id}
-                        className={`europeCountryOverlayGroup ${isHovered ? 'isHovered' : ''} ${isActive ? 'isActive' : ''} ${isSelected ? 'isSelected' : ''}`}
+                        className={`europeCountryOverlayGroup ${isHovered ? 'isHovered' : ''} ${isSelected ? 'isSelected' : ''}`}
                         onMouseEnter={() => setHoveredEuropeNodeId(node.id)}
                         onMouseLeave={() => setHoveredEuropeNodeId(null)}
                         onFocus={() => setHoveredEuropeNodeId(node.id)}
@@ -562,7 +560,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                         }}
                       >
                         {shape.paths.map((d, index) => (
-                          <path key={`${shape.id}-${index}`} d={d} className={`europeCountryOverlayPath status${node.status || 'planned'} ${isHovered ? 'isHovered' : ''} ${isActive ? 'isActive' : ''} ${isSelected ? 'isSelected' : ''}`} />
+                          <path key={`${shape.id}-${index}`} d={d} className={`europeCountryOverlayPath status${node.status || 'planned'} ${isHovered ? 'isHovered' : ''} ${isSelected ? 'isSelected' : ''}`} />
                         ))}
                       </g>
                     )
@@ -573,14 +571,13 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                 const isTatryBorderCountry = node.id === 'poland' || node.id === 'slovakia'
                 const isHovered = hoveredEuropeNodeId === node.id
                 const isSelected = selectedEuropeNodeId === node.id
-                const isActive = node.status === 'active' || node.id === 'tatry'
                 const labelOffsetX = node.labelOffset?.x ?? 0
                 const labelOffsetY = node.labelOffset?.y ?? 0
                 return (
-                  <g key={node.id} className={`atlasCountryMarker ${isTatryBorderCountry ? 'isTatryBorderCountry' : ''} ${isHovered ? 'isHovered' : ''} ${isActive ? 'isActive' : ''} ${isSelected ? 'isSelected' : ''}`}>
+                  <g key={node.id} className={`atlasCountryMarker ${isTatryBorderCountry ? 'isTatryBorderCountry' : ''} ${isHovered ? 'isHovered' : ''} ${isSelected ? 'isSelected' : ''}`}>
                     <circle cx={node.position.x - 9} cy={node.position.y - 2} r="3.2" className={`atlasCountryDot ${node.status === 'visited' || node.status === 'active' ? 'isVisited' : 'isMuted'}`} />
                     <foreignObject x={node.position.x + labelOffsetX} y={node.position.y - 14 + labelOffsetY} width={node.position.chipWidth || 104} height="26">
-                      <button type="button" className={`atlasCountryChip ${isHovered ? 'isHovered' : ''} ${isActive ? 'isActive' : ''} ${isSelected ? 'isSelected' : ''}`} onMouseEnter={() => setHoveredEuropeNodeId(node.id)} onMouseLeave={() => setHoveredEuropeNodeId(null)} onFocus={() => setHoveredEuropeNodeId(node.id)} onBlur={() => setHoveredEuropeNodeId(null)} onClick={() => { setSelectedEuropeNodeId(node.id); if (node.routeTarget === 'tatry' && tatryRegion) setAtlasPath((prev) => [...prev, tatryRegion.id]) }}>
+                      <button type="button" className={`atlasCountryChip ${isHovered ? 'isHovered' : ''} ${isSelected ? 'isSelected' : ''}`} onMouseEnter={() => setHoveredEuropeNodeId(node.id)} onMouseLeave={() => setHoveredEuropeNodeId(null)} onFocus={() => setHoveredEuropeNodeId(node.id)} onBlur={() => setHoveredEuropeNodeId(null)} onClick={() => { setSelectedEuropeNodeId(node.id); if (node.routeTarget === 'tatry' && tatryRegion) setAtlasPath((prev) => [...prev, tatryRegion.id]) }}>
                         <span>{node.code}</span>
                         <span>{node.label}</span>
                       </button>
