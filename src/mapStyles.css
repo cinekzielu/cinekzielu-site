@@ -25,7 +25,10 @@
 .europeCountryOverlaySvg{overflow:visible}
 .europeCountryOverlayGroup{cursor:pointer}
 .europeCountryOverlayPath{fill:rgba(240,216,176,.03);stroke:rgba(240,216,176,.14);stroke-width:.9;transition:fill .22s ease,stroke .22s ease,filter .22s ease,opacity .22s ease}
-.europeCountryOverlayGroup.isHovered .europeCountryOverlayPath,.europeCountryOverlayGroup.isSelected .europeCountryOverlayPath{fill:rgba(235,188,96,.32);stroke:rgba(252,225,172,.82);filter:drop-shadow(0 0 7px rgba(244,197,112,.24))}
+.europeCountryOverlayPath.isActive{fill:rgba(246,226,194,.11);stroke:rgba(247,224,186,.28)}
+.europeCountryOverlayPath.isSelected{fill:rgba(236,193,112,.24);stroke:rgba(252,225,172,.7)}
+.europeCountryOverlayGroup.isHovered .europeCountryOverlayPath,.europeCountryOverlayPath.isHovered{fill:rgba(235,188,96,.28);stroke:rgba(252,225,172,.78);filter:drop-shadow(0 0 7px rgba(244,197,112,.22))}
+.europeCountryOverlayGroup.isSelected .europeCountryOverlayPath,.europeCountryOverlayPath.isSelected{fill:rgba(235,188,96,.34);stroke:rgba(252,225,172,.86);filter:drop-shadow(0 0 8px rgba(244,197,112,.28))}
 .europeCountryOverlayPath.statusactive,.europeCountryOverlayPath.statusvisited{fill:rgba(246,226,194,.09)}
 .europeCountryOverlayPath.statusfuture{opacity:.82}
 .atlasCountryDot{fill:rgba(231,209,172,.9);stroke:rgba(18,14,11,.8);stroke-width:.9;filter:drop-shadow(0 0 9px rgba(244,220,178,.42))}
@@ -33,6 +36,9 @@
 .atlasCountryDot.isVisited{fill:rgba(245,224,188,.98)}
 .atlasCountryChip{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:999px;border:1px solid rgba(236,218,186,.3);background:linear-gradient(165deg,rgba(14,12,10,.96),rgba(30,24,19,.84));color:rgba(246,228,198,.92);font-size:10px;line-height:1;letter-spacing:.04em;white-space:nowrap;cursor:pointer;box-shadow:0 8px 16px rgba(0,0,0,.26),0 0 12px rgba(231,193,129,.09),inset 0 0 0 1px rgba(255,237,208,.03);transition:border-color .2s ease,transform .2s ease}
 .atlasCountryChip:hover,.atlasCountryChip:focus-visible{border-color:rgba(248,228,190,.72);transform:translateY(-1px)}
+.atlasCountryChip.isActive{border-color:rgba(243,216,174,.52)}
+.atlasCountryChip.isSelected{border-color:rgba(248,228,190,.76);box-shadow:0 8px 16px rgba(0,0,0,.26),0 0 14px rgba(239,203,141,.14),inset 0 0 0 1px rgba(255,237,208,.06)}
+.atlasCountryChip.isHovered{border-color:rgba(248,228,190,.66);box-shadow:0 8px 16px rgba(0,0,0,.26),0 0 12px rgba(239,203,141,.16),inset 0 0 0 1px rgba(255,237,208,.05)}
 .atlasCountryMarker.isTatryBorderCountry .atlasCountryChip{border-color:rgba(247,226,188,.58);background:linear-gradient(165deg,rgba(45,35,24,.92),rgba(24,19,15,.84))}
 
 .atlasStage.isEuropeView .atlasCountryDot{r:2.5;stroke-width:.8}
