@@ -296,7 +296,8 @@ img {
 }
 
 #map.section .sectionHeader {
-  margin-bottom: 30px;
+  transform: translateY(20px);
+  margin-bottom: 18px;
 }
 .sectionDark {
   background: rgba(11, 10, 9, 0.35);
