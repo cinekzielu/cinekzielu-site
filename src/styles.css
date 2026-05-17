@@ -296,14 +296,15 @@ img {
 }
 
 #map.section .sectionHeader {
-  transform: translateY(28px);
-  margin-bottom: 14px;
-  row-gap: 14px;
+  margin-bottom: 32px;
+  grid-template-columns: 1fr;
+  gap: 12px;
   align-items: start;
+  max-width: min(100%, 900px);
 }
 
 #map.section .sectionHeader .cardType {
-  grid-column: 1 / -1;
+  grid-column: 1;
 }
 
 #map.section .sectionHeader h2 {
@@ -312,9 +313,10 @@ img {
 }
 
 #map.section .sectionHeader p {
-  grid-column: 2;
+  grid-column: 1;
   align-self: start;
-  margin-top: 8px;
+  margin-top: 0;
+  max-width: 72ch;
 }
 .sectionDark {
   background: rgba(11, 10, 9, 0.35);
