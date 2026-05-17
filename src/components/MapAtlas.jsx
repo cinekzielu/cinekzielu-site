@@ -5,6 +5,7 @@ import tatryHillshadeDark from '../assets/maps/tatry-hillshade-dark.png.png'
 import '../mapStyles.css'
 
 import worldAtlasBaseAsset from '../assets/maps/world-atlas-dark.webp'
+import europeAtlasDarkAsset from '../assets/maps/europe-atlas-dark.webp'
 import worldContinentOverlaysSvgRaw from '../assets/maps/world-continent-overlays.svg?raw'
 import { europeAtlasNodes, europeDefaultNodeId } from '../data/europeAtlasData'
 
@@ -359,7 +360,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
       status: 'active',
     }
   const europeNodeMap = new Map(europeAtlasNodes.map((node) => [node.id, node]))
-  const europeAtlasImageSrc = '/assets/maps/europe-atlas-dark.webp'
+  const europeAtlasImageSrc = europeAtlasDarkAsset
   const europeOverlaySvgSrc = '/assets/maps/europe-country-overlays.svg'
   const activeEuropeNode = europeNodeMap.get(hoveredEuropeNodeId || selectedEuropeNodeId || europeDefaultNodeId) || europeNodeMap.get(europeDefaultNodeId)
   const europePanel = activeId === 'europe' ? activeEuropeNode : null
