@@ -509,7 +509,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                 return (
                   <g key={shape.id} className="continentOverlayGroup" onMouseEnter={() => meta && setHoveredContinent(meta.id)} onMouseLeave={() => setHoveredContinent(null)} onFocus={() => meta && setHoveredContinent(meta.id)} onBlur={() => setHoveredContinent(null)} onClick={() => meta?.status === 'active' && continent && setAtlasPath((prev) => [...prev, continent.id])}>
                     {shape.paths.map((d, index) => (
-                      <path key={`${shape.id}-${index}`} d={d} className={`atlasOutline continentOverlay ${continent?.visited ? 'isVisited' : 'isMuted'} ${isHovered ? 'isHovered' : ''}`} />
+                      <path key={`${shape.id}-${index}`} d={d} className={`atlasOutline continentOverlay ${isHovered ? 'isHovered' : ''}`} />
                     ))}
                   </g>
                 )
@@ -560,7 +560,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                         }}
                       >
                         {shape.paths.map((d, index) => (
-                          <path key={`${shape.id}-${index}`} d={d} className={`europeCountryOverlayPath status${node.status || 'planned'} ${isHovered ? 'isHovered' : ''} ${isSelected ? 'isSelected' : ''}`} />
+                          <path key={`${shape.id}-${index}`} d={d} className={`europeCountryOverlayPath ${isHovered ? 'isHovered' : ''} ${isSelected ? 'isSelected' : ''}`} />
                         ))}
                       </g>
                     )
