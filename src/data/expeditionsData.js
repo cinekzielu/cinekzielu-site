@@ -77,6 +77,7 @@ export const expeditionsData = [
     youtubeUrl: 'https://youtu.be/QRSSYlhRGMM',
     galleryId: 'tatry',
     coverImage: img('koscielec-thumb.jpg'),
+    homepageFeatured: true,
   },
   {
     id: 'morocco-toubkal',
@@ -95,6 +96,7 @@ export const expeditionsData = [
     youtubeUrl: 'https://youtu.be/McawfrouM_0',
     galleryId: 'morocco',
     coverImage: img('maroko-thumb.png'),
+    homepageFeatured: true,
   },
   {
     id: 'switzerland-trip',
@@ -113,6 +115,7 @@ export const expeditionsData = [
     youtubeUrl: '',
     galleryId: 'switzerland',
     coverImage: img('swiss-lake.jpg'),
+    homepageFeatured: true,
   },
   {
     id: 'zermatt',

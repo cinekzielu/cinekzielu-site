@@ -631,6 +631,47 @@ img {
 .filmsArchiveCta {
   margin-top: 18px;
 }
+
+.featuredExpeditionsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.featuredExpeditionCard {
+  border: 1px solid var(--line);
+  background: linear-gradient(165deg, rgba(30, 26, 24, 0.9), rgba(16, 14, 13, 0.9));
+  border-radius: 26px;
+  padding: 22px;
+  transition: transform .3s var(--easing-cinematic), border-color .3s var(--easing-cinematic), box-shadow .3s var(--easing-cinematic);
+}
+
+.featuredExpeditionCard:hover {
+  transform: translateY(var(--card-lift-y));
+  border-color: var(--line-strong);
+  box-shadow: var(--glow-soft);
+}
+
+.featuredExpeditionMetaRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.featuredExpeditionLocation {
+  margin-top: 10px;
+  color: #d8ccb9;
+  font-size: 13px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.featuredExpeditionCta {
+  margin-top: 16px;
+  border-color: rgba(230, 186, 119, 0.34);
+}
+
 .mapLayout {
   display: grid;
   grid-template-columns: 1.25fr .75fr;
@@ -1634,6 +1675,7 @@ img {
 
   .filmGrid,
   .placeGrid,
+  .featuredExpeditionsGrid,
   .formatGrid,
   .postGrid,
   .gearGrid {

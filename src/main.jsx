@@ -4,6 +4,7 @@ import { Camera, ChevronLeft, ChevronRight, Menu, Play, X } from 'lucide-react'
 import './styles.css'
 import { contentData } from './data/contentData'
 import { filmsData } from './data/filmsData'
+import { expeditionsData } from './data/expeditionsData'
 import { MapAtlas } from './components/MapAtlas'
 
 const socials = {
@@ -32,6 +33,14 @@ const homepageFilms = (featuredFilms.length ? featuredFilms : filmsData.slice(0,
 
 const filmFallbackLabel = 'CINEMATIC STORY'
 
+const homepageFeaturedExpeditions = expeditionsData
+  .filter((expedition) => expedition.homepageFeatured || expedition.featured)
+  .slice(0, 3)
+  .map((expedition) => ({
+    ...expedition,
+    statusLabel: formatFilmStatus(String(expedition.status || '')),
+    timelineLabel: expedition.year || expedition.season || expedition.status,
+  }))
 
 
 const places = [
@@ -521,6 +530,39 @@ function App() {
           <a className="smallButton filmsArchiveCta" href="#films" aria-label="Zobacz wszystkie filmy (wkrótce)">
             Zobacz wszystkie filmy
           </a>
+        </div>
+      </section>
+
+      <section id="featured-expeditions" className="section sectionDarker reveal">
+        <div className="container">
+          <SectionHeader
+            label="WYBRANE WYPRAWY"
+            title="Miejsca, do których wracam"
+            text="Tatry, Maroko i Alpy — różne skale wypraw, ten sam cel: droga, obraz i historia."
+          />
+          <div className="featuredExpeditionsGrid">
+            {homepageFeaturedExpeditions.map((expedition) => (
+              <article className="featuredExpeditionCard" key={expedition.id}>
+                <div className="featuredExpeditionMetaRow">
+                  <div className="cardType">{expedition.statusLabel}</div>
+                  <span className="filmHelperLabel">{expedition.timelineLabel}</span>
+                </div>
+                <h3>{expedition.title}</h3>
+                <div className="featuredExpeditionLocation">{expedition.location} • {expedition.country}</div>
+                <p>{expedition.shortDescription}</p>
+                {expedition.tags?.length ? (
+                  <div className="filmTags">
+                    {expedition.tags.slice(0, 4).map((tag) => (
+                      <span key={`${expedition.id}-${tag}`}>{tag}</span>
+                    ))}
+                  </div>
+                ) : null}
+                <a className="smallButton featuredExpeditionCta" href="#map">
+                  {expedition.youtubeUrl ? 'Zobacz kierunek' : 'Wkrótce więcej'}
+                </a>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
