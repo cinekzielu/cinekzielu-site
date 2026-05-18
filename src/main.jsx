@@ -1,6 +1,6 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { Camera, ChevronLeft, ChevronRight, Menu, Play, X } from 'lucide-react'
+import { Camera, ChevronLeft, ChevronRight, MapPin, Mountain, Menu, Play, X } from 'lucide-react'
 import './styles.css'
 import { contentData } from './data/contentData'
 import { filmsData } from './data/filmsData'
@@ -40,6 +40,10 @@ const homepageFeaturedExpeditions = expeditionsData
     ...expedition,
     statusLabel: formatFilmStatus(String(expedition.status || '')),
     timelineLabel: expedition.year || expedition.season || expedition.status,
+    directionMeta: expedition.directionMeta || `${(expedition.country === 'Maroko' ? 'AFRYKA' : 'EUROPA')} / ${expedition.country}`,
+    atlasCode: expedition.atlasCode || `ATLS-${expedition.id.slice(0, 3).toUpperCase()}` ,
+    elevationLabel: expedition.elevationLabel || expedition.routeInfo?.elevationGain || '',
+    routeAccent: expedition.routeAccent || 'rgba(221, 169, 92, 0.72)',
   }))
 
 
@@ -542,17 +546,27 @@ function App() {
           />
           <div className="featuredExpeditionsGrid">
             {homepageFeaturedExpeditions.map((expedition) => (
-              <article className="featuredExpeditionCard" key={expedition.id}>
+              <article className="featuredExpeditionCard" key={expedition.id} style={{ '--route-accent': expedition.routeAccent }}>
+                <div className="featuredExpeditionTopLine">
+                  <span className="featuredExpeditionDirection">{expedition.directionMeta}</span>
+                  <span className="featuredExpeditionCode">{expedition.atlasCode}</span>
+                </div>
+                <div className="featuredExpeditionRoute" aria-hidden="true">
+                  <span className="featuredExpeditionRouteDot" />
+                  <span className="featuredExpeditionRouteTrail" />
+                  <Mountain size={14} />
+                </div>
                 <div className="featuredExpeditionMetaRow">
                   <div className="cardType">{expedition.statusLabel}</div>
                   <span className="filmHelperLabel">{expedition.timelineLabel}</span>
                 </div>
                 <h3>{expedition.title}</h3>
-                <div className="featuredExpeditionLocation">{expedition.location} • {expedition.country}</div>
+                <div className="featuredExpeditionLocation"><MapPin size={13} /> {expedition.location} • {expedition.country}</div>
                 <p>{expedition.shortDescription}</p>
+                <div className="featuredExpeditionExtraMeta">{expedition.elevationLabel}</div>
                 {expedition.tags?.length ? (
-                  <div className="filmTags">
-                    {expedition.tags.slice(0, 4).map((tag) => (
+                  <div className="filmTags featuredExpeditionTags">
+                    {expedition.tags.slice(0, 3).map((tag) => (
                       <span key={`${expedition.id}-${tag}`}>{tag}</span>
                     ))}
                   </div>
