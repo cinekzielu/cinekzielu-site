@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { Camera, ChevronLeft, ChevronRight, Menu, Play, X } from 'lucide-react'
 import './styles.css'
 import { contentData } from './data/contentData'
+import { filmsData } from './data/filmsData'
 import { MapAtlas } from './components/MapAtlas'
 
 const socials = {
@@ -13,35 +14,16 @@ const socials = {
 
 const img = (name) => `/images/${name}`
 
-const featuredFilms = [
-  {
-    title: 'Tatry — wejście i droga',
-    type: 'VLOG',
-    badge: 'WINTER ASCENT',
-    duration: '18 MIN',
-    desc: 'Materiały z tatrzańskich szlaków: podejścia, warunki i klimat całej wyprawy od startu po zejście.',
-    image: img('lomnica-thumb.png'),
-    link: socials.youtube,
-  },
-  {
-    title: 'Maroko — trekking i kontrast',
-    type: 'SHORT FILM',
-    badge: 'CINEMATIC',
-    duration: '7 MIN',
-    desc: 'Podróż i trekking w zupełnie innym świetle: kontrast krajobrazu, tempo drogi i codzienność po trasie.',
-    image: img('maroko-thumb.png'),
-    link: socials.youtube,
-  },
-  {
-    title: 'Kościelec zimą — warunki i emocje',
-    type: 'CINEMATIC',
-    badge: 'EXPEDITION EDIT',
-    duration: 'SHORT',
-    desc: 'Zimowe podejście na Kościelec pokazane filmowo — skupienie, ruch, chłód i satysfakcja na końcu dnia.',
-    image: img('koscielec-thumb.jpg'),
-    link: socials.youtube,
-  },
-]
+const featuredFilms = filmsData.slice(0, 3).map((film) => ({
+  title: film.title,
+  type: film.category.toUpperCase().replace('-', ' '),
+  badge: String(film.status).toUpperCase().replace('-', ' '),
+  duration: film.duration,
+  desc: film.shortDescription,
+  image: film.thumbnail,
+  link: film.youtubeUrl || socials.youtube,
+}))
+
 
 
 const places = [

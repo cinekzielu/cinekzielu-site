@@ -1,8 +1,8 @@
 import { travelAtlasData } from './travelData'
-import { galleryCollections } from './galleryData'
+import { galleryData } from './galleryData'
 import { expeditionsData } from './expeditionsData'
 
-const buildLookup = (items) => Object.fromEntries(items.map((item) => [item.id ?? item.slug, item]))
+const buildLookup = (items) => Object.fromEntries(items.map((item) => [item.id, item]))
 
 const atlasLookups = {
   continents: buildLookup(travelAtlasData.continents),
@@ -14,19 +14,34 @@ const atlasLookups = {
 }
 
 const expeditions = expeditionsData.map((expedition) => {
-  const atlasNode = expedition.atlasNodeId
-    ? atlasLookups.summits[expedition.atlasNodeId] || atlasLookups.places[expedition.atlasNodeId] || null
+  const atlasNode = expedition.mapNodeId
+    ? atlasLookups.summits[expedition.mapNodeId] || atlasLookups.places[expedition.mapNodeId] || null
     : null
-
-  const atlasFilm = expedition.atlasFilmId ? atlasLookups.films[expedition.atlasFilmId] : null
 
   return {
     ...expedition,
-    filmUrl: atlasFilm?.url || expedition.filmUrl,
+    slug: expedition.id,
+    filmUrl: expedition.youtubeUrl,
     atlasNode,
-    atlasFilm,
+    atlasNodeId: expedition.mapNodeId,
+    galleryCollectionSlug: expedition.galleryId,
+    heroImage: expedition.coverImage,
+    mood: expedition.shortDescription,
+    stats: {
+      region: expedition.region,
+      filmFormat: expedition.type,
+      height: expedition.routeInfo?.elevationGain ?? 'wkrótce',
+    },
   }
 })
+
+const galleryCollections = galleryData.map((gallery) => ({
+  ...gallery,
+  slug: gallery.id,
+  description: gallery.subtitle,
+  cover: gallery.coverImage,
+  photos: [],
+}))
 
 const galleriesBySlug = buildLookup(galleryCollections)
 const expeditionsBySlug = buildLookup(expeditions)
