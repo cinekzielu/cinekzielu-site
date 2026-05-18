@@ -627,6 +627,10 @@ img {
   border-radius: 15px;
 }
 
+
+.filmsArchiveCta {
+  margin-top: 18px;
+}
 .mapLayout {
   display: grid;
   grid-template-columns: 1.25fr .75fr;
