@@ -471,9 +471,9 @@ function App() {
       <section id="films" className="section sectionDark reveal">
         <div className="container">
           <SectionHeader
-            label="Wybrane filmy"
-            title="Trzy wejścia w mój klimat"
-            text="Tatry, Maroko i zimowy Kościelec — trzy różne kierunki, ale ten sam rdzeń: droga, miejsce i historia, którą chciałem zapisać."
+            label="WYBRANE FILMY"
+            title="Filmy z drogi"
+            text="Trzy historie z gór i podróży — zapisane w rytmie drogi, obrazu i momentów po trasie."
           />
           <div className="filmGrid">
             {homepageFilms.map((film) => (
@@ -536,9 +536,9 @@ function App() {
       <section id="featured-expeditions" className="section sectionDarker reveal">
         <div className="container">
           <SectionHeader
-            label="WYBRANE WYPRAWY"
-            title="Miejsca, do których wracam"
-            text="Tatry, Maroko i Alpy — różne skale wypraw, ten sam cel: droga, obraz i historia."
+            label="WYBRANE KIERUNKI"
+            title="Miejsca, które prowadzą dalej"
+            text="Tatry, Maroko i Szwajcaria — trzy różne skale wypraw, które najlepiej pokazują kierunek tej strony."
           />
           <div className="featuredExpeditionsGrid">
             {homepageFeaturedExpeditions.map((expedition) => (
@@ -558,7 +558,7 @@ function App() {
                   </div>
                 ) : null}
                 <a className="smallButton featuredExpeditionCta" href="#map">
-                  {expedition.youtubeUrl ? 'Zobacz kierunek' : 'Wkrótce więcej'}
+                  Zobacz na mapie
                 </a>
               </article>
             ))}
