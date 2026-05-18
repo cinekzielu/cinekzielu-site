@@ -14,15 +14,19 @@ const socials = {
 
 const img = (name) => `/images/${name}`
 
-const featuredFilms = filmsData.slice(0, 3).map((film) => ({
-  title: film.title,
-  type: film.category.toUpperCase().replace('-', ' '),
-  badge: String(film.status).toUpperCase().replace('-', ' '),
-  duration: film.duration,
-  desc: film.shortDescription,
-  image: film.thumbnail,
-  link: film.youtubeUrl || socials.youtube,
+const formatFilmCategory = (category = '') => category.replace(/[-_]/g, ' ').toUpperCase()
+
+const formatFilmStatus = (status = '') => status.replace(/[-_]/g, ' ').toUpperCase()
+
+const featuredFilms = filmsData.map((film) => ({
+  ...film,
+  typeLabel: formatFilmCategory(film.category),
+  statusLabel: formatFilmStatus(String(film.status || '')),
+  timelineLabel: film.year || film.status,
+  ctaUrl: film.youtubeUrl || null,
 }))
+
+const filmFallbackLabel = 'CINEMATIC STORY'
 
 
 
@@ -460,24 +464,53 @@ function App() {
           />
           <div className="filmGrid">
             {featuredFilms.map((film) => (
-              <article className="filmCard" key={film.title}>
+              <article className="filmCard" key={film.id}>
                 <div className="filmImageWrap">
-                  <img src={film.image} alt={film.title} />
-                  <div className="filmImageBadges">
-                    <span className="filmImageBadge filmImageBadgeType">{film.type}</span>
-                    <span className="filmImageBadge filmImageBadgeYoutube"><Play size={13} /> YouTube</span>
+                  {film.thumbnail ? (
+                    <img
+                      src={film.thumbnail}
+                      alt={`Miniatura filmu ${film.title}`}
+                      loading="lazy"
+                      onError={(event) => {
+                        event.currentTarget.style.display = 'none'
+                        event.currentTarget.parentElement?.classList.add('filmImageWrapFallback')
+                      }}
+                    />
+                  ) : null}
+                  <div className="filmImageFallback" aria-hidden="true">
+                    <span>{filmFallbackLabel}</span>
                   </div>
-                  <span className="filmDuration">{film.duration}</span>
+                  <div className="filmImageBadges">
+                    <span className="filmImageBadge filmImageBadgeType">{film.typeLabel}</span>
+                    {film.ctaUrl ? (
+                      <span className="filmImageBadge filmImageBadgeYoutube"><Play size={13} /> YouTube</span>
+                    ) : (
+                      <span className="filmImageBadge filmImageBadgeSoon">Wkrótce</span>
+                    )}
+                  </div>
+                  {film.duration ? <span className="filmDuration">{film.duration}</span> : null}
                 </div>
                 <div className="filmMetaRow">
-                  <div className="cardType">{film.badge}</div>
-                  <span className="filmHelperLabel">film dokumentalny</span>
+                  <div className="cardType">{film.statusLabel}</div>
+                  <span className="filmHelperLabel">{film.timelineLabel}</span>
                 </div>
                 <h3>{film.title}</h3>
-                <p>{film.desc}</p>
-                <a className="smallButton filmCta" href={film.link} target="_blank" rel="noreferrer">
-                  <Play size={14} /> Obejrzyj film
-                </a>
+                <div className="filmLocation">{film.location}</div>
+                <p>{film.shortDescription}</p>
+                {film.tags?.length ? (
+                  <div className="filmTags">
+                    {film.tags.slice(0, 3).map((tag) => (
+                      <span key={`${film.id}-${tag}`}>{tag}</span>
+                    ))}
+                  </div>
+                ) : null}
+                {film.ctaUrl ? (
+                  <a className="smallButton filmCta" href={film.ctaUrl} target="_blank" rel="noreferrer">
+                    <Play size={14} /> Obejrzyj na YouTube
+                  </a>
+                ) : (
+                  <div className="filmStatusSoon">Premiera wkrótce</div>
+                )}
               </article>
             ))}
           </div>

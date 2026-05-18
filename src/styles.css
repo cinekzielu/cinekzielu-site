@@ -457,6 +457,12 @@ img {
   border-color: rgba(255, 118, 118, 0.4);
 }
 
+
+.filmImageBadgeSoon {
+  border-color: rgba(232, 216, 184, 0.32);
+  color: rgba(245, 238, 225, 0.88);
+}
+
 .filmDuration {
   position: absolute;
   right: 12px;
@@ -496,6 +502,40 @@ img {
   margin-top: 10px;
 }
 
+
+.filmLocation {
+  margin-top: 10px;
+  color: #d8ccb9;
+  font-size: 13px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.filmTags {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filmTags span {
+  font-size: 11px;
+  letter-spacing: .08em;
+  color: rgba(237, 228, 212, 0.85);
+  border: 1px solid rgba(214, 198, 168, 0.24);
+  background: rgba(25, 22, 19, 0.7);
+  border-radius: 999px;
+  padding: 5px 10px;
+}
+
+.filmStatusSoon {
+  margin-top: 14px;
+  font-size: 12px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(223, 211, 192, 0.76);
+}
+
 .filmCta {
   display: inline-flex;
   align-items: center;
@@ -515,11 +555,36 @@ img {
 }
 
 .filmImageWrap {
+  position: relative;
   margin-bottom: 20px;
   overflow: hidden;
   border-radius: 20px;
   border: 1px solid var(--line);
   background: #10100f;
+}
+
+.filmImageFallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 14px;
+  background: linear-gradient(155deg, rgba(59, 50, 42, 0.88), rgba(19, 16, 14, 0.98));
+}
+
+.filmImageFallback span {
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(241, 232, 216, 0.72);
+}
+
+.filmImageWrapFallback .filmImageFallback {
+  display: flex;
+}
+
+.filmImageWrap img + .filmImageFallback {
+  display: none;
 }
 
 .filmImageWrap img {
