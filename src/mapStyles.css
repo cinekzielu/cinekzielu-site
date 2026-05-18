@@ -22,27 +22,27 @@
 .atlasCountry.isTatryBorderCountry{fill:rgba(176,140,88,.18)!important;stroke:rgba(248,227,189,.64)!important;filter:drop-shadow(0 0 10px rgba(243,214,160,.24))}
 .atlasCountryLabel.isTatryBorderCountryLabel{fill:rgba(250,231,197,.96);font-size:9.2px}
 .atlasCountryMarker{isolation:isolate}
-.europeCountryOverlaySvg{overflow:visible}
-.europeCountryOverlayGroup{cursor:pointer}
-.europeCountryOverlayPath{fill:rgba(240,216,176,.03);stroke:rgba(240,216,176,.14);stroke-width:.9;transition:fill .22s ease,stroke .22s ease,filter .22s ease,opacity .22s ease}
+.europeCountryOverlaySvg{overflow:visible;isolation:isolate}
+.europeCountryOverlayGroup{cursor:pointer}.europeCountryOverlayGroup.isSpecialRegion{position:relative;z-index:4}
+.europeCountryOverlayPath{fill:rgba(240,216,176,.03);stroke:rgba(240,216,176,.14);stroke-width:.9;transition:fill .22s ease,stroke .22s ease,filter .22s ease,opacity .22s ease}.europeCountryOverlayGroup.isSpecialRegion .europeCountryOverlayPath{fill:rgba(228,187,112,.2);stroke:rgba(249,227,187,.72);stroke-width:1.02;filter:drop-shadow(0 0 8px rgba(243,203,131,.24));pointer-events:auto}
 .europeCountryOverlayPath.isActive{fill:rgba(246,226,194,.11);stroke:rgba(247,224,186,.28)}
 .europeCountryOverlayPath.isSelected{fill:rgba(236,193,112,.24);stroke:rgba(252,225,172,.7)}
-.europeCountryOverlayGroup.isHovered .europeCountryOverlayPath,.europeCountryOverlayPath.isHovered{fill:rgba(235,188,96,.28);stroke:rgba(252,225,172,.78);filter:drop-shadow(0 0 7px rgba(244,197,112,.22))}
+.europeCountryOverlayGroup.isHovered .europeCountryOverlayPath,.europeCountryOverlayPath.isHovered{fill:rgba(235,188,96,.28);stroke:rgba(252,225,172,.78);filter:drop-shadow(0 0 7px rgba(244,197,112,.22))}.europeCountryOverlayGroup.isSpecialRegion.isHovered .europeCountryOverlayPath{fill:rgba(232,190,114,.3);stroke:rgba(251,233,199,.9);filter:drop-shadow(0 0 10px rgba(245,210,148,.33))}
 .europeCountryOverlayGroup.isSelected .europeCountryOverlayPath,.europeCountryOverlayPath.isSelected{fill:rgba(235,188,96,.34);stroke:rgba(252,225,172,.86);filter:drop-shadow(0 0 8px rgba(244,197,112,.28))}
 .europeCountryOverlayPath.statusactive,.europeCountryOverlayPath.statusvisited{fill:rgba(246,226,194,.09)}
 .europeCountryOverlayPath.statusfuture{opacity:.82}
 .atlasCountryDot{fill:rgba(231,209,172,.9);stroke:rgba(18,14,11,.8);stroke-width:.9;filter:drop-shadow(0 0 9px rgba(244,220,178,.42))}
 .atlasCountryDot.isMuted{opacity:.72}
 .atlasCountryDot.isVisited{fill:rgba(245,224,188,.98)}
-.atlasCountryChip{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:999px;border:1px solid rgba(236,218,186,.3);background:linear-gradient(165deg,rgba(14,12,10,.96),rgba(30,24,19,.84));color:rgba(246,228,198,.92);font-size:10px;line-height:1;letter-spacing:.04em;white-space:nowrap;cursor:pointer;box-shadow:0 8px 16px rgba(0,0,0,.26),0 0 12px rgba(231,193,129,.09),inset 0 0 0 1px rgba(255,237,208,.03);transition:border-color .2s ease,transform .2s ease}
-.atlasCountryChip:hover,.atlasCountryChip:focus-visible{border-color:rgba(248,228,190,.72);transform:translateY(-1px)}
+.atlasCountryChip{display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 7px;border-radius:999px;border:1px solid rgba(236,218,186,.2);background:linear-gradient(165deg,rgba(14,12,10,.82),rgba(30,24,19,.66));color:rgba(246,228,198,.82);font-size:9.4px;line-height:1;letter-spacing:.035em;white-space:nowrap;cursor:pointer;opacity:.8;box-shadow:0 6px 10px rgba(0,0,0,.2),0 0 8px rgba(231,193,129,.05),inset 0 0 0 1px rgba(255,237,208,.02);transition:border-color .2s ease,transform .2s ease,opacity .2s ease,box-shadow .2s ease,background .2s ease}
+.atlasCountryChip:hover,.atlasCountryChip:focus-visible{border-color:rgba(248,228,190,.54);transform:translateY(-1px);opacity:.95}
 .atlasCountryChip.isActive{border-color:rgba(243,216,174,.52)}
-.atlasCountryChip.isSelected{border-color:rgba(248,228,190,.76);box-shadow:0 8px 16px rgba(0,0,0,.26),0 0 14px rgba(239,203,141,.14),inset 0 0 0 1px rgba(255,237,208,.06)}
-.atlasCountryChip.isHovered{border-color:rgba(248,228,190,.66);box-shadow:0 8px 16px rgba(0,0,0,.26),0 0 12px rgba(239,203,141,.16),inset 0 0 0 1px rgba(255,237,208,.05)}
+.atlasCountryChip.isSelected{border-color:rgba(248,228,190,.7);opacity:1;box-shadow:0 8px 16px rgba(0,0,0,.26),0 0 12px rgba(239,203,141,.12),inset 0 0 0 1px rgba(255,237,208,.05)}
+.atlasCountryChip.isHovered{border-color:rgba(248,228,190,.58);opacity:.96;box-shadow:0 8px 16px rgba(0,0,0,.26),0 0 10px rgba(239,203,141,.12),inset 0 0 0 1px rgba(255,237,208,.04)}
 .atlasCountryMarker.isTatryBorderCountry .atlasCountryChip{border-color:rgba(247,226,188,.58);background:linear-gradient(165deg,rgba(45,35,24,.92),rgba(24,19,15,.84))}
 
 .atlasStage.isEuropeView .atlasCountryDot{r:2.5;stroke-width:.8}
-.atlasStage.isEuropeView .atlasCountryChip{height:15px;padding:0 5px;gap:4px;font-size:7px;border-radius:999px;letter-spacing:.03em}
+.atlasStage.isEuropeView .atlasCountryChip{height:14px;padding:0 4px;gap:3px;font-size:6.7px;border-radius:999px;letter-spacing:.024em}
 .atlasStage.isEuropeView .atlasTatryMarker{transform-box:fill-box;transform-origin:center;transform:scale(.68)}
 .atlasStage.isEuropeView .atlasTatryMarker .atlasInlineLabel{font-size:7px;letter-spacing:.1em}
 .atlasWorldLabel{fill:rgba(222,200,164,.72);font-size:8.35px;font-weight:540;letter-spacing:.11em;text-transform:uppercase;pointer-events:none;paint-order:stroke;stroke:rgba(7,6,5,.52);stroke-width:.6px;stroke-linejoin:round}
@@ -78,8 +78,8 @@
 .continentMarkerChip.isHovered .continentMarkerDot{fill:rgba(249,229,195,.9);filter:drop-shadow(0 0 6px rgba(243,213,157,.34))}
 .atlasTatryMarker{cursor:pointer}
 .atlasTatryMarker:focus-visible{outline:none}
-.atlasTatryMarker .atlasTatryGlow{fill:rgba(208,168,105,.2);stroke:rgba(245,226,189,.75);stroke-width:1.2;stroke-dasharray:3 5;filter:drop-shadow(0 0 10px rgba(244,214,157,.34));transition:all .3s ease}
-.atlasTatryMarker:hover .atlasTatryGlow,.atlasTatryMarker:focus-visible .atlasTatryGlow{fill:rgba(212,174,117,.26);stroke:rgba(248,232,201,.9)}
+.atlasTatryMarker .atlasTatryGlow{fill:rgba(217,174,102,.24);stroke:rgba(249,230,189,.8);stroke-width:1.2;stroke-dasharray:3 5;filter:drop-shadow(0 0 12px rgba(244,206,132,.38));transition:all .3s ease}
+.atlasTatryMarker:hover .atlasTatryGlow,.atlasTatryMarker:focus-visible .atlasTatryGlow{fill:rgba(223,182,114,.32);stroke:rgba(251,236,207,.94)}
 .atlasTatryRing{fill:none;stroke:rgba(239,220,186,.38);stroke-width:1;stroke-dasharray:4 6;opacity:.82;pointer-events:none}
 .atlasTatryMountain{fill:rgba(243,223,188,.84);stroke:rgba(73,57,38,.7);stroke-width:.7;pointer-events:none}
 .atlasLatLine{fill:none;stroke:rgba(236,214,174,.2);stroke-width:1;stroke-dasharray:8 8;pointer-events:none}
@@ -183,3 +183,8 @@
   .tatryBaseMap{inset:6.7% 3.1% 10.4%}
   .tatryBaseMapImage{object-position:53% 33%}
 }
+
+.atlasCountryMarker.isSubtleCountry .atlasCountryChip{opacity:.66;border-color:rgba(232,213,182,.16);background:linear-gradient(165deg,rgba(13,11,10,.7),rgba(27,22,18,.54));box-shadow:0 4px 8px rgba(0,0,0,.16)}
+.atlasCountryMarker.isContextCountry .atlasCountryChip{opacity:.82;border-color:rgba(239,220,188,.22)}
+.atlasCountryMarker.isPriorityCountry .atlasCountryChip{opacity:.92;border-color:rgba(245,224,186,.38);background:linear-gradient(165deg,rgba(24,19,14,.86),rgba(35,28,22,.72))}
+.atlasCountryMarker.isPriorityCountry .atlasCountryDot{opacity:.96;filter:drop-shadow(0 0 9px rgba(244,220,178,.5))}

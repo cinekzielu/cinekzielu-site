@@ -106,7 +106,7 @@ const parseEuropeOverlayShapes = (svgRaw) => {
 
     if (doc.querySelector('parsererror')) {
       if (import.meta.env.DEV) console.warn('[europe overlay] SVG parsererror detected, skipping overlay')
-      return { viewBox: '0 0 560 360', shapes: [] }
+      return { viewBox: '0 0 560 360', shapes: [], countryOverlayShapes: [], specialRegionOverlayShapes: [] }
     }
 
     const viewBox = svgRoot.getAttribute('viewBox') || '0 0 560 360'
@@ -151,14 +151,25 @@ const parseEuropeOverlayShapes = (svgRaw) => {
       .map(([id, paths]) => ({ id, paths: [...new Set(paths)] }))
       .filter((shape) => shape.paths.length > 0)
 
+    const specialRegionOverlayIds = new Set(['tatry-region', 'tatry'])
+    const countryOverlayShapes = []
+    const specialRegionOverlayShapes = []
+    shapes.forEach((shape) => {
+      if (specialRegionOverlayIds.has(shape.id)) {
+        specialRegionOverlayShapes.push(shape)
+      } else {
+        countryOverlayShapes.push(shape)
+      }
+    })
+
     if (import.meta.env.DEV && shapes.length === 0) {
       console.warn('[europe overlay] no supported path overlays detected')
     }
 
-    return { viewBox, shapes }
+    return { viewBox, shapes, countryOverlayShapes, specialRegionOverlayShapes }
   } catch (error) {
     if (import.meta.env.DEV) console.warn('[europe overlay] parse failed', error)
-    return { viewBox: '0 0 560 360', shapes: [] }
+    return { viewBox: '0 0 560 360', shapes: [], countryOverlayShapes: [], specialRegionOverlayShapes: [] }
   }
 }
 const continentMeta = [
@@ -435,6 +446,11 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
   const activeEuropeNode = europeNodeMap.get(hoveredEuropeNodeId || selectedEuropeNodeId || europeDefaultNodeId) || europeNodeMap.get(europeDefaultNodeId)
   const europePanel = activeId === 'europe' ? activeEuropeNode : null
 
+  const subtleCountryIds = new Set(['norway', 'germany', 'france', 'spain', 'italy', 'greece', 'austria', 'slovenia', 'liechtenstein'])
+  const mediumCountryIds = new Set(['poland', 'slovakia'])
+  const priorityCountryIds = new Set(['switzerland', 'romania'])
+
+
   const tags = isWorldView
     ? ['Europa aktywna', 'kolejne regiony w planach', 'galerie wkrótce']
     : [activeNode.visited ? 'odwiedzone' : 'w planach', activeFilm ? 'film' : null, activeNode.gallery?.length ? 'galeria' : 'galeria wkrótce'].filter(Boolean)
@@ -534,9 +550,9 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
               {/* ETAP 13.8.2: Optional premium Europe base asset fallback. */}
               {europeAtlasImageLoaded && <image href={europeAtlasImageSrc} x="22" y="20" width="516" height="318" preserveAspectRatio="xMidYMid slice" opacity="0.62" onError={() => setEuropeAtlasImageLoaded(false)} />}
               <rect x="22" y="20" width="516" height="318" rx="20" className="atlasEuropeFrame" />
-              {europeOverlayData?.shapes?.length > 0 && (
+              {(europeOverlayData?.countryOverlayShapes?.length > 0 || europeOverlayData?.specialRegionOverlayShapes?.length > 0) && (
                 <svg x="22" y="20" width="516" height="318" viewBox={europeOverlayData.viewBox} preserveAspectRatio="xMidYMid slice" className="europeCountryOverlaySvg">
-                  {europeOverlayData.shapes.map((shape) => {
+                  {[...(europeOverlayData.countryOverlayShapes || []), ...(europeOverlayData.specialRegionOverlayShapes || [])].map((shape) => {
                     const node = europeNodeMap.get(shape.id) || [...europeNodeMap.values()].find((atlasNode) => atlasNode.svgId === shape.id)
                     if (!node) return null
                     const isHovered = hoveredEuropeNodeId === node.id
@@ -545,7 +561,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                     return (
                       <g
                         key={shape.id}
-                        className={`europeCountryOverlayGroup ${isHovered ? 'isHovered' : ''} ${isSelected ? 'isSelected' : ''}`}
+                        className={`europeCountryOverlayGroup ${isTatryTarget ? 'isSpecialRegion' : ''} ${isHovered ? 'isHovered' : ''} ${isSelected ? 'isSelected' : ''}`}
                         onMouseEnter={() => setHoveredEuropeNodeId(node.id)}
                         onMouseLeave={() => setHoveredEuropeNodeId(null)}
                         onFocus={() => setHoveredEuropeNodeId(node.id)}
@@ -574,7 +590,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                 const labelOffsetX = node.labelOffset?.x ?? 0
                 const labelOffsetY = node.labelOffset?.y ?? 0
                 return (
-                  <g key={node.id} className={`atlasCountryMarker ${isTatryBorderCountry ? 'isTatryBorderCountry' : ''} ${isHovered ? 'isHovered' : ''} ${isSelected ? 'isSelected' : ''}`}>
+                  <g key={node.id} className={`atlasCountryMarker ${isTatryBorderCountry ? 'isTatryBorderCountry' : ''} ${priorityCountryIds.has(node.id) ? 'isPriorityCountry' : ''} ${mediumCountryIds.has(node.id) ? 'isContextCountry' : ''} ${subtleCountryIds.has(node.id) ? 'isSubtleCountry' : ''} ${isHovered ? 'isHovered' : ''} ${isSelected ? 'isSelected' : ''}`}>
                     <circle cx={node.position.x - 9} cy={node.position.y - 2} r="3.2" className={`atlasCountryDot ${node.status === 'visited' || node.status === 'active' ? 'isVisited' : 'isMuted'}`} />
                     <foreignObject x={node.position.x + labelOffsetX} y={node.position.y - 14 + labelOffsetY} width={node.position.chipWidth || 104} height="26">
                       <button type="button" className={`atlasCountryChip ${isHovered ? 'isHovered' : ''} ${isSelected ? 'isSelected' : ''}`} onMouseEnter={() => setHoveredEuropeNodeId(node.id)} onMouseLeave={() => setHoveredEuropeNodeId(null)} onFocus={() => setHoveredEuropeNodeId(node.id)} onBlur={() => setHoveredEuropeNodeId(null)} onClick={() => { setSelectedEuropeNodeId(node.id); if (node.routeTarget === 'tatry' && tatryRegion) setAtlasPath((prev) => [...prev, tatryRegion.id]) }}>
