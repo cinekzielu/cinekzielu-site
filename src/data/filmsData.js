@@ -14,6 +14,7 @@ export const filmsData = [
     relatedExpeditionId: 'lomnica',
     tags: ['Tatry', 'summit', 'cinematic'],
     shortDescription: 'Podejście na Łomnicę i pełna historia drogi od startu po zejście.',
+    featured: true,
   },
   {
     id: 'film-durny-szczyt',
@@ -56,6 +57,7 @@ export const filmsData = [
     relatedExpeditionId: 'koscielec-winter',
     tags: ['winter', 'Tatry', 'mountain'],
     shortDescription: 'Zimowe podejście i klimat wysokogórskiej ekspozycji.',
+    featured: true,
   },
   {
     id: 'film-morocco-toubkal',
@@ -70,6 +72,7 @@ export const filmsData = [
     relatedExpeditionId: 'morocco-toubkal',
     tags: ['travel', 'Atlas'],
     shortDescription: 'Trekking i podróż w zupełnie innym świetle niż Tatry.',
+    featured: true,
   },
   {
     id: 'film-switzerland-cinematic',

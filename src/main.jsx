@@ -18,7 +18,11 @@ const formatFilmCategory = (category = '') => category.replace(/[-_]/g, ' ').toU
 
 const formatFilmStatus = (status = '') => status.replace(/[-_]/g, ' ').toUpperCase()
 
-const featuredFilms = filmsData.map((film) => ({
+const featuredFilms = filmsData
+  .filter((film) => film.homepageFeatured || film.featured)
+  .slice(0, 3)
+
+const homepageFilms = (featuredFilms.length ? featuredFilms : filmsData.slice(0, 3)).map((film) => ({
   ...film,
   typeLabel: formatFilmCategory(film.category),
   statusLabel: formatFilmStatus(String(film.status || '')),
@@ -463,7 +467,7 @@ function App() {
             text="Tatry, Maroko i zimowy Kościelec — trzy różne kierunki, ale ten sam rdzeń: droga, miejsce i historia, którą chciałem zapisać."
           />
           <div className="filmGrid">
-            {featuredFilms.map((film) => (
+            {homepageFilms.map((film) => (
               <article className="filmCard" key={film.id}>
                 <div className="filmImageWrap">
                   {film.thumbnail ? (
@@ -514,6 +518,9 @@ function App() {
               </article>
             ))}
           </div>
+          <a className="smallButton filmsArchiveCta" href="#films" aria-label="Zobacz wszystkie filmy (wkrótce)">
+            Zobacz wszystkie filmy
+          </a>
         </div>
       </section>
 
