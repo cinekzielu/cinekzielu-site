@@ -160,7 +160,6 @@ const parseEuropeOverlayShapes = (svgRaw) => {
     })
 
     doc.querySelectorAll('path').forEach((pathNode) => {
-      if (pathNode.closest('g[id]')) return
       const id = getNodeOverlayId(pathNode)
       const d = pathNode.getAttribute('d')
       if (!id || !d) return
