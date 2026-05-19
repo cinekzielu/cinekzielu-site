@@ -285,7 +285,7 @@ img {
 }
 
 .section {
-  padding: 82px 0;
+  padding: 76px 0;
   position: relative;
 }
 
@@ -344,11 +344,12 @@ img {
 }
 
 .sectionHeader {
-  margin-bottom: 40px;
+  margin-bottom: 36px;
   display: grid;
-  grid-template-columns: 1fr .72fr;
-  gap: 34px;
-  align-items: end;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  max-width: 72ch;
 }
 
 .sectionHeader h2,
@@ -368,6 +369,15 @@ img {
   margin: 0;
   color: var(--muted);
   line-height: 1.78;
+  max-width: 62ch;
+}
+
+#films.section,
+#featured-expeditions.section,
+#expeditions.section,
+#gallery-preview.section {
+  padding-top: 74px;
+  padding-bottom: 74px;
 }
 
 .filmGrid,
@@ -1822,11 +1832,11 @@ img {
   }
 
   .section {
-    padding: 82px 0;
+    padding: 74px 0;
   }
 
   .sectionHeader {
-    margin-bottom: 34px;
+    margin-bottom: 30px;
     gap: 18px;
   }
 
@@ -1978,7 +1988,7 @@ img {
   }
 
   .section {
-    padding: 72px 0;
+    padding: 64px 0;
   }
 
   .hero {

@@ -668,7 +668,7 @@ function App() {
       <section id="expeditions" className="section sectionDark reveal">
         <div className="container">
           <SectionHeader
-            label="Wyprawy"
+            label="WYPRAWY"
             title="Historie z wypraw"
             text="Każda wyprawa ma własną historię: krótki kontekst trasy, najważniejsze dane i kadry z drogi."
           />
