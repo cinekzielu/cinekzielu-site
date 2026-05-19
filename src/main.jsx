@@ -871,6 +871,27 @@ function App() {
         </div>
       </section>
 
+      <section id="author-footer" className="section authorFooterSection reveal">
+        <div className="container authorFooterWrap">
+          <div className="authorFooterLead">
+            <p className="cardType">AUTOR</p>
+            <h2>Cinek Zielu</h2>
+            <p>
+              Nagrywam wyprawy, wejścia w góry i podróże — czasem bardziej filmowo, czasem bardziej dokumentalnie, ale zawsze po swojemu.
+            </p>
+          </div>
+          <div className="authorFooterSocials" aria-label="Kanały i kontakt">
+            <a href={socials.youtube} target="_blank" rel="noreferrer">YouTube</a>
+            <a href={socials.instagram} target="_blank" rel="noreferrer">Instagram</a>
+            <a href={socials.tiktok} target="_blank" rel="noreferrer">TikTok</a>
+            <a href="mailto:kontakt@cinekzielu.com">Kontakt</a>
+          </div>
+        </div>
+        <div className="container authorFooterSignature">
+          <p>© {new Date().getFullYear()} Cinek Zielu — góry, podróże i filmy z drogi.</p>
+        </div>
+      </section>
+
       <section id="gallery" className="section reveal">
         <div className="container">
           <SectionHeader
