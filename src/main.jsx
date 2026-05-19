@@ -147,7 +147,7 @@ const places = [
   },
   {
     title: 'Szwajcaria',
-    desc: 'Alpejskie krajobrazy, cinematic short films, spokojniejsze tempo i najmocniejsze wizualnie zdjęcia oparte na przestrzeni, świetle i skali gór.',
+    desc: 'Alpejskie krajobrazy, krótkie filmy cinematic, spokojniejsze tempo i najmocniejsze wizualnie zdjęcia oparte na przestrzeni, świetle i skali gór.',
     meta: 'Alpy • cinematic • krajobraz',
     className: 'place-swiss',
   },
@@ -1073,7 +1073,7 @@ function App() {
               </ul>
             </div>
             <p className="aboutCta">
-              Jeśli chcesz zobaczyć więcej albo pogadać o współpracy, przejdź do kontaktu.
+              Jeśli chcesz zobaczyć więcej albo porozmawiać o współpracy, przejdź do kontaktu.
             </p>
           </div>
           <aside className="aboutVisualCard" aria-label="Portret twórcy">

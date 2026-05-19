@@ -35,6 +35,7 @@ body {
     radial-gradient(circle at top, rgba(160, 130, 90, 0.08), transparent 32%),
     var(--bg);
   color: var(--text);
+  overflow-x: hidden;
 }
 
 a {
