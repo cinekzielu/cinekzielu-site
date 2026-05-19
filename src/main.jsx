@@ -5,6 +5,7 @@ import './styles.css'
 import { contentData } from './data/contentData'
 import { filmsData } from './data/filmsData'
 import { expeditionsData } from './data/expeditionsData'
+import { galleryData } from './data/galleryData'
 import { MapAtlas } from './components/MapAtlas'
 
 const socials = {
@@ -33,6 +34,8 @@ const homepageFilms = (featuredFilms.length ? featuredFilms : filmsData.slice(0,
 
 const filmFallbackLabel = 'CINEMATIC STORY'
 const expeditionFallbackLabel = 'Materiał w przygotowaniu'
+const galleryFallbackLabel = 'Kadry w przygotowaniu'
+const galleryPreviewIds = ['tatry', 'morocco', 'switzerland']
 
 const preferredStoryIds = ['gerlach-winter', 'lomnica', 'durny-szczyt', 'koscielec-winter']
 
@@ -47,6 +50,45 @@ const homepageExpeditionStories = expeditionsData
     cardTags: expedition.tags || [],
     ctaLabel: expedition.youtubeUrl ? 'Zobacz historię' : 'Wkrótce więcej',
   }))
+
+const formatContentStatus = (status = '') => {
+  const normalized = String(status).trim().toLowerCase()
+  if (normalized === 'planned') return 'w przygotowaniu'
+  if (normalized === 'in-production') return 'w realizacji'
+  if (normalized === 'published') return 'opublikowane'
+  if (normalized === 'archived') return 'archiwalne'
+  return normalized ? formatFilmStatus(normalized) : 'w przygotowaniu'
+}
+
+const homepageGalleryCards = galleryPreviewIds
+  .map((id) => galleryData.find((gallery) => gallery.id === id))
+  .filter(Boolean)
+  .slice(0, 3)
+  .map((gallery) => ({
+    ...gallery,
+    statusLabel: formatContentStatus(gallery.status),
+    description: gallery.subtitle || 'Galeria kadrów z drogi.',
+    ctaLabel: gallery.coverImage ? 'Zobacz kadry' : 'Galeria wkrótce',
+  }))
+
+function GalleryPreviewCover({ gallery }) {
+  const [isBroken, setIsBroken] = React.useState(false)
+  const showFallback = !gallery.coverImage || isBroken
+
+  return (
+    <div className={`galleryPreviewVisual ${showFallback ? 'isFallback' : ''}`}>
+      {!showFallback ? (
+        <img src={gallery.coverImage} alt={`Kadr galerii ${gallery.title}`} loading="lazy" onError={() => setIsBroken(true)} />
+      ) : null}
+      <div className="galleryPreviewOverlay" />
+      {showFallback ? (
+        <div className="galleryPreviewFallback" aria-hidden="true">
+          <span>{galleryFallbackLabel}</span>
+        </div>
+      ) : null}
+    </div>
+  )
+}
 
 function ExpeditionStoryCover({ expedition }) {
   const [isBroken, setIsBroken] = React.useState(false)
@@ -793,6 +835,39 @@ function App() {
               ))}
             </div>
           )}
+        </div>
+      </section>
+
+      <section id="gallery-preview" className="section sectionDarker reveal">
+        <div className="container">
+          <SectionHeader
+            label="GALERIE"
+            title="Kadry z drogi"
+            text="Nie wszystko trafia do filmu. Część historii zostaje w pojedynczych kadrach — góry, światło, droga i miejsca po drodze."
+          />
+          <div className="galleryPreviewGrid">
+            {homepageGalleryCards.map((gallery) => (
+              <article className="galleryPreviewCard" key={gallery.id}>
+                <GalleryPreviewCover gallery={gallery} />
+                <div className="galleryPreviewBody">
+                  <div className="galleryPreviewMetaTop">
+                    <div className="cardType">{gallery.statusLabel}</div>
+                    <span className="filmHelperLabel">{gallery.location}</span>
+                  </div>
+                  <h3>{gallery.title}</h3>
+                  <p>{gallery.description}</p>
+                  {gallery.tags?.length ? (
+                    <div className="filmTags galleryPreviewTags">
+                      {gallery.tags.slice(0, 3).map((tag) => (
+                        <span key={`${gallery.id}-${tag}`}>{tag}</span>
+                      ))}
+                    </div>
+                  ) : null}
+                  <span className={`smallButton galleryPreviewCta ${gallery.coverImage ? '' : 'isDisabled'}`}>{gallery.ctaLabel}</span>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
