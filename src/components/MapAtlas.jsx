@@ -96,6 +96,26 @@ const parseWorldOverlayShapes = (svgRaw) => {
   }
 }
 
+const normalizeMapNodeId = (value) => {
+  if (!value) return null
+  return value
+    .toString()
+    .trim()
+    .toLowerCase()
+    .replace(/[_\s]+/g, '-')
+}
+
+const europeNodeIdAliases = new Map([
+  ['tatry-region', 'tatry'],
+  ['tatry', 'tatry'],
+])
+
+const resolveEuropeNodeId = (value) => {
+  const normalized = normalizeMapNodeId(value)
+  if (!normalized) return null
+  return europeNodeIdAliases.get(normalized) || normalized
+}
+
 const parseEuropeOverlayShapes = (svgRaw) => {
   if (!svgRaw) return null
   try {
@@ -118,19 +138,12 @@ const parseEuropeOverlayShapes = (svgRaw) => {
         || node.getAttribute('data-id')
         || node.getAttribute('data-name')
 
-      if (!rawId) return null
-      const id = rawId.trim().toLowerCase()
-      return id || null
+      return normalizeMapNodeId(rawId)
     }
 
     const nodes = new Map()
-    const normalizeOverlayId = (id) => {
-      if (!id) return null
-      if (id === 'tatry-region') return 'tatry'
-      return id
-    }
     const addShape = (id, paths) => {
-      const normalizedId = normalizeOverlayId(id)
+      const normalizedId = resolveEuropeNodeId(id)
       const cleanPaths = (paths || []).map((d) => d?.trim()).filter(Boolean)
       if (!normalizedId || cleanPaths.length === 0) return
       if (!nodes.has(normalizedId)) nodes.set(normalizedId, [])
@@ -147,6 +160,7 @@ const parseEuropeOverlayShapes = (svgRaw) => {
     })
 
     doc.querySelectorAll('path').forEach((pathNode) => {
+      if (pathNode.closest('g[id]')) return
       const id = getNodeOverlayId(pathNode)
       const d = pathNode.getAttribute('d')
       if (!id || !d) return
@@ -157,7 +171,7 @@ const parseEuropeOverlayShapes = (svgRaw) => {
       .map(([id, paths]) => ({ id, paths: [...new Set(paths)] }))
       .filter((shape) => shape.paths.length > 0)
 
-    const specialRegionOverlayIds = new Set(['tatry-region', 'tatry'])
+    const specialRegionOverlayIds = new Set(['tatry'])
     const countryOverlayShapes = []
     const specialRegionOverlayShapes = []
     shapes.forEach((shape) => {
