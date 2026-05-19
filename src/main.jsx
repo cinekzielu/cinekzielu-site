@@ -44,6 +44,10 @@ const homepageFeaturedExpeditions = expeditionsData
     atlasCode: expedition.atlasCode || `ATLS-${expedition.id.slice(0, 3).toUpperCase()}` ,
     elevationLabel: expedition.elevationLabel || expedition.routeInfo?.elevationGain || '',
     routeAccent: expedition.routeAccent || 'rgba(221, 169, 92, 0.72)',
+    featuredDirectionTitle: expedition.featuredDirectionTitle || expedition.displayTitle || expedition.directionTitle || expedition.title,
+    featuredDirectionDescription: expedition.featuredDirectionDescription || expedition.shortDescription,
+    featuredDirectionLocation: expedition.featuredDirectionLocation || expedition.country,
+    featuredDirectionTags: expedition.featuredDirectionTags || expedition.tags,
   }))
 
 
@@ -560,13 +564,13 @@ function App() {
                   <div className="cardType">{expedition.statusLabel}</div>
                   <span className="filmHelperLabel">{expedition.timelineLabel}</span>
                 </div>
-                <h3>{expedition.title}</h3>
-                <div className="featuredExpeditionLocation"><MapPin size={13} /> {expedition.location} • {expedition.country}</div>
-                <p>{expedition.shortDescription}</p>
+                <h3>{expedition.featuredDirectionTitle}</h3>
+                <div className="featuredExpeditionLocation"><MapPin size={13} /> {expedition.featuredDirectionLocation}</div>
+                <p>{expedition.featuredDirectionDescription}</p>
                 <div className="featuredExpeditionExtraMeta">{expedition.elevationLabel}</div>
-                {expedition.tags?.length ? (
+                {expedition.featuredDirectionTags?.length ? (
                   <div className="filmTags featuredExpeditionTags">
-                    {expedition.tags.slice(0, 3).map((tag) => (
+                    {expedition.featuredDirectionTags.slice(0, 3).map((tag) => (
                       <span key={`${expedition.id}-${tag}`}>{tag}</span>
                     ))}
                   </div>
