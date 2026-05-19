@@ -2373,6 +2373,106 @@ img {
   gap: 20px;
 }
 
+.expeditionStoriesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.expeditionStoryCard {
+  background: linear-gradient(164deg, rgba(38, 32, 28, 0.9), rgba(16, 13, 12, 0.95));
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transition: transform .3s var(--easing-cinematic), border-color .3s var(--easing-cinematic), box-shadow .3s var(--easing-cinematic);
+}
+
+.expeditionStoryCard:hover {
+  transform: translateY(var(--card-lift-y));
+  border-color: var(--line-strong);
+  box-shadow: var(--glow-soft);
+}
+
+.expeditionStoryMedia {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  position: relative;
+  background: #161311;
+}
+
+.expeditionStoryMedia img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .7s var(--easing-cinematic);
+}
+
+.expeditionStoryCard:hover .expeditionStoryMedia img {
+  transform: scale(1.045);
+}
+
+.expeditionStoryMediaFallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  text-align: center;
+  color: #d9cebf;
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  background:
+    linear-gradient(128deg, rgba(196, 148, 90, 0.16), rgba(24, 20, 18, 0.94)),
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.04) 1px, transparent 1px, transparent 12px);
+}
+
+.expeditionStoryBody {
+  padding: 18px 18px 20px;
+}
+
+.expeditionStoryMetaTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+
+.expeditionStoryBody h3 {
+  margin: 10px 0 8px;
+  font-size: clamp(24px, 2.4vw, 30px);
+}
+
+.expeditionStoryActions {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.expeditionStoryCta {
+  pointer-events: none;
+  padding-inline: 14px;
+}
+
+.expeditionStoryCta.isDisabled {
+  opacity: 0.74;
+}
+
+.expeditionStoryYouTube {
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: .05em;
+  transition: color .2s ease;
+}
+
+.expeditionStoryCard:hover .expeditionStoryYouTube {
+  color: #efe4d6;
+}
+
 .expeditionCard {
   background: var(--card);
   border: 1px solid var(--line);
@@ -2675,6 +2775,10 @@ img {
     grid-template-columns: 1fr 1fr;
   }
 
+  .expeditionStoriesGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
   .expeditionStatsBar {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2783,6 +2887,10 @@ img {
 
 @media (max-width: 720px) {
   .expeditionGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .expeditionStoriesGrid {
     grid-template-columns: 1fr;
   }
 
