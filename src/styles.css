@@ -2379,6 +2379,87 @@ img {
   gap: 20px;
 }
 
+.galleryPreviewGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.galleryPreviewCard {
+  background: linear-gradient(164deg, rgba(38, 32, 28, 0.9), rgba(16, 13, 12, 0.95));
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transition: transform .3s var(--easing-cinematic), border-color .3s var(--easing-cinematic), box-shadow .3s var(--easing-cinematic);
+}
+
+.galleryPreviewCard:hover {
+  transform: translateY(var(--card-lift-y));
+  border-color: var(--line-strong);
+  box-shadow: var(--glow-soft);
+}
+
+.galleryPreviewVisual {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(232, 216, 184, 0.2);
+  background: linear-gradient(145deg, rgba(42, 36, 30, 0.9), rgba(14, 12, 11, 0.96));
+}
+
+.galleryPreviewVisual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.galleryPreviewOverlay {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(-35deg, rgba(225, 190, 124, 0.08) 0 1px, transparent 1px 14px),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.64));
+}
+
+.galleryPreviewFallback {
+  position: absolute;
+  inset: auto 16px 16px 16px;
+  border: 1px solid rgba(232, 216, 184, 0.26);
+  background: rgba(8, 8, 8, 0.42);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: #e8d8b8;
+}
+
+.galleryPreviewBody {
+  padding: 18px 18px 20px;
+}
+
+.galleryPreviewMetaTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+
+.galleryPreviewBody h3 {
+  margin: 10px 0 8px;
+  font-size: clamp(24px, 2.4vw, 30px);
+}
+
+.galleryPreviewTags {
+  margin-top: 14px;
+}
+
+.galleryPreviewCta {
+  margin-top: 16px;
+  pointer-events: none;
+}
+
 .expeditionStoryCard {
   background: linear-gradient(164deg, rgba(38, 32, 28, 0.9), rgba(16, 13, 12, 0.95));
   border: 1px solid var(--line);
@@ -2779,6 +2860,10 @@ img {
     grid-template-columns: 1fr 1fr;
   }
 
+  .galleryPreviewGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
   .expeditionStatsBar {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2891,6 +2976,10 @@ img {
   }
 
   .expeditionStoriesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .galleryPreviewGrid {
     grid-template-columns: 1fr;
   }
 
