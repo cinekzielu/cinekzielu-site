@@ -18,6 +18,7 @@ export const expeditionsData = [
     youtubeUrl: '',
     galleryId: 'tatry',
     coverImage: img('gerlach-winter.jpg'),
+    homepageStory: true,
     routeInfo: {
       start: 'Tatrzańska Polanka',
       endpoint: 'Gerlach',
@@ -41,6 +42,7 @@ export const expeditionsData = [
     youtubeUrl: 'https://www.youtube.com/watch?v=zb8zqv8gpZk&t=5s',
     galleryId: 'tatry',
     coverImage: img('lomnica-thumb.png'),
+    homepageStory: true,
   },
   {
     id: 'durny-szczyt',
@@ -59,6 +61,7 @@ export const expeditionsData = [
     youtubeUrl: '',
     galleryId: 'tatry',
     coverImage: img('durny-szczyt.jpg'),
+    homepageStory: true,
   },
   {
     id: 'koscielec-winter',

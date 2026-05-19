@@ -32,6 +32,45 @@ const homepageFilms = (featuredFilms.length ? featuredFilms : filmsData.slice(0,
 }))
 
 const filmFallbackLabel = 'CINEMATIC STORY'
+const expeditionFallbackLabel = 'Materiał w przygotowaniu'
+
+const preferredStoryIds = ['gerlach-winter', 'lomnica', 'durny-szczyt', 'koscielec-winter']
+
+const homepageExpeditionStories = expeditionsData
+  .filter((expedition) => expedition.homepageStory || expedition.storyFeatured || preferredStoryIds.includes(expedition.id))
+  .slice(0, 3)
+  .map((expedition) => ({
+    ...expedition,
+    statusLabel: formatFilmStatus(String(expedition.status || '')),
+    timelineLabel: expedition.year || formatFilmStatus(String(expedition.season || '')),
+    cardLocation: expedition.location || expedition.region || expedition.country,
+    cardTags: expedition.tags || [],
+    ctaLabel: expedition.youtubeUrl ? 'Zobacz historię' : 'Wkrótce więcej',
+  }))
+
+function ExpeditionStoryCover({ expedition }) {
+  const [isBroken, setIsBroken] = React.useState(false)
+  const cover = expedition.coverImage || expedition.heroImage || expedition.thumbnail
+  const showFallback = !cover || isBroken
+
+  return (
+    <div className={`expeditionStoryMedia ${showFallback ? 'isFallback' : ''}`}>
+      {!showFallback ? (
+        <img
+          src={cover}
+          alt={expedition.title}
+          loading="lazy"
+          onError={() => setIsBroken(true)}
+        />
+      ) : null}
+      {showFallback ? (
+        <div className="expeditionStoryMediaFallback" aria-hidden="true">
+          <span>{expeditionFallbackLabel}</span>
+        </div>
+      ) : null}
+    </div>
+  )
+}
 
 const homepageFeaturedExpeditions = expeditionsData
   .filter((expedition) => expedition.homepageFeatured || expedition.featured)
@@ -720,25 +759,35 @@ function App() {
               </article>
             )
           ) : (
-            <div className="expeditionGrid">
-              {contentData.expeditions.map((expedition) => (
-                <article className="expeditionCard" key={expedition.slug}>
-                  <div className="expeditionImageWrap">
-                    <img src={expedition.heroImage} alt={expedition.title} />
-                  </div>
-                  <div className="expeditionBody">
-                    <div className="cardType">{expedition.type}</div>
-                    <h3>{expedition.title}</h3>
-                    <p className="expeditionLocation">{expedition.location}</p>
-                    <p>{expedition.shortDescription}</p>
-                    <div className="expeditionTags">
-                      {expedition.tags.map((tag) => (
-                        <span key={tag}>{tag}</span>
-                      ))}
+            <div className="expeditionStoriesGrid">
+              {homepageExpeditionStories.map((expedition) => (
+                <article className="expeditionStoryCard" key={expedition.id}>
+                  <ExpeditionStoryCover expedition={expedition} />
+                  <div className="expeditionStoryBody">
+                    <div className="expeditionStoryMetaTop">
+                      <div className="cardType">{expedition.statusLabel}</div>
+                      <span className="filmHelperLabel">{expedition.timelineLabel}</span>
                     </div>
-                    <button className="smallButton" type="button" onClick={() => openExpedition(expedition.slug)}>
-                      Wejdź w historię
-                    </button>
+                    <h3>{expedition.title}</h3>
+                    <p className="expeditionLocation">{expedition.cardLocation}</p>
+                    <p>{expedition.shortDescription}</p>
+                    {expedition.cardTags.length ? (
+                      <div className="expeditionTags">
+                        {expedition.cardTags.slice(0, 3).map((tag) => (
+                          <span key={`${expedition.id}-${tag}`}>{tag}</span>
+                        ))}
+                      </div>
+                    ) : null}
+                    <div className="expeditionStoryActions">
+                      <span className={`smallButton expeditionStoryCta ${expedition.youtubeUrl ? '' : 'isDisabled'}`}>
+                        {expedition.ctaLabel}
+                      </span>
+                      {expedition.youtubeUrl ? (
+                        <a className="expeditionStoryYouTube" href={expedition.youtubeUrl} target="_blank" rel="noreferrer">
+                          Film na YouTube
+                        </a>
+                      ) : null}
+                    </div>
                   </div>
                 </article>
               ))}
