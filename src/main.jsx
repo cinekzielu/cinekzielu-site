@@ -1,6 +1,6 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { Camera, ChevronLeft, ChevronRight, MapPin, Mountain, Menu, Play, X } from 'lucide-react'
+import { MapPin, Mountain, Menu, Play, X } from 'lucide-react'
 import './styles.css'
 import { contentData } from './data/contentData'
 import { filmsData } from './data/filmsData'
@@ -34,7 +34,7 @@ const homepageFilms = (featuredFilms.length ? featuredFilms : filmsData.slice(0,
 
 const filmFallbackLabel = 'CINEMATIC STORY'
 const expeditionFallbackLabel = 'Materiał w przygotowaniu'
-const galleryFallbackLabel = 'Kadry w przygotowaniu'
+const galleryFallbackLabel = 'Galeria w przygotowaniu'
 const galleryPreviewIds = ['tatry', 'morocco', 'switzerland']
 
 const preferredStoryIds = ['gerlach-winter', 'lomnica', 'durny-szczyt', 'koscielec-winter']
@@ -68,7 +68,7 @@ const homepageGalleryCards = galleryPreviewIds
     ...gallery,
     statusLabel: formatContentStatus(gallery.status),
     description: gallery.subtitle || 'Galeria kadrów z drogi.',
-    ctaLabel: gallery.coverImage ? 'Zobacz kadry' : 'Galeria wkrótce',
+    ctaLabel: 'Galerie dla preview',
   }))
 
 function GalleryPreviewCover({ gallery }) {
@@ -132,104 +132,13 @@ const homepageFeaturedExpeditions = expeditionsData
   }))
 
 
-const places = [
-  {
-    title: 'Tatry',
-    desc: 'Wejścia, granie, zimowe warunki i bardziej wymagające trasy. Filmy, które pokazują góry prawdziwie — z wysiłkiem, emocją i klimatem drogi.',
-    meta: 'Góry • szczyty • droga',
-    className: 'place-tatry',
-  },
-  {
-    title: 'Maroko',
-    desc: 'Podróż, trekking, inne światło i pierwszy mocniejszy krok poza europejski klimat. Materiały zbudowane wokół przygody, kontrastu i atmosfery miejsca.',
-    meta: 'Podróż • trekking • kontrast',
-    className: 'place-maroko',
-  },
-  {
-    title: 'Szwajcaria',
-    desc: 'Alpejskie krajobrazy, krótkie filmy cinematic, spokojniejsze tempo i najmocniejsze wizualnie zdjęcia oparte na przestrzeni, świetle i skali gór.',
-    meta: 'Alpy • cinematic • krajobraz',
-    className: 'place-swiss',
-  },
-]
-
-const formats = [
-  {
-    title: 'Vlogi',
-    desc: 'Dłuższe historie z wypraw: przygotowanie, droga, wejście, komentarz, zmęczenie i klimat całego dnia.',
-  },
-  {
-    title: 'Short films',
-    desc: 'Krótsze, bardziej dopracowane formy — obraz, muzyka, rytm, nastrój i spójna wizja miejsca.',
-  },
-  {
-    title: 'Reels',
-    desc: 'Dynamiczne pionowe materiały pod Instagram i TikTok: mocne momenty, szybki rytm i kulisy tworzenia.',
-  },
-]
-
-
-const creativeGear = [
-  {
-    title: 'Aparat',
-    label: 'Obraz i detal',
-    desc: 'To nim łapię światło, fakturę skały i drobne momenty po drodze. Ma dawać obraz, który czuć, a nie tylko oglądać.',
-  },
-  {
-    title: 'Kamera sportowa',
-    label: 'Ruch i tempo',
-    desc: 'Wchodzi tam, gdzie liczy się dynamika: podejścia, ekspozycja, szybkie zmiany pogody. Dzięki niej film oddaje rytm wyprawy od środka.',
-  },
-  {
-    title: 'Obiektywy',
-    label: 'Skala i perspektywa',
-    desc: 'Szeroko pokazuję przestrzeń, ciaśniej buduję emocję człowieka w terenie. To one decydują, czy widz patrzy na krajobraz, czy czuje historię.',
-  },
-  {
-    title: 'Dźwięk',
-    label: 'Atmosfera',
-    desc: 'Wiatr, kroki, oddech i cisza robią połowę klimatu. Dźwięk prowadzi widza przez materiał równie mocno jak obraz.',
-  },
-  {
-    title: 'Montaż',
-    label: 'Finalny klimat',
-    desc: 'Tu z surowych ujęć powstaje opowieść: tempo, napięcie i oddech filmu. Montaż nie udaje przygody — porządkuje to, co naprawdę wydarzyło się w trasie.',
-  },
-  {
-    title: 'Podejście do tworzenia',
-    label: 'Autentyczność',
-    desc: 'Nie gonię za checklistą kadrów. Najpierw przeżywam drogę, później wybieram ujęcia, które najuczciwiej oddają miejsce i emocje.',
-  },
-]
-
-const workflowSteps = [
-  {
-    title: 'Wyprawa i nagranie',
-    desc: 'Plan to punkt startowy, ale najważniejsze są warunki i momenty, które pojawiają się po drodze.',
-  },
-  {
-    title: 'Selekcja materiału',
-    desc: 'Wybieram ujęcia, które niosą historię: światło, ruch, emocję i naturalny rytm miejsca.',
-  },
-  {
-    title: 'Montaż i klimat filmu',
-    desc: 'Składam całość tak, by widz czuł drogę od pierwszego kroku do ostatniego kadru.',
-  },
-]
-
-const blogPosts = [
-  { title: 'Jak wygląda tworzenie filmu górskiego od środka', category: 'Behind the scenes' },
-  { title: 'Sprzęt, który zabieram w góry na nagrania', category: 'Sprzęt' },
-  { title: 'Od wejścia na szczyt do gotowego montażu', category: 'Proces' },
-]
-
 const mobileNavLinks = [
   { href: '#map', label: 'Mapa' },
   { href: '#films', label: 'Filmy' },
-  { href: '#expeditions', label: 'Wyprawy' },
+  { href: '#featured-expeditions', label: 'Kierunki' },
+  { href: '#expeditions', label: 'Historie' },
   { href: '#gallery', label: 'Galeria' },
-  { href: '#about', label: 'O mnie' },
-  { href: '#contact', label: 'Kontakt' },
+  { href: '#footer', label: 'Kontakt' },
 ]
 
 const mobileMenuVariant = 'A'
@@ -265,17 +174,6 @@ const parseExpeditionSlugFromPath = (pathname) => {
 
 function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
-  const [activeCollectionSlug, setActiveCollectionSlug] = React.useState(null)
-  const [activePhotoIndex, setActivePhotoIndex] = React.useState(null)
-  const activeCollection = React.useMemo(
-    () => contentData.galleriesBySlug[activeCollectionSlug] ?? null,
-    [activeCollectionSlug]
-  )
-  const activeCollectionPhotos = React.useMemo(
-    () => (activeCollection ? activeCollection.photos.map((photo) => ({ ...photo, group: activeCollection.title })) : []),
-    [activeCollection]
-  )
-  const activePhoto = activePhotoIndex === null ? null : activeCollectionPhotos[activePhotoIndex]
   const [atlasPath, setAtlasPath] = React.useState(['world'])
   const [activeExpeditionSlug, setActiveExpeditionSlug] = React.useState(null)
   const [isExpeditionNotFound, setIsExpeditionNotFound] = React.useState(false)
@@ -311,40 +209,8 @@ function App() {
     if (activeId === 'world') return { id: 'world', name: 'Świat', description: 'Wybierz kontynent, aby wejść głębiej w atlas wypraw.' }
     return atlasLookups.continents[activeId] || atlasLookups.countries[activeId] || atlasLookups.specialRegions[activeId] || atlasLookups.summits[activeId] || atlasLookups.places[activeId]
   }, [activeId, atlasLookups])
-  const touchStartX = React.useRef(0)
-  const touchStartY = React.useRef(0)
 
-
-  const showPreviousPhoto = React.useCallback(() => {
-    setActivePhotoIndex((current) => (current - 1 + activeCollectionPhotos.length) % activeCollectionPhotos.length)
-  }, [activeCollectionPhotos.length])
-
-  const showNextPhoto = React.useCallback(() => {
-    setActivePhotoIndex((current) => (current + 1) % activeCollectionPhotos.length)
-  }, [activeCollectionPhotos.length])
-
-  const handleLightboxTouchStart = (event) => {
-    const touch = event.touches[0]
-    touchStartX.current = touch.clientX
-    touchStartY.current = touch.clientY
-  }
-
-  const handleLightboxTouchEnd = (event) => {
-    const touch = event.changedTouches[0]
-    const deltaX = touch.clientX - touchStartX.current
-    const deltaY = touch.clientY - touchStartY.current
-
-    if (Math.abs(deltaX) < 50 || Math.abs(deltaX) < Math.abs(deltaY) * 1.25) return
-
-    if (deltaX < 0) showNextPhoto()
-    if (deltaX > 0) showPreviousPhoto()
-  }
-
-
-  React.useEffect(() => {
-    setActivePhotoIndex(null)
-  }, [activeCollectionSlug])
-  React.useEffect(() => {
+    React.useEffect(() => {
     const elements = document.querySelectorAll('.reveal')
 
     const observer = new IntersectionObserver(
@@ -368,18 +234,11 @@ function App() {
   }, [])
 
   React.useEffect(() => {
-    if (!isMobileMenuOpen && activePhotoIndex === null) return undefined
+    if (!isMobileMenuOpen) return undefined
 
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
         setIsMobileMenuOpen(false)
-        setActivePhotoIndex(null)
-      }
-      if (activePhotoIndex !== null && event.key === 'ArrowLeft') {
-        showPreviousPhoto()
-      }
-      if (activePhotoIndex !== null && event.key === 'ArrowRight') {
-        showNextPhoto()
       }
     }
 
@@ -390,7 +249,7 @@ function App() {
       document.body.style.overflow = ''
       window.removeEventListener('keydown', handleKeyDown)
     }
-  }, [activePhotoIndex, isMobileMenuOpen, showNextPhoto, showPreviousPhoto])
+  }, [isMobileMenuOpen])
 
   React.useEffect(() => {
     const syncExpeditionFromUrl = () => {
@@ -457,16 +316,6 @@ function App() {
     }
     setActiveExpeditionSlug(slug)
     setIsExpeditionNotFound(false)
-  }
-
-  const openCollectionFromExpedition = () => {
-    if (!activeExpeditionCollection) {
-      window.location.hash = '#gallery'
-      return
-    }
-
-    setActiveCollectionSlug(activeExpeditionCollection.slug)
-    window.location.hash = '#gallery'
   }
 
   const goBackToExpeditions = () => {
@@ -725,30 +574,19 @@ function App() {
               <div className="expeditionPlaceholder reveal">
                 <div className="expeditionGalleryHeader">
                   <p className="storyLabel">Galeria wyprawy</p>
-                  <button className="smallButton" type="button" onClick={openCollectionFromExpedition}>
-                    Otwórz pełną kolekcję
-                  </button>
+                  <span className="smallButton isDisabled">Galeria wkrótce</span>
                 </div>
                 {hasExpeditionGallery ? (
                   <div className="expeditionGalleryGrid">
-                    {expeditionGalleryPhotos.map((photo, index) => (
+                    {expeditionGalleryPhotos.map((photo) => (
                       <figure
                         className={`expeditionPhotoCard ${photo.format === 'portrait' ? 'portrait' : ''}`}
                         key={`${activeExpeditionCollection.slug}-${photo.title}`}
                         role="button"
                         tabIndex={0}
                         aria-label={`Otwórz podgląd zdjęcia: ${photo.title}`}
-                        onClick={() => {
-                          setActiveCollectionSlug(activeExpeditionCollection.slug)
-                          setActivePhotoIndex(index)
-                        }}
-                        onKeyDown={(event) => {
-                          if (event.key === 'Enter' || event.key === ' ') {
-                            event.preventDefault()
-                            setActiveCollectionSlug(activeExpeditionCollection.slug)
-                            setActivePhotoIndex(index)
-                          }
-                        }}
+                        onClick={() => {}}
+                        onKeyDown={() => {}}
                       >
                         <img src={photo.src} alt={photo.title} />
                         <figcaption>{photo.title}</figcaption>
@@ -842,8 +680,8 @@ function App() {
         <div className="container">
           <SectionHeader
             label="GALERIE"
-            title="Kadry z drogi"
-            text="Nie wszystko trafia do filmu. Część historii zostaje w pojedynczych kadrach — góry, światło, droga i miejsca po drodze."
+            title="Galerie z wypraw"
+            text="Zdjęcia z gór i podróży — miejsca, światło i momenty, które warto było zostawić poza filmem."
           />
           <div className="galleryPreviewGrid">
             {homepageGalleryCards.map((gallery) => (
@@ -863,7 +701,7 @@ function App() {
                       ))}
                     </div>
                   ) : null}
-                  <span className={`smallButton galleryPreviewCta ${gallery.coverImage ? '' : 'isDisabled'}`}>{gallery.ctaLabel}</span>
+                  <span className="smallButton galleryPreviewCta isDisabled">{gallery.ctaLabel}</span>
                 </div>
               </article>
             ))}
@@ -871,336 +709,8 @@ function App() {
         </div>
       </section>
 
-      <section id="author-footer" className="section authorFooterSection reveal">
-        <div className="container authorFooterWrap">
-          <div className="authorFooterLead">
-            <p className="cardType">AUTOR</p>
-            <h2>Cinek Zielu</h2>
-            <p>
-              Nagrywam wyprawy, wejścia w góry i podróże — czasem bardziej filmowo, czasem bardziej dokumentalnie, ale zawsze po swojemu.
-            </p>
-          </div>
-          <div className="authorFooterSocials" aria-label="Kanały i kontakt">
-            <a href={socials.youtube} target="_blank" rel="noreferrer">YouTube</a>
-            <a href={socials.instagram} target="_blank" rel="noreferrer">Instagram</a>
-            <a href={socials.tiktok} target="_blank" rel="noreferrer">TikTok</a>
-            <a href="mailto:kontakt@cinekzielu.com">Kontakt</a>
-          </div>
-        </div>
-        <div className="container authorFooterSignature">
-          <p>© {new Date().getFullYear()} Cinek Zielu — góry, podróże i filmy z drogi.</p>
-        </div>
-      </section>
 
-      <section id="gallery" className="section reveal">
-        <div className="container">
-          <SectionHeader
-            label="Galeria"
-            title="Zdjęcia z miejsc, które najmocniej zapamiętałem"
-            text="Jasna strona tych samych wypraw: więcej światła, detali i momentów, które trudno oddać samym filmem."
-          />
-          {!activeCollection && (
-            <div className="collectionGrid">
-              {contentData.galleries.map((collection) => (
-                <article className="collectionCard" key={collection.slug}>
-                  <div className="collectionCoverWrap">
-                    <img src={collection.cover} alt={collection.title} className="collectionCover" />
-                  </div>
-                  <div className="collectionBody">
-                    <div className="collectionTop">
-                      <h3>{collection.title}</h3>
-                      <span>{collection.photos.length} zdjęć</span>
-                    </div>
-                    <p>{collection.description}</p>
-                    <div className="collectionTags">
-                      {collection.tags.map((tag) => (
-                        <span key={tag}>{tag}</span>
-                      ))}
-                    </div>
-                    <button className="smallButton" type="button" onClick={() => setActiveCollectionSlug(collection.slug)}>
-                      Otwórz kolekcję
-                    </button>
-                  </div>
-                </article>
-              ))}
-            </div>
-          )}
-
-          {activeCollection && (
-            <div className="galleryCollectionView">
-              <div className="galleryCollectionTop">
-                <div>
-                  <p className="galleryBreadcrumb">Galeria / {activeCollection.title}</p>
-                  <h3>{activeCollection.title}</h3>
-                </div>
-                <button className="smallButton" type="button" onClick={() => setActiveCollectionSlug(null)}>
-                  Wróć do galerii
-                </button>
-              </div>
-
-              <div className="galleryGrid">
-                {activeCollection.photos.map((photo, index) => (
-                  <figure
-                    className={`photoCard ${photo.format === 'portrait' ? 'portrait' : ''} ${
-                      index === 0 && activeCollection.title === 'Szwajcaria' ? 'featured' : ''
-                    }`}
-                    key={`${activeCollection.slug}-${photo.title}`}
-                    role="button"
-                    tabIndex={0}
-                    aria-label={`Otwórz podgląd zdjęcia: ${photo.title}`}
-                    onClick={() => setActivePhotoIndex(index)}
-                    onKeyDown={(event) => {
-                      if (event.key === 'Enter' || event.key === ' ') {
-                        event.preventDefault()
-                        setActivePhotoIndex(index)
-                      }
-                    }}
-                  >
-                    <img src={photo.src} alt={photo.title} />
-                    <figcaption>{photo.title}</figcaption>
-                  </figure>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </section>
-      {activePhoto && (
-        <div className="lightboxOverlay" onClick={() => setActivePhotoIndex(null)}>
-          <div
-            className="lightboxContent"
-            onClick={(event) => event.stopPropagation()}
-            onTouchStart={handleLightboxTouchStart}
-            onTouchEnd={handleLightboxTouchEnd}
-          >
-            <button className="lightboxClose" type="button" aria-label="Zamknij podgląd" onClick={() => setActivePhotoIndex(null)}>
-              <X size={20} />
-            </button>
-            <div className="lightboxTopBar" aria-hidden="true">
-              <span className="lightboxBrand">Cinek Zielu / Galeria</span>
-              <span className="lightboxCounter">
-                {activePhotoIndex + 1} / {activeCollectionPhotos.length}
-              </span>
-            </div>
-            <button
-              className="lightboxArrow lightboxArrowLeft"
-              type="button"
-              aria-label="Poprzednie zdjęcie"
-              onClick={showPreviousPhoto}
-            >
-              <ChevronLeft size={24} />
-            </button>
-            <img
-              key={activePhoto.src}
-              className="lightboxImage"
-              src={activePhoto.src}
-              alt={activePhoto.title}
-            />
-            <button
-              className="lightboxArrow lightboxArrowRight"
-              type="button"
-              aria-label="Następne zdjęcie"
-              onClick={showNextPhoto}
-            >
-              <ChevronRight size={24} />
-            </button>
-            <div className="lightboxCaption">
-              <span>{activePhoto.group}</span>
-              <p>{activePhoto.title}</p>
-            </div>
-          </div>
-        </div>
-      )}
-
-      <section id="places" className="section sectionDark reveal">
-        <div className="container">
-          <SectionHeader
-            label="Miejsca"
-            title="Każde miejsce ma trochę inny kolor, tempo i klimat"
-            text="Baza zostaje ciemna i filmowa, ale konkretne miejsca mogą mieć własny akcent: Tatry chłodniejsze, Szwajcaria bardziej zielona, Maroko cieplejsze."
-          />
-          <div className="placeGrid">
-            {places.map((place) => (
-              <article className="placeCard" key={place.title}>
-                <div className={`placeVisual ${place.className}`}>
-                  <div>
-                    <span>{place.meta}</span>
-                    <h3>{place.title}</h3>
-                  </div>
-                </div>
-                <p>{place.desc}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="about" className="section reveal">
-        <div className="container aboutProfile">
-          <div className="aboutLead">
-            <div className="cardType">Kim jestem</div>
-            <h2>Najpierw idę w teren. Potem buduję z tego historię.</h2>
-            <p className="aboutIntro">
-              Cinek Zielu to moja osobista marka twórcy outdoorowego — oparta na realnej drodze, nie na pozowaniu pod przygodę.
-            </p>
-            <div className="aboutPillars">
-              <span>Góry</span>
-              <span>Podróże</span>
-              <span>Film</span>
-              <span>Fotografia</span>
-            </div>
-          </div>
-          <div className="aboutEditorial">
-            <p>
-              Jestem Marcin Zieliński i działam jako <strong>Cinek Zielu</strong>. Najbliżej mi do gór: tam wszystko jest
-              prostsze, surowsze i bardziej prawdziwe. Właśnie w takim klimacie najczęściej tworzę.
-            </p>
-            <p>
-              Podróże traktuję jak drogę, nie checklistę. Interesuje mnie tempo miejsca, światło, ludzie po trasie i momenty,
-              które dzieją się między planem a celem.
-            </p>
-            <p>
-              Film i zdjęcia są dla mnie sposobem, żeby zatrzymać klimat wyprawy — nie tylko sam szczyt, ale też napięcie,
-              zmęczenie i ciszę. Dlatego ta strona to nie zbiór wyjazdów, tylko historie z miejsc, które naprawdę coś zostawiły.
-            </p>
-            <div className="aboutWhatICreate">
-              <p className="storyLabel">Na tej stronie znajdziesz</p>
-              <ul>
-                <li>wyprawy</li>
-                <li>filmy</li>
-                <li>zdjęcia</li>
-                <li>historie z miejsc</li>
-              </ul>
-            </div>
-            <p className="aboutCta">
-              Jeśli chcesz zobaczyć więcej albo porozmawiać o współpracy, przejdź do kontaktu.
-            </p>
-          </div>
-          <aside className="aboutVisualCard" aria-label="Portret twórcy">
-            <img src={img('hero.jpg')} alt="Cinek Zielu w górskim krajobrazie" />
-            <div>
-              <p className="storyLabel">Manifest twórcy</p>
-              <p>
-                Tworzę materiały outdoorowe w filmowym stylu, ale punktem wyjścia zawsze jest prawdziwe doświadczenie miejsca.
-              </p>
-            </div>
-          </aside>
-        </div>
-      </section>
-
-
-      <section id="gear" className="section sectionDark reveal">
-        <div className="container">
-          <SectionHeader
-            label="Sprzęt i kulisy"
-            title="Sprzęt i kulisy tworzenia"
-            text="Czym pracuję to tylko część historii. Najważniejsze jest to, jak sprzęt pomaga oddać klimat miejsca, drogę i emocje, które dzieją się między kadrami."
-          />
-          <div className="gearGrid">
-            {creativeGear.map((item) => (
-              <article className="gearCard" key={item.title}>
-                <span className="gearLabel">{item.label}</span>
-                <h3>{item.title}</h3>
-                <p>{item.desc}</p>
-              </article>
-            ))}
-          </div>
-          <div className="workflowBox" aria-label="Jak wygląda proces tworzenia">
-            <p className="storyLabel">Workflow</p>
-            <h3>Jak wygląda proces</h3>
-            <div className="workflowSteps">
-              {workflowSteps.map((step, index) => (
-                <article className="workflowStep" key={step.title}>
-                  <span>0{index + 1}</span>
-                  <div>
-                    <h4>{step.title}</h4>
-                    <p>{step.desc}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="section sectionDark reveal">
-        <div className="container">
-          <SectionHeader
-            label="Formaty"
-            title="Różne formy jednej opowieści"
-            text="Nie każdy materiał musi działać tak samo. Czasem historia potrzebuje dłuższego filmu, czasem krótkiego cinematic edit, a czasem jednego mocnego Reelsa."
-          />
-          <div className="formatGrid">
-            {formats.map((item, index) => (
-              <div className="formatCard" key={item.title}>
-                <div className="number">0{index + 1}</div>
-                <h3>{item.title}</h3>
-                <p>{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="contact" className="section sectionDarker reveal">
-        <div className="container contactHub">
-          <div className="contactIntro">
-            <div className="cardType">Współpraca i kontakt</div>
-            <h2>Jeśli chcesz porozmawiać o projekcie, wyprawie albo filmie — zapraszam.</h2>
-            <p>
-              Najłatwiej odezwać się przez social media — tam jestem na bieżąco i tam najszybciej odpowiadam w sprawie wspólnych projektów.
-            </p>
-            <div className="contactIntroNote">Najlepiej napisać na Instagramie. YouTube i TikTok to miejsce na pełniejsze portfolio materiałów.</div>
-          </div>
-
-          <div className="contactSocials">
-            <a className="socialCard" href={socials.instagram} target="_blank" rel="noreferrer">
-              <span>Instagram</span>
-              <strong>Kulisy wypraw i codzienne kadry</strong>
-            </a>
-            <a className="socialCard" href={socials.youtube} target="_blank" rel="noreferrer">
-              <span>YouTube</span>
-              <strong>Dłuższe filmy i cinematic opowieści</strong>
-            </a>
-            <a className="socialCard" href={socials.tiktok} target="_blank" rel="noreferrer">
-              <span>TikTok</span>
-              <strong>Krótkie formy, tempo i momenty z trasy</strong>
-            </a>
-          </div>
-
-          <div className="contactCollab">
-            <h3>Projekty, które tworzę</h3>
-            <ul>
-              <li>Wyprawy i dokumentacja terenowa</li>
-              <li>Filmy, short form i outdoor storytelling</li>
-              <li>Zdjęcia i wizualne historie z miejsc</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section className="section sectionDark reveal">
-        <div className="container">
-          <SectionHeader
-            label="Aktualności"
-            title="Notatki z drogi, kulisy i przyszłe projekty"
-            text="Ta sekcja może działać spokojniej niż social media — jako miejsce na zapowiedzi większych filmów, opisy wypraw, kulisy montażu i rzeczy, które nie mieszczą się w krótkim poście."
-          />
-          <div className="postGrid">
-            {blogPosts.map((post) => (
-              <article className="postCard" key={post.title}>
-                <div className="cardType">{post.category}</div>
-                <h3>{post.title}</h3>
-                <p>
-                  Miejsce na przyszłe wpisy: krótkie podsumowania wyjazdów, notatki po filmach, sprzęt, plany i kulisy tworzenia.
-                </p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <footer className="footerSignature">
+      <footer id="footer" className="footerSignature">
         <div className="footerSeparator" aria-hidden="true" />
         <div className="container footerInner">
           <div className="footerBrand">
@@ -1215,8 +725,8 @@ function App() {
               <a href={socials.youtube} target="_blank" rel="noreferrer">YouTube</a>
               <a href={socials.tiktok} target="_blank" rel="noreferrer">TikTok</a>
             </div>
-            <a className="footerAnchor" href="#contact">Kontakt i współpraca</a>
-            <p className="footerCopyright">© {new Date().getFullYear()} Cinek Zielu</p>
+            <a className="footerAnchor" href="mailto:kontakt@cinekzielu.com">Kontakt i współpraca</a>
+            <p className="footerCopyright">© 2026 Cinek Zielu</p>
           </div>
         </div>
       </footer>
@@ -1235,13 +745,5 @@ function SectionHeader({ label, title, text }) {
   )
 }
 
-function InfoCard({ title, text }) {
-  return (
-    <article className="infoCard">
-      <h3>{title}</h3>
-      <p>{text}</p>
-    </article>
-  )
-}
 
 createRoot(document.getElementById('root')).render(<App />)
