@@ -190,3 +190,13 @@
 .atlasCountryMarker.isContextCountry .atlasCountryChip{opacity:.82;border-color:rgba(239,220,188,.22)}
 .atlasCountryMarker.isPriorityCountry .atlasCountryChip{opacity:.92;border-color:rgba(245,224,186,.38);background:linear-gradient(165deg,rgba(24,19,14,.86),rgba(35,28,22,.72))}
 .atlasCountryMarker.isPriorityCountry .atlasCountryDot{opacity:.96;filter:drop-shadow(0 0 9px rgba(244,220,178,.5))}
+
+/* ETAP 16.1 HOTFIX 4: ensure interactive label state wins over tier baseline styling */
+.atlasCountryMarker.isActive .atlasCountryChip,
+.atlasCountryMarker.isHovered .atlasCountryChip,
+.atlasCountryMarker.isSelected .atlasCountryChip{
+  border-color:rgba(250,231,196,.76);
+  opacity:1;
+  background:linear-gradient(165deg,rgba(42,33,23,.92),rgba(26,20,16,.8));
+  box-shadow:0 8px 16px rgba(0,0,0,.26),0 0 12px rgba(239,203,141,.16),inset 0 0 0 1px rgba(255,237,208,.06);
+}
