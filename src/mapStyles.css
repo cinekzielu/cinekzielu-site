@@ -22,8 +22,8 @@
 .atlasCountry.isTatryBorderCountry{fill:rgba(176,140,88,.18)!important;stroke:rgba(248,227,189,.64)!important;filter:drop-shadow(0 0 10px rgba(243,214,160,.24))}
 .atlasCountryLabel.isTatryBorderCountryLabel{fill:rgba(250,231,197,.96);font-size:9.2px}
 .atlasCountryMarker{isolation:isolate}
-.europeCountryOverlaySvg{overflow:visible;isolation:isolate;pointer-events:none}
-.europeCountryOverlayGroup{cursor:pointer;pointer-events:none}.europeCountryOverlayGroup.isSpecialRegion{position:relative;z-index:4;pointer-events:none}
+.europeCountryOverlaySvg{overflow:visible;isolation:isolate;pointer-events:auto}
+.europeCountryOverlayGroup{cursor:pointer;pointer-events:auto}.europeCountryOverlayGroup.isSpecialRegion{position:relative;z-index:4;pointer-events:auto}
 .europeCountryOverlayPath{fill:rgba(240,216,176,.035);stroke:rgba(240,216,176,.2);stroke-width:.94;transition:fill .22s ease,stroke .22s ease,filter .22s ease,opacity .22s ease;pointer-events:visiblePainted}
 .europeCountryOverlayGroup.isSpecialRegion .europeCountryOverlayPath{fill:rgba(228,187,112,.028);stroke:rgba(244,216,166,.3);stroke-width:1.02;filter:none;pointer-events:visiblePainted}
 .europeCountryOverlayPath.isActive{fill:rgba(246,226,194,.11);stroke:rgba(247,224,186,.28)}
