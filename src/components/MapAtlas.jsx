@@ -462,7 +462,8 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
   useEffect(() => {
     setEuropeOverlayData(parseEuropeOverlayShapes(europeCountryOverlaysSvgRaw))
   }, [])
-  const activeEuropeNode = europeNodeMap.get(hoveredEuropeNodeId || selectedEuropeNodeId || europeDefaultNodeId) || europeNodeMap.get(europeDefaultNodeId)
+  const hoveredOrSelectedEuropeNodeId = hoveredEuropeNodeId || selectedEuropeNodeId || europeDefaultNodeId
+  const activeEuropeNode = europeNodeMap.get(hoveredOrSelectedEuropeNodeId) || europeNodeMap.get(europeDefaultNodeId)
   const europePanel = activeId === 'europe' ? activeEuropeNode : null
 
   const subtleCountryIds = new Set(['norway', 'germany', 'france', 'spain', 'italy', 'greece', 'austria', 'slovenia', 'liechtenstein'])
@@ -570,17 +571,18 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
               {europeAtlasImageLoaded && <image href={europeAtlasImageSrc} x="22" y="20" width="516" height="318" preserveAspectRatio="xMidYMid slice" opacity="0.62" onError={() => setEuropeAtlasImageLoaded(false)} />}
               <rect x="22" y="20" width="516" height="318" rx="20" className="atlasEuropeFrame" />
               {(europeOverlayData?.countryOverlayShapes?.length > 0 || europeOverlayData?.specialRegionOverlayShapes?.length > 0) && (
-                <svg x="22" y="20" width="516" height="318" viewBox={europeOverlayData.viewBox} preserveAspectRatio="xMidYMid slice" className="europeCountryOverlaySvg">
+                <svg x="22" y="20" width="516" height="318" viewBox={europeOverlayData.viewBox} preserveAspectRatio="xMidYMid slice" className="europeCountryOverlaySvg" aria-hidden="true">
                   {[...(europeOverlayData.countryOverlayShapes || []), ...(europeOverlayData.specialRegionOverlayShapes || [])].map((shape) => {
                     const node = europeNodeMap.get(shape.id) || [...europeNodeMap.values()].find((atlasNode) => atlasNode.svgId === shape.id)
                     if (!node) return null
                     const isHovered = hoveredEuropeNodeId === node.id
                     const isSelected = selectedEuropeNodeId === node.id
                     const isTatryTarget = node.routeTarget === 'tatry' || node.id === 'tatry'
-                    const isActive = isHovered || isSelected
+                    const isActive = hoveredOrSelectedEuropeNodeId === node.id
                     return (
                       <g
                         key={shape.id}
+                        data-node-id={node.id}
                         className={`europeCountryOverlayGroup ${isTatryTarget ? 'isSpecialRegion' : ''} ${isHovered ? 'isHovered' : ''} ${isSelected ? 'isSelected' : ''} ${isActive ? 'isActive' : ''}`}
                         onMouseEnter={() => setHoveredEuropeNodeId(node.id)}
                         onMouseLeave={() => setHoveredEuropeNodeId(null)}
@@ -607,7 +609,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                 const isTatryBorderCountry = node.id === 'poland' || node.id === 'slovakia'
                 const isHovered = hoveredEuropeNodeId === node.id
                 const isSelected = selectedEuropeNodeId === node.id
-                const isActive = isHovered || isSelected
+                const isActive = hoveredOrSelectedEuropeNodeId === node.id
                 const labelOffsetX = node.labelOffset?.x ?? 0
                 const labelOffsetY = node.labelOffset?.y ?? 0
                 return (
