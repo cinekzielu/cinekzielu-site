@@ -137,7 +137,7 @@ const mobileNavLinks = [
   { href: '#films', label: 'Filmy' },
   { href: '#featured-expeditions', label: 'Kierunki' },
   { href: '#expeditions', label: 'Historie' },
-  { href: '#gallery', label: 'Galeria' },
+  { href: '#gallery-preview', label: 'Galeria' },
   { href: '#footer', label: 'Kontakt' },
 ]
 
