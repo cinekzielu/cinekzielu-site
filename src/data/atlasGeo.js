@@ -46,11 +46,30 @@ const tatryUiLayout = {
   'starorobocianski-wierch': { nudge: { x: -0.9, y: 0.1 }, labelOffset: { x: -18, y: 8 }, tier: 'secondary' },
 }
 
-const tatryBounds = {
+export const tatryBounds = {
   latMin: 49.12,
   latMax: 49.29,
   lngMin: 19.76,
   lngMax: 20.28,
+}
+
+export const tatryProjectionConfig = {
+  bounds: tatryBounds,
+  coordinateSpace: 'tatry-scene-normalized-percent',
+  projectionMode: 'normalized-bounds-then-stylized-ridge-layout',
+  background: {
+    width: 3208,
+    height: 2000,
+    aspectRatio: 3208 / 2000,
+  },
+  stylizedLayout: {
+    axisXStart: 12,
+    axisXSpan: 80,
+    ridgeYStart: 62,
+    ridgeYSpan: 26,
+    corridorWaveAmplitude: 1.1,
+    geoPull: 9.2,
+  },
 }
 
 const clampPercent = (value) => Math.max(0, Math.min(100, value))
@@ -58,17 +77,18 @@ const clampPercent = (value) => Math.max(0, Math.min(100, value))
 const stylizeTatryProjection = (position) => {
   if (!position) return null
   const normalizedX = position.x / 100
-  const axisX = 12 + normalizedX * 80
-  const ridgeSlope = 62 - normalizedX * 26
-  const corridorWave = Math.sin(normalizedX * Math.PI * 1.05) * 1.1
-  const geoPull = ((position.y - 50) / 50) * 9.2
+  const layout = tatryProjectionConfig.stylizedLayout
+  const axisX = layout.axisXStart + normalizedX * layout.axisXSpan
+  const ridgeSlope = layout.ridgeYStart - normalizedX * layout.ridgeYSpan
+  const corridorWave = Math.sin(normalizedX * Math.PI * 1.05) * layout.corridorWaveAmplitude
+  const geoPull = ((position.y - 50) / 50) * layout.geoPull
   return {
     x: clampPercent(axisX),
     y: clampPercent(ridgeSlope + corridorWave + geoPull),
   }
 }
 
-export function projectGeoToTatryLayout({ lat, lng }, bounds = tatryBounds) {
+export function projectGeoToTatryLayout({ lat, lng }, bounds = tatryProjectionConfig.bounds) {
   if (typeof lat !== 'number' || typeof lng !== 'number') return null
   const x = ((lng - bounds.lngMin) / (bounds.lngMax - bounds.lngMin)) * 100
   const y = ((bounds.latMax - lat) / (bounds.latMax - bounds.latMin)) * 100
