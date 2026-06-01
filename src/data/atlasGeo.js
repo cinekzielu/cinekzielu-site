@@ -23,19 +23,19 @@ const tatryGeoPoints = {
 }
 
 const tatryUiLayout = {
-  swinica: { nudge: { x: -1.3, y: 0.8 }, labelOffset: { x: -10, y: 1 }, tier: 'primary' },
-  koscielec: { nudge: { x: 0.8, y: -0.7 }, labelOffset: { x: -13, y: -6 }, tier: 'secondary' },
+  swinica: { mapPosition: { x: 26, y: 57 }, labelOffset: { x: -10, y: 1 }, tier: 'primary' },
+  koscielec: { mapPosition: { x: 34, y: 46 }, labelOffset: { x: -13, y: -6 }, tier: 'primary' },
   krywan: { nudge: { x: -0.4, y: 0.4 }, labelOffset: { x: -15, y: 10 }, tier: 'primary' },
-  lomnica: { nudge: { x: 0.7, y: -0.2 }, labelOffset: { x: 9, y: -8 }, tier: 'primary' },
-  gerlach: { nudge: { x: 0.9, y: -0.7 }, labelOffset: { x: 9, y: -12 }, tier: 'featured' },
-  'durny-szczyt': { nudge: { x: 1.6, y: -1 }, labelOffset: { x: -28, y: 9 }, tier: 'secondary' },
+  lomnica: { mapPosition: { x: 72, y: 36 }, labelOffset: { x: 9, y: -8 }, tier: 'featured' },
+  gerlach: { mapPosition: { x: 57, y: 43 }, labelOffset: { x: 9, y: -12 }, tier: 'featured' },
+  'durny-szczyt': { mapPosition: { x: 78, y: 48 }, labelOffset: { x: -28, y: 9 }, tier: 'primary' },
   'lodowy-szczyt': { nudge: { x: 0.2, y: -0.6 }, labelOffset: { x: 14, y: -10 }, tier: 'primary' },
   'baranie-rogi': { nudge: { x: 0.9, y: -0.6 }, labelOffset: { x: 13, y: -2 }, tier: 'secondary' },
-  'kiezmarski-szczyt': { nudge: { x: 1.4, y: -0.3 }, labelOffset: { x: 13, y: 8 }, tier: 'primary' },
+  'kiezmarski-szczyt': { mapPosition: { x: 87, y: 40 }, labelOffset: { x: 13, y: 8 }, tier: 'primary' },
   konczysta: { nudge: { x: -0.3, y: 0.4 }, labelOffset: { x: -16, y: 10 }, tier: 'secondary' },
   rysy: { nudge: { x: 0.1, y: -0.5 }, labelOffset: { x: -13, y: -10 }, tier: 'featured' },
   giewont: { nudge: { x: -0.2, y: -0.2 }, labelOffset: { x: -14, y: -8 }, tier: 'primary' },
-  szatan: { nudge: { x: 0.3, y: 0.5 }, labelOffset: { x: 12, y: -8 }, tier: 'secondary' },
+  szatan: { mapPosition: { x: 48, y: 57 }, labelOffset: { x: 12, y: -8 }, tier: 'secondary' },
   'jagniecy-szczyt': { nudge: { x: 0.6, y: -0.1 }, labelOffset: { x: 14, y: 6 }, tier: 'secondary' },
   'posrednia-gran': { nudge: { x: 0.3, y: 0.2 }, labelOffset: { x: 12, y: -12 }, tier: 'secondary' },
   'slawkowski-szczyt': { nudge: { x: 0.4, y: 0.5 }, labelOffset: { x: 14, y: 10 }, tier: 'secondary' },
@@ -90,9 +90,9 @@ export function resolveTatryPointPosition(pointId) {
   const stylized = stylizeTatryProjection(projected)
   const nudgeX = ui?.nudge?.x || 0
   const nudgeY = ui?.nudge?.y || 0
-  const mapPosition = stylized
+  const mapPosition = ui?.mapPosition || (stylized
     ? { x: clampPercent(stylized.x + nudgeX), y: clampPercent(stylized.y + nudgeY) }
-    : ui?.mapPosition || projected || { x: 50, y: 50 }
+    : projected || { x: 50, y: 50 })
 
   return {
     geo: geoPoint,
