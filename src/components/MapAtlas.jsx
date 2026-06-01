@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { travelAtlasData } from '../data/travelData'
 import { resolveTatryPointPosition } from '../data/atlasGeo'
-import tatryHillshadeDark from '../assets/maps/tatry-hillshade-dark.png.png'
+import tatryHillshadeDark from '../assets/maps/tatry-hillshade-dark.png'
+import { tatryMapBasePlaceholder } from '../data/tatryMapBase'
 import '../mapStyles.css'
 
 import worldAtlasBaseAsset from '../assets/maps/world-atlas-dark.webp'
@@ -201,11 +202,41 @@ const continentMeta = [
 ]
 
 
-const TatryMapBase = () => (
-  <div className="tatryBaseMap" aria-hidden="true">
-    <img src={tatryHillshadeDark} alt="" className="tatryBaseMapImage" />
-  </div>
-)
+const TatryMapBase = () => {
+  const { contour, relief, ridges, valleys, border } = tatryMapBasePlaceholder.layers
+
+  return (
+    <div className="tatryBaseMap" aria-hidden="true">
+      <img src={tatryHillshadeDark} alt="" className="tatryBaseMapImage" />
+      <svg viewBox={tatryMapBasePlaceholder.viewBox} className="tatryStructure" preserveAspectRatio="none">
+        <defs>
+          <pattern id="tatry-atlas-grid" width="5" height="5" patternUnits="userSpaceOnUse">
+            <path d="M 5 0 L 0 0 0 5" className="tatryGridLine" />
+          </pattern>
+          <linearGradient id="tatry-relief-gold" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#e9cd99" stopOpacity=".04" />
+            <stop offset=".52" stopColor="#c59a5f" stopOpacity=".16" />
+            <stop offset="1" stopColor="#71512f" stopOpacity=".03" />
+          </linearGradient>
+        </defs>
+        <rect width="100" height="100" className="tatryGrid" />
+        <path d={contour.d} className="tatryRegionContour" />
+        {relief.shading.map((band) => <path key={band.id} d={band.d} className="tatryReliefBand" />)}
+        {ridges.map((ridge) => <path key={ridge.id} d={ridge.d} className="tatryRidgeLine" />)}
+        {valleys.map((valley) => <path key={valley.id} d={valley.d} className="tatryValleyLine" />)}
+        <path d={border.d} className="tatryBorder" />
+        {border.labels.map((label) => (
+          <text key={label.text} x={label.x} y={label.y} textAnchor={label.anchor} className={`tatryBorderLabel ${label.variant === 'south' ? 'isSouth' : ''}`}>{label.text}</text>
+        ))}
+        <text x="7.5" y="15" className="tatryAtlasKicker">ATLAS SZCZYTÓW · TATRY</text>
+        <text x="7.5" y="20" className="tatryAtlasCoordinates">49°12′ N — 20°04′ E</text>
+        <text x="93" y="83" textAnchor="end" className="tatryAtlasScale">0 ··· 10 ··· 20 KM</text>
+        <text x="10" y="46" className="tatryRangeLabel">TATRY ZACHODNIE</text>
+        <text x="56" y="29" className="tatryRangeLabel isHighTatras">TATRY WYSOKIE</text>
+      </svg>
+    </div>
+  )
+}
 
 const levelNames = ['Świat', 'Kontynent', 'Kraj', 'Region specjalny', 'Szczyt']
 const levelIcons = {
