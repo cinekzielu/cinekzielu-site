@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { travelAtlasData } from '../data/travelData'
 import { resolveTatryPointPosition } from '../data/atlasGeo'
-import tatryHillshadeDark from '../assets/maps/tatry-hillshade-dark.png.png'
 import '../mapStyles.css'
 
 import worldAtlasBaseAsset from '../assets/maps/world-atlas-dark.webp'
@@ -202,8 +201,17 @@ const continentMeta = [
 
 
 const TatryMapBase = () => (
-  <div className="tatryBaseMap" aria-hidden="true">
-    <img src={tatryHillshadeDark} alt="" className="tatryBaseMapImage" />
+  <div className="tatryPlaceholder" aria-hidden="true">
+    <div className="tatryPlaceholderHeading">
+      <span>Atlas regionu</span>
+      <strong>Tatry Wysokie i Zachodnie</strong>
+    </div>
+    <svg viewBox="0 0 100 54" className="tatryPlaceholderLineArt" preserveAspectRatio="none">
+      <path d="M2 43 13 34 21 38 32 24 39 30 51 14 58 22 67 17 76 28 86 19 98 34" />
+      <path d="M2 47 15 39 24 42 35 31 42 35 52 21 60 28 68 23 79 34 87 26 98 39" />
+      <path d="M4 50 C20 44 28 47 40 41 S62 35 72 39 88 39 97 44" />
+    </svg>
+    <span className="tatryPlaceholderCaption">Placeholder mapy • finalne SVG zostanie dodane w kolejnym etapie</span>
   </div>
 )
 
@@ -397,6 +405,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
   const [hoveredContinent, setHoveredContinent] = useState(null)
   const [hoveredEuropeNodeId, setHoveredEuropeNodeId] = useState(null)
   const [selectedEuropeNodeId, setSelectedEuropeNodeId] = useState(null)
+  const [selectedTatryPointId, setSelectedTatryPointId] = useState(null)
   const [europeAtlasImageLoaded, setEuropeAtlasImageLoaded] = useState(true)
   const [europeOverlayData, setEuropeOverlayData] = useState(null)
   const continents = travelAtlasData.continents
@@ -433,8 +442,12 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
       tier: position.tier,
     }
   })
-  const activeFilm = activeNode.filmId ? atlasLookups.films[activeNode.filmId] : null
-  const nodeType = activeNode.atlasType || activeNode.type || null
+  const selectedTatryPoint = activeId === 'tatry' && selectedTatryPointId
+    ? atlasLookups.summits[selectedTatryPointId] || null
+    : null
+  const panelNode = selectedTatryPoint || activeNode
+  const activeFilm = panelNode.filmId ? atlasLookups.films[panelNode.filmId] : null
+  const nodeType = panelNode.atlasType || panelNode.type || null
   const typeLabelMap = { summit: 'Szczyt', trail: 'Szlak / przejście', viewpoint: 'Punkt widokowy', place: 'Miejsce', city: 'Miasto', hut: 'Schronisko', region: 'Region', country: 'Kraj', continent: 'Kontynent' }
 
   const isWorldView = activeId === 'world'
@@ -482,7 +495,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
 
   const tags = isWorldView
     ? ['Europa aktywna', 'kolejne regiony w planach', 'galerie wkrótce']
-    : [activeNode.visited ? 'odwiedzone' : 'w planach', activeFilm ? 'film' : null, activeNode.gallery?.length ? 'galeria' : 'galeria wkrótce'].filter(Boolean)
+    : [panelNode.status || (panelNode.visited ? 'odwiedzone' : 'w planach'), activeFilm ? 'film' : null, panelNode.season || null].filter(Boolean)
   const tatryPointsWithLeaders = getTatryCollisionLayout(tatryPoints).map((point) => {
     const offsetX = point.labelOffset?.x ?? 0
     const offsetY = point.labelOffset?.y ?? 0
@@ -646,14 +659,14 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
               {tatryPointsWithLeaders.map((summit) => (
                 <div
                   key={summit.id}
-                  className={`summitPoint summitTier${summit.tier || 'secondary'} ${summit.isFeatured ? 'isFeaturedLabel' : 'isSecondaryLabel'} pointType${summit.pointType || summit.atlasType || summit.type || 'place'} ${activeId === summit.id ? 'isActive' : ''} ${hoveredSummitId === summit.id ? 'isHovered' : ''}`}
+                  className={`summitPoint summitTier${summit.tier || 'secondary'} ${summit.isFeatured ? 'isFeaturedLabel' : 'isSecondaryLabel'} pointType${summit.pointType || summit.atlasType || summit.type || 'place'} ${selectedTatryPointId === summit.id ? 'isActive' : ''} ${hoveredSummitId === summit.id ? 'isHovered' : ''}`}
                   style={{ left: `${summit.mapPosition?.x ?? 50}%`, top: `${summit.mapPosition?.y ?? 50}%` }}
                 >
                   <button
                     type="button"
                     className="summitHitArea"
                     aria-label={`Punkt: ${summit.displayName || summit.name}`}
-                    onClick={() => summit.id in atlasLookups.summits && setAtlasPath((prev) => [...prev, summit.id])}
+                    onClick={() => summit.id in atlasLookups.summits && setSelectedTatryPointId(summit.id)}
                     onMouseEnter={() => setHoveredSummitId(summit.id)}
                     onMouseLeave={() => setHoveredSummitId(null)}
                     onFocus={() => setHoveredSummitId(summit.id)}
@@ -664,9 +677,9 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                   {summit.hasLeader && <span className="leader" style={{ '--leader-length': `${Math.max(7, Math.min(30, summit.leaderLength - 4))}px`, '--leader-angle': `${summit.leaderAngle}rad` }} />}
                   <button
                     type="button"
-                    className={`label anchor${summit.labelAnchor || 'east'} ${(!summit.isFeatured && activeId !== summit.id && hoveredSummitId !== summit.id) ? 'isHidden' : ''}`}
+                    className={`label anchor${summit.labelAnchor || 'east'} ${(!summit.isFeatured && selectedTatryPointId !== summit.id && hoveredSummitId !== summit.id) ? 'isHidden' : ''}`}
                     style={{ transform: `translate(${summit.labelOffset?.x ?? 0}px, ${summit.labelOffset?.y ?? 0}px)` }}
-                    onClick={() => summit.id in atlasLookups.summits && setAtlasPath((prev) => [...prev, summit.id])}
+                    onClick={() => summit.id in atlasLookups.summits && setSelectedTatryPointId(summit.id)}
                     onMouseEnter={() => setHoveredSummitId(summit.id)}
                     onMouseLeave={() => setHoveredSummitId(null)}
                     onFocus={() => setHoveredSummitId(summit.id)}
@@ -692,22 +705,31 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
       <article className="mapCard isActiveRegion atlasDetailCard">
         <p className="atlasEyebrow">{isWorldView ? 'Atlas signature view' : 'Atlas entry'}</p>
         <p className="atlasLevelLabel">{levelNames[atlasLevel] || `Poziom ${atlasLevel}`}</p>
-        <h3>{isWorldView && worldPanel ? worldPanel.name : (activeId === 'europe' && europePanel ? europePanel.label : activeNode.name)}</h3>
-        <p className="atlasLead">{isWorldView ? (worldPanel?.description || 'Wybierz kontynent, aby odkrywać wyprawy, regiony i szczyty.') : (activeId === 'europe' && europePanel ? europePanel.panelDescription : activeNode.description)}</p>
+        <h3>{isWorldView && worldPanel ? worldPanel.name : (activeId === 'europe' && europePanel ? europePanel.label : panelNode.name)}</h3>
+        <p className="atlasLead">{isWorldView ? (worldPanel?.description || 'Wybierz kontynent, aby odkrywać wyprawy, regiony i szczyty.') : (activeId === 'europe' && europePanel ? europePanel.panelDescription : panelNode.description)}</p>
         {isWorldView && <p className="atlasPointType">{worldPanel?.typeLabel || 'Świat'}</p>}
         {nodeType && <p className="atlasPointType">{typeLabelMap[nodeType] || 'Punkt atlasu'}</p>}
         <div className="atlasTagRow">{(activeId === 'europe' && europePanel ? europePanel.panelTags : (worldPanel?.tags || tags)).map((tag) => <span key={tag} className="atlasTag">{tag}</span>)}</div>
         {worldPanel?.isEurope && <p className="atlasMeta">Europa jest aktywnym kierunkiem i prowadzi do kolejnego poziomu atlasu.</p>}
-        {activeNode.countryIds && <p className="atlasMeta">Kraje: {activeNode.countryIds.map((id) => atlasLookups.countries[id]?.name).filter(Boolean).join(', ')}</p>}
+        {panelNode.countryIds && <p className="atlasMeta">Kraje: {panelNode.countryIds.map((id) => atlasLookups.countries[id]?.name).filter(Boolean).join(', ')}</p>}
+        {selectedTatryPoint && (
+          <div className="atlasTatryDetails">
+            <p><span>Wysokość</span><strong>{selectedTatryPoint.altitude}</strong></p>
+            <p><span>Typ</span><strong>{typeLabelMap[nodeType] || 'Punkt atlasu'}</strong></p>
+            <p><span>Status</span><strong>{selectedTatryPoint.status}</strong></p>
+            <p><span>Sezon</span><strong>{selectedTatryPoint.season}</strong></p>
+          </div>
+        )}
         {activeId === 'europe' && <p className="atlasMeta">Europa to kontynent wypraw. Hover markerów aktualizuje panel, Tatry pozostają aktywnym regionem specjalnym, a struktura jest gotowa pod europe-atlas-dark.webp i manualne europe-country-overlays.svg.</p>}
-        {activeId === 'tatry' && <p className="atlasMeta">Tatry to region graniczny Polski i Słowacji — wspólna oś wypraw z przejściem do szczegółowego widoku szczytów.</p>}
+        {activeId === 'tatry' && !selectedTatryPoint && <p className="atlasMeta">Tatry to region graniczny Polski i Słowacji — wybierz marker, aby zobaczyć szczegóły szczytu i powiązany materiał.</p>}
         {atlasLevel === 1 && countriesForContinent.length > 0 && <p className="atlasMeta">Widoczne kraje: {countriesForContinent.map((country) => country.name).join(', ')}</p>}
         {activeFilm && (
           <a className="smallButton atlasCta" href={activeFilm.url} target="_blank" rel="noreferrer">
             Obejrzyj film — {activeFilm.title}
           </a>
         )}
-        {!activeNode.gallery?.length && <p className="atlasSoon">Galeria wkrótce.</p>}
+        {selectedTatryPoint && !activeFilm && <p className="atlasSoon">Materiał w przygotowaniu.</p>}
+        {!selectedTatryPoint && !panelNode.gallery?.length && <p className="atlasSoon">Galeria wkrótce.</p>}
       </article>
     </div>
   )

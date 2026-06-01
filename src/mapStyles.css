@@ -200,3 +200,19 @@
   background:linear-gradient(165deg,rgba(42,33,23,.92),rgba(26,20,16,.8));
   box-shadow:0 8px 16px rgba(0,0,0,.26),0 0 12px rgba(239,203,141,.16),inset 0 0 0 1px rgba(255,237,208,.06);
 }
+
+/* ETAP 18.0: asset-free Tatry placeholder, ready to be replaced with final SVG. */
+.tatryPlaceholder{position:absolute;inset:3.1% 1.9% 4.8%;z-index:1;overflow:hidden;border:1px solid rgba(244,228,197,.12);border-radius:8px;background:radial-gradient(circle at 54% 38%,rgba(181,147,96,.14),transparent 34%),linear-gradient(145deg,rgba(12,10,8,.96),rgba(3,3,3,.98));box-shadow:inset 0 0 86px rgba(0,0,0,.54)}
+.tatryPlaceholder::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(236,214,177,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(236,214,177,.055) 1px,transparent 1px);background-size:8.333% 16.666%;mask-image:linear-gradient(180deg,rgba(0,0,0,.88),transparent 92%)}
+.tatryPlaceholderHeading{position:absolute;left:4.5%;top:8%;display:grid;gap:4px;text-transform:uppercase;letter-spacing:.15em;color:rgba(244,225,194,.9)}
+.tatryPlaceholderHeading span{font-size:9px;color:rgba(233,210,174,.56)}
+.tatryPlaceholderHeading strong{font-family:Georgia,serif;font-size:clamp(14px,2.1vw,22px);font-weight:500;letter-spacing:.08em}
+.tatryPlaceholderLineArt{position:absolute;inset:auto 2% 12%;width:96%;height:66%;overflow:visible;filter:drop-shadow(0 0 8px rgba(223,188,133,.13))}
+.tatryPlaceholderLineArt path{fill:none;stroke:rgba(235,211,174,.2);stroke-width:.34;vector-effect:non-scaling-stroke}
+.tatryPlaceholderLineArt path:first-child{stroke:rgba(242,220,183,.48);stroke-width:.62}
+.tatryPlaceholderCaption{position:absolute;right:3.5%;bottom:5%;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:rgba(232,211,178,.4)}
+.atlasTatryDetails{display:grid;gap:8px;margin-top:14px;padding:12px;border:1px solid rgba(239,217,181,.16);border-radius:10px;background:rgba(8,7,6,.34)}
+.atlasTatryDetails p{display:flex;justify-content:space-between;gap:16px;margin:0;font-size:12px}
+.atlasTatryDetails span{color:rgba(231,211,180,.58);text-transform:uppercase;letter-spacing:.1em;font-size:10px}
+.atlasTatryDetails strong{color:rgba(248,231,201,.94);font-weight:500;text-align:right}
+@media (max-width:980px){.tatryPlaceholder{inset:6.7% 3.1% 10.4%}.tatryPlaceholderCaption{max-width:72%;text-align:right;line-height:1.45}.tatryPlaceholderHeading{top:7%}}
