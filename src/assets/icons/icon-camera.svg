@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" role="img" aria-labelledby="icon-camera-title">
   <title id="icon-camera-title">icon-camera</title>
-  <g id="icon-camera" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <g id="icon-camera" fill="none" stroke="#c8a45d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
   <path d="M6.4 12.2h4.2l1.8-2.7h7.1l1.8 2.7h4.3c1.1 0 2 .9 2 2v8.6c0 1.1-.9 2-2 2H6.4c-1.1 0-2-.9-2-2v-8.6c0-1.1.9-2 2-2Z"/>
   <circle cx="16" cy="18.5" r="4.3"/>
   <circle cx="16" cy="18.5" r="2.45"/>

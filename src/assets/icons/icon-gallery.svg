@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" role="img" aria-labelledby="icon-gallery-title">
   <title id="icon-gallery-title">icon-gallery</title>
-  <g id="icon-gallery" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <g id="icon-gallery" fill="none" stroke="#c8a45d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
   <rect x="10.2" y="10.8" width="15.8" height="12.4" rx="1.6"/>
   <path d="M7.1 18.9V9.2c0-1 .8-1.8 1.8-1.8h12.2"/>
   <path d="M12.9 20.5l4.1-4.3 3.1 2.7 2.6-2.3 3.3 3.9"/>

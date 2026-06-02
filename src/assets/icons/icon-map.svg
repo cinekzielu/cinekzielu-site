@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" role="img" aria-labelledby="icon-map-title">
   <title id="icon-map-title">icon-map</title>
-  <g id="icon-map" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round">
+  <g id="icon-map" fill="none" stroke="#c8a45d" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round">
   <path d="M5.5 8.4l7-2.8 7 2.8 7-2.8v18l-7 2.8-7-2.8-7 2.8v-18Z"/>
   <path d="M12.5 5.6v18"/>
   <path d="M19.5 8.4v18"/>

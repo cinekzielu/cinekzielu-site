@@ -359,10 +359,7 @@ img {
   width: 24px;
   height: 24px;
   flex: 0 0 auto;
-  color: var(--gold);
-  background-color: currentColor;
-  -webkit-mask: var(--cz-icon-src) center / contain no-repeat;
-  mask: var(--cz-icon-src) center / contain no-repeat;
+  object-fit: contain;
   opacity: .72;
 }
 
@@ -384,8 +381,8 @@ img {
 }
 
 .sectionHeaderLabel .cz-icon {
-  width: 26px;
-  height: 26px;
+  width: 20px;
+  height: 20px;
 }
 
 .sectionHeader h2,
