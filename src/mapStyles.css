@@ -227,3 +227,34 @@
   .tatryAtlasCoordinates,.tatryAtlasScale,.tatryRangeLabel{opacity:.62}
   .tatryAtlasKicker{font-size:2.5px}
 }
+
+/* HOTFIX 18.2.1: one stable atlas viewport for World / Europe / Tatry */
+.cinematicAtlas .atlasMapWrap{display:flex;min-width:0;flex-direction:column}
+.cinematicAtlas .atlasToolbar{min-height:54px}
+.cinematicAtlas .atlasStage,
+.cinematicAtlas .atlasStage.isEuropeView{width:100%;height:628px;min-height:628px}
+.cinematicAtlas .atlasSvg,
+.cinematicAtlas .atlasSvg.isEuropeView,
+.cinematicAtlas .summitLayer,
+.cinematicAtlas .tatryLayer,
+.cinematicAtlas .tatryViewport,
+.cinematicAtlas .tatryScene{width:100%;height:100%;min-height:0}
+.cinematicAtlas .atlasSvg{display:block}
+
+@media (max-width:980px){
+  .cinematicAtlas .atlasToolbar{min-height:49px}
+  .cinematicAtlas .atlasStage,
+  .cinematicAtlas .atlasStage.isEuropeView{height:372px;min-height:372px}
+  .cinematicAtlas .atlasSvg,
+  .cinematicAtlas .atlasSvg.isEuropeView,
+  .cinematicAtlas .summitLayer{height:100%;min-height:0}
+}
+
+@media (max-width:620px){
+  .cinematicAtlas .atlasCrumbTrail{gap:6px;flex-wrap:nowrap}
+  .cinematicAtlas .atlasCrumb{min-width:0;flex:1 1 0;gap:6px;padding:8px 6px;border-radius:10px}
+  .cinematicAtlas .atlasCrumbIcon{width:27px;height:27px;border-radius:8px}
+  .cinematicAtlas .atlasCrumbIcon svg{width:15px;height:15px}
+  .cinematicAtlas .atlasCrumbLevel{font-size:7px;letter-spacing:.1em}
+  .cinematicAtlas .atlasCrumbName{font-size:11px}
+}
