@@ -281,6 +281,15 @@ const tatryTierWeight = {
 
 const tatryFeaturedIds = new Set(['gerlach', 'lomnica', 'rysy', 'krywan', 'koscielec', 'kiezmarski-szczyt', 'lodowy-szczyt', 'durny-szczyt'])
 
+const tatryLandmarkLabelIds = new Set(['gerlach', 'lomnica', 'rysy', 'koscielec', 'lodowy-szczyt'])
+const tatryContextLabelIds = new Set(['giewont', 'swinica', 'krywan', 'wysoka', 'mieguszowiecki-szczyt-wielki'])
+
+const getTatryLabelVisibility = (pointId) => {
+  if (tatryLandmarkLabelIds.has(pointId)) return 'landmark'
+  if (tatryContextLabelIds.has(pointId)) return 'context'
+  return 'hover'
+}
+
 const tatryClusterPriority = {
   'lomnica': 12,
   'gerlach': 11,
@@ -336,6 +345,8 @@ const getTatryCollisionLayout = (points) => {
   }))
 
   const byPriority = [...points].sort((a, b) => {
+    const visibilityDelta = ['hover', 'context', 'landmark'].indexOf(getTatryLabelVisibility(b.id)) - ['hover', 'context', 'landmark'].indexOf(getTatryLabelVisibility(a.id))
+    if (visibilityDelta !== 0) return visibilityDelta
     const tierDelta = (tatryTierWeight[b.tier] || 0) - (tatryTierWeight[a.tier] || 0)
     if (tierDelta !== 0) return tierDelta
     return (tatryClusterPriority[b.id] || 0) - (tatryClusterPriority[a.id] || 0)
@@ -345,6 +356,7 @@ const getTatryCollisionLayout = (points) => {
     const fullName = point.name
     const shortName = tatryLabelAliases[point.id] || point.name
     const baseOffset = point.labelOffset || { x: 0, y: 0 }
+    const labelVisibility = getTatryLabelVisibility(point.id)
 
     const pickVariant = (name) => {
       const textWidth = Math.max(52, Math.min(138, name.length * 6 + 24))
@@ -396,25 +408,30 @@ const getTatryCollisionLayout = (points) => {
         }
       })
 
-      labelBoxes.push({
-        left: (point.mapPosition?.x ?? 50) * anchorScaleX + selected.x,
-        right: (point.mapPosition?.x ?? 50) * anchorScaleX + selected.x + textWidth,
-        top: (point.mapPosition?.y ?? 50) * anchorScaleY + selected.y - textHeight / 2,
-        bottom: (point.mapPosition?.y ?? 50) * anchorScaleY + selected.y + textHeight / 2,
-      })
-
-      return { offset: selected, score: selectedScore }
+      return { offset: selected, score: selectedScore, textWidth }
     }
 
     const full = pickVariant(fullName)
     const shouldCompact = full.score > 75 && shortName !== fullName
     const compact = shouldCompact ? pickVariant(shortName) : null
+    const labelLayout = compact || full
+
+    if (labelVisibility !== 'hover') {
+      labelBoxes.push({
+        left: (point.mapPosition?.x ?? 50) * anchorScaleX + labelLayout.offset.x,
+        right: (point.mapPosition?.x ?? 50) * anchorScaleX + labelLayout.offset.x + labelLayout.textWidth,
+        top: (point.mapPosition?.y ?? 50) * anchorScaleY + labelLayout.offset.y - textHeight / 2,
+        bottom: (point.mapPosition?.y ?? 50) * anchorScaleY + labelLayout.offset.y + textHeight / 2,
+      })
+    }
 
     return {
       ...point,
       displayName: compact ? shortName : fullName,
-      labelOffset: compact ? compact.offset : full.offset,
-      labelAnchor: (compact ? compact.offset : full.offset).anchor || 'east',
+      labelOffset: labelLayout.offset,
+      labelAnchor: labelLayout.offset.anchor || 'east',
+      labelVisibility,
+      isLabelVisibleByDefault: labelVisibility !== 'hover',
       visualPriority: tatryTierWeight[point.tier] || 1,
     }
   }).sort((a, b) => a.visualPriority - b.visualPriority)
@@ -677,7 +694,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
               {tatryPointsWithLeaders.map((summit) => (
                 <div
                   key={summit.id}
-                  className={`summitPoint summitTier${summit.tier || 'secondary'} ${summit.isFeatured ? 'isFeaturedLabel' : 'isSecondaryLabel'} pointType${summit.pointType || summit.atlasType || summit.type || 'place'} ${activeId === summit.id ? 'isActive' : ''} ${hoveredSummitId === summit.id ? 'isHovered' : ''}`}
+                  className={`summitPoint summitTier${summit.tier || 'secondary'} ${summit.isFeatured ? 'isFeaturedLabel' : 'isSecondaryLabel'} is${summit.labelVisibility || 'hover'}Label pointType${summit.pointType || summit.atlasType || summit.type || 'place'} ${activeId === summit.id ? 'isActive' : ''} ${hoveredSummitId === summit.id ? 'isHovered' : ''}`}
                   style={{ left: `${summit.mapPosition?.x ?? 50}%`, top: `${summit.mapPosition?.y ?? 50}%` }}
                 >
                   <button
@@ -695,7 +712,7 @@ export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) 
                   {summit.hasLeader && <span className="leader" style={{ '--leader-length': `${Math.max(7, Math.min(30, summit.leaderLength - 4))}px`, '--leader-angle': `${summit.leaderAngle}rad` }} />}
                   <button
                     type="button"
-                    className={`label anchor${summit.labelAnchor || 'east'} ${(!summit.isFeatured && activeId !== summit.id && hoveredSummitId !== summit.id) ? 'isHidden' : ''}`}
+                    className={`label anchor${summit.labelAnchor || 'east'} ${(!summit.isLabelVisibleByDefault && activeId !== summit.id && hoveredSummitId !== summit.id) ? 'isHidden' : ''}`}
                     style={{ transform: `translate(${summit.labelOffset?.x ?? 0}px, ${summit.labelOffset?.y ?? 0}px)` }}
                     onClick={() => summit.id in atlasLookups.summits && setAtlasPath((prev) => [...prev, summit.id])}
                     onMouseEnter={() => setHoveredSummitId(summit.id)}

@@ -275,3 +275,17 @@
   .cinematicAtlas .tatryLayer::before{inset:.95% .7% 1.25%}
   .cinematicAtlas .tatryScene{transform:scale(1.01)}
 }
+
+/* ETAP 18.3: Tatry label hierarchy and interactive marker polish */
+.summitPoint.islandmarkLabel{z-index:3}
+.summitPoint.iscontextLabel .label{opacity:.86;border-color:rgba(231,202,154,.3);background:linear-gradient(145deg,rgba(12,10,9,.88),rgba(25,20,15,.76))}
+.summitPoint.ishoverLabel .dot{width:6px;height:6px;opacity:.58;box-shadow:0 0 0 1px rgba(255,240,214,.2),0 0 7px rgba(244,220,183,.27)}
+.summitPoint.isHovered,.summitPoint:focus-within{z-index:6;transform:translate(-50%,-50%) scale(1.08)}
+.summitPoint.isHovered .dot,.summitPoint:focus-within .dot{opacity:1;background:rgba(255,239,207,1);box-shadow:0 0 0 1px rgba(255,247,226,.56),0 0 0 6px rgba(246,222,182,.17),0 0 20px rgba(246,219,172,.8),0 0 34px rgba(245,218,170,.38)}
+.summitPoint.isHovered .leader,.summitPoint:focus-within .leader{opacity:1}
+.summitPoint.isHovered .label,.summitPoint:focus-within .label{opacity:1;border-color:rgba(247,228,193,.78);background:linear-gradient(145deg,rgba(20,16,12,.98),rgba(39,29,19,.94));box-shadow:0 10px 22px rgba(0,0,0,.38),0 0 18px rgba(247,223,183,.14)}
+@media (max-width:620px){
+  .summitPoint.iscontextLabel:not(.isHovered):not(:focus-within) .label{opacity:0;pointer-events:none}
+  .summitPoint .label{font-size:9.6px;padding:4px 7px;max-width:43vw}
+  .summitHitArea{width:25px;height:25px}
+}
