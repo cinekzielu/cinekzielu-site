@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" role="img" aria-labelledby="icon-frame-title">
+  <title id="icon-frame-title">icon-frame</title>
+  <g id="icon-frame" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M6.4 11.4V6.4h5"/>
+  <path d="M20.6 6.4h5v5"/>
+  <path d="M25.6 20.6v5h-5"/>
+  <path d="M11.4 25.6h-5v-5"/>
+  <path d="M16 12.9v6.2"/>
+  <path d="M12.9 16h6.2"/>
+  <path d="M6.4 16h2.2"/>
+  <path d="M23.4 16h2.2"/>
+  <path d="M16 6.4v2.2"/>
+  <path d="M16 23.4v2.2"/>
+</g>
+</svg>

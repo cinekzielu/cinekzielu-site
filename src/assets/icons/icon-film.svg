@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" role="img" aria-labelledby="icon-film-title">
+  <title id="icon-film-title">icon-film</title>
+  <g id="icon-film" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="5.2" y="9" width="21.6" height="14" rx="2"/>
+  <path d="M13.6 13.1l6.6 3.9-6.6 3.9v-7.8Z"/>
+  <path d="M8.6 12.1h3.3"/>
+  <path d="M20.1 12.1h3.3"/>
+  <path d="M8.6 19.9h3.3"/>
+  <path d="M20.1 19.9h3.3"/>
+</g>
+</svg>

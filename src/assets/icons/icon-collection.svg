@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" role="img" aria-labelledby="icon-collection-title">
+  <title id="icon-collection-title">icon-collection</title>
+  <g id="icon-collection" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M6.5 13.8h19v11.4c0 .8-.6 1.4-1.4 1.4H7.9c-.8 0-1.4-.6-1.4-1.4V13.8Z"/>
+  <path d="M8.8 13.8l1.2-3.2h12l1.2 3.2"/>
+  <path d="M10.6 10.6V7.1h3.6v6.7"/>
+  <path d="M14.7 10.6V6.2h3.5v7.6"/>
+  <path d="M18.8 10.6V7.6h3.3v6.2"/>
+  <path d="M11.4 9.2h1.7"/>
+  <path d="M15.5 8.4h1.9"/>
+  <path d="M19.6 9.6h1.5"/>
+  <rect x="12.1" y="18.2" width="7.8" height="3.4" rx=".8"/>
+</g>
+</svg>

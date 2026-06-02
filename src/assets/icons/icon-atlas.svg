@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" role="img" aria-labelledby="icon-atlas-title">
+  <title id="icon-atlas-title">icon-atlas</title>
+  <g id="icon-atlas" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M8.4 5.7h13.7c1.2 0 2.1.9 2.1 2.1v17.3c0 .7-.5 1.2-1.2 1.2H9.3c-1.5 0-2.7-1.2-2.7-2.7V7.5c0-1 .8-1.8 1.8-1.8Z"/>
+  <path d="M9.7 5.8v20.4"/>
+  <path d="M6.6 23.5c0-1.5 1.2-2.7 2.7-2.7h14.9"/>
+  <circle cx="16.8" cy="14.2" r="4.1"/>
+  <path d="M12.7 14.2h8.2"/>
+  <path d="M16.8 10.1c1.2 1.2 1.8 2.6 1.8 4.1s-.6 2.9-1.8 4.1"/>
+  <path d="M16.8 10.1c-1.2 1.2-1.8 2.6-1.8 4.1s.6 2.9 1.8 4.1"/>
+  <path d="M12.4 26.2v-4.4l2.2 1.4 2.2-1.4v4.4"/>
+</g>
+</svg>
