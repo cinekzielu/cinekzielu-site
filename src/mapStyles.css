@@ -258,3 +258,20 @@
   .cinematicAtlas .atlasCrumbLevel{font-size:7px;letter-spacing:.1em}
   .cinematicAtlas .atlasCrumbName{font-size:11px}
 }
+
+/* HOTFIX 18.2.2: increase map presence inside the unified atlas viewport */
+.cinematicAtlas .atlasWorldSvg{transform:scale(1.045);transform-origin:50% 50%}
+.cinematicAtlas .atlasWorldSvg.isEuropeView{transform:scale(1.075)}
+.cinematicAtlas .tatryLayer{padding:5px 5px 3px}
+.cinematicAtlas .tatryBaseMap{inset:.8% .65% 1.1%}
+.cinematicAtlas .tatryLayer::before{inset:1.15% .85% 1.65%}
+.cinematicAtlas .tatryScene{transform:scale(1.025);transform-origin:50% 50%}
+
+@media (max-width:980px){
+  .cinematicAtlas .atlasWorldSvg{transform:scale(1.025)}
+  .cinematicAtlas .atlasWorldSvg.isEuropeView{transform:scale(1.045)}
+  .cinematicAtlas .tatryLayer{padding:3px 3px 2px}
+  .cinematicAtlas .tatryBaseMap{inset:.65% .5% .85%}
+  .cinematicAtlas .tatryLayer::before{inset:.95% .7% 1.25%}
+  .cinematicAtlas .tatryScene{transform:scale(1.012)}
+}
