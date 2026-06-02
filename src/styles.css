@@ -11,6 +11,7 @@
   --muted: #b7aa9b;
   --faint: #7b7065;
   --cream: #e8d8b8;
+  --gold: #c9a36d;
   --olive: #a6b084;
   --sand: #c8844e;
   --shadow: 0 30px 80px rgba(0, 0, 0, 0.34);
@@ -260,6 +261,15 @@ img {
   font-size: 11px;
   letter-spacing: .28em;
   text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.heroBadge .cz-icon {
+  width: 20px;
+  height: 20px;
+  opacity: .78;
 }
 
 .heroCaption {
@@ -303,7 +313,7 @@ img {
   align-items: end;
 }
 
-#map.section .sectionHeader .cardType {
+#map.section .sectionHeaderLabel {
   grid-column: 1;
   grid-row: 1;
 }
@@ -344,6 +354,18 @@ img {
   background: linear-gradient(180deg, rgba(192, 150, 96, .08), transparent 72%);
 }
 
+.cz-icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  color: var(--gold);
+  background-color: currentColor;
+  -webkit-mask: var(--cz-icon-src) center / contain no-repeat;
+  mask: var(--cz-icon-src) center / contain no-repeat;
+  opacity: .72;
+}
+
 .sectionHeader {
   margin-bottom: 36px;
   display: grid;
@@ -351,6 +373,19 @@ img {
   gap: 14px;
   align-items: start;
   max-width: 72ch;
+}
+
+.sectionHeaderLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  width: fit-content;
+  color: var(--gold);
+}
+
+.sectionHeaderLabel .cz-icon {
+  width: 26px;
+  height: 26px;
 }
 
 .sectionHeader h2,
@@ -2607,6 +2642,16 @@ img {
   margin: 0;
   color: var(--cream);
   font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.expeditionLocation .cz-icon,
+.featuredExpeditionLocation .cz-icon {
+  width: 20px;
+  height: 20px;
+  opacity: .68;
 }
 
 .expeditionTags {

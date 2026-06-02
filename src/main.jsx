@@ -1,12 +1,17 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { MapPin, Mountain, Menu, Play, X } from 'lucide-react'
+import { Mountain, Menu, Play, X } from 'lucide-react'
 import './styles.css'
 import { contentData } from './data/contentData'
 import { filmsData } from './data/filmsData'
 import { expeditionsData } from './data/expeditionsData'
 import { galleryData } from './data/galleryData'
 import { MapAtlas } from './components/MapAtlas'
+import iconAtlas from './assets/icons/icon-atlas.svg'
+import iconCamera from './assets/icons/icon-camera.svg'
+import iconFilm from './assets/icons/icon-film.svg'
+import iconGallery from './assets/icons/icon-gallery.svg'
+import iconLocationMark from './assets/icons/icon-location-mark.svg'
 
 const socials = {
   youtube: 'https://www.youtube.com/@cinek_zielu',
@@ -15,6 +20,16 @@ const socials = {
 }
 
 const img = (name) => `/images/${name}`
+
+function CzIcon({ src, className = '' }) {
+  return (
+    <span
+      className={`cz-icon ${className}`.trim()}
+      style={{ '--cz-icon-src': `url(${src})` }}
+      aria-hidden="true"
+    />
+  )
+}
 
 const formatFilmCategory = (category = '') => category.replace(/[-_]/g, ' ').toUpperCase()
 
@@ -394,7 +409,7 @@ function App() {
             <div className="heroImageWrap">
               <img src={img('hero.jpg')} alt="Marcin Zieliński na górskim szczycie" className="heroImage" />
               <div className="heroOverlay"></div>
-              <div className="heroBadge">Cinek Zielu</div>
+              <div className="heroBadge"><CzIcon src={iconCamera} /> Cinek Zielu</div>
               <div className="heroCaption">
                 <h2>Marcin Zieliński</h2>
                 <p>Góry, podróże i filmowe kadry z miejsc, do których wracam myślami.</p>
@@ -404,11 +419,12 @@ function App() {
         </div>
       </section>
 
-      <section id="map" className="section sectionDarker reveal"><div className="container"><SectionHeader label="MAPA WYPRAW" title="Interaktywna mapa wypraw" text="Hierarchia: Świat → kontynent → kraj/region → Tatry/szczyty." /><MapAtlas atlasPath={atlasPath} setAtlasPath={setAtlasPath} activeNode={activeNode} atlasLookups={atlasLookups} /></div></section>
+      <section id="map" className="section sectionDarker reveal"><div className="container"><SectionHeader icon={iconAtlas} label="MAPA WYPRAW" title="Interaktywna mapa wypraw" text="Hierarchia: Świat → kontynent → kraj/region → Tatry/szczyty." /><MapAtlas atlasPath={atlasPath} setAtlasPath={setAtlasPath} activeNode={activeNode} atlasLookups={atlasLookups} /></div></section>
 
       <section id="films" className="section sectionDark reveal">
         <div className="container">
           <SectionHeader
+            icon={iconFilm}
             label="WYBRANE FILMY"
             title="Filmy z drogi"
             text="Trzy historie z gór i podróży — zapisane w rytmie drogi, obrazu i momentów po trasie."
@@ -474,6 +490,7 @@ function App() {
       <section id="featured-expeditions" className="section sectionDarker reveal">
         <div className="container">
           <SectionHeader
+            icon={iconLocationMark}
             label="WYBRANE KIERUNKI"
             title="Miejsca, które prowadzą dalej"
             text="Tatry, Maroko i Szwajcaria — trzy różne skale wypraw, które najlepiej pokazują kierunek tej strony."
@@ -495,7 +512,7 @@ function App() {
                   <span className="filmHelperLabel">{expedition.timelineLabel}</span>
                 </div>
                 <h3>{expedition.featuredDirectionTitle}</h3>
-                <div className="featuredExpeditionLocation"><MapPin size={13} /> {expedition.featuredDirectionLocation}</div>
+                <div className="featuredExpeditionLocation"><CzIcon src={iconLocationMark} /> {expedition.featuredDirectionLocation}</div>
                 <p>{expedition.featuredDirectionDescription}</p>
                 <div className="featuredExpeditionExtraMeta">{expedition.elevationLabel}</div>
                 {expedition.featuredDirectionTags?.length ? (
@@ -517,6 +534,7 @@ function App() {
       <section id="expeditions" className="section sectionDark reveal">
         <div className="container">
           <SectionHeader
+            icon={iconLocationMark}
             label="WYPRAWY"
             title="Historie z wypraw"
             text="Każda wyprawa ma własną historię: krótki kontekst trasy, najważniejsze dane i kadry z drogi."
@@ -649,7 +667,7 @@ function App() {
                       <span className="filmHelperLabel">{expedition.timelineLabel}</span>
                     </div>
                     <h3>{expedition.title}</h3>
-                    <p className="expeditionLocation">{expedition.cardLocation}</p>
+                    <p className="expeditionLocation"><CzIcon src={iconLocationMark} /> {expedition.cardLocation}</p>
                     <p>{expedition.shortDescription}</p>
                     {expedition.cardTags.length ? (
                       <div className="expeditionTags">
@@ -679,6 +697,7 @@ function App() {
       <section id="gallery-preview" className="section sectionDarker reveal">
         <div className="container">
           <SectionHeader
+            icon={iconGallery}
             label="GALERIE"
             title="Galerie z wypraw"
             text="Zdjęcia z gór i podróży — miejsca, światło i momenty, które warto było zostawić poza filmem."
@@ -735,10 +754,13 @@ function App() {
 }
 
 
-function SectionHeader({ label, title, text }) {
+function SectionHeader({ icon, label, title, text }) {
   return (
     <header className="sectionHeader">
-      <div className="cardType">{label}</div>
+      <div className="sectionHeaderLabel">
+        {icon ? <CzIcon src={icon} /> : null}
+        <div className="cardType">{label}</div>
+      </div>
       <h2>{title}</h2>
       <p>{text}</p>
     </header>
