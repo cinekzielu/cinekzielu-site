@@ -7,7 +7,7 @@ import { filmsData } from './data/filmsData'
 import { expeditionsData } from './data/expeditionsData'
 import { galleryData } from './data/galleryData'
 import { MapAtlas } from './components/MapAtlas'
-import iconAtlas from './assets/icons/icon-atlas.svg'
+import iconMap from './assets/icons/icon-map.svg'
 import iconCamera from './assets/icons/icon-camera.svg'
 import iconFilm from './assets/icons/icon-film.svg'
 import iconGallery from './assets/icons/icon-gallery.svg'
@@ -22,13 +22,7 @@ const socials = {
 const img = (name) => `/images/${name}`
 
 function CzIcon({ src, className = '' }) {
-  return (
-    <span
-      className={`cz-icon ${className}`.trim()}
-      style={{ '--cz-icon-src': `url(${src})` }}
-      aria-hidden="true"
-    />
-  )
+  return <img src={src} alt="" className={`cz-icon ${className}`.trim()} aria-hidden="true" />
 }
 
 const formatFilmCategory = (category = '') => category.replace(/[-_]/g, ' ').toUpperCase()
@@ -419,7 +413,7 @@ function App() {
         </div>
       </section>
 
-      <section id="map" className="section sectionDarker reveal"><div className="container"><SectionHeader icon={iconAtlas} label="MAPA WYPRAW" title="Interaktywna mapa wypraw" text="Hierarchia: Świat → kontynent → kraj/region → Tatry/szczyty." /><MapAtlas atlasPath={atlasPath} setAtlasPath={setAtlasPath} activeNode={activeNode} atlasLookups={atlasLookups} /></div></section>
+      <section id="map" className="section sectionDarker reveal"><div className="container"><SectionHeader icon={iconMap} label="MAPA WYPRAW" title="Interaktywna mapa wypraw" text="Hierarchia: Świat → kontynent → kraj/region → Tatry/szczyty." /><MapAtlas atlasPath={atlasPath} setAtlasPath={setAtlasPath} activeNode={activeNode} atlasLookups={atlasLookups} /></div></section>
 
       <section id="films" className="section sectionDark reveal">
         <div className="container">
