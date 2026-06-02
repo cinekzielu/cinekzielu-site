@@ -267,8 +267,6 @@ img {
 }
 
 .heroBadge .cz-icon {
-  width: 20px;
-  height: 20px;
   opacity: .78;
 }
 
@@ -356,8 +354,8 @@ img {
 
 .cz-icon {
   display: inline-block;
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   flex: 0 0 auto;
   object-fit: contain;
   opacity: .72;
@@ -380,10 +378,6 @@ img {
   color: var(--gold);
 }
 
-.sectionHeaderLabel .cz-icon {
-  width: 20px;
-  height: 20px;
-}
 
 .sectionHeader h2,
 .aboutGrid h2,
@@ -2646,8 +2640,6 @@ img {
 
 .expeditionLocation .cz-icon,
 .featuredExpeditionLocation .cz-icon {
-  width: 20px;
-  height: 20px;
   opacity: .68;
 }
 
