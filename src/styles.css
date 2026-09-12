@@ -2431,11 +2431,6 @@ img {
   transition: transform .3s var(--easing-cinematic), border-color .3s var(--easing-cinematic), box-shadow .3s var(--easing-cinematic);
 }
 
-.galleryPreviewCard:hover {
-  transform: translateY(var(--card-lift-y));
-  border-color: var(--line-strong);
-  box-shadow: var(--glow-soft);
-}
 
 .galleryPreviewVisual {
   position: relative;
@@ -2498,6 +2493,8 @@ img {
 }
 
 .expeditionStoryCard {
+  display: flex;
+  flex-direction: column;
   background: linear-gradient(164deg, rgba(38, 32, 28, 0.9), rgba(16, 13, 12, 0.95));
   border: 1px solid var(--line);
   border-radius: 24px;
@@ -2506,11 +2503,6 @@ img {
   transition: transform .3s var(--easing-cinematic), border-color .3s var(--easing-cinematic), box-shadow .3s var(--easing-cinematic);
 }
 
-.expeditionStoryCard:hover {
-  transform: translateY(var(--card-lift-y));
-  border-color: var(--line-strong);
-  box-shadow: var(--glow-soft);
-}
 
 .expeditionStoryMedia {
   aspect-ratio: 16 / 10;
@@ -2526,9 +2518,6 @@ img {
   transition: transform .7s var(--easing-cinematic);
 }
 
-.expeditionStoryCard:hover .expeditionStoryMedia img {
-  transform: scale(1.045);
-}
 
 .expeditionStoryMediaFallback {
   position: absolute;
@@ -2548,6 +2537,9 @@ img {
 }
 
 .expeditionStoryBody {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   padding: 18px 18px 20px;
 }
 
@@ -2564,7 +2556,8 @@ img {
 }
 
 .expeditionStoryActions {
-  margin-top: 16px;
+  margin-top: auto;
+  padding-top: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2587,7 +2580,8 @@ img {
   transition: color .2s ease;
 }
 
-.expeditionStoryCard:hover .expeditionStoryYouTube {
+.expeditionStoryYouTube:hover,
+.expeditionStoryYouTube:focus-visible {
   color: #efe4d6;
 }
 
@@ -3150,4 +3144,28 @@ img {
   .authorFooterSocials {
     justify-self: start;
   }
+}
+
+/* ETAP 19.1 FIX: passive availability labels, scoped to homepage cards. */
+.contentStatus {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: rgba(214, 198, 168, 0.04);
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.4;
+  letter-spacing: .14em;
+  cursor: default;
+}
+
+.expeditionStoryBody > p {
+  margin: 10px 0 0;
+  line-height: 1.65;
+}
+
+.expeditionStoryBody > .expeditionTags {
+  margin-bottom: 0;
 }

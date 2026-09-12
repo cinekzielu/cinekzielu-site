@@ -17,7 +17,7 @@ export const expeditionsData = [
     tags: ['Tatry', 'zima', 'alpinizm'],
     youtubeUrl: '',
     galleryId: 'tatry',
-    coverImage: img('gerlach-winter.jpg'),
+    coverImage: null,
     homepageStory: true,
     routeInfo: {
       start: 'Tatrzańska Polanka',
@@ -80,7 +80,7 @@ export const expeditionsData = [
     tags: ['Tatry', 'technicznie', 'grań'],
     youtubeUrl: '',
     galleryId: 'tatry',
-    coverImage: img('durny-szczyt.jpg'),
+    coverImage: null,
     homepageStory: true,
   },
   {
