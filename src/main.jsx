@@ -33,13 +33,16 @@ const featuredFilms = filmsData
   .filter((film) => film.homepageFeatured || film.featured)
   .slice(0, 3)
 
-const homepageFilms = (featuredFilms.length ? featuredFilms : filmsData.slice(0, 3)).map((film) => ({
-  ...film,
-  typeLabel: formatFilmCategory(film.category),
-  statusLabel: formatFilmStatus(String(film.status || '')),
-  timelineLabel: film.year || film.status,
-  ctaUrl: film.youtubeUrl || null,
-}))
+const homepageFilms = (featuredFilms.length ? featuredFilms : filmsData.slice(0, 3)).map((film) => {
+  const ctaUrl = film.status === 'published' ? film.youtubeUrl?.trim() || null : null
+  return {
+    ...film,
+    typeLabel: formatFilmCategory(film.category),
+    statusLabel: ctaUrl ? 'Opublikowane' : 'Wkrótce',
+    timelineLabel: film.year || '',
+    ctaUrl,
+  }
+})
 
 const filmFallbackLabel = 'CINEMATIC STORY'
 const expeditionFallbackLabel = 'Materiał w przygotowaniu'
@@ -51,14 +54,17 @@ const preferredStoryIds = ['gerlach-winter', 'lomnica', 'durny-szczyt', 'kosciel
 const homepageExpeditionStories = expeditionsData
   .filter((expedition) => expedition.homepageStory || expedition.storyFeatured || preferredStoryIds.includes(expedition.id))
   .slice(0, 3)
-  .map((expedition) => ({
-    ...expedition,
-    statusLabel: formatFilmStatus(String(expedition.status || '')),
-    timelineLabel: expedition.year || formatFilmStatus(String(expedition.season || '')),
-    cardLocation: expedition.location || expedition.region || expedition.country,
-    cardTags: expedition.tags || [],
-    ctaLabel: expedition.youtubeUrl ? 'Zobacz historię' : 'Wkrótce więcej',
-  }))
+  .map((expedition) => {
+    const hasPublishedStory = expedition.status === 'published' && Boolean(expedition.longDescription?.trim())
+    return {
+      ...expedition,
+      statusLabel: hasPublishedStory ? 'Opublikowane' : 'Wkrótce',
+      timelineLabel: expedition.year || formatFilmStatus(String(expedition.season || '')),
+      cardLocation: expedition.location || expedition.region || expedition.country,
+      cardTags: expedition.tags || [],
+      hasPublishedStory,
+    }
+  })
 
 const formatContentStatus = (status = '') => {
   const normalized = String(status).trim().toLowerCase()
@@ -77,7 +83,6 @@ const homepageGalleryCards = galleryPreviewIds
     ...gallery,
     statusLabel: formatContentStatus(gallery.status),
     description: gallery.subtitle || 'Galeria kadrów z drogi.',
-    ctaLabel: 'Galerie dla preview',
   }))
 
 function GalleryPreviewCover({ gallery }) {
@@ -452,7 +457,7 @@ function App() {
                   {film.duration ? <span className="filmDuration">{film.duration}</span> : null}
                 </div>
                 <div className="filmMetaRow">
-                  <div className="cardType">{film.statusLabel}</div>
+                  <span className={`cardType${film.ctaUrl ? '' : ' contentStatus'}`}>{film.statusLabel}</span>
                   <span className="filmHelperLabel">{film.timelineLabel}</span>
                 </div>
                 <h3>{film.title}</h3>
@@ -470,14 +475,11 @@ function App() {
                     <Play size={14} /> Obejrzyj na YouTube
                   </a>
                 ) : (
-                  <div className="filmStatusSoon">Premiera wkrótce</div>
+                  <div className="filmStatusSoon">Wkrótce</div>
                 )}
               </article>
             ))}
           </div>
-          <a className="smallButton filmsArchiveCta" href="#films" aria-label="Zobacz wszystkie filmy (wkrótce)">
-            Zobacz wszystkie filmy
-          </a>
         </div>
       </section>
 
@@ -657,7 +659,7 @@ function App() {
                   <ExpeditionStoryCover expedition={expedition} />
                   <div className="expeditionStoryBody">
                     <div className="expeditionStoryMetaTop">
-                      <div className="cardType">{expedition.statusLabel}</div>
+                      <span className={`cardType${expedition.hasPublishedStory ? '' : ' contentStatus'}`}>{expedition.statusLabel}</span>
                       <span className="filmHelperLabel">{expedition.timelineLabel}</span>
                     </div>
                     <h3>{expedition.title}</h3>
@@ -670,16 +672,20 @@ function App() {
                         ))}
                       </div>
                     ) : null}
-                    <div className="expeditionStoryActions">
-                      <span className={`smallButton expeditionStoryCta ${expedition.youtubeUrl ? '' : 'isDisabled'}`}>
-                        {expedition.ctaLabel}
-                      </span>
-                      {expedition.youtubeUrl ? (
-                        <a className="expeditionStoryYouTube" href={expedition.youtubeUrl} target="_blank" rel="noreferrer">
-                          Film na YouTube
-                        </a>
-                      ) : null}
-                    </div>
+                    {expedition.hasPublishedStory || expedition.youtubeUrl ? (
+                      <div className="expeditionStoryActions">
+                        {expedition.hasPublishedStory ? (
+                          <a className="smallButton" href={`/wyprawy/${encodeURIComponent(expedition.id)}`}>
+                            Zobacz historię
+                          </a>
+                        ) : null}
+                        {expedition.youtubeUrl ? (
+                          <a className="expeditionStoryYouTube" href={expedition.youtubeUrl} target="_blank" rel="noreferrer">
+                            Film na YouTube
+                          </a>
+                        ) : null}
+                      </div>
+                    ) : null}
                   </div>
                 </article>
               ))}
@@ -714,7 +720,6 @@ function App() {
                       ))}
                     </div>
                   ) : null}
-                  <span className="smallButton galleryPreviewCta isDisabled">{gallery.ctaLabel}</span>
                 </div>
               </article>
             ))}
