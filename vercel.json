@@ -1,8 +1,56 @@
 {
-  "rewrites": [
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
     {
-      "source": "/wyprawy/:slug",
-      "destination": "/index.html"
+      "source": "/index",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/wyprawy/switzerland-trip",
+      "destination": "/wyprawy/szwajcaria-2025",
+      "permanent": true
+    },
+    {
+      "source": "/wyprawy/gerlach-winter",
+      "destination": "/mapa?atlas=gerlach",
+      "permanent": true
+    },
+    {
+      "source": "/wyprawy/lomnica-expedition",
+      "destination": "/mapa?atlas=lomnica",
+      "permanent": true
+    },
+    {
+      "source": "/wyprawy/lomnica",
+      "destination": "/mapa?atlas=lomnica",
+      "permanent": true
+    },
+    {
+      "source": "/wyprawy/durny-szczyt",
+      "destination": "/mapa?atlas=durny-szczyt",
+      "permanent": true
+    },
+    {
+      "source": "/wyprawy/koscielec-winter",
+      "destination": "/mapa?atlas=koscielec",
+      "permanent": true
+    },
+    {
+      "source": "/wyprawy/morocco-toubkal",
+      "destination": "/mapa?atlas=morocco",
+      "permanent": true
+    },
+    {
+      "source": "/wyprawy/zermatt",
+      "destination": "/mapa?atlas=zermatt",
+      "permanent": true
+    },
+    {
+      "source": "/wyprawy/romania-transfagarasan",
+      "destination": "/mapa?atlas=romania",
+      "permanent": true
     }
   ]
 }

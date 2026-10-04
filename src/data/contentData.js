@@ -24,7 +24,7 @@ const expeditions = expeditionsData.map((expedition) => {
     filmUrl: expedition.youtubeUrl,
     atlasNode,
     atlasNodeId: expedition.mapNodeId,
-    galleryCollectionSlug: expedition.galleryId,
+    galleryCollectionSlug: galleryData.find(gallery => gallery.relatedExpeditionIds.includes(expedition.id))?.id || null,
     heroImage: expedition.coverImage,
     mood: expedition.shortDescription,
     stats: {
@@ -40,7 +40,7 @@ const galleryCollections = galleryData.map((gallery) => ({
   slug: gallery.id,
   description: gallery.subtitle,
   cover: gallery.coverImage,
-  photos: [],
+  photos: gallery.photos,
 }))
 
 const galleriesBySlug = buildLookup(galleryCollections)
