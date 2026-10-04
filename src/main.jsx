@@ -4,14 +4,23 @@ import { Mountain, Menu, Play, X } from 'lucide-react'
 import './styles.css'
 import { contentData } from './data/contentData'
 import { filmsData } from './data/filmsData'
-import { expeditionsData } from './data/expeditionsData'
+import { FilmIndex } from './components/Films'
+import { getAtlasMaterials } from './data/atlasContent'
+import { applyPageMetadata } from './pageMetadata'
+import { legacyRedirects, normalizePagePath } from './data/siteMetadata'
+import { NotFound } from './components/NotFound'
 import { galleryData } from './data/galleryData'
-import { MapAtlas } from './components/MapAtlas'
+import { GalleryCards, GalleryIndex, GalleryPage } from './components/Galleries'
+import { ExpeditionIndex, ExpeditionPage, ExpeditionList } from './components/Expeditions'
+import { expeditionPages, findExpeditionPage } from './data/expeditionPages'
 import iconMap from './assets/icons/icon-map.svg'
 import iconCamera from './assets/icons/icon-camera.svg'
 import iconFilm from './assets/icons/icon-film.svg'
 import iconGallery from './assets/icons/icon-gallery.svg'
 import iconLocationMark from './assets/icons/icon-location-mark.svg'
+
+const MapPage = React.lazy(() => import('./components/MapPage').then(module => ({ default: module.MapPage })))
+const MapAtlas = React.lazy(() => import('./components/MapAtlas').then(module => ({ default: module.MapAtlas })))
 
 const socials = {
   youtube: 'https://www.youtube.com/@cinek_zielu',
@@ -31,6 +40,7 @@ const formatFilmStatus = (status = '') => status.replace(/[-_]/g, ' ').toUpperCa
 
 const featuredFilms = filmsData
   .filter((film) => film.homepageFeatured || film.featured)
+  .sort((a, b) => a.homepageOrder - b.homepageOrder)
   .slice(0, 3)
 
 const homepageFilms = (featuredFilms.length ? featuredFilms : filmsData.slice(0, 3)).map((film) => {
@@ -39,156 +49,47 @@ const homepageFilms = (featuredFilms.length ? featuredFilms : filmsData.slice(0,
     ...film,
     typeLabel: formatFilmCategory(film.category),
     statusLabel: ctaUrl ? 'Opublikowane' : 'Wkrótce',
-    timelineLabel: film.year || '',
+    timelineLabel: film.year ? `Publikacja ${film.year}` : '',
     ctaUrl,
   }
 })
 
 const filmFallbackLabel = 'CINEMATIC STORY'
-const expeditionFallbackLabel = 'Materiał w przygotowaniu'
-const galleryFallbackLabel = 'Galeria w przygotowaniu'
-const galleryPreviewIds = ['tatry', 'morocco', 'switzerland']
-
-const preferredStoryIds = ['gerlach-winter', 'lomnica', 'durny-szczyt', 'koscielec-winter']
-
-const homepageExpeditionStories = expeditionsData
-  .filter((expedition) => expedition.homepageStory || expedition.storyFeatured || preferredStoryIds.includes(expedition.id))
-  .slice(0, 3)
-  .map((expedition) => {
-    const hasPublishedStory = expedition.status === 'published' && Boolean(expedition.longDescription?.trim())
-    return {
-      ...expedition,
-      statusLabel: hasPublishedStory ? 'Opublikowane' : 'Wkrótce',
-      timelineLabel: expedition.year || formatFilmStatus(String(expedition.season || '')),
-      cardLocation: expedition.location || expedition.region || expedition.country,
-      cardTags: expedition.tags || [],
-      hasPublishedStory,
-    }
-  })
-
-const formatContentStatus = (status = '') => {
-  const normalized = String(status).trim().toLowerCase()
-  if (normalized === 'planned') return 'w przygotowaniu'
-  if (normalized === 'in-production') return 'w realizacji'
-  if (normalized === 'published') return 'opublikowane'
-  if (normalized === 'archived') return 'archiwalne'
-  return normalized ? formatFilmStatus(normalized) : 'w przygotowaniu'
-}
-
-const homepageGalleryCards = galleryPreviewIds
-  .map((id) => galleryData.find((gallery) => gallery.id === id))
-  .filter(Boolean)
-  .slice(0, 3)
-  .map((gallery) => ({
-    ...gallery,
-    statusLabel: formatContentStatus(gallery.status),
-    description: gallery.subtitle || 'Galeria kadrów z drogi.',
-  }))
-
-function GalleryPreviewCover({ gallery }) {
-  const [isBroken, setIsBroken] = React.useState(false)
-  const showFallback = !gallery.coverImage || isBroken
-
-  return (
-    <div className={`galleryPreviewVisual ${showFallback ? 'isFallback' : ''}`}>
-      {!showFallback ? (
-        <img src={gallery.coverImage} alt={`Kadr galerii ${gallery.title}`} loading="lazy" onError={() => setIsBroken(true)} />
-      ) : null}
-      <div className="galleryPreviewOverlay" />
-      {showFallback ? (
-        <div className="galleryPreviewFallback" aria-hidden="true">
-          <span>{galleryFallbackLabel}</span>
-        </div>
-      ) : null}
-    </div>
-  )
-}
-
-function ExpeditionStoryCover({ expedition }) {
-  const [isBroken, setIsBroken] = React.useState(false)
-  const cover = expedition.coverImage || expedition.heroImage || expedition.thumbnail
-  const showFallback = !cover || isBroken
-
-  return (
-    <div className={`expeditionStoryMedia ${showFallback ? 'isFallback' : ''}`}>
-      {!showFallback ? (
-        <img
-          src={cover}
-          alt={expedition.title}
-          loading="lazy"
-          onError={() => setIsBroken(true)}
-        />
-      ) : null}
-      {showFallback ? (
-        <div className="expeditionStoryMediaFallback" aria-hidden="true">
-          <span>{expeditionFallbackLabel}</span>
-        </div>
-      ) : null}
-    </div>
-  )
-}
-
-const homepageFeaturedExpeditions = expeditionsData
-  .filter((expedition) => expedition.homepageFeatured || expedition.featured)
-  .slice(0, 3)
-  .map((expedition) => ({
-    ...expedition,
-    statusLabel: formatFilmStatus(String(expedition.status || '')),
-    timelineLabel: expedition.year || expedition.season || expedition.status,
-    directionMeta: expedition.directionMeta || `${(expedition.country === 'Maroko' ? 'AFRYKA' : 'EUROPA')} / ${expedition.country}`,
-    atlasCode: expedition.atlasCode || `ATLS-${expedition.id.slice(0, 3).toUpperCase()}` ,
-    elevationLabel: expedition.elevationLabel || expedition.routeInfo?.elevationGain || '',
-    routeAccent: expedition.routeAccent || 'rgba(221, 169, 92, 0.72)',
-    featuredDirectionTitle: expedition.featuredDirectionTitle || expedition.displayTitle || expedition.directionTitle || expedition.title,
-    featuredDirectionDescription: expedition.featuredDirectionDescription || expedition.shortDescription,
-    featuredDirectionLocation: expedition.featuredDirectionLocation || expedition.country,
-    featuredDirectionTags: expedition.featuredDirectionTags || expedition.tags,
-  }))
-
+const homepageFeaturedExpeditions = [
+  { id: 'tatry', name: 'Tatry', location: 'Polska i Słowacja', continent: 'EUROPA', code: 'ATLS-TAT-001', description: 'Granie, zimowe wejścia i filmy ze szczytów.', tags: ['Tatry', 'granie', 'zima'] },
+  { id: 'morocco', name: 'Maroko / Toubkal', location: 'Maroko', continent: 'AFRYKA', code: 'ATLS-MAR-002', description: 'Podróż po Maroku i wejście na Toubkal.', tags: ['Atlas Wysoki', 'podróż', 'film'] },
+  { id: 'switzerland', name: 'Szwajcaria', location: 'Szwajcaria', continent: 'EUROPA', code: 'ATLS-CHE-003', description: 'Alpejskie jeziora, grzbiety i lodowce.', tags: ['Alpy', 'fotografia', 'filmy'] },
+].map(direction => {
+  const materials = getAtlasMaterials(direction.id)
+  return { id: direction.id, featuredMapNodeId: direction.id, featuredDirectionTitle: direction.name,
+    featuredDirectionLocation: direction.location, featuredDirectionDescription: direction.description, featuredDirectionTags: direction.tags,
+    directionMeta: `${direction.continent} / ${direction.location}`, atlasCode: direction.code, routeAccent: 'rgba(221, 169, 92, 0.72)',
+    statusLabel: `${materials.films.length} ${materials.films.length === 2 ? 'filmy' : 'filmów'}`,
+    timelineLabel: materials.galleries.length ? `${materials.galleries.length} ${materials.galleries.length === 1 ? 'galeria' : 'galerie'}` : 'YouTube',
+    elevationLabel: materials.photoCount ? `${materials.photoCount} zdjęć` : '',
+  }
+})
 
 const mobileNavLinks = [
   { href: '#map', label: 'Mapa' },
   { href: '#films', label: 'Filmy' },
   { href: '#featured-expeditions', label: 'Kierunki' },
-  { href: '#expeditions', label: 'Historie' },
-  { href: '#gallery-preview', label: 'Galeria' },
+  { href: '#expeditions', label: 'Wyprawy' },
+  { href: '#gallery-preview', label: 'Galerie' },
   { href: '#footer', label: 'Kontakt' },
 ]
 
 const mobileMenuVariant = 'A'
-const defaultMetadata = {
-  title: 'Cinek Zielu | Góry, podróże i filmy dokumentalne',
-  description:
-    'Cinek Zielu (Marcin Zieliński) — góry, podróże i filmy dokumentalne. Zobacz zdjęcia, relacje i historie z wypraw.',
-  image: '/og-image.jpg',
-}
-
-const setMetaTag = ({ selector, attribute, value }) => {
-  const element = document.querySelector(selector)
-  if (!element) return
-  element.setAttribute(attribute, value)
-}
-
-const updatePageMetadata = ({ title, description, image }) => {
-  document.title = title
-  setMetaTag({ selector: 'meta[name="description"]', attribute: 'content', value: description })
-  setMetaTag({ selector: 'meta[property="og:title"]', attribute: 'content', value: title })
-  setMetaTag({ selector: 'meta[property="og:description"]', attribute: 'content', value: description })
-  setMetaTag({ selector: 'meta[property="og:image"]', attribute: 'content', value: image })
-  setMetaTag({ selector: 'meta[name="twitter:title"]', attribute: 'content', value: title })
-  setMetaTag({ selector: 'meta[name="twitter:description"]', attribute: 'content', value: description })
-  setMetaTag({ selector: 'meta[name="twitter:image"]', attribute: 'content', value: image })
-}
-
-
 const parseExpeditionSlugFromPath = (pathname) => {
   const match = pathname.match(/^\/wyprawy\/([^/]+)\/?$/)
-  return match ? decodeURIComponent(match[1]) : null
+  if (!match) return null
+  try { return decodeURIComponent(match[1]) } catch { return null }
 }
 
 function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
-  const [atlasPath, setAtlasPath] = React.useState(['world'])
+  const menuRef = React.useRef(null)
+  const menuButtonRef = React.useRef(null)
   const [activeExpeditionSlug, setActiveExpeditionSlug] = React.useState(null)
   const [isExpeditionNotFound, setIsExpeditionNotFound] = React.useState(false)
   const activeExpedition = React.useMemo(
@@ -199,11 +100,6 @@ function App() {
     if (!activeExpedition?.galleryCollectionSlug) return null
     return contentData.galleriesBySlug[activeExpedition.galleryCollectionSlug] ?? null
   }, [activeExpedition])
-  const expeditionGalleryPhotos = React.useMemo(
-    () => activeExpeditionCollection?.photos.slice(0, 6) ?? [],
-    [activeExpeditionCollection]
-  )
-  const hasExpeditionGallery = expeditionGalleryPhotos.length >= 3
   const randomRelatedExpedition = React.useMemo(() => {
     if (!activeExpedition) return null
 
@@ -214,16 +110,6 @@ function App() {
     return candidates[randomIndex] ?? null
   }, [activeExpedition])
 
-  const atlasLookups = React.useMemo(() => ({
-    ...contentData.atlasLookups,
-  }), [])
-  const atlasLevel = atlasPath.length - 1
-  const activeId = atlasPath[atlasPath.length - 1]
-  const activeNode = React.useMemo(() => {
-    if (activeId === 'world') return { id: 'world', name: 'Świat', description: 'Wybierz kontynent, aby wejść głębiej w atlas wypraw.' }
-    return atlasLookups.continents[activeId] || atlasLookups.countries[activeId] || atlasLookups.specialRegions[activeId] || atlasLookups.summits[activeId] || atlasLookups.places[activeId]
-  }, [activeId, atlasLookups])
-
     React.useEffect(() => {
     const elements = document.querySelectorAll('.reveal')
 
@@ -232,11 +118,13 @@ function App() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('isVisible')
+            observer.unobserve(entry.target)
           }
         })
       },
       {
-        threshold: 0.12,
+        threshold: 0,
+        rootMargin: '120px 0px',
       }
     )
 
@@ -248,21 +136,25 @@ function App() {
   }, [])
 
   React.useEffect(() => {
-    if (!isMobileMenuOpen) return undefined
-
-    const handleKeyDown = (event) => {
-      if (event.key === 'Escape') {
-        setIsMobileMenuOpen(false)
+    if (!isMobileMenuOpen) return
+    const previous = document.body.style.overflow
+    const links = [...menuRef.current.querySelectorAll('a')]
+    const controls = [menuButtonRef.current, ...links]
+    const media = window.matchMedia('(min-width:901px)')
+    const close = () => { setIsMobileMenuOpen(false); menuButtonRef.current?.focus() }
+    const keydown = event => {
+      if (event.key === 'Escape') { event.preventDefault(); close() }
+      if (event.key === 'Tab') {
+        if (event.shiftKey && document.activeElement === controls[0]) { event.preventDefault(); controls.at(-1)?.focus() }
+        else if (!event.shiftKey && document.activeElement === controls.at(-1)) { event.preventDefault(); controls[0]?.focus() }
       }
     }
-
+    const resize = () => { if (media.matches) setIsMobileMenuOpen(false) }
     document.body.style.overflow = 'hidden'
-    window.addEventListener('keydown', handleKeyDown)
-
-    return () => {
-      document.body.style.overflow = ''
-      window.removeEventListener('keydown', handleKeyDown)
-    }
+    links[0]?.focus()
+    window.addEventListener('keydown', keydown)
+    media.addEventListener('change', resize)
+    return () => { document.body.style.overflow = previous; window.removeEventListener('keydown', keydown); media.removeEventListener('change', resize) }
   }, [isMobileMenuOpen])
 
   React.useEffect(() => {
@@ -307,22 +199,6 @@ function App() {
     })
   }, [activeExpeditionSlug, isExpeditionNotFound])
 
-  React.useEffect(() => {
-    if (activeExpedition) {
-      updatePageMetadata({
-        title: `Cinek Zielu — ${activeExpedition.title}`,
-        description: activeExpedition.shortDescription,
-        image: activeExpedition.heroImage,
-      })
-      return
-    }
-
-    updatePageMetadata(defaultMetadata)
-  }, [activeExpedition])
-
-  // Uwaga: crawlers social media zwykle nie wykonują JS w SPA konsekwentnie.
-  // Dla pełnego SEO/OG per URL docelowo potrzebne będą SSR (np. Next.js) albo statycznie generowane strony.
-
   const openExpedition = (slug) => {
     const nextUrl = `/wyprawy/${slug}`
     if (window.location.pathname !== nextUrl) {
@@ -343,7 +219,8 @@ function App() {
   }
 
   return (
-    <main>
+    <main className="homepage">
+      <a className="cz-skip-link" href="#home-content">Przejdź do treści</a>
       <section className="hero">
         <div className="cinematicNoise"></div>
         <div className="cinematicFog fogOne"></div>
@@ -363,6 +240,8 @@ function App() {
           </div>
           <button
             className="hamburgerButton"
+            ref={menuButtonRef}
+            aria-controls="mobile-navigation"
             type="button"
             aria-label={isMobileMenuOpen ? 'Zamknij menu' : 'Otwórz menu'}
             aria-expanded={isMobileMenuOpen}
@@ -375,15 +254,15 @@ function App() {
           className={`mobileMenuBackdrop ${isMobileMenuOpen ? 'isOpen' : ''}`}
           onClick={() => setIsMobileMenuOpen(false)}
         />
-        <div className={`mobileMenu mobileVariant${mobileMenuVariant} ${isMobileMenuOpen ? 'isOpen' : ''}`}>
+        <div ref={menuRef} id="mobile-navigation" role="navigation" aria-label="Menu mobilne" inert={!isMobileMenuOpen} className={`mobileMenu mobileVariant${mobileMenuVariant} ${isMobileMenuOpen ? 'isOpen' : ''}`}>
           {mobileNavLinks.map((item) => (
-            <a href={item.href} key={item.href} onClick={() => setIsMobileMenuOpen(false)}>
+            <a href={item.href} key={item.href} onClick={() => { setIsMobileMenuOpen(false); requestAnimationFrame(() => { const target = document.querySelector(item.href); if (target) { target.tabIndex = -1; target.focus({ preventScroll: true }) } }) }}>
               {item.label}
             </a>
           ))}
         </div>
 
-        <div className="heroGrid container">
+        <div className="heroGrid container" id="home-content" tabIndex={-1}>
           <div className="heroText">
             <div className="eyebrow">Cinek Zielu / Marcin Zieliński</div>
             <h1 className="heroTitle">Wyprawy, filmy i historie z miejsc, które zostają ze mną na długo.</h1>
@@ -406,7 +285,7 @@ function App() {
 
           <div className="heroCard">
             <div className="heroImageWrap">
-              <img src={img('hero.jpg')} alt="Marcin Zieliński na górskim szczycie" className="heroImage" />
+              <img src="/images/optimized/hero-720.webp" srcSet="/images/optimized/hero-720.webp 720w, /images/optimized/hero-1280.webp 1280w" sizes="(max-width:900px) calc(100vw - 40px), (max-width:1400px) 44vw, 600px" width="1760" height="2048" fetchPriority="high" decoding="async" alt="Marcin Zieliński na górskim szczycie" className="heroImage" />
               <div className="heroOverlay"></div>
               <div className="heroBadge"><CzIcon src={iconCamera} /> Cinek Zielu</div>
               <div className="heroCaption">
@@ -418,7 +297,7 @@ function App() {
         </div>
       </section>
 
-      <section id="map" className="section sectionDarker reveal"><div className="container"><SectionHeader icon={iconMap} label="MAPA WYPRAW" title="Interaktywna mapa wypraw" text="Hierarchia: Świat → kontynent → kraj/region → Tatry/szczyty." /><MapAtlas atlasPath={atlasPath} setAtlasPath={setAtlasPath} activeNode={activeNode} atlasLookups={atlasLookups} /></div></section>
+      <section id="map" className="section sectionDarker reveal"><div className="container"><SectionHeader icon={iconMap} label="MAPA WYPRAW" title="Mapa wypraw" text="Wybierz miejsce, aby zobaczyć zdjęcia i filmy z wypraw." /><React.Suspense fallback={<p role="status">Wczytywanie mapy…</p>}><MapAtlas /></React.Suspense></div></section>
 
       <section id="films" className="section sectionDark reveal">
         <div className="container">
@@ -426,7 +305,7 @@ function App() {
             icon={iconFilm}
             label="WYBRANE FILMY"
             title="Filmy z drogi"
-            text="Trzy historie z gór i podróży — zapisane w rytmie drogi, obrazu i momentów po trasie."
+            text="Trzy wybrane filmy. Więcej znajdziesz w bibliotece."
           />
           <div className="filmGrid">
             {homepageFilms.map((film) => (
@@ -435,6 +314,11 @@ function App() {
                   {film.thumbnail ? (
                     <img
                       src={film.thumbnail}
+                      srcSet={film.homepageThumbnail ? `${film.homepageThumbnail.replace('-960.webp', '-640.webp')} 640w, ${film.homepageThumbnail} 960w` : undefined}
+                      sizes="(max-width:900px) calc(100vw - 40px), (max-width:1400px) 31vw, 400px"
+                      width="960"
+                      height="540"
+                      decoding="async"
                       alt={`Miniatura filmu ${film.title}`}
                       loading="lazy"
                       onError={(event) => {
@@ -480,6 +364,7 @@ function App() {
               </article>
             ))}
           </div>
+          <a className="cz-gallery-text-link" href="/filmy">Biblioteka filmów →</a>
         </div>
       </section>
 
@@ -489,7 +374,7 @@ function App() {
             icon={iconLocationMark}
             label="WYBRANE KIERUNKI"
             title="Miejsca, które prowadzą dalej"
-            text="Tatry, Maroko i Szwajcaria — trzy różne skale wypraw, które najlepiej pokazują kierunek tej strony."
+            text="Tatry, Maroko i Szwajcaria. Wybierz miejsce i zobacz materiały."
           />
           <div className="featuredExpeditionsGrid">
             {homepageFeaturedExpeditions.map((expedition) => (
@@ -518,7 +403,7 @@ function App() {
                     ))}
                   </div>
                 ) : null}
-                <a className="smallButton featuredExpeditionCta" href="#map">
+                <a className="smallButton featuredExpeditionCta" href={`/mapa?atlas=${expedition.featuredMapNodeId || expedition.mapNodeId || 'world'}`}>
                   Zobacz na mapie
                 </a>
               </article>
@@ -532,8 +417,8 @@ function App() {
           <SectionHeader
             icon={iconLocationMark}
             label="WYPRAWY"
-            title="Historie z wypraw"
-            text="Każda wyprawa ma własną historię: krótki kontekst trasy, najważniejsze dane i kadry z drogi."
+            title="Wyprawy"
+            text="Zdjęcia, filmy, miejsca."
           />
           {activeExpedition || isExpeditionNotFound ? (
             activeExpedition ? (
@@ -585,32 +470,10 @@ function App() {
               </div>
 
 
-              <div className="expeditionPlaceholder reveal">
-                <div className="expeditionGalleryHeader">
-                  <p className="storyLabel">Galeria wyprawy</p>
-                  <span className="smallButton isDisabled">Galeria wkrótce</span>
-                </div>
-                {hasExpeditionGallery ? (
-                  <div className="expeditionGalleryGrid">
-                    {expeditionGalleryPhotos.map((photo) => (
-                      <figure
-                        className={`expeditionPhotoCard ${photo.format === 'portrait' ? 'portrait' : ''}`}
-                        key={`${activeExpeditionCollection.slug}-${photo.title}`}
-                        role="button"
-                        tabIndex={0}
-                        aria-label={`Otwórz podgląd zdjęcia: ${photo.title}`}
-                        onClick={() => {}}
-                        onKeyDown={() => {}}
-                      >
-                        <img src={photo.src} alt={photo.title} />
-                        <figcaption>{photo.title}</figcaption>
-                      </figure>
-                    ))}
-                  </div>
-                ) : (
-                  <p>Ta galeria będzie jeszcze rozwijana.</p>
-                )}
-              </div>
+              {activeExpeditionCollection && <div className="expeditionPlaceholder reveal">
+                <p className="storyLabel">Galeria wyprawy</p>
+                <GalleryCards galleries={[activeExpeditionCollection]} />
+              </div>}
 
               {randomRelatedExpedition && (
                 <div className="expeditionNextStory reveal">
@@ -653,80 +516,21 @@ function App() {
               </article>
             )
           ) : (
-            <div className="expeditionStoriesGrid">
-              {homepageExpeditionStories.map((expedition) => (
-                <article className="expeditionStoryCard" key={expedition.id}>
-                  <ExpeditionStoryCover expedition={expedition} />
-                  <div className="expeditionStoryBody">
-                    <div className="expeditionStoryMetaTop">
-                      <span className={`cardType${expedition.hasPublishedStory ? '' : ' contentStatus'}`}>{expedition.statusLabel}</span>
-                      <span className="filmHelperLabel">{expedition.timelineLabel}</span>
-                    </div>
-                    <h3>{expedition.title}</h3>
-                    <p className="expeditionLocation"><CzIcon src={iconLocationMark} /> {expedition.cardLocation}</p>
-                    <p>{expedition.shortDescription}</p>
-                    {expedition.cardTags.length ? (
-                      <div className="expeditionTags">
-                        {expedition.cardTags.slice(0, 3).map((tag) => (
-                          <span key={`${expedition.id}-${tag}`}>{tag}</span>
-                        ))}
-                      </div>
-                    ) : null}
-                    {expedition.hasPublishedStory || expedition.youtubeUrl ? (
-                      <div className="expeditionStoryActions">
-                        {expedition.hasPublishedStory ? (
-                          <a className="smallButton" href={`/wyprawy/${encodeURIComponent(expedition.id)}`}>
-                            Zobacz historię
-                          </a>
-                        ) : null}
-                        {expedition.youtubeUrl ? (
-                          <a className="expeditionStoryYouTube" href={expedition.youtubeUrl} target="_blank" rel="noreferrer">
-                            Film na YouTube
-                          </a>
-                        ) : null}
-                      </div>
-                    ) : null}
-                  </div>
-                </article>
-              ))}
-            </div>
+            <>
+              <ExpeditionList expeditions={expeditionPages.slice(0, 3)} compact />
+              <a className="cz-gallery-text-link" href="/wyprawy">Wszystkie wyprawy →</a>
+            </>
           )}
         </div>
       </section>
 
       <section id="gallery-preview" className="section sectionDarker reveal">
         <div className="container">
-          <SectionHeader
-            icon={iconGallery}
-            label="GALERIE"
-            title="Galerie z wypraw"
-            text="Zdjęcia z gór i podróży — miejsca, światło i momenty, które warto było zostawić poza filmem."
-          />
-          <div className="galleryPreviewGrid">
-            {homepageGalleryCards.map((gallery) => (
-              <article className="galleryPreviewCard" key={gallery.id}>
-                <GalleryPreviewCover gallery={gallery} />
-                <div className="galleryPreviewBody">
-                  <div className="galleryPreviewMetaTop">
-                    <div className="cardType">{gallery.statusLabel}</div>
-                    <span className="filmHelperLabel">{gallery.location}</span>
-                  </div>
-                  <h3>{gallery.title}</h3>
-                  <p>{gallery.description}</p>
-                  {gallery.tags?.length ? (
-                    <div className="filmTags galleryPreviewTags">
-                      {gallery.tags.slice(0, 3).map((tag) => (
-                        <span key={`${gallery.id}-${tag}`}>{tag}</span>
-                      ))}
-                    </div>
-                  ) : null}
-                </div>
-              </article>
-            ))}
-          </div>
+          <SectionHeader icon={iconGallery} label="GALERIE" title="Zdjęcia z wypraw" />
+          <GalleryCards galleries={galleryData.slice(0, 3)} compact />
+          <a className="cz-gallery-text-link" href="/galerie">Wszystkie galerie · {galleryData.length} wyprawy →</a>
         </div>
       </section>
-
 
       <footer id="footer" className="footerSignature">
         <div className="footerSeparator" aria-hidden="true" />
@@ -767,4 +571,16 @@ function SectionHeader({ icon, label, title, text }) {
 }
 
 
-createRoot(document.getElementById('root')).render(<App />)
+// Full-page links keep browser history and static metadata consistent.
+const pathname = normalizePagePath(window.location.pathname)
+if (legacyRedirects[pathname]) window.location.replace(legacyRedirects[pathname])
+applyPageMetadata(pathname)
+const pageRoute = pathname.match(/^\/(galerie|wyprawy)(?:\/(.*?))?$/)
+let pageSlug = null
+try { pageSlug = pageRoute?.[2] ? decodeURIComponent(pageRoute[2]) : null } catch { pageSlug = '__invalid__' }
+let page = pathname === '/' ? <App /> : <NotFound />
+if (pathname === '/mapa') page = <React.Suspense fallback={<p role="status">Wczytywanie mapy…</p>}><MapPage /></React.Suspense>
+if (pathname === '/filmy') page = <FilmIndex />
+if (pageRoute?.[1] === 'galerie') page = pageSlug ? <GalleryPage slug={pageSlug} /> : <GalleryIndex />
+if (pageRoute?.[1] === 'wyprawy') page = pageSlug ? <ExpeditionPage slug={pageSlug} /> : <ExpeditionIndex />
+createRoot(document.getElementById('root')).render(page)

@@ -1,15 +1,16 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { travelAtlasData } from '../data/travelData'
-import { resolveTatryPointPosition } from '../data/atlasGeo'
-import tatryHillshadeDark from '../assets/maps/tatry-hillshade-dark.png'
-import { tatryMapBasePlaceholder } from '../data/tatryMapBase'
+import { galleryHref, photoCount } from '../data/galleryNavigation'
+import { Search, Play, Mountain } from 'lucide-react'
+import { atlasContentNodes, atlasNodeById, atlasQuickIds, readAtlasSelection, atlasAncestry, getAtlasMaterials, hasAtlasMaterials, searchAtlasNodes, atlasHref, atlasFilmLibraryHref } from '../data/atlasContent'
+import { TatryExplorer } from './TatryExplorer'
 import '../mapStyles.css'
+import '../atlasExplorer.css'
 
 import worldAtlasBaseAsset from '../assets/maps/world-atlas-dark.webp'
 import europeAtlasDarkAsset from '../assets/maps/europe-atlas-dark.webp'
-import worldContinentOverlaysSvgRaw from '../assets/maps/world-continent-overlays.svg?raw'
+import worldOverlayPaths from '../data/worldOverlayPaths.json'
 import europeCountryOverlaysSvgRaw from '../assets/maps/europe-country-overlays.svg?raw'
-import { europeAtlasNodes, europeDefaultNodeId } from '../data/europeAtlasData'
+import { europeAtlasNodes } from '../data/europeAtlasData'
 
 const worldShapes = [
   { id: 'north-america', d: 'M52 100l20-22 40-22 48-16 54 2 40 12 26 18 6 18-12 16-20 12-26 6-20 14-24 6-22-2-16 10-20 6-20-6-14-14-14-20z' },
@@ -21,81 +22,6 @@ const worldShapes = [
 ]
 
 
-
-const worldOverlayShapeIds = ['europe', 'asia', 'africa', 'north-america', 'south-america', 'oceania']
-
-const findContinentId = (node) => {
-  if (!node) return null
-
-  const candidates = [
-    node.getAttribute('id'),
-    node.getAttribute('inkscape:label'),
-    node.getAttribute('label'),
-    node.getAttribute('data-name'),
-    node.getAttribute('data-continent'),
-  ]
-
-  const normalized = candidates
-    .filter(Boolean)
-    .map((value) => value.trim().toLowerCase().replace(/\s+/g, '-'))
-    .find((value) => worldOverlayShapeIds.includes(value))
-
-  return normalized || null
-}
-
-const parseWorldOverlayShapes = (svgRaw) => {
-  if (!svgRaw) return null
-
-  try {
-    const parser = new DOMParser()
-    const doc = parser.parseFromString(svgRaw, 'image/svg+xml')
-    const svgRoot = doc.querySelector('svg')
-
-    if (!svgRoot) return null
-
-    const viewBox = svgRoot.getAttribute('viewBox') || '0 0 560 360'
-    const continentsMap = new Map()
-
-    const ensureContinent = (id) => {
-      if (!continentsMap.has(id)) {
-        continentsMap.set(id, { id, paths: [] })
-      }
-      return continentsMap.get(id)
-    }
-
-    doc.querySelectorAll('g, path').forEach((node) => {
-      const continentId = findContinentId(node)
-      if (!continentId) return
-
-      const continent = ensureContinent(continentId)
-      if (node.tagName.toLowerCase() === 'path') {
-        const d = node.getAttribute('d')
-        if (d) continent.paths.push(d)
-      }
-
-      if (node.tagName.toLowerCase() === 'g') {
-        node.querySelectorAll('path').forEach((pathNode) => {
-          const d = pathNode.getAttribute('d')
-          if (d) continent.paths.push(d)
-        })
-      }
-    })
-
-    const continents = worldOverlayShapeIds
-      .map((id) => continentsMap.get(id))
-      .filter((continent) => continent && continent.paths.length > 0)
-      .map((continent) => ({ ...continent, paths: [...new Set(continent.paths)] }))
-
-    const detectedIds = continents.map((continent) => continent.id)
-    if (import.meta.env.DEV) {
-      console.info('[world overlay] manual continents detected:', detectedIds)
-    }
-
-    return { viewBox, continents, detectedIds }
-  } catch (error) {
-    return { viewBox: '0 0 560 360', continents: [], detectedIds: [] }
-  }
-}
 
 const normalizeMapNodeId = (value) => {
   if (!value) return null
@@ -193,570 +119,161 @@ const parseEuropeOverlayShapes = (svgRaw) => {
   }
 }
 const continentMeta = [
-  { id: 'europe', shapeId: 'europe', label: 'Europa', type: 'Kontynent', status: 'active', description: 'Aktywny kierunek atlasu. Wejście do krajów, regionów i szczytów.', position: { x: 294, y: 107 }, routePath: ['world', 'europe'], panelTags: ['active', 'wyprawy', 'film + galerie'] },
-  { id: 'asia', shapeId: 'asia', label: 'Azja', type: 'Kontynent', status: 'planned', description: 'Kontynent przygotowany pod kolejne wyprawy i nowe wpisy w atlasie.', position: { x: 410, y: 116 }, routePath: null, panelTags: ['planned', 'future direction'] },
-  { id: 'africa', shapeId: 'africa', label: 'Afryka', type: 'Kontynent', status: 'planned', description: 'Kolejny etap rozwoju atlasu. Warstwa gotowa pod dalsze kierunki.', position: { x: 294, y: 184 }, routePath: null, panelTags: ['planned', 'future expansion'] },
-  { id: 'northAmerica', shapeId: 'north-america', label: 'Ameryka Płn.', type: 'Kontynent', status: 'planned', description: 'Kontynent dodany jako gotowy overlay i marker pod przyszłe treści.', position: { x: 122, y: 116 }, routePath: null, panelTags: ['planned', 'future direction'] },
-  { id: 'southAmerica', shapeId: 'south-america', label: 'Ameryka Płd.', type: 'Kontynent', status: 'planned', description: 'Warstwa przygotowana pod kolejne wyprawy i panel kontynentu.', position: { x: 180, y: 248 }, routePath: null, panelTags: ['planned', 'future direction'] },
-  { id: 'oceania', shapeId: 'oceania', label: 'Oceania', type: 'Kontynent', status: 'locked', description: 'Kierunek zaplanowany w atlasie — aktywacja po dodaniu materiałów.', position: { x: 476, y: 270 }, routePath: null, panelTags: ['locked', 'future direction'] },
+  { shapeId: 'europe', label: 'Europa', position: { x: 294, y: 107 } },
+  { shapeId: 'asia', label: 'Azja', position: { x: 410, y: 116 } },
+  { shapeId: 'africa', label: 'Afryka', position: { x: 294, y: 184 } },
+  { shapeId: 'north-america', label: 'Ameryka Płn.', position: { x: 122, y: 116 } },
+  { shapeId: 'south-america', label: 'Ameryka Płd.', position: { x: 180, y: 248 } },
+  { shapeId: 'oceania', label: 'Oceania', position: { x: 476, y: 270 } },
 ]
 
-
-const TatryMapBase = () => {
-  const { contour, relief, ridges, valleys, border } = tatryMapBasePlaceholder.layers
-
-  return (
-    <div className="tatryBaseMap" aria-hidden="true">
-      <img src={tatryHillshadeDark} alt="" className="tatryBaseMapImage" />
-      <svg viewBox={tatryMapBasePlaceholder.viewBox} className="tatryStructure" preserveAspectRatio="none">
-        <defs>
-          <pattern id="tatry-atlas-grid" width="5" height="5" patternUnits="userSpaceOnUse">
-            <path d="M 5 0 L 0 0 0 5" className="tatryGridLine" />
-          </pattern>
-          <linearGradient id="tatry-relief-gold" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#e9cd99" stopOpacity=".04" />
-            <stop offset=".52" stopColor="#c59a5f" stopOpacity=".16" />
-            <stop offset="1" stopColor="#71512f" stopOpacity=".03" />
-          </linearGradient>
-        </defs>
-        <rect width="100" height="100" className="tatryGrid" />
-        <path d={contour.d} className="tatryRegionContour" />
-        {relief.shading.map((band) => <path key={band.id} d={band.d} className="tatryReliefBand" />)}
-        {ridges.map((ridge) => <path key={ridge.id} d={ridge.d} className="tatryRidgeLine" />)}
-        {valleys.map((valley) => <path key={valley.id} d={valley.d} className="tatryValleyLine" />)}
-        <path d={border.d} className="tatryBorder" />
-        {border.labels.map((label) => (
-          <text key={label.text} x={label.x} y={label.y} textAnchor={label.anchor} className={`tatryBorderLabel ${label.variant === 'south' ? 'isSouth' : ''}`}>{label.text}</text>
-        ))}
-        <text x="7.5" y="15" className="tatryAtlasKicker">ATLAS SZCZYTÓW · TATRY</text>
-        <text x="7.5" y="20" className="tatryAtlasCoordinates">49°12′ N — 20°04′ E</text>
-        <text x="93" y="83" textAnchor="end" className="tatryAtlasScale">0 ··· 10 ··· 20 KM</text>
-        <text x="10" y="46" className="tatryRangeLabel">TATRY ZACHODNIE</text>
-        <text x="56" y="29" className="tatryRangeLabel isHighTatras">TATRY WYSOKIE</text>
-      </svg>
-    </div>
-  )
-}
-
-const levelNames = ['Świat', 'Kontynent', 'Kraj', 'Region specjalny', 'Szczyt']
-const levelIcons = {
-  world: (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="12" cy="12" r="8.4" />
-      <path d="M3.6 12h16.8M12 3.6c2.2 2.2 3.6 5.2 3.6 8.4S14.2 18.2 12 20.4M12 3.6C9.8 5.8 8.4 8.8 8.4 12s1.4 6.2 3.6 8.4" />
-    </svg>
-  ),
-  europe: (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M5.2 10.6 7.4 7.9l3-1.2 2.7.6 1.5 1.6 1.9.4 1.2 2-1 2-2.3 1.4-2.4.2-1.8 1.1-2.6-.3-1.8-1.5-.8-2.2z" />
-    </svg>
-  ),
-  mountain: (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M3.8 18.4 9.7 8.2l4 5.4 1.9-2.8 4.6 7.6H3.8z" />
-      <path d="m9.7 8.2 1.3 1.8 1.4-2.2 1.3 1.8" />
-    </svg>
-  ),
-}
-
-
-
-const tatryLabelAliases = {
-  'durny-szczyt': 'Durny',
-  'lodowy-szczyt': 'Lodowy',
-  'kiezmarski-szczyt': 'Kieżmarski',
-  'baranie-rogi': 'Baranie Rogi',
-  'jagniecy-szczyt': 'Jagnięcy',
-  'slawkowski-szczyt': 'Sławkowski',
-  'mieguszowiecki-szczyt-wielki': 'Mięguszowiecki',
-  'starorobocianski-wierch': 'Starorobociański',
-}
-
-
-const tatryTierWeight = {
-  featured: 3,
-  primary: 2,
-  secondary: 1,
-}
-
-const tatryFeaturedIds = new Set(['gerlach', 'lomnica', 'rysy', 'krywan', 'koscielec', 'kiezmarski-szczyt', 'lodowy-szczyt', 'durny-szczyt'])
-
-const tatryLandmarkLabelIds = new Set(['gerlach', 'lomnica', 'rysy', 'koscielec', 'lodowy-szczyt'])
-const tatryContextLabelIds = new Set(['giewont', 'swinica', 'krywan', 'wysoka', 'mieguszowiecki-szczyt-wielki'])
-
-const getTatryLabelVisibility = (pointId) => {
-  if (tatryLandmarkLabelIds.has(pointId)) return 'landmark'
-  if (tatryContextLabelIds.has(pointId)) return 'context'
-  return 'hover'
-}
-
-const tatryClusterPriority = {
-  'lomnica': 12,
-  'gerlach': 11,
-  'rysy': 10,
-  'swinica': 9,
-  'koscielec': 9,
-  'krywan': 8,
-  'kończysta': 7,
-  'lodowy-szczyt': 7,
-  'baranie-rogi': 6,
-  'kiezmarski-szczyt': 6,
-  'durny-szczyt': 5,
-  wysoka: 10,
-  'mieguszowiecki-szczyt-wielki': 9,
-  giewont: 8,
-  szatan: 8,
-  ganek: 7,
-  'posrednia-gran': 7,
-  'slawkowski-szczyt': 6,
-  'jagniecy-szczyt': 6,
-  wolowiec: 5,
-  'starorobocianski-wierch': 5,
-}
-
-const getTatryCollisionLayout = (points) => {
-  const anchorScaleX = 5.2
-  const anchorScaleY = 4.6
-  const pointPadding = 7
-  const textHeight = 24
-  const mapBounds = { left: 14, right: 504, top: 14, bottom: 444 }
-  const variantOrder = [
-    (base) => ({ x: base.x + 18, y: base.y - 8, anchor: 'east' }),
-    (base) => ({ x: base.x - 18, y: base.y - 8, anchor: 'west' }),
-    (base) => ({ x: base.x + 16, y: base.y + 11, anchor: 'east' }),
-    (base) => ({ x: base.x - 16, y: base.y + 11, anchor: 'west' }),
-    (base) => ({ x: base.x + 6, y: base.y - 18, anchor: 'north' }),
-    (base) => ({ x: base.x - 6, y: base.y + 18, anchor: 'south' }),
-    (base) => ({ x: base.x + 28, y: base.y - 2, anchor: 'east' }),
-    (base) => ({ x: base.x - 28, y: base.y - 2, anchor: 'west' }),
-    (base) => ({ x: base.x + 29, y: base.y - 17, anchor: 'east' }),
-    (base) => ({ x: base.x - 29, y: base.y - 17, anchor: 'west' }),
-    (base) => ({ x: base.x + 29, y: base.y + 17, anchor: 'east' }),
-    (base) => ({ x: base.x - 29, y: base.y + 17, anchor: 'west' }),
-    (base) => ({ x: base.x + 40, y: base.y + 2, anchor: 'east' }),
-    (base) => ({ x: base.x - 40, y: base.y + 2, anchor: 'west' }),
-  ]
-
-  const labelBoxes = []
-  const mapPoints = points.map((point) => ({
-    id: point.id,
-    x: (point.mapPosition?.x ?? 50) * anchorScaleX,
-    y: (point.mapPosition?.y ?? 50) * anchorScaleY,
-  }))
-
-  const byPriority = [...points].sort((a, b) => {
-    const visibilityDelta = ['hover', 'context', 'landmark'].indexOf(getTatryLabelVisibility(b.id)) - ['hover', 'context', 'landmark'].indexOf(getTatryLabelVisibility(a.id))
-    if (visibilityDelta !== 0) return visibilityDelta
-    const tierDelta = (tatryTierWeight[b.tier] || 0) - (tatryTierWeight[a.tier] || 0)
-    if (tierDelta !== 0) return tierDelta
-    return (tatryClusterPriority[b.id] || 0) - (tatryClusterPriority[a.id] || 0)
-  })
-
-  return byPriority.map((point) => {
-    const fullName = point.name
-    const shortName = tatryLabelAliases[point.id] || point.name
-    const baseOffset = point.labelOffset || { x: 0, y: 0 }
-    const labelVisibility = getTatryLabelVisibility(point.id)
-
-    const pickVariant = (name) => {
-      const textWidth = Math.max(52, Math.min(138, name.length * 6 + 24))
-      let selected = variantOrder[0](baseOffset)
-      let selectedScore = Number.POSITIVE_INFINITY
-      let selectedDistance = Number.POSITIVE_INFINITY
-
-      variantOrder.forEach((variant) => {
-        const offset = variant(baseOffset)
-        const anchorX = (point.mapPosition?.x ?? 50) * anchorScaleX + offset.x
-        const anchorY = (point.mapPosition?.y ?? 50) * anchorScaleY + offset.y
-        const candidate = {
-          left: anchorX,
-          right: anchorX + textWidth,
-          top: anchorY - textHeight / 2,
-          bottom: anchorY + textHeight / 2,
-        }
-
-        const labelPenalty = labelBoxes.reduce((sum, box) => {
-          const overlapX = candidate.left < box.right && candidate.right > box.left
-          const overlapY = candidate.top < box.bottom && candidate.bottom > box.top
-          if (!overlapX || !overlapY) return sum
-          const overlapWidth = Math.min(candidate.right, box.right) - Math.max(candidate.left, box.left)
-          const overlapHeight = Math.min(candidate.bottom, box.bottom) - Math.max(candidate.top, box.top)
-          return sum + overlapWidth * overlapHeight
-        }, 0)
-
-        const pointPenalty = mapPoints.reduce((sum, mapPoint) => {
-          if (mapPoint.id === point.id) return sum
-          const nearX = mapPoint.x >= candidate.left - pointPadding && mapPoint.x <= candidate.right + pointPadding
-          const nearY = mapPoint.y >= candidate.top - pointPadding && mapPoint.y <= candidate.bottom + pointPadding
-          return nearX && nearY ? sum + 110 : sum
-        }, 0)
-
-        const leaderLength = Math.hypot(offset.x, offset.y)
-        const leaderCutoff = Math.max(0, leaderLength - 36)
-        const edgeOverflow = Math.max(0, mapBounds.left - candidate.left) + Math.max(0, candidate.right - mapBounds.right) + Math.max(0, mapBounds.top - candidate.top) + Math.max(0, candidate.bottom - mapBounds.bottom)
-        const angle = Math.abs(Math.atan2(offset.y, offset.x || 0.001))
-        const straightLinePenalty = angle < 0.1 || angle > 3 ? 3 : 0
-        const longLeaderPenalty = leaderCutoff * 0.9
-        const cardinalBonus = ['east', 'west'].includes(offset.anchor) ? -4 : 0
-        const distance = Math.abs(offset.x - baseOffset.x) + Math.abs(offset.y - baseOffset.y)
-        const score = (labelPenalty * 1.45) + (pointPenalty * 1.15) + straightLinePenalty + longLeaderPenalty + (edgeOverflow * 1.6) + cardinalBonus
-
-        if (score < selectedScore || (score === selectedScore && distance < selectedDistance)) {
-          selected = offset
-          selectedScore = score
-          selectedDistance = distance
-        }
-      })
-
-      return { offset: selected, score: selectedScore, textWidth }
-    }
-
-    const full = pickVariant(fullName)
-    const shouldCompact = full.score > 75 && shortName !== fullName
-    const compact = shouldCompact ? pickVariant(shortName) : null
-    const labelLayout = compact || full
-
-    if (labelVisibility !== 'hover') {
-      labelBoxes.push({
-        left: (point.mapPosition?.x ?? 50) * anchorScaleX + labelLayout.offset.x,
-        right: (point.mapPosition?.x ?? 50) * anchorScaleX + labelLayout.offset.x + labelLayout.textWidth,
-        top: (point.mapPosition?.y ?? 50) * anchorScaleY + labelLayout.offset.y - textHeight / 2,
-        bottom: (point.mapPosition?.y ?? 50) * anchorScaleY + labelLayout.offset.y + textHeight / 2,
-      })
-    }
-
-    return {
-      ...point,
-      displayName: compact ? shortName : fullName,
-      labelOffset: labelLayout.offset,
-      labelAnchor: labelLayout.offset.anchor || 'east',
-      labelVisibility,
-      isLabelVisibleByDefault: labelVisibility !== 'hover',
-      visualPriority: tatryTierWeight[point.tier] || 1,
-    }
-  }).sort((a, b) => a.visualPriority - b.visualPriority)
-}
-
-export function MapAtlas({ atlasPath, setAtlasPath, activeNode, atlasLookups }) {
-  const atlasLevel = atlasPath.length - 1
-  const activeId = atlasPath[atlasPath.length - 1]
-  const stageRef = useRef(null)
-  const [hoveredSummitId, setHoveredSummitId] = useState(null)
-  const [hoveredContinent, setHoveredContinent] = useState(null)
-  const [hoveredEuropeNodeId, setHoveredEuropeNodeId] = useState(null)
-  const [selectedEuropeNodeId, setSelectedEuropeNodeId] = useState(null)
-  const [europeAtlasImageLoaded, setEuropeAtlasImageLoaded] = useState(true)
-  const [europeOverlayData, setEuropeOverlayData] = useState(null)
-  const continents = travelAtlasData.continents
-  const parsedOverlay = useMemo(() => parseWorldOverlayShapes(worldContinentOverlaysSvgRaw), [])
-  const manualContinents = parsedOverlay?.continents || []
-  const isUsingManualWorldOverlay = manualContinents.length > 0
-  const overlayShapes = isUsingManualWorldOverlay ? manualContinents : worldShapes.map((shape) => ({ id: shape.id, paths: [shape.d] }))
-  const overlayViewBox = parsedOverlay?.viewBox || '0 0 560 360'
-  const continentMetaByShapeId = new Map(continentMeta.map((item) => [item.shapeId, item]))
-  const getNodeName = (id) =>
-    id === 'world'
-      ? 'Świat'
-      : atlasLookups.continents[id]?.name || atlasLookups.countries[id]?.name || atlasLookups.specialRegions[id]?.name || atlasLookups.summits[id]?.name || atlasLookups.places[id]?.name || id
-
-  const breadcrumb = atlasPath.map((id) => ({ id, name: getNodeName(id) }))
-  const getCrumbIcon = (id, level) => {
-    if (id === 'world') return levelIcons.world
-    if (id === 'europe' || level === 1) return levelIcons.europe
-    return levelIcons.mountain
-  }
-  const countriesForContinent = travelAtlasData.countries.filter((country) => country.continentId === activeId)
-  const tatryRegion = travelAtlasData.specialRegions.find((region) => region.id === 'tatry')
-  const tatryPointIds = tatryRegion?.summitIds || []
-  const tatryPoints = tatryPointIds.map((pointId) => {
-    const atlasPoint = atlasLookups.summits[pointId] || atlasLookups.places[pointId] || { id: pointId }
-    const position = resolveTatryPointPosition(pointId)
-    return {
-      ...atlasPoint,
-      zone: position.geo?.zone || null,
-      geo: atlasPoint.geo || position.geo,
-      projectedPosition: position.projectedPosition,
-      mapPosition: position.mapPosition,
-      labelOffset: position.labelOffset,
-      tier: position.tier,
-    }
-  })
-  const activeFilm = activeNode.filmId ? atlasLookups.films[activeNode.filmId] : null
-  const nodeType = activeNode.atlasType || activeNode.type || null
-  const typeLabelMap = { summit: 'Szczyt', trail: 'Szlak / przejście', viewpoint: 'Punkt widokowy', place: 'Miejsce', city: 'Miasto', hut: 'Schronisko', region: 'Region', country: 'Kraj', continent: 'Kontynent' }
-
-  const isWorldView = activeId === 'world'
-  const hoveredContinentMeta = isWorldView ? continentMeta.find((item) => item.id === hoveredContinent) || null : null
-  const worldPanel = hoveredContinentMeta
-    ? {
-      name: hoveredContinentMeta.label,
-      description: hoveredContinentMeta.description,
-      typeLabel: 'Kontynent',
-      tags: hoveredContinentMeta.panelTags,
-      isEurope: hoveredContinentMeta.id === 'europe',
-      status: hoveredContinentMeta.status,
-      typeLabel: hoveredContinentMeta.type,
-    }
-    : {
-      name: 'Europa',
-      description: continentMetaByShapeId.get('europe')?.description,
-      typeLabel: continentMetaByShapeId.get('europe')?.type,
-      tags: continentMetaByShapeId.get('europe')?.panelTags,
-      isEurope: true,
-      status: 'active',
-    }
-  const europeNodeMap = new Map(europeAtlasNodes.map((node) => [node.id, node]))
-  const europeAtlasImageSrc = europeAtlasDarkAsset
+export function MapAtlas({ standalone = false }) {
+  const [selectedId, setSelectedId] = useState(readAtlasSelection)
+  const [hoveredId, setHoveredId] = useState(null)
+  const [query, setQuery] = useState('')
+  const [onlyMaterials, setOnlyMaterials] = useState(true)
+  const [zoom, setZoom] = useState(1)
+  const scrollRef = useRef(null)
+  const zoomCenter = useRef({ x: .5, y: .5 })
+  const panelRef = useRef(null)
+  const selected = atlasNodeById[selectedId]
+  const ancestry = atlasAncestry(selectedId)
+  const view = selected.view
+  const materials = getAtlasMaterials(selectedId)
+  const selectedCountry = ancestry.find(node => node.kind === 'Kraj' && node.parent === 'europe')?.id
+  const selectedContinent = ancestry.find(node => node.kind === 'Kontynent')?.id
+  const worldOverlay = worldOverlayPaths
+  const europeOverlay = useMemo(() => parseEuropeOverlayShapes(europeCountryOverlaysSvgRaw), [])
+  const worldOverlays = worldOverlay?.continents.length ? worldOverlay.continents : worldShapes.map(shape => ({ ...shape, paths: [shape.d] }))
   useEffect(() => {
-    setEuropeOverlayData(parseEuropeOverlayShapes(europeCountryOverlaysSvgRaw))
+    const sync = () => { setSelectedId(readAtlasSelection()); setHoveredId(null); setQuery('') }
+    window.addEventListener('popstate', sync)
+    return () => window.removeEventListener('popstate', sync)
   }, [])
-  const hoveredOrSelectedEuropeNodeId = hoveredEuropeNodeId || selectedEuropeNodeId || europeDefaultNodeId
-  const setEuropeHover = (nodeId) => setHoveredEuropeNodeId(nodeId)
-  const clearEuropeHover = () => setHoveredEuropeNodeId(null)
-  const handleEuropeSelect = (node) => {
-    setSelectedEuropeNodeId(node.id)
-    const isTatryTarget = node.routeTarget === 'tatry' || node.id === 'tatry'
-    if (isTatryTarget && tatryRegion) {
-      setAtlasPath((prev) => [...prev, tatryRegion.id])
-    }
+  useEffect(() => {
+    if (standalone || window.location.hash !== '#map') return
+    let frame
+    const scroll = () => { frame = requestAnimationFrame(() => document.getElementById('map')?.scrollIntoView({ block: 'start', behavior: 'instant' })) }
+    scroll()
+    window.addEventListener('load', scroll, { once: true })
+    return () => { cancelAnimationFrame(frame); window.removeEventListener('load', scroll) }
+  }, [standalone])
+  useEffect(() => {
+    setZoom(1)
+    scrollRef.current?.scrollTo({ left: 0, top: 0 })
+  }, [view])
+  useEffect(() => {
+    const scroller = scrollRef.current
+    if (!scroller) return
+    scroller.scrollLeft = zoomCenter.current.x * scroller.scrollWidth - scroller.clientWidth / 2
+    scroller.scrollTop = zoomCenter.current.y * scroller.scrollHeight - scroller.clientHeight / 2
+  }, [zoom])
+  const select = (id) => {
+    if (!atlasNodeById[id]) return
+    const url = new URL(window.location.href)
+    if (id === 'world') url.searchParams.delete('atlas'); else url.searchParams.set('atlas', id)
+    if (!standalone) url.hash = 'map'
+    const next = url.pathname + url.search + url.hash
+    if (next !== window.location.pathname + window.location.search + window.location.hash) window.history.pushState({}, '', next)
+    setSelectedId(id); setHoveredId(null); setQuery('')
   }
-  const activeEuropeNode = europeNodeMap.get(hoveredOrSelectedEuropeNodeId) || europeNodeMap.get(europeDefaultNodeId)
-  const europePanel = activeId === 'europe' ? activeEuropeNode : null
+  const activateKey = (event, id) => {
+    if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); select(id) }
+  }
+  const changeZoom = (next) => {
+    const scroller = scrollRef.current
+    if (scroller) zoomCenter.current = { x: (scroller.scrollLeft + scroller.clientWidth / 2) / scroller.scrollWidth, y: (scroller.scrollTop + scroller.clientHeight / 2) / scroller.scrollHeight }
+    setZoom(Math.max(1, Math.min(2.5, next)))
+  }
+  let candidates = atlasContentNodes.filter(node => view === 'tatry' ? node.parent === 'tatry' : selectedCountry === 'switzerland' ? node.parent === 'switzerland' : view === 'europe' ? node.parent === 'europe' || node.id === 'jura' : atlasQuickIds.includes(node.id))
+  if (query.trim()) candidates = searchAtlasNodes(query, atlasContentNodes.filter(node => node.id !== 'world'))
+  const listed = candidates.filter(node => !onlyMaterials || hasAtlasMaterials(node.id) || node.id === selectedId)
+  const typeLabel = (count, one, few, many) => `${count} ${count === 1 ? one : count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 12 || count % 100 > 14) ? few : many}`
+  const filmLabel = count => typeLabel(count, 'film', 'filmy', 'filmów')
+  const summary = `${materials.galleries.length ? typeLabel(materials.galleries.length, 'galeria', 'galerie', 'galerii') + ' · ' : ''}${filmLabel(materials.films.length)}`
+  const showPanel = () => { panelRef.current?.scrollIntoView({ behavior: 'instant', block: 'start' }); panelRef.current?.focus({ preventScroll: true }) }
 
-  const subtleCountryIds = new Set(['norway', 'germany', 'france', 'spain', 'italy', 'greece', 'austria', 'slovenia', 'liechtenstein'])
-  const mediumCountryIds = new Set(['poland', 'slovakia'])
-  const priorityCountryIds = new Set(['switzerland', 'romania'])
-
-
-  const tags = isWorldView
-    ? ['Europa aktywna', 'kolejne regiony w planach', 'galerie wkrótce']
-    : [activeNode.visited ? 'odwiedzone' : 'w planach', activeFilm ? 'film' : null, activeNode.gallery?.length ? 'galeria' : 'galeria wkrótce'].filter(Boolean)
-  const tatryPointsWithLeaders = getTatryCollisionLayout(tatryPoints).map((point) => {
-    const offsetX = point.labelOffset?.x ?? 0
-    const offsetY = point.labelOffset?.y ?? 0
-    const leaderLength = Math.hypot(offsetX, offsetY)
-    const isFeatured = point.tier === 'featured' || tatryFeaturedIds.has(point.id)
-    return {
-      ...point,
-      isFeatured,
-      hasLeader: leaderLength >= 11 && (isFeatured || point.tier === 'primary'),
-      leaderLength,
-      leaderAngle: Math.atan2(offsetY, offsetX),
-      isSecondary: !isFeatured && point.tier !== 'primary',
-    }
-  })
-
-  return (
+  return <div className={`cz-atlas ${standalone ? 'is-standalone' : ''}`}>
+    <div className="cz-atlas-topline">
+      <div className="cz-atlas-quick" role="group" aria-label="Szybki wybór miejsca">
+        <button type="button" onClick={() => select('world')} aria-pressed={selectedId === 'world'}>Świat</button>
+        {atlasQuickIds.map(id => <button type="button" key={id} onClick={() => select(id)} aria-pressed={ancestry.some(node => node.id === id)}>{atlasNodeById[id].name}</button>)}
+      </div>
+      {!standalone && <a className="cz-atlas-expand" href={atlasHref(selectedId)}>Otwórz mapę ↗</a>}
+    </div>
     <div className="atlasLayout cinematicAtlas">
-      <div className={`atlasMapWrap atlasZoomLevel${atlasLevel}`}>
-        <div className="atlasToolbar">
-          <div className="atlasCrumbTrail" aria-label="Nawigacja atlasu">
-            {breadcrumb.map((item, i) => (
-              <button key={item.id} className={`atlasCrumb ${i === breadcrumb.length - 1 ? 'isCurrent' : ''}`} type="button" onClick={() => setAtlasPath((prev) => prev.slice(0, i + 1))}>
-                <span className="atlasCrumbIcon">{getCrumbIcon(item.id, i)}</span>
-                <span className="atlasCrumbBody">
-                  <span className="atlasCrumbLevel">{levelNames[i] || `Poziom ${i}`}</span>
-                  <span className="atlasCrumbName">{item.name}</span>
-                </span>
-              </button>
-            ))}
+      <div className="atlasMapWrap">
+        <div className="cz-atlas-mapbar">
+          <nav className="cz-atlas-breadcrumb" aria-label="Położenie na mapie">{ancestry.map((node, index) => <React.Fragment key={node.id}>{index > 0 && <span aria-hidden="true">/</span>}<button type="button" aria-current={node.id === selectedId ? 'location' : undefined} onClick={() => select(node.id)}>{node.name}</button></React.Fragment>)}</nav>
+          {view !== 'tatry' && <div className="cz-atlas-zoom" role="group" aria-label="Skala mapy"><button type="button" aria-label="Pomniejsz mapę" disabled={zoom === 1} onClick={() => changeZoom(zoom - .5)}>−</button><button type="button" aria-label="Przywróć skalę mapy" onClick={() => changeZoom(1)}>{Math.round(zoom * 100)}%</button><button type="button" aria-label="Powiększ mapę" disabled={zoom === 2.5} onClick={() => changeZoom(zoom + .5)}>+</button></div>}
+        </div>
+        {view !== 'tatry' && <>
+        <div className="cz-atlas-canvas-wrap">
+        {view === 'europe' && <nav className="cz-atlas-regions" aria-label="Regiony górskie">
+          <span>Regiony</span>
+          {['tatry', 'alpy'].map(id => <button type="button" key={id} aria-label={`Otwórz region: ${atlasNodeById[id].name}`} aria-pressed={selectedId === id} onClick={() => select(id)}><Mountain size={17} aria-hidden="true" /><span>{atlasNodeById[id].name}</span><span aria-hidden="true">↗</span></button>)}
+        </nav>}
+        <div className={`cz-atlas-scroll ${zoom > 1 ? 'is-zoomed' : ''}`} ref={scrollRef}>
+          <div className={`atlasStage cinematicStage ${view === 'europe' ? 'isEuropeView' : ''}`} style={{ '--atlas-zoom': zoom }}>
+            {view === 'world' && <svg viewBox="0 0 560 360" className="atlasSvg atlasWorldSvg" role="group" aria-label="Mapa świata — wybierz kontynent">
+              <image href={worldAtlasBaseAsset} x="10" y="10" width="540" height="340" preserveAspectRatio="xMidYMid slice" />
+              <svg x="10" y="10" width="540" height="340" viewBox={worldOverlay?.viewBox || '0 0 560 360'} preserveAspectRatio="xMidYMid slice" className="worldContinentsOverlaySvg">
+                {worldOverlays.map(shape => <g key={shape.id} role="button" tabIndex={0} aria-label={`Wybierz: ${atlasNodeById[shape.id]?.name}`} aria-pressed={selectedContinent === shape.id} onClick={() => select(shape.id)} onKeyDown={event => activateKey(event, shape.id)} onMouseEnter={() => setHoveredId(shape.id)} onMouseLeave={() => setHoveredId(null)} onFocus={() => setHoveredId(shape.id)} onBlur={() => setHoveredId(null)} className={`cz-atlas-world-target ${selectedContinent === shape.id ? 'is-selected' : ''} ${hoveredId === shape.id ? 'is-hovered' : ''} ${hasAtlasMaterials(shape.id) ? 'has-materials' : ''}`}>
+                  {shape.paths.map((d, i) => <path key={i} d={d} className="atlasOutline continentOverlay" />)}
+                </g>)}
+              </svg>
+              {continentMeta.map(continent => <g key={continent.shapeId} className="cz-atlas-continent-label" aria-hidden="true"><circle cx={continent.position.x - 8} cy={continent.position.y - 4} r={hasAtlasMaterials(continent.shapeId) ? 3 : 2} /><text x={continent.position.x} y={continent.position.y}>{continent.label}</text></g>)}
+            </svg>}
+            {view === 'europe' && <svg viewBox="0 0 560 360" className="atlasSvg atlasWorldSvg isEuropeView" role="group" aria-label="Mapa Europy — wybierz kraj">
+              <image href={europeAtlasDarkAsset} x="22" y="20" width="516" height="318" preserveAspectRatio="xMidYMid slice" />
+              {europeOverlay && <svg x="22" y="20" width="516" height="318" viewBox={europeOverlay.viewBox} preserveAspectRatio="xMidYMid slice" className="europeCountryOverlaySvg" aria-hidden="true">
+                {[...europeOverlay.countryOverlayShapes, ...europeOverlay.specialRegionOverlayShapes].map(shape => atlasNodeById[shape.id] ? <g key={shape.id} onClick={() => select(shape.id)} onMouseEnter={() => setHoveredId(shape.id)} onMouseLeave={() => setHoveredId(null)} className={`europeCountryOverlayGroup ${selectedCountry === shape.id ? 'isSelected' : ''} ${hoveredId === shape.id ? 'isHovered' : ''}`}>
+                  {shape.paths.map((d, i) => <path key={i} d={d} className={`europeCountryOverlayPath ${hasAtlasMaterials(shape.id) ? 'has-materials' : ''}`} />)}
+                </g> : null)}
+              </svg>}
+              {europeAtlasNodes.filter(node => node.type !== 'continent' && node.id !== 'tatry').map(node => {
+                const available = hasAtlasMaterials(node.id)
+                const active = selectedCountry === node.id
+                const hovered = hoveredId === node.id
+                const show = available || active || hovered
+                return <g key={node.id} className={`atlasCountryMarker ${active ? 'isSelected' : ''} ${hovered ? 'isHovered' : ''}`}>
+                  <circle cx={node.position.x - 9} cy={node.position.y - 2} r={available ? 3.2 : 2} className={`atlasCountryDot ${available ? 'isVisited' : 'isMuted'}`} />
+                  {show && <foreignObject x={node.position.x + (node.labelOffset?.x || 0)} y={node.position.y - 14 + (node.labelOffset?.y || 0)} width={node.position.chipWidth || 104} height="36"><button type="button" className="atlasCountryChip" aria-label={`Wybierz: ${node.label}`} aria-pressed={active} onClick={() => select(node.id)} onMouseEnter={() => setHoveredId(node.id)} onMouseLeave={() => setHoveredId(null)}><span>{node.label}</span></button></foreignObject>}
+                </g>
+              })}
+            </svg>}
+
           </div>
         </div>
-
-        <div className={`atlasStage cinematicStage ${activeId === 'europe' ? 'isEuropeView' : ''}`} ref={stageRef}>
-          {activeId === 'world' && (
-            <svg viewBox="0 0 560 360" className="atlasSvg atlasSvgInteractive atlasWorldSvg">
-              <defs>
-                <radialGradient id="worldEuropeGlow" cx="52%" cy="42%" r="30%">
-                  <stop offset="0%" stopColor="rgba(245,225,188,.24)" />
-                  <stop offset="100%" stopColor="rgba(245,225,188,0)" />
-                </radialGradient>
-                <radialGradient id="worldBoardGlow" cx="50%" cy="44%" r="60%">
-                  <stop offset="0%" stopColor="rgba(245,223,183,.08)" />
-                  <stop offset="100%" stopColor="rgba(245,223,183,0)" />
-                </radialGradient>
-              </defs>
-              <path d="M38 178h484" className="atlasLatLine" />
-              <g className="worldBase" aria-hidden="true">
-                {worldAtlasBaseAsset ? (
-                  <>
-                    <image href={worldAtlasBaseAsset} x="10" y="10" width="540" height="340" preserveAspectRatio="xMidYMid slice" className="worldBaseImage" />
-                    <rect x="10" y="10" width="540" height="340" rx="18" className="worldBaseFrame" />
-                  </>
-                ) : (
-                  <>
-                    <rect x="10" y="10" width="540" height="340" rx="18" className="worldBoardFrame" />
-                    <rect x="18" y="18" width="524" height="324" rx="14" className="worldBoardInset" />
-                    <ellipse cx="282" cy="178" rx="228" ry="126" className="worldBoardAtmosphere" />
-                    <path d="M38 98h484M38 258h484M72 54v252M190 42v272M290 34v286M390 42v272M488 54v252" className="worldContourLines" />
-                    <rect x="10" y="10" width="540" height="340" rx="18" className="worldPlaceholderSvg" />
-                  </>
-                )}
-              </g>
-              <g className="continentOverlays">
-                <svg className="worldContinentsOverlaySvg" x="10" y="10" width="540" height="340" viewBox={overlayViewBox} preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-              {overlayShapes.map((shape) => {
-                const meta = continentMetaByShapeId.get(shape.id)
-                const continent = continents.find((c) => c.id === meta?.routePath?.[1])
-                const isHovered = hoveredContinent === meta?.id
-                return (
-                  <g key={shape.id} className="continentOverlayGroup" onMouseEnter={() => meta && setHoveredContinent(meta.id)} onMouseLeave={() => setHoveredContinent(null)} onFocus={() => meta && setHoveredContinent(meta.id)} onBlur={() => setHoveredContinent(null)} onClick={() => meta?.status === 'active' && continent && setAtlasPath((prev) => [...prev, continent.id])}>
-                    {shape.paths.map((d, index) => (
-                      <path key={`${shape.id}-${index}`} d={d} className={`atlasOutline continentOverlay ${isHovered ? 'isHovered' : ''}`} />
-                    ))}
-                  </g>
-                )
-              })}
-                </svg>
-              </g>
-              <g className="continentMarkers">
-              {continentMeta.map((region) => (
-                <g key={region.id} className={`continentMarkerChip ${hoveredContinent === region.id ? 'isHovered' : ''}`}>
-                  <circle cx={region.position.x - 8} cy={region.position.y - 4} r={2.1} className="continentMarkerDot" />
-                  <text data-id={region.shapeId} x={region.position.x} y={region.position.y} className={`atlasWorldLabel continentMarker ${hoveredContinent === region.id ? 'isHovered' : ''}`}>
-                    {region.label}
-                  </text>
-                </g>
-              ))}
-              </g>
-            </svg>
-          )}
-
-          {activeId === 'europe' && (
-            <svg viewBox="0 0 560 360" className="atlasSvg atlasSvgInteractive atlasWorldSvg isEuropeView">
-              {/* ETAP 13.8.2: Optional premium Europe base asset fallback. */}
-              {europeAtlasImageLoaded && <image href={europeAtlasImageSrc} x="22" y="20" width="516" height="318" preserveAspectRatio="xMidYMid slice" opacity="0.62" onError={() => setEuropeAtlasImageLoaded(false)} />}
-              <rect x="22" y="20" width="516" height="318" rx="20" className="atlasEuropeFrame" />
-              {(europeOverlayData?.countryOverlayShapes?.length > 0 || europeOverlayData?.specialRegionOverlayShapes?.length > 0) && (
-                <svg x="22" y="20" width="516" height="318" viewBox={europeOverlayData.viewBox} preserveAspectRatio="xMidYMid slice" className="europeCountryOverlaySvg" aria-hidden="true">
-                  {[...(europeOverlayData.countryOverlayShapes || []), ...(europeOverlayData.specialRegionOverlayShapes || [])].map((shape) => {
-                    const node = europeNodeMap.get(shape.id) || [...europeNodeMap.values()].find((atlasNode) => atlasNode.svgId === shape.id)
-                    if (!node) return null
-                    const interactionId = resolveEuropeNodeId(node.svgId || node.id) || node.id
-                    const isHovered = hoveredEuropeNodeId === interactionId
-                    const isSelected = selectedEuropeNodeId === interactionId
-                    const isTatryTarget = node.routeTarget === 'tatry' || interactionId === 'tatry'
-                    const isActive = hoveredOrSelectedEuropeNodeId === interactionId
-                    return (
-                      <g
-                        key={shape.id}
-                        data-node-id={interactionId}
-                        className={`europeCountryOverlayGroup ${isTatryTarget ? 'isSpecialRegion' : ''} ${isHovered ? 'isHovered' : ''} ${isSelected ? 'isSelected' : ''} ${isActive ? 'isActive' : ''}`}
-                        onMouseEnter={() => setEuropeHover(interactionId)}
-                        onMouseLeave={clearEuropeHover}
-                        onFocus={() => setEuropeHover(interactionId)}
-                        onBlur={clearEuropeHover}
-                        onClick={() => handleEuropeSelect(node)}
-                      >
-                        {shape.paths.map((d, index) => (
-                          <path key={`${shape.id}-${index}`} d={d} className={`europeCountryOverlayPath ${isHovered ? 'isHovered' : ''} ${isSelected ? 'isSelected' : ''} ${isActive ? 'isActive' : ''}`} onMouseEnter={() => setEuropeHover(interactionId)} onMouseLeave={clearEuropeHover} onFocus={() => setEuropeHover(interactionId)} onBlur={clearEuropeHover} />
-                        ))}
-                      </g>
-                    )
-                  })}
-                </svg>
-              )}
-              {europeAtlasNodes.filter((node) => node.type !== 'continent' && node.id !== 'tatry').map((node) => {
-                const isTatryBorderCountry = node.id === 'poland' || node.id === 'slovakia'
-                const interactionId = resolveEuropeNodeId(node.svgId || node.id) || node.id
-                const isHovered = hoveredEuropeNodeId === interactionId
-                const isSelected = selectedEuropeNodeId === interactionId
-                const isActive = hoveredOrSelectedEuropeNodeId === interactionId
-                const labelOffsetX = node.labelOffset?.x ?? 0
-                const labelOffsetY = node.labelOffset?.y ?? 0
-                return (
-                  <g key={node.id} className={`atlasCountryMarker ${isTatryBorderCountry ? 'isTatryBorderCountry' : ''} ${priorityCountryIds.has(node.id) ? 'isPriorityCountry' : ''} ${mediumCountryIds.has(node.id) ? 'isContextCountry' : ''} ${subtleCountryIds.has(node.id) ? 'isSubtleCountry' : ''} ${isHovered ? 'isHovered' : ''} ${isSelected ? 'isSelected' : ''} ${isActive ? 'isActive' : ''}`}>
-                    <circle cx={node.position.x - 9} cy={node.position.y - 2} r="3.2" className={`atlasCountryDot ${node.status === 'visited' || node.status === 'active' ? 'isVisited' : 'isMuted'}`} />
-                    <foreignObject x={node.position.x + labelOffsetX} y={node.position.y - 14 + labelOffsetY} width={node.position.chipWidth || 104} height="26">
-                      <button type="button" className={`atlasCountryChip ${isHovered ? 'isHovered' : ''} ${isSelected ? 'isSelected' : ''} ${isActive ? 'isActive' : ''}`} onMouseEnter={() => setEuropeHover(interactionId)} onMouseLeave={clearEuropeHover} onFocus={() => setEuropeHover(interactionId)} onBlur={clearEuropeHover} onClick={() => handleEuropeSelect(node)}>
-                        <span>{node.code}</span>
-                        <span>{node.label}</span>
-                      </button>
-                    </foreignObject>
-                  </g>
-                )
-              })}
-              {(() => { const tatryNode = europeNodeMap.get('tatry'); const isTatryHovered = hoveredEuropeNodeId === 'tatry'; const isTatrySelected = selectedEuropeNodeId === 'tatry'; const isTatryActive = hoveredOrSelectedEuropeNodeId === 'tatry'; return (
-              <g className={`atlasTatryMarker ${isTatryHovered ? 'isHovered' : ''} ${isTatrySelected ? 'isSelected' : ''} ${isTatryActive ? 'isActive' : ''}`} onMouseEnter={() => setEuropeHover('tatry')} onMouseLeave={clearEuropeHover} onClick={() => tatryNode && handleEuropeSelect(tatryNode)} role="button" tabIndex={0} onFocus={() => setEuropeHover('tatry')} onBlur={clearEuropeHover} onKeyDown={(event) => event.key === 'Enter' && tatryNode && handleEuropeSelect(tatryNode)}>
-                <circle cx={tatryNode.position.x} cy={tatryNode.position.y} r="9" className="atlasTatryGlow" />
-                <circle cx={tatryNode.position.x} cy={tatryNode.position.y} r="17" className="atlasTatryRing" />
-                <path d={`M${tatryNode.position.x - 8} ${tatryNode.position.y + 6}l7-12 4 6 4-7 8 13z`} className="atlasTatryMountain" />
-                <text x={tatryNode.position.x} y={tatryNode.position.y + 24} textAnchor="middle" className="atlasInlineLabel">Tatry</text>
-              </g> )})()}
-            </svg>
-          )}
-
-          {activeId === 'tatry' && (
-            <div className="summitLayer tatryLayer">
-              <div className="tatryViewport">
-              <div className="tatryScene">
-              <TatryMapBase />
-              {tatryPointsWithLeaders.map((summit) => (
-                <div
-                  key={summit.id}
-                  className={`summitPoint summitTier${summit.tier || 'secondary'} ${summit.isFeatured ? 'isFeaturedLabel' : 'isSecondaryLabel'} is${summit.labelVisibility || 'hover'}Label pointType${summit.pointType || summit.atlasType || summit.type || 'place'} ${activeId === summit.id ? 'isActive' : ''} ${hoveredSummitId === summit.id ? 'isHovered' : ''}`}
-                  style={{ left: `${summit.mapPosition?.x ?? 50}%`, top: `${summit.mapPosition?.y ?? 50}%` }}
-                >
-                  <button
-                    type="button"
-                    className="summitHitArea"
-                    aria-label={`Punkt: ${summit.displayName || summit.name}`}
-                    onClick={() => summit.id in atlasLookups.summits && setAtlasPath((prev) => [...prev, summit.id])}
-                    onMouseEnter={() => setHoveredSummitId(summit.id)}
-                    onMouseLeave={() => setHoveredSummitId(null)}
-                    onFocus={() => setHoveredSummitId(summit.id)}
-                    onBlur={() => setHoveredSummitId(null)}
-                  >
-                    <span className="dot" />
-                  </button>
-                  {summit.hasLeader && <span className="leader" style={{ '--leader-length': `${Math.max(7, Math.min(30, summit.leaderLength - 4))}px`, '--leader-angle': `${summit.leaderAngle}rad` }} />}
-                  <button
-                    type="button"
-                    className={`label anchor${summit.labelAnchor || 'east'} ${(!summit.isLabelVisibleByDefault && activeId !== summit.id && hoveredSummitId !== summit.id) ? 'isHidden' : ''}`}
-                    style={{ transform: `translate(${summit.labelOffset?.x ?? 0}px, ${summit.labelOffset?.y ?? 0}px)` }}
-                    onClick={() => summit.id in atlasLookups.summits && setAtlasPath((prev) => [...prev, summit.id])}
-                    onMouseEnter={() => setHoveredSummitId(summit.id)}
-                    onMouseLeave={() => setHoveredSummitId(null)}
-                    onFocus={() => setHoveredSummitId(summit.id)}
-                    onBlur={() => setHoveredSummitId(null)}
-                  >{summit.displayName || summit.name}</button>
-                </div>
-              ))}
-              </div>
-              </div>
-            </div>
-          )}
-
-          {activeId === 'africa' && (
-            <svg viewBox="0 0 560 360" className="atlasSvg atlasSvgInteractive atlasWorldSvg">
-              <path d="M264 44l50 12 46 56 12 58-18 88-44 52-54-20-22-72 10-84z" className="atlasOutline isVisited" />
-            </svg>
-          )}
-
-          {activeId !== 'world' && activeId !== 'europe' && activeId !== 'tatry' && activeId !== 'africa' && <div className="atlasFallback">Wybierz kolejny poziom z panelu po prawej.</div>}
         </div>
+        <div className="cz-atlas-legend"><span><i /> Dostępne materiały</span><span><i className="is-empty" /> Pozostałe miejsca</span><span className="cz-atlas-map-note">{zoom > 1 ? 'Przewijaj powiększoną mapę' : 'Mapa poglądowa'}</span></div>
+        </>}
+        {view === 'tatry' && <TatryExplorer selectedId={selectedId} onSelect={select} onlyMaterials={onlyMaterials} setOnlyMaterials={setOnlyMaterials} onShowMaterials={showPanel} />}
+        {view !== 'tatry' && <><button type="button" className="cz-atlas-mobile-materials" onClick={showPanel}><span>{selected.name}<small>{summary}</small></span><span>Materiały ↓</span></button>
+        <div className="cz-atlas-picker">
+          <div className="cz-atlas-picker-heading"><h3>Wybierz miejsce</h3><label><input type="checkbox" checked={onlyMaterials} onChange={event => setOnlyMaterials(event.target.checked)} /> Z materiałami</label></div>
+          <div className="cz-atlas-search"><Search size={16} aria-hidden="true" /><input type="search" aria-label="Szukaj miejsca na mapie" placeholder="Szukaj miejsca…" value={query} onChange={event => setQuery(event.target.value)} /></div>
+          <div className="cz-atlas-place-list" role="group" aria-label="Miejsca na mapie">{listed.map(node => {
+            const data = getAtlasMaterials(node.id)
+            return <button type="button" key={node.id} aria-pressed={node.id === selectedId} onClick={() => select(node.id)}><span>{node.name}</span><small>{data.films.length || data.galleries.length ? [data.galleries.length && typeLabel(data.galleries.length, 'galeria', 'galerie', 'galerii'), data.films.length && filmLabel(data.films.length)].filter(Boolean).join(' · ') : 'Brak materiałów'}</small></button>
+          })}</div>
+          {!listed.length && <p className="cz-atlas-empty-search" role="status">Brak wyników. Zmień nazwę lub wyłącz filtr „Z materiałami”.</p>}
+        </div></>}
       </div>
-
-      <article className="mapCard isActiveRegion atlasDetailCard">
-        <p className="atlasEyebrow">{isWorldView ? 'Atlas signature view' : 'Atlas entry'}</p>
-        <p className="atlasLevelLabel">{levelNames[atlasLevel] || `Poziom ${atlasLevel}`}</p>
-        <h3>{isWorldView && worldPanel ? worldPanel.name : (activeId === 'europe' && europePanel ? europePanel.label : activeNode.name)}</h3>
-        <p className="atlasLead">{isWorldView ? (worldPanel?.description || 'Wybierz kontynent, aby odkrywać wyprawy, regiony i szczyty.') : (activeId === 'europe' && europePanel ? europePanel.panelDescription : activeNode.description)}</p>
-        {isWorldView && <p className="atlasPointType">{worldPanel?.typeLabel || 'Świat'}</p>}
-        {nodeType && <p className="atlasPointType">{typeLabelMap[nodeType] || 'Punkt atlasu'}</p>}
-        <div className="atlasTagRow">{(activeId === 'europe' && europePanel ? europePanel.panelTags : (worldPanel?.tags || tags)).map((tag) => <span key={tag} className="atlasTag">{tag}</span>)}</div>
-        {worldPanel?.isEurope && <p className="atlasMeta">Europa jest aktywnym kierunkiem i prowadzi do kolejnego poziomu atlasu.</p>}
-        {activeNode.countryIds && <p className="atlasMeta">Kraje: {activeNode.countryIds.map((id) => atlasLookups.countries[id]?.name).filter(Boolean).join(', ')}</p>}
-        {activeId === 'europe' && <p className="atlasMeta">Europa to kontynent wypraw. Hover markerów aktualizuje panel, Tatry pozostają aktywnym regionem specjalnym, a struktura jest gotowa pod europe-atlas-dark.webp i manualne europe-country-overlays.svg.</p>}
-        {activeId === 'tatry' && <p className="atlasMeta">Tatry to region graniczny Polski i Słowacji — wspólna oś wypraw z przejściem do szczegółowego widoku szczytów.</p>}
-        {atlasLevel === 1 && countriesForContinent.length > 0 && <p className="atlasMeta">Widoczne kraje: {countriesForContinent.map((country) => country.name).join(', ')}</p>}
-        {activeFilm && (
-          <a className="smallButton atlasCta" href={activeFilm.url} target="_blank" rel="noreferrer">
-            Obejrzyj film — {activeFilm.title}
-          </a>
-        )}
-        {!activeNode.gallery?.length && <p className="atlasSoon">Galeria wkrótce.</p>}
-      </article>
+      <aside className="cz-atlas-detail" ref={panelRef} tabIndex={-1} aria-label={`Materiały: ${selected.name}`}>
+        <p className="cz-atlas-kicker">{selected.kind}{selected.altitude ? ` · ${selected.altitude}` : ''}</p>
+        <h3>{selected.name}</h3>
+        {selected.description && <p className="cz-atlas-description">{selected.description}</p>}
+        <div className="cz-atlas-stats"><div><strong>{materials.galleries.length}</strong><span>Galerie</span></div><div><strong>{materials.films.length}</strong><span>Filmy</span></div><div><strong>{materials.photoCount}</strong><span>Zdjęcia</span></div></div>
+        {selected.related?.length > 0 && <div className="cz-atlas-related">{selected.related.map(id => <button type="button" key={id} onClick={() => select(id)}>{atlasNodeById[id].name} →</button>)}</div>}
+        {materials.galleries.length > 0 && <section className="cz-atlas-trips" aria-label="Wyprawy i galerie"><h4>Wyprawy i galerie</h4>{materials.galleries.map(gallery => <article key={gallery.id}>
+          <a href={`/wyprawy/${gallery.id}`} tabIndex={-1} aria-hidden="true"><img src={gallery.coverImage} alt="" width={gallery.coverWidth} height={gallery.coverHeight} loading="lazy" /></a>
+          <div><a className="cz-atlas-trip-title" href={`/wyprawy/${gallery.id}`}>{gallery.title} <span>{gallery.year}</span> ↗</a><a className="cz-atlas-gallery-link" href={galleryHref(gallery)}>Galeria · {photoCount(gallery.photos.length)} ↗</a></div>
+        </article>)}</section>}
+        {materials.films.length > 0 && <section className="cz-atlas-films" aria-label="Filmy z tego miejsca"><h4>Filmy <span>{materials.films.length}</span></h4>{materials.films.slice(0, 3).map(film => <a key={film.id} href={film.youtubeUrl} target="_blank" rel="noreferrer"><Play size={15} aria-hidden="true" /><span>{film.title}<small>{film.format} · {film.duration}</small></span><span aria-hidden="true">↗</span></a>)}{materials.films.length > 3 && <a className="cz-atlas-library" href={atlasFilmLibraryHref(selectedId)}>Biblioteka filmów ↗</a>}</section>}
+        {!materials.films.length && !materials.galleries.length && <div className="cz-atlas-no-content"><p>Nie ma jeszcze opublikowanych materiałów z tego miejsca.</p><button type="button" onClick={() => select(selected.parent || 'world')}>← {atlasNodeById[selected.parent || 'world'].name}</button></div>}
+      </aside>
     </div>
-  )
+    <span className="cz-atlas-announcement" role="status" aria-live="polite" aria-atomic="true">{selected.name}: {summary}</span>
+  </div>
 }

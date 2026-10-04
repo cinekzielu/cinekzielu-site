@@ -1,0 +1,23 @@
+.cz-tatry{min-width:0}
+.cz-tatry-hint{display:flex;justify-content:space-between;gap:12px;padding:14px 0 22px;color:#a99b88;font-size:10px;line-height:1.6}
+.cz-tatry-selection{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:21px 0 16px;border-top:1px solid var(--atlas-line)}
+.cz-tatry-selection small{font-size:10px;color:var(--atlas-muted);display:block;margin-bottom:7px}
+.cz-tatry-selection strong{font-weight:450;font-size:23px;letter-spacing:-.025em;line-height:1.3;display:block}
+.cz-tatry-materials{display:flex;align-items:center;gap:7px;flex-shrink:0;min-height:44px;padding:8px 12px;border:1px solid var(--atlas-line);background:none;color:#dec59b;font-size:11px!important}
+.cz-tatry-search-row{display:flex;align-items:center;gap:18px;margin-bottom:12px}
+.cz-tatry-search-row .cz-atlas-search{flex:1;min-width:0;margin:0}
+.cz-tatry-filter{display:flex;align-items:center;gap:7px;min-height:44px;font-size:11px;color:var(--atlas-muted);cursor:pointer;white-space:nowrap}
+.cz-tatry-filter input{accent-color:var(--atlas-accent);width:15px;height:15px}
+.cz-tatry-places{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 22px}
+.cz-tatry-places button{display:flex;align-items:center;gap:12px;text-align:left;padding:15px 10px;border:0;border-bottom:1px solid var(--atlas-line);background:none;color:#ede3d6;min-height:73px;min-width:0}
+.cz-tatry-places button>span:nth-child(2){flex:1;min-width:0}
+.cz-tatry-places strong{display:block;font-size:12px;line-height:1.5;font-weight:400;overflow-wrap:anywhere}
+.cz-tatry-places small{display:block;font-size:10px;color:var(--atlas-muted);margin-top:5px;line-height:1.5}
+.cz-tatry-places button>svg{color:#b09a79;flex-shrink:0}
+.cz-tatry-list-dot{width:6px;height:6px;flex-shrink:0;border:1px solid #8f816c;border-radius:50%}
+.cz-tatry-list-dot.has-materials{background:#c9a36d;border-color:#c9a36d}
+.cz-tatry-places button:hover{background:#c9a36d09}
+.cz-tatry-places button[aria-pressed=true]{background:#c9a36d10;box-shadow:inset 2px 0 #c9a36d}
+.cz-tatry-source{font-size:10px!important;line-height:1.8!important;color:#998c79;padding:19px 0 0;margin:0!important}
+@media(max-width:1100px){.cz-tatry-places{column-gap:12px}.cz-tatry-places button{gap:9px;padding:14px 8px}}
+@media(max-width:520px){.cz-tatry-hint{font-size:9px;gap:8px;padding-bottom:17px}.cz-tatry-wheel-hint{display:none}.cz-tatry-selection strong{font-size:22px}.cz-tatry-selection{gap:8px}.cz-tatry-search-row{flex-wrap:wrap;gap:2px}.cz-tatry-search-row .cz-atlas-search{flex-basis:100%}.cz-tatry-places{grid-template-columns:1fr}.cz-tatry-places button{min-height:70px;padding:13px 9px;gap:13px}.cz-tatry-places strong{font-size:13px}.cz-tatry-materials{padding:8px;font-size:10px!important}}

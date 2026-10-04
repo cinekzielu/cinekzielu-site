@@ -85,6 +85,7 @@ export const expeditionsData = [
   },
   {
     id: 'koscielec-winter',
+    featuredMapNodeId: 'tatry',
     title: 'Kościelec zimą',
     subtitle: 'Mróz, lód i dynamiczne podejście',
     location: 'Tatry',

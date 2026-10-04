@@ -1,0 +1,43 @@
+.cz-terrain-frame{position:relative;isolation:isolate;overflow:hidden;border:1px solid #c9a36d50;border-radius:3px;background:#292822;color:#ede3d6}
+.cz-terrain-surface{position:relative;height:520px;overflow:hidden;touch-action:none;cursor:grab;outline-offset:-3px;user-select:none;-webkit-user-select:none}
+.cz-terrain-surface.is-dragging{cursor:grabbing}
+.cz-terrain-tiles{position:absolute;inset:0;pointer-events:none;filter:grayscale(.9) invert(.9) sepia(.18) brightness(.85) contrast(.9)}
+.is-natural .cz-terrain-tiles{filter:saturate(.65) contrast(.95)}
+.cz-terrain-tiles img{position:absolute;max-width:none!important;max-height:none!important;pointer-events:none;user-select:none;-webkit-user-drag:none}
+.cz-terrain-top{position:absolute;top:14px;left:14px;right:14px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;pointer-events:none;z-index:5}
+.cz-terrain-top>*{pointer-events:auto}
+.cz-terrain-frame button{font-family:inherit;cursor:pointer}
+.cz-terrain-reset,.cz-terrain-tone,.cz-terrain-controls{background:#171612f5;border:1px solid #b69a7066;box-shadow:0 2px 10px #0003;border-radius:3px}
+.cz-terrain-reset{display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 13px;color:#e8d0aa;font-size:11px}
+.cz-terrain-tone{display:flex;padding:3px;gap:2px}
+.cz-terrain-tone button{min-height:36px;padding:0 10px;border:0;border-radius:1px;font-size:10px;color:#b4a791;background:transparent}
+.cz-terrain-tone button[aria-pressed=true]{background:#c9a36d26;color:#f3dbb7}
+.cz-terrain-controls{position:absolute;right:14px;top:72px;display:flex;flex-direction:column;z-index:5;overflow:hidden}
+.cz-terrain-controls button{display:grid;place-items:center;width:44px;height:44px;padding:0;background:transparent;border:0;color:#ebd5b2}
+.cz-terrain-controls button+button{border-top:1px solid #b69a703d}
+.cz-terrain-controls button:disabled{opacity:.3;cursor:default}
+.cz-terrain-controls button:not(:disabled):hover,.cz-terrain-reset:hover{background:#3c3021}
+.cz-terrain-frame button:focus-visible,.cz-terrain-surface:focus-visible{outline:2px solid #e4bf80;outline-offset:-3px}
+.cz-terrain-marker{position:absolute;z-index:2;display:grid;place-items:center;width:44px;height:44px;padding:0;transform:translate(-50%,-50%);border:0;border-radius:50%;background:transparent;color:#ddbe8e}
+.cz-terrain-marker>span{position:relative;display:grid;place-items:center;width:24px;height:24px;border:1px solid #dab883;border-radius:50%;background:#242018;box-shadow:0 1px 5px #0009}
+.cz-terrain-marker.is-stack>span{box-shadow:3px 3px 0 -1px #242018,3px 3px 0 0 #b89969,0 1px 6px #000b}
+.cz-terrain-marker.is-active{z-index:3}
+.cz-terrain-marker.is-active>span{background:#e0bd80;color:#231c12;border-color:#ffe5b8;box-shadow:0 0 0 5px #c9a36d33,0 1px 6px #0009}
+.cz-terrain-marker:hover>span,.cz-terrain-marker:focus-visible>span{background:#b4915d;color:#15130f;border-color:#f5d6a8}
+.cz-terrain-label{position:absolute;z-index:4;pointer-events:none;background:#1b1813f5;border:1px solid #c9a36d66;border-radius:2px;padding:8px 10px;width:200px;text-align:center;color:#f0d8b3;font-size:11px;line-height:1.5;box-shadow:0 2px 12px #0005}
+.cz-terrain-label small{display:block;color:#b7a58b;font-size:9px;margin-top:2px}
+.cz-terrain-nearby{position:absolute;z-index:6;left:50%;top:50%;transform:translate(-50%,-50%);width:min(280px,calc(100% - 28px));padding:40px 12px 12px;background:#191712;border:1px solid #c9a36d88;box-shadow:0 4px 25px #0008}
+.cz-terrain-nearby>button{display:block;min-height:44px;width:100%;padding:10px;border:0;border-bottom:1px solid #c9a36d33;background:none;color:#e5cca6;text-align:left;font-size:12px}
+.cz-terrain-nearby .cz-terrain-close{position:absolute;top:0;right:0;width:44px;height:44px;display:grid;place-items:center;border:0;padding:0}
+.cz-terrain-loading,.cz-terrain-error{position:absolute;z-index:6;left:50%;bottom:48px;transform:translateX(-50%);max-width:calc(100% - 28px);padding:10px 14px;background:#1b1813ed;border:1px solid #c9a36d66;color:#e8d3b2;font-size:11px;line-height:1.5;text-align:center}
+.cz-terrain-loading{pointer-events:none}
+.cz-terrain-error button{display:block;min-height:44px;margin:4px auto 0;padding:0 20px;border:0;background:none;color:#e5bf85;text-decoration:underline;font-size:12px}
+.cz-terrain-scale{position:absolute;pointer-events:none;left:15px;bottom:33px;padding:4px 6px;background:#171612d9;color:#e6d5ba;font-size:9px;line-height:1.2;text-align:center}
+.cz-terrain-scale i{display:block;height:5px;margin-top:3px;border:1px solid currentColor;border-top:0}
+.cz-terrain-attribution{position:absolute;bottom:0;right:0;max-width:100%;padding:5px 8px;background:#171612ed;color:#c7bba7;font-size:9px;line-height:1.4;text-align:right}
+.cz-terrain-attribution a{color:inherit!important;text-decoration:none!important}
+.cz-terrain-attribution a:hover{text-decoration:underline!important}
+.cz-terrain-frame:fullscreen{width:100vw;height:100dvh;border:0;border-radius:0}
+.cz-terrain-frame:fullscreen .cz-terrain-surface{height:100dvh}
+@media(min-width:1600px){.cz-terrain-surface{height:580px}}
+@media(max-width:520px){.cz-terrain-surface{height:430px}.cz-terrain-top{top:10px;left:10px;right:10px;gap:8px}.cz-terrain-reset{padding:0 10px;font-size:10px;gap:6px}.cz-terrain-tone{padding:0}.cz-terrain-tone button{min-height:44px;padding:0 8px;font-size:9px}.cz-terrain-controls{top:66px;right:10px}.cz-terrain-attribution{font-size:8px;padding:5px}.cz-terrain-label{font-size:10px}}
