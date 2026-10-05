@@ -5,14 +5,23 @@ import { atlasNodeById } from '../src/data/atlasContent.js'
 import { galleryData } from '../src/data/galleryData.js'
 import { expeditionPages } from '../src/data/expeditionPages.js'
 import { filmCatalog } from '../src/data/filmCatalog.js'
+import { portfolioPhotos } from '../src/data/portfolioData.js'
+import { author } from '../src/data/authorData.js'
 
 const root = new URL('../', import.meta.url)
 const read = file => readFile(new URL(file, root), 'utf8')
 const decode = value => value.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>')
 const attribute = (html, key) => decode(html.match(new RegExp(`<meta (?:name|property)="${key}" content="([^"]*)"`))?.[1] || '')
 const canonicalPaths = new Set(sitePages.map(page => page.path))
-assert.equal(canonicalPaths.size, 13)
-assert.equal(new Set(sitePages.map(page => page.title)).size, 13)
+assert.equal(canonicalPaths.size, 7 + galleryData.length + expeditionPages.length)
+assert.equal(new Set(sitePages.map(page => page.title)).size, sitePages.length)
+assert(portfolioPhotos.length >= 15 && portfolioPhotos.length <= 20)
+assert.equal(new Set(portfolioPhotos.map(photo => photo.full)).size, portfolioPhotos.length)
+for (const photo of portfolioPhotos) {
+  assert(galleryData.some(gallery => `/galerie/${gallery.id}` === photo.sourceHref && gallery.photos.some(item => item.full === photo.full)), 'Portfolio must reference a current, non-excluded gallery photo')
+}
+assert(canonicalPaths.has('/fotografia') && canonicalPaths.has('/o-mnie'))
+assert.equal(author.email, 'cinekzielu@gmail.com', 'Use the owner-confirmed contact address')
 for (const page of sitePages) {
   const html = await read(`dist/${page.path === '/' ? 'index' : page.path.slice(1)}.html`)
   assert.equal(decode(html.match(/<title>(.*?)<\/title>/)?.[1] || ''), page.title, page.path)
@@ -55,10 +64,12 @@ assert(attribute(await read('dist/404.html'), 'robots').includes('noindex'))
 for (const gallery of galleryData) {
   assert(expeditionPages.some(expedition => expedition.id === gallery.id))
   assert(atlasNodeById[gallery.mapNodeId])
+  for (const place of gallery.mapPlaces || []) assert(atlasNodeById[place.id], place.id)
   for (const film of gallery.films) assert(filmCatalog.some(item => item.youtubeId === film.id), film.id)
   for (const photo of gallery.photos) {
     await stat(new URL('public' + photo.src, root))
     await stat(new URL('public' + photo.full, root))
+    await stat(new URL('public' + photo.mobileSrc, root))
   }
 }
 const originalHero = await stat(new URL('public/images/hero.jpg', root))

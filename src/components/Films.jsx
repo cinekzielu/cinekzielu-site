@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Play, Search, X } from 'lucide-react'
 import { filmCatalog, filmRegions, filmRegionLabel, filterFilms } from '../data/filmCatalog'
 import { CollectionShell } from './CollectionShell'
+import { FilmLink } from './SiteTools'
 import '../filmStyles.css'
 
 const readFilters = () => {
@@ -12,7 +13,7 @@ const readFilters = () => {
 function FilmCard({ film, index }) {
   const [failedImage, setFailedImage] = useState(false)
   return <article className="cz-film-card">
-    <a className="cz-film-main" href={film.youtubeUrl} target="_blank" rel="noreferrer" aria-label={`${film.title} — ${film.format}, ${film.duration}, oglądaj na YouTube`}>
+    <FilmLink className="cz-film-main" href={film.youtubeUrl} target="_blank" rel="noreferrer" aria-label={`${film.title} — ${film.format}, ${film.duration}, odtwórz film`}>
       <div className="cz-film-image">
         {!failedImage && <img src={film.thumbnail} alt="" width="1280" height="720" loading={index < 3 ? 'eager' : 'lazy'} decoding="async" onError={() => setFailedImage(true)} />}
         <span className={`cz-film-play${failedImage ? ' is-fallback' : ''}`} aria-hidden="true"><Play size={22} strokeWidth={1.4} /></span>
@@ -20,7 +21,7 @@ function FilmCard({ film, index }) {
       </div>
       <div className="cz-film-meta"><span>{film.series || filmRegionLabel(film.region)}</span><span>{film.format}</span></div>
       <h2>{film.title}<span aria-hidden="true">↗</span></h2>
-    </a>
+    </FilmLink>
     {film.expeditionId && <div className="cz-film-related"><a href={`/wyprawy/${film.expeditionId}`}>Wyprawa ↗</a><a href={`/galerie/${film.expeditionId}`}>Galeria ↗</a></div>}
   </article>
 }

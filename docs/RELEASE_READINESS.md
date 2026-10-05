@@ -1,5 +1,15 @@
 # Pierwsza wersja do przeglądu — 4 października 2026
 
+## Aktualizacja zatwierdzona do publikacji — 5 października 2026
+
+Użytkownik ponownie zlecił wdrożenie nowych, obejrzanych lokalnie zmian na istniejącą stronę cinekzielu.pl. Ta zgoda zastępuje wcześniejsze odłożenie publikacji opisane w dokumentach poszczególnych etapów.
+
+Pakiet obejmuje 29 stron, 11 galerii z 220 zdjęciami, portfolio fotografii, stronę O mnie z potwierdzonym kontaktem, filtry kolekcji, wspólne wyszukiwanie, odtwarzacz filmów oraz wspólny atlas krajów i obszarów. Atlas ma 73 miejsca, 14 obrysów państw, osobne obszary górskie i materiały z różnych lat. Świat i kontynenty zachowują indywidualny styl.
+
+Build oraz wszystkie siedem kontroli `check-*.mjs` przeszły przed publikacją. Pliki galerii to wyłącznie 660 wariantów 220 zdjęć aktualnego katalogu; wycofane selekcje, oryginały i prywatne manifesty pozostają poza repozytorium. Przed wysłaniem sprawdzono aktualny główny commit `ff1f462bec8fe001b4d92f7a75d7e91de8e28179`. Zależności i dostawca hostingu bez zmian. Po wdrożeniu wymagane sprawdzenie rzeczywistych stron, zasobów, przekierowań i działania obrysów na domenie produkcyjnej.
+
+Poniżej pozostaje historyczna kontrola poprzedniego wdrożenia.
+
 Status: wersja zaakceptowana przez użytkownika wraz z poprawkami miniaturek i odstępów. Publikacja pod cinekzielu.pl została autoryzowana 4 października 2026. Poniżej zapis kontroli poprzedzającej wdrożenie.
 
 ## Zakres

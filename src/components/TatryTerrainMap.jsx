@@ -1,18 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Minus, Plus, Maximize2, Mountain, X } from 'lucide-react'
+import { Minus, Plus, Maximize2, Mountain, House, Tent, X, MapPin, Route, Waves, Snowflake, Trees, Castle, Camera } from 'lucide-react'
 import { atlasNodeById } from '../data/atlasContent'
 import { tatryLocations, tatryLocationById } from '../data/tatryAtlas'
 import { mercator, unproject, worldSize, fitTerrain, terrainMarkers, visibleTerrainTiles, reprojectTerrainTile, gestureTerrain, zoomTerrainAt, clampTerrainZoom, MIN_TERRAIN_ZOOM, MAX_TERRAIN_ZOOM } from '../data/terrainMap'
 import '../tatryTerrain.css'
+import { CountryOutline } from './CountryOutline'
 
 const centerOf = entries => ({ x: entries.reduce((sum, point) => sum + point.x, 0) / entries.length, y: entries.reduce((sum, point) => sum + point.y, 0) / entries.length })
 const pointDistance = entries => entries.length < 2 ? 0 : Math.hypot(entries[0].x - entries[1].x, entries[0].y - entries[1].y)
-const initialView = (id, points, size) => tatryLocationById[id] ? { ...mercator(tatryLocationById[id]), zoom: 14 } : fitTerrain(points.length ? points : tatryLocations, size)
+const markerIcons = { mountain:Mountain, village:House, hut:Tent, city:MapPin, route:Route, lakes:Waves, glacier:Snowflake, forest:Trees, castle:Castle, film:Camera, waterfall:Waves }
+const initialView = (id, points, size, locations, locationById, overview, focusZoom) => locationById[id] ? { ...mercator(locationById[id]), zoom: focusZoom } : fitTerrain(overview || (points.length ? points : locations), size)
 
-export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0 }) {
+export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0, locations = tatryLocations, locationById = tatryLocationById, regionId = 'tatry', resetLabel = 'Całe Tatry', surfaceLabel = 'Mapa terenu Tatr. Przesuwaj palcem lub strzałkami. Plus i minus przybliżają, Home pokazuje całe Tatry.', initialTone = 'natural', overviewPoints = null, focusZoom = 14, countryId = null }) {
   const [size, setSize] = useState({ width: 800, height: 500 })
-  const [view, setView] = useState(() => initialView(selectedId, points, { width: 800, height: 500 }))
-  const [tone, setTone] = useState('natural')
+  const [view, setView] = useState(() => initialView(selectedId, points, { width: 800, height: 500 }, locations, locationById, overviewPoints, focusZoom))
+  const [tone, setTone] = useState(initialTone)
   const [hovered, setHovered] = useState(null)
   const [tileStatus, setTileStatus] = useState({})
   const [retry, setRetry] = useState(0)
@@ -45,14 +47,14 @@ export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0
   }
   const reset = () => {
     interacted.current = true; setHovered(null); setNearbyChoices(null)
-    commit(fitTerrain(tatryLocations, sizeRef.current))
+    commit(fitTerrain(overviewPoints || locations, sizeRef.current))
   }
   useEffect(() => {
     const observer = new ResizeObserver(([entry]) => {
       const next = { width: entry.contentRect.width, height: entry.contentRect.height }
       if (!next.width || !next.height) return
       setSize(next); sizeRef.current = next
-      if (!interacted.current) commit(initialView(selectedRef.current, pointsRef.current, next))
+      if (!interacted.current) commit(initialView(selectedRef.current, pointsRef.current, next, locations, locationById, overviewPoints, focusZoom))
     })
     observer.observe(surface.current)
     return () => { observer.disconnect(); if (pendingFrame.current !== null) cancelAnimationFrame(pendingFrame.current) }
@@ -61,11 +63,11 @@ export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0
     const selectionKey = `${selectedId}/${focusRequest}`
     if (previousSelection.current === selectionKey) return
     previousSelection.current = selectionKey
-    const point = tatryLocationById[selectedId]
+    const point = locationById[selectedId]
     setNearbyChoices(null)
     if (selectionFromMap.current === selectedId) { selectionFromMap.current = null; return }
-    if (point) { interacted.current = true; commit({ ...mercator(point), zoom: Math.max(13.5, viewRef.current.zoom) }) }
-    else if (selectedId === 'tatry') reset()
+    if (point) { interacted.current = true; commit({ ...mercator(point), zoom: Math.max(focusZoom, viewRef.current.zoom) }) }
+    else if (selectedId === regionId) reset()
   }, [selectedId, focusRequest])
   useEffect(() => {
     const element = surface.current
@@ -157,27 +159,28 @@ export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0
   const labelWidth = label ? Math.min(200, Math.max(90, label.length * 6 + 20)) : 0
   const latitude = unproject(view).lat
   const metersPerPixel = 40075016.686 * Math.cos(latitude * Math.PI / 180) / worldSize(view.zoom)
-  const scaleDistance = [50, 100, 200, 500, 1000, 2000, 5000, 10000].filter(distance => distance / metersPerPixel <= 90).pop() || 50
+  const scaleDistance = [50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000].filter(distance => distance / metersPerPixel <= 90).pop() || 50
 
   return <div ref={frame} className={`cz-terrain-frame ${expanded ? 'is-expanded' : ''} is-${tone}`}>
-    <div className={`cz-terrain-surface ${dragging ? 'is-dragging' : ''}`} ref={surface} tabIndex={0} role="region" aria-label="Mapa terenu Tatr. Przesuwaj palcem lub strzałkami. Plus i minus przybliżają, Home pokazuje całe Tatry."
+    <div className={`cz-terrain-surface ${dragging ? 'is-dragging' : ''}`} ref={surface} tabIndex={0} role="region" aria-label={surfaceLabel}
       onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={pointerEnd} onPointerCancel={pointerEnd} onLostPointerCapture={pointerEnd} onKeyDown={keyDown}
       onDoubleClick={event => { if (event.target.closest('button,a')) return; const rect = event.currentTarget.getBoundingClientRect(); zoom(1, { x: event.clientX - rect.left, y: event.clientY - rect.top }) }}>
+      {countryId && <CountryOutline countryId={countryId} view={view} size={size} />}
       <div className="cz-terrain-tiles" aria-hidden="true">
         {backdrop.map(tile => <img key={`backdrop/${tile.key}`} src={tile.src} alt="" draggable={false} referrerPolicy="strict-origin-when-cross-origin" style={{ left: tile.left, top: tile.top, width: tile.size + .5, height: tile.size + .5 }} />)}
         {tiles.map(tile => <img key={`${retry}/${tile.key}`} src={tile.src} alt="" draggable={false} referrerPolicy="strict-origin-when-cross-origin" style={{ left: tile.left, top: tile.top, width: tile.size + .5, height: tile.size + .5 }}
         onLoad={() => setTileStatus(current => current[tile.key] === 'loaded' ? current : { ...current, [tile.key]: 'loaded' })}
         onError={() => setTileStatus(current => current[tile.key] === 'error' ? current : { ...current, [tile.key]: 'error' })} />)}</div>
-      {groups.map(group => <button type="button" key={group.id} style={{ left: group.x, top: group.y }} className={`cz-terrain-marker ${group.points.length > 1 ? 'is-stack' : ''} ${activeGroup === group ? 'is-active' : ''}`}
+      {groups.map(group => { const Icon = markerIcons[group.points[0].icon] || Mountain; return <button type="button" key={group.id} style={{ left: group.x, top: group.y }} className={`cz-terrain-marker ${group.points.length > 1 ? 'is-stack' : ''} ${activeGroup === group ? 'is-active' : ''}`}
         tabIndex={group.x >= 22 && group.x <= size.width - 22 && group.y >= 22 && group.y <= size.height - 22 ? 0 : -1}
-        aria-label={group.points.length === 1 ? `Wybierz: ${atlasNodeById[group.points[0].id].name}` : `Przybliż szczyty: ${group.points.map(point => atlasNodeById[point.id].name).join(', ')}`}
+        aria-label={group.points.length === 1 ? `Wybierz: ${atlasNodeById[group.points[0].id].name}` : `Przybliż ${regionId === 'tatry' ? 'szczyty' : 'miejsca'}: ${group.points.map(point => atlasNodeById[point.id].name).join(', ')}`}
         aria-pressed={group.points.length === 1 ? group.points[0].id === selectedId : undefined}
-        onClick={() => pick(group)} onPointerEnter={() => !dragging && setHovered(group.id)} onPointerLeave={() => setHovered(null)} onFocus={() => setHovered(group.id)} onBlur={() => setHovered(null)}><span><Mountain size={13} aria-hidden="true" /></span></button>)}
+        onClick={() => pick(group)} onPointerEnter={() => !dragging && setHovered(group.id)} onPointerLeave={() => setHovered(null)} onFocus={() => setHovered(group.id)} onBlur={() => setHovered(null)}><span>{group.points.length > 1 ? group.points.length : <Icon size={13} aria-hidden="true" />}</span></button>})}
       {label && <div className="cz-terrain-label" style={{ width: labelWidth, left: Math.max(8, Math.min(size.width - labelWidth - 8, labelGroup.x - labelWidth / 2)), top: Math.max(64, labelGroup.y - 56) }}>{label}{labelGroup.points.length > 1 && <small>Kliknij, aby przybliżyć</small>}</div>}
-      {nearbyChoices && <div className="cz-terrain-nearby"><button className="cz-terrain-close" aria-label="Zamknij wybór szczytu" onClick={() => setNearbyChoices(null)}><X size={15} /></button>{nearbyChoices.map(point => <button type="button" key={point.id} onClick={() => { selectionFromMap.current = point.id; onSelect(point.id); setNearbyChoices(null) }}>{atlasNodeById[point.id].name} →</button>)}</div>}
+      {nearbyChoices && <div className="cz-terrain-nearby"><button className="cz-terrain-close" aria-label="Zamknij wybór miejsca" onClick={() => setNearbyChoices(null)}><X size={15} /></button>{nearbyChoices.map(point => <button type="button" key={point.id} onClick={() => { selectionFromMap.current = point.id; onSelect(point.id); setNearbyChoices(null) }}>{atlasNodeById[point.id].name} →</button>)}</div>}
     </div>
     <div className="cz-terrain-top">
-      <button type="button" className="cz-terrain-reset" onClick={reset}><Mountain size={15} aria-hidden="true" />Całe Tatry</button>
+      <button type="button" className="cz-terrain-reset" onClick={reset}><Mountain size={15} aria-hidden="true" />{resetLabel}</button>
       <div className="cz-terrain-tone" role="group" aria-label="Kolor mapy"><button type="button" aria-pressed={tone === 'dark'} onClick={() => setTone('dark')}>Ciemna</button><button type="button" aria-pressed={tone === 'natural'} onClick={() => setTone('natural')}>Naturalna</button></div>
     </div>
     <div className="cz-terrain-controls" role="group" aria-label="Sterowanie mapą terenu">
@@ -189,6 +192,6 @@ export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0
     {failed > 0 && <div className="cz-terrain-error" role="status"><span>{loaded ? 'Część mapy nie została wczytana.' : 'Podkład mapy jest chwilowo niedostępny.'}</span><button type="button" onClick={() => { setTileStatus({}); setRetry(current => current + 1) }}>Ponów</button></div>}
     {fullscreenError && <div className="cz-terrain-error" role="status">Pełny ekran jest niedostępny w tej przeglądarce.<button type="button" onClick={() => setFullscreenError(false)}>Zamknij</button></div>}
     <div className="cz-terrain-scale" aria-hidden="true"><span>{scaleDistance >= 1000 ? `${scaleDistance / 1000} km` : `${scaleDistance} m`}</span><i style={{ width: scaleDistance / metersPerPixel }} /></div>
-    <div className="cz-terrain-attribution">© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a> · SRTM · <a href="https://opentopomap.org/about" target="_blank" rel="noreferrer">OpenTopoMap (CC BY-SA)</a> · <a href="https://top-o-map.com/" target="_blank" rel="noreferrer">Top-O-Map</a></div>
+    <div className="cz-terrain-attribution">© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a> · SRTM · <a href="https://opentopomap.org/about" target="_blank" rel="noreferrer">OpenTopoMap (CC BY-SA)</a> · <a href="https://top-o-map.com/" target="_blank" rel="noreferrer">Top-O-Map</a>{countryId && <> · <a href="https://www.naturalearthdata.com/" target="_blank" rel="noreferrer">Obrys: Natural Earth</a></>}</div>
   </div>
 }

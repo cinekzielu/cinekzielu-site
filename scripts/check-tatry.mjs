@@ -62,4 +62,4 @@ for (const size of [{width:274,height:430},{width:342,height:430},{width:798,hei
   }
 }
 assert.equal(zoomTerrainAt({x:.5,y:.5,zoom:MIN_TERRAIN_ZOOM},-100,{x:0,y:0},{width:300,height:400}).zoom,MIN_TERRAIN_ZOOM)
-console.log('PASS: 22 sourced pins; Mercator/tile alignment; viewport coverage; cursor zoom; drag/pinch anchors; zoom limits; all peaks reachable at 4 sizes.')
+console.log(`PASS: ${tatryLocations.length} sourced pins; Mercator/tile alignment; viewport coverage; cursor zoom; drag/pinch anchors; zoom limits; all peaks reachable at 4 sizes.`)

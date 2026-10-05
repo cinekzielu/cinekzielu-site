@@ -4,6 +4,13 @@
 .cz-terrain-tiles{position:absolute;inset:0;pointer-events:none;filter:grayscale(.9) invert(.9) sepia(.18) brightness(.85) contrast(.9)}
 .is-natural .cz-terrain-tiles{filter:saturate(.65) contrast(.95)}
 .cz-terrain-tiles img{position:absolute;max-width:none!important;max-height:none!important;pointer-events:none;user-select:none;-webkit-user-drag:none}
+.cz-terrain-country-outline{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:hidden}
+.cz-terrain-country-outside{fill:#0b0a08;fill-opacity:.3}
+.cz-terrain-country-halo{fill:none;stroke:#17130dbb;stroke-width:4.5;stroke-linejoin:round;stroke-linecap:round}
+.cz-terrain-country-border{fill:none;stroke:#e4ba75;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.is-natural .cz-terrain-country-outside{fill-opacity:.18}
+.is-natural .cz-terrain-country-halo{stroke:#fff4dccc}
+.is-natural .cz-terrain-country-border{stroke:#93601e}
 .cz-terrain-top{position:absolute;top:14px;left:14px;right:14px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;pointer-events:none;z-index:5}
 .cz-terrain-top>*{pointer-events:auto}
 .cz-terrain-frame button{font-family:inherit;cursor:pointer}

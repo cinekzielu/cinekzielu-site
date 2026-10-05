@@ -14,3 +14,4 @@
 @media(max-width:600px){.cz-film-grid{grid-template-columns:1fr;gap:34px}.cz-film-filters{gap:4px}.cz-film-filters button{padding:10px 11px;min-height:44px}.cz-film-intro{font-size:12px;line-height:1.7;margin-bottom:26px}.cz-film-search{min-height:44px;max-width:none}.cz-film-search button{padding:8px}.cz-film-search input{font-size:16px}.cz-film-card h2{font-size:20px}.cz-film-channel{align-items:flex-start;flex-direction:column;gap:10px;margin-top:44px}.cz-film-related a{padding:10px 0}.cz-film-results{font-size:10px}}
 @media(prefers-reduced-motion:reduce){.cz-films *{transition:none!important}}
 @media(max-width:600px){.cz-film-filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;gap:4px}.cz-film-filters button{padding:10px 7px}}
+@media(max-width:600px){.cz-film-search button{min-width:44px;min-height:44px;align-items:center;justify-content:center}.cz-film-related a{min-height:44px;display:inline-flex;align-items:center}}
