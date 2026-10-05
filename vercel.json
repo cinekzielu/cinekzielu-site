@@ -34,7 +34,7 @@
     },
     {
       "source": "/wyprawy/koscielec-winter",
-      "destination": "/mapa?atlas=koscielec",
+      "destination": "/wyprawy/koscielec-2026",
       "permanent": true
     },
     {

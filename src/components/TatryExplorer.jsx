@@ -7,17 +7,16 @@ import { TatryTerrainMap } from './TatryTerrainMap'
 import '../tatryExplorer.css'
 
 const nodes = atlasContentNodes.filter(node => node.parent === 'tatry').sort((a, b) => a.name.localeCompare(b.name, 'pl'))
-const baseCount = nodes.filter(node => hasAtlasMaterials(node.id)).length
-const materialLabel = id => {
-  const { films, galleries } = getAtlasMaterials(id)
+const materialLabel = (id, year) => {
+  const { films, galleries } = getAtlasMaterials(id, year)
   return [galleries.length && `Galeria · ${photoCount(galleries.reduce((count, gallery) => count + gallery.photos.length, 0))}`, films.length && `${films.length} ${films.length === 1 ? 'film' : 'filmy'}`].filter(Boolean).join(' · ') || 'Brak materiałów'
 }
 
-export function TatryExplorer({ selectedId, onSelect, onlyMaterials, setOnlyMaterials, onShowMaterials }) {
+export function TatryExplorer({ selectedId, onSelect, onlyMaterials, setOnlyMaterials, onShowMaterials, year = 'all' }) {
   const [query, setQuery] = useState('')
   const [focusRequest, setFocusRequest] = useState(0)
   const mapRef = useRef(null)
-  const currentNodes = useMemo(() => searchAtlasNodes(query, nodes).filter(node => !onlyMaterials || hasAtlasMaterials(node.id) || node.id === selectedId), [query, onlyMaterials, selectedId])
+  const currentNodes = useMemo(() => searchAtlasNodes(query, nodes).filter(node => (!onlyMaterials && year === 'all') || hasAtlasMaterials(node.id, year) || node.id === selectedId), [query, onlyMaterials, selectedId, year])
   const points = tatryLocations.filter(point => currentNodes.some(node => node.id === point.id))
   useEffect(() => { setQuery('') }, [selectedId])
   useEffect(() => {
@@ -32,7 +31,7 @@ export function TatryExplorer({ selectedId, onSelect, onlyMaterials, setOnlyMate
     <TatryTerrainMap points={points} selectedId={selectedId} onSelect={onSelect} focusRequest={focusRequest} />
     <div className="cz-tatry-hint"><span>Przeciągnij mapę · przybliż + / −<span className="cz-tatry-wheel-hint"> · Ctrl + kółko</span></span><span>N ↑</span></div>
     <div className="cz-tatry-selection">
-      <div><small>{selectedId === 'tatry' ? `${baseCount} miejsc z materiałami` : atlasNodeById[selectedId].kind === 'Przejście grani' ? 'Przejście grani' : 'Wybrane miejsce'}</small><strong>{selectedId === 'tatry' ? 'Szczyty i granie' : atlasNodeById[selectedId].name}</strong></div>
+      <div><small>{selectedId === 'tatry' ? `Miejsca z materiałami: ${nodes.filter(node => hasAtlasMaterials(node.id, year)).length}` : atlasNodeById[selectedId].kind === 'Przejście grani' ? 'Przejście grani' : 'Wybrane miejsce'}</small><strong>{selectedId === 'tatry' ? 'Szczyty i granie' : atlasNodeById[selectedId].name}</strong></div>
       <button type="button" className="cz-tatry-materials" onClick={onShowMaterials}>Materiały <ArrowUpRight size={15} aria-hidden="true" /></button>
     </div>
     <div className="cz-tatry-search-row">
@@ -41,11 +40,11 @@ export function TatryExplorer({ selectedId, onSelect, onlyMaterials, setOnlyMate
     </div>
     <div className="cz-tatry-places" role="group" aria-label="Miejsca w Tatrach">
       {currentNodes.map(node => <button type="button" key={node.id} aria-pressed={selectedId === node.id} onClick={() => { setQuery(''); setFocusRequest(current => current + 1); onSelect(node.id) }}>
-        <span className={`cz-tatry-list-dot ${hasAtlasMaterials(node.id) ? 'has-materials' : ''}`} aria-hidden="true" />
-        <span><strong>{node.name}</strong><small>{materialLabel(node.id)}</small></span><ArrowUpRight size={14} aria-hidden="true" />
+        <span className={`cz-tatry-list-dot ${hasAtlasMaterials(node.id, year) ? 'has-materials' : ''}`} aria-hidden="true" />
+        <span><strong>{node.name}</strong><small>{materialLabel(node.id, year)}</small></span><ArrowUpRight size={14} aria-hidden="true" />
       </button>)}
     </div>
     {!currentNodes.length && <p className="cz-atlas-empty-search" role="status">Brak wyników. Zmień nazwę lub wyłącz filtr „Z materiałami”.</p>}
-    {selectedId === 'liptowskie-mury' && <p className="cz-tatry-source">Liptowskie Mury to przejście grani — materiały znajdziesz w panelu wyprawy.</p>}
+    {atlasNodeById[selectedId].kind === 'Przejście grani' && <p className="cz-tatry-source">{atlasNodeById[selectedId].name}: przejście grani — materiały znajdziesz w panelu wyprawy.</p>}
   </section>
 }

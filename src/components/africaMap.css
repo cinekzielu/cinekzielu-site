@@ -1,0 +1,13 @@
+.cz-atlas .atlasStage.isAfricaView{display:flex;align-items:center;justify-content:center;background:#0a0d0b}
+.cz-africa-sheet{position:relative;flex:none;width:min(100%,calc(var(--atlas-height) * var(--atlas-zoom)));aspect-ratio:1}
+.cz-africa-svg{display:block;width:100%;height:100%;overflow:visible}
+.cz-africa-grid path{fill:none;stroke:#c9a36d;stroke-opacity:.06;stroke-width:.6}
+.cz-africa-country path{stroke:#bcaa8c;stroke-opacity:.22;stroke-width:.65;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.cz-africa-country.has-materials{cursor:pointer}.cz-africa-country.has-materials path{stroke:#c9a36d;stroke-width:1.1;stroke-opacity:1;transition:filter .18s ease}
+.cz-africa-country.has-materials:hover path,.is-morocco-selected .cz-africa-country.has-materials path{filter:drop-shadow(0 0 3px #c9a36d33);stroke:#e5c48c;stroke-width:1.5}
+.cz-africa-ocean text{fill:#b4a48c;opacity:.45;font-size:7px;letter-spacing:2px;text-anchor:middle}.cz-africa-name{fill:#ac9879;font-size:10px;letter-spacing:5px}
+.cz-africa-marker{position:absolute;transform:translate(14px,-50%);display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:3px;min-height:48px;min-width:92px;padding:8px 12px;background:#11160ff5;border:1px solid #c9a36d80;border-radius:3px;color:#f0dec0;text-align:left;font-size:12px;box-shadow:0 4px 20px #0003}
+.cz-africa-marker::before{content:"";position:absolute;left:-19px;top:calc(50% - 4px);width:7px;height:7px;border:1px solid #ffe2b5;background:#c9a36d;border-radius:50%;box-shadow:0 0 0 4px #c9a36d22}
+.cz-africa-marker>span{display:flex;gap:12px;justify-content:space-between;width:100%}.cz-africa-marker small{font-size:9px;color:#b7aa9b}.cz-africa-marker:hover,.cz-africa-marker[aria-pressed=true]{border-color:#e2c99e;background:#342a1e;color:#fff1d9}
+.cz-atlas-legend .cz-atlas-map-source{margin-left:auto;color:#938675;font-size:9px}.cz-atlas-legend .cz-atlas-map-source+.cz-atlas-map-note{margin-left:0}
+@media(prefers-reduced-motion:reduce){.cz-africa-country.has-materials path{transition:none}}

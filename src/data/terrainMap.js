@@ -1,6 +1,6 @@
 // Web Mercator coordinates are shared by the raster tiles and every marker.
 export const TERRAIN_TILE_URL = 'https://tile.top-o-map.com/{z}/{x}/{y}.png'
-export const MIN_TERRAIN_ZOOM = 9
+export const MIN_TERRAIN_ZOOM = 2
 export const MAX_TERRAIN_ZOOM = 16
 export const clampTerrainZoom = zoom => Math.max(MIN_TERRAIN_ZOOM, Math.min(MAX_TERRAIN_ZOOM, zoom))
 export const worldSize = zoom => 256 * 2 ** zoom
@@ -15,7 +15,15 @@ export function terrainScreen(point, view, size) {
   const world = mercator(point), scale = worldSize(view.zoom)
   return { x: size.width / 2 + (world.x - view.x) * scale, y: size.height / 2 + (world.y - view.y) * scale }
 }
+
+export function terrainSvgViewport(view, size) {
+  const scale = worldSize(view.zoom)
+  const width = size.width / scale, height = size.height / scale
+  const left = view.x - width / 2, top = view.y - height / 2
+  return { left, top, width, height, viewBox:`${left} ${top} ${width} ${height}` }
+}
 export function fitTerrain(points, size, maxZoom = 14) {
+  if (!points.length) return {x:.5,y:.5,zoom:MIN_TERRAIN_ZOOM}
   const coords = points.map(mercator)
   const left = Math.min(...coords.map(p => p.x)), right = Math.max(...coords.map(p => p.x))
   const top = Math.min(...coords.map(p => p.y)), bottom = Math.max(...coords.map(p => p.y))

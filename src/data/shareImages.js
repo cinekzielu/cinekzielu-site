@@ -32,5 +32,60 @@ export const shareImages = {
     "width": 1200,
     "height": 630,
     "alt": "Cinek Zielu — góry, podróże i film"
+  },
+  "koscielec-2026": {
+    "src": "/share/koscielec-2026.jpg",
+    "width": 1600,
+    "height": 900,
+    "alt": "Górskie grzbiety w ciepłym świetle nad śnieżnym zboczem",
+    "bytes": 127407
+  },
+  "baranie-rogi-lodowy-szczyt-2026": {
+    "src": "/share/baranie-rogi-lodowy-szczyt-2026.jpg",
+    "width": 1600,
+    "height": 1067,
+    "alt": "Ciemne skaliste turnie częściowo przesłonięte niskimi chmurami",
+    "bytes": 242806
+  },
+  "swinica-2025": {
+    "src": "/share/swinica-2025.jpg",
+    "width": 1600,
+    "height": 1067,
+    "alt": "Górska grań ponad kosodrzewiną pod białymi chmurami",
+    "bytes": 291848
+  },
+  "turbacz-2026": {
+    "src": "/share/turbacz-2026.jpg",
+    "width": 1600,
+    "height": 900,
+    "alt": "Sylwetka wędrowca i ośnieżone drzewa na tle gór ponad chmurami",
+    "bytes": 284427
+  },
+  "zabi-kon-2026": {
+    "src": "/share/zabi-kon-2026.jpg",
+    "width": 1600,
+    "height": 1067,
+    "alt": "Ostra skalna grań z małymi sylwetkami wspinaczy na tle błękitnego nieba",
+    "bytes": 291856
+  },
+  "szpiglasowy-wierch-2025": {
+    "src": "/share/szpiglasowy-wierch-2025.jpg",
+    "width": 1600,
+    "height": 1067,
+    "alt": "Górski staw pod rozległą skalną granią w letnim świetle",
+    "bytes": 421063
+  },
+  "krywan-2025": {
+    "src": "/share/krywan-2025-landscape.jpg",
+    "width": 1600,
+    "height": 1067,
+    "alt": "Kolejne grzbiety Tatr w popołudniowym świetle",
+    "bytes": 126533
+  },
+  "about": {
+    "src": "/share/marcin-zielinski.jpg",
+    "width": 1280,
+    "height": 1489,
+    "alt": "Marcin Zieliński na górskim szczycie"
   }
 }

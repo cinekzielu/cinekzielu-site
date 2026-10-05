@@ -25,6 +25,10 @@ export const tatryLocations = [
   ['wolowiec', 49.2075694, 19.7631281, 2302916813],
   ['wysoka', 49.1726908, 20.0941846, 12655996884],
   ['zabi-kon', 49.1785869, 20.0793064, 3508683869],
+  ['lodowa-kopa', 49.1964482, 20.1825885, 6008115144],
+  ['szpiglasowy-wierch', 49.1972908, 20.0401058, 452477062],
+  ['huncowski-szczyt', 49.1979918, 20.2251697, 380695706],
+  ['walentkowy-wierch', 49.2134347, 20.0068154, 385107932],
 ].map(([id, lat, lng, osmNode]) => ({ id, lat, lng, source: `https://www.openstreetmap.org/node/${osmNode}`, sourceName: 'OpenStreetMap' }))
 
 export const tatryLocationById = Object.fromEntries(tatryLocations.map(point => [point.id, point]))

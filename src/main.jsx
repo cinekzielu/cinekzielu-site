@@ -5,11 +5,15 @@ import './styles.css'
 import { contentData } from './data/contentData'
 import { filmsData } from './data/filmsData'
 import { FilmIndex } from './components/Films'
+import { SiteToolsProvider, SearchTrigger, FilmLink } from './components/SiteTools'
+import { PhotographyPage } from './components/Photography'
+import { AboutPage } from './components/About'
 import { getAtlasMaterials } from './data/atlasContent'
 import { applyPageMetadata } from './pageMetadata'
 import { legacyRedirects, normalizePagePath } from './data/siteMetadata'
 import { NotFound } from './components/NotFound'
 import { galleryData } from './data/galleryData'
+import { expeditionCount } from './data/galleryNavigation'
 import { GalleryCards, GalleryIndex, GalleryPage } from './components/Galleries'
 import { ExpeditionIndex, ExpeditionPage, ExpeditionList } from './components/Expeditions'
 import { expeditionPages, findExpeditionPage } from './data/expeditionPages'
@@ -71,12 +75,13 @@ const homepageFeaturedExpeditions = [
 })
 
 const mobileNavLinks = [
-  { href: '#map', label: 'Mapa' },
-  { href: '#films', label: 'Filmy' },
-  { href: '#featured-expeditions', label: 'Kierunki' },
+  { href: '/fotografia', label: 'Fotografia' },
   { href: '#expeditions', label: 'Wyprawy' },
+  { href: '#films', label: 'Filmy' },
+  { href: '#map', label: 'Mapa' },
   { href: '#gallery-preview', label: 'Galerie' },
-  { href: '#footer', label: 'Kontakt' },
+  { href: '/o-mnie', label: 'O mnie' },
+  { href: '/o-mnie#kontakt', label: 'Kontakt' },
 ]
 
 const mobileMenuVariant = 'A'
@@ -139,7 +144,7 @@ function App() {
     if (!isMobileMenuOpen) return
     const previous = document.body.style.overflow
     const links = [...menuRef.current.querySelectorAll('a')]
-    const controls = [menuButtonRef.current, ...links]
+    const controls = [document.querySelector('.homepage .cz-search-trigger'), menuButtonRef.current, ...links].filter(Boolean)
     const media = window.matchMedia('(min-width:901px)')
     const close = () => { setIsMobileMenuOpen(false); menuButtonRef.current?.focus() }
     const keydown = event => {
@@ -238,6 +243,7 @@ function App() {
               </a>
             ))}
           </div>
+          <SearchTrigger onOpen={() => setIsMobileMenuOpen(false)} />
           <button
             className="hamburgerButton"
             ref={menuButtonRef}
@@ -256,7 +262,7 @@ function App() {
         />
         <div ref={menuRef} id="mobile-navigation" role="navigation" aria-label="Menu mobilne" inert={!isMobileMenuOpen} className={`mobileMenu mobileVariant${mobileMenuVariant} ${isMobileMenuOpen ? 'isOpen' : ''}`}>
           {mobileNavLinks.map((item) => (
-            <a href={item.href} key={item.href} onClick={() => { setIsMobileMenuOpen(false); requestAnimationFrame(() => { const target = document.querySelector(item.href); if (target) { target.tabIndex = -1; target.focus({ preventScroll: true }) } }) }}>
+            <a href={item.href} key={item.href} onClick={() => { setIsMobileMenuOpen(false); requestAnimationFrame(() => { const target = item.href.startsWith('#') ? document.querySelector(item.href) : null; if (target) { target.tabIndex = -1; target.focus({ preventScroll: true }) } }) }}>
               {item.label}
             </a>
           ))}
@@ -274,8 +280,8 @@ function App() {
               <a className="button primary" href="#films">
                 <Play size={16} /> Obejrzyj filmy
               </a>
-              <a className="button" href={socials.instagram} target="_blank" rel="noreferrer">
-                Instagram
+              <a className="button" href="/fotografia">
+                Zobacz fotografie
               </a>
               <a className="button" href={socials.youtube} target="_blank" rel="noreferrer">
                 YouTube
@@ -310,7 +316,7 @@ function App() {
           <div className="filmGrid">
             {homepageFilms.map((film) => (
               <article className="filmCard" key={film.id}>
-                <div className="filmImageWrap">
+                <FilmLink className="filmImageWrap" href={film.ctaUrl || undefined} tabIndex={-1} aria-hidden="true">
                   {film.thumbnail ? (
                     <img
                       src={film.thumbnail}
@@ -339,7 +345,7 @@ function App() {
                     )}
                   </div>
                   {film.duration ? <span className="filmDuration">{film.duration}</span> : null}
-                </div>
+                </FilmLink>
                 <div className="filmMetaRow">
                   <span className={`cardType${film.ctaUrl ? '' : ' contentStatus'}`}>{film.statusLabel}</span>
                   <span className="filmHelperLabel">{film.timelineLabel}</span>
@@ -355,9 +361,9 @@ function App() {
                   </div>
                 ) : null}
                 {film.ctaUrl ? (
-                  <a className="smallButton filmCta" href={film.ctaUrl} target="_blank" rel="noreferrer">
-                    <Play size={14} /> Obejrzyj na YouTube
-                  </a>
+                  <FilmLink className="smallButton filmCta" href={film.ctaUrl} target="_blank" rel="noreferrer">
+                    <Play size={14} /> Obejrzyj film
+                  </FilmLink>
                 ) : (
                   <div className="filmStatusSoon">Wkrótce</div>
                 )}
@@ -528,7 +534,7 @@ function App() {
         <div className="container">
           <SectionHeader icon={iconGallery} label="GALERIE" title="Zdjęcia z wypraw" />
           <GalleryCards galleries={galleryData.slice(0, 3)} compact />
-          <a className="cz-gallery-text-link" href="/galerie">Wszystkie galerie · {galleryData.length} wyprawy →</a>
+          <a className="cz-gallery-text-link" href="/galerie">Wszystkie galerie · {expeditionCount(galleryData.length)} →</a>
         </div>
       </section>
 
@@ -547,7 +553,7 @@ function App() {
               <a href={socials.youtube} target="_blank" rel="noreferrer">YouTube</a>
               <a href={socials.tiktok} target="_blank" rel="noreferrer">TikTok</a>
             </div>
-            <a className="footerAnchor" href="mailto:kontakt@cinekzielu.com">Kontakt i współpraca</a>
+            <a className="footerAnchor" href="/o-mnie#kontakt">O mnie i kontakt</a>
             <p className="footerCopyright">© 2026 Cinek Zielu</p>
           </div>
         </div>
@@ -581,6 +587,8 @@ try { pageSlug = pageRoute?.[2] ? decodeURIComponent(pageRoute[2]) : null } catc
 let page = pathname === '/' ? <App /> : <NotFound />
 if (pathname === '/mapa') page = <React.Suspense fallback={<p role="status">Wczytywanie mapy…</p>}><MapPage /></React.Suspense>
 if (pathname === '/filmy') page = <FilmIndex />
+if (pathname === '/fotografia') page = <PhotographyPage />
+if (pathname === '/o-mnie') page = <AboutPage />
 if (pageRoute?.[1] === 'galerie') page = pageSlug ? <GalleryPage slug={pageSlug} /> : <GalleryIndex />
 if (pageRoute?.[1] === 'wyprawy') page = pageSlug ? <ExpeditionPage slug={pageSlug} /> : <ExpeditionIndex />
-createRoot(document.getElementById('root')).render(page)
+createRoot(document.getElementById('root')).render(<SiteToolsProvider>{page}</SiteToolsProvider>)

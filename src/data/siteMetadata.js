@@ -9,12 +9,14 @@ const page = (path, title, description, image = shareImages.default) => ({ path,
 
 export const sitePages = [
   page('/', 'Cinek Zielu | Góry, podróże i film', 'Marcin Zieliński — fotografie i filmy z gór i podróży. Odkryj wyprawy, galerie i miejsca na mapie.'),
+  page('/fotografia', 'Fotografia — portfolio | Cinek Zielu', 'Wybrane fotografie Marcina Zielińskiego. Góry, podróże i przyroda w osiemnastu kadrach.', shareImages['alpy-2026']),
+  page('/o-mnie', 'Marcin Zieliński — o mnie i kontakt | Cinek Zielu', 'Marcin Zieliński, Cinek Zielu. Góry, fotografia i film. Kilka słów o autorze, kontakt i profile społecznościowe.', shareImages.about),
   page('/mapa', 'Mapa wypraw — Cinek Zielu', 'Odkrywaj wyprawy, filmy i galerie na mapie. Tatry, Szwajcaria, Alpy, Maroko i Jura.'),
   page('/filmy', 'Filmy z gór i podróży — Cinek Zielu', 'Filmy z Tatr, Szwajcarii, Alp, Jury i Maroka. Wybierz miejsce, znajdź film i zobacz fotografie z wyprawy.'),
-  page('/galerie', 'Galerie z wypraw — Cinek Zielu', `${totalPhotos} fotografii z ${galleryData.length} wypraw. Szwajcaria, Alpy i Tatry w kadrach Marcina Zielińskiego.`, shareImages['alpy-2026']),
-  page('/wyprawy', 'Wyprawy — fotografie, filmy i miejsca | Cinek Zielu', 'Wyprawy w Alpy, Tatry i do Szwajcarii. Fotografie, filmy oraz miejsca na mapie — Cinek Zielu.', shareImages['alpy-2026']),
-  ...galleryData.map(gallery => page(`/galerie/${gallery.id}`, `${gallery.title} ${gallery.year} — galeria | Cinek Zielu`, `${gallery.title} ${gallery.year} — ${gallery.photos.length} fotografii z wyprawy. Zobacz galerię, filmy i miejsce na mapie. Fotografie Marcina Zielińskiego.`, shareImages[gallery.id])),
-  ...expeditionPages.map(expedition => page(`/wyprawy/${expedition.id}`, `${expedition.title} ${expedition.year} — wyprawa | Cinek Zielu`, `${expedition.description} Zobacz galerię zdjęć, filmy i miejsce na mapie.`, shareImages[expedition.id])),
+  page('/galerie', 'Galerie z wypraw — Cinek Zielu', `${totalPhotos} fotografii z ${galleryData.length} wypraw. Szwajcaria, Alpy, Tatry i Gorce w kadrach Marcina Zielińskiego.`, shareImages['alpy-2026']),
+  page('/wyprawy', 'Wyprawy — fotografie, filmy i miejsca | Cinek Zielu', 'Wyprawy w Alpy, Tatry, Gorce i do Szwajcarii. Fotografie, filmy oraz miejsca na mapie — Cinek Zielu.', shareImages['alpy-2026']),
+  ...galleryData.map(gallery => page(`/galerie/${gallery.id}`, `${gallery.title} ${gallery.year} — galeria | Cinek Zielu`, `${gallery.title} ${gallery.year} — ${gallery.photos.length} fotografii z wyprawy. Zobacz galerię${gallery.films.length ? ', filmy' : ''} i miejsce na mapie. Fotografie Marcina Zielińskiego.`, shareImages[gallery.id])),
+  ...expeditionPages.map(expedition => page(`/wyprawy/${expedition.id}`, `${expedition.title} ${expedition.year} — wyprawa | Cinek Zielu`, `${expedition.description} Zobacz galerię zdjęć${expedition.gallery.films.length ? ', filmy' : ''} i miejsce na mapie.`, shareImages[expedition.id])),
 ]
 
 // Old draft URLs lead to verified material instead of unfinished story pages.
@@ -26,7 +28,7 @@ export const legacyRedirects = {
   '/wyprawy/lomnica-expedition': '/mapa?atlas=lomnica',
   '/wyprawy/lomnica': '/mapa?atlas=lomnica',
   '/wyprawy/durny-szczyt': '/mapa?atlas=durny-szczyt',
-  '/wyprawy/koscielec-winter': '/mapa?atlas=koscielec',
+  '/wyprawy/koscielec-winter': '/wyprawy/koscielec-2026',
   '/wyprawy/morocco-toubkal': '/mapa?atlas=morocco',
   '/wyprawy/zermatt': '/mapa?atlas=zermatt',
   '/wyprawy/romania-transfagarasan': '/mapa?atlas=romania',

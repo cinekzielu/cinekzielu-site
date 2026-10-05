@@ -1,5 +1,9 @@
 # Tatry — przesuwana mapa terenu
 
+Aktualizacja: mapa ma obecnie 26 punktów szczytów i dwa przejścia grani.
+Nowe miejsca i źródła opisuje `ATLAS_ADDITIONAL_PLACES.md`.
+Poniższe liczby odnoszą się do pierwotnego etapu wdrożenia mapy.
+
 Bieżący etap lokalny z 4 października 2026. Podgląd: `/mapa?atlas=tatry`. Użytkownik odrzucił wcześniejszy schemat z siatką i liczbowymi grupami, wybierając: „Mapa terenu oglądana z góry, z przesuwaniem i przybliżaniem”. Ten dokument zastępuje opis tamtego wariantu. Nie opublikowano na domenie.
 
 ## Działanie
