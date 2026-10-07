@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Search, ArrowUpRight } from 'lucide-react'
 import { atlasContentNodes, atlasNodeById, getAtlasMaterials, hasAtlasMaterials, searchAtlasNodes } from '../data/atlasContent'
-import { photoCount } from '../data/galleryNavigation'
+import { galleryCollectionCount } from '../data/galleryNavigation'
 import { tatryLocations, tatryLocationById } from '../data/tatryAtlas'
 import { TatryTerrainMap } from './TatryTerrainMap'
 import '../tatryExplorer.css'
@@ -9,7 +9,7 @@ import '../tatryExplorer.css'
 const nodes = atlasContentNodes.filter(node => node.parent === 'tatry').sort((a, b) => a.name.localeCompare(b.name, 'pl'))
 const materialLabel = (id, year) => {
   const { films, galleries } = getAtlasMaterials(id, year)
-  return [galleries.length && `Galeria · ${photoCount(galleries.reduce((count, gallery) => count + gallery.photos.length, 0))}`, films.length && `${films.length} ${films.length === 1 ? 'film' : 'filmy'}`].filter(Boolean).join(' · ') || 'Brak materiałów'
+  return [galleries.length && `${galleryCollectionCount(galleries)}`, films.length && `${films.length} ${films.length === 1 ? 'film' : 'filmy'}`].filter(Boolean).join(' · ') || 'Brak materiałów'
 }
 
 export function TatryExplorer({ selectedId, onSelect, onlyMaterials, setOnlyMaterials, onShowMaterials, year = 'all' }) {

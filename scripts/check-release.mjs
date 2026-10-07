@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { readFile, stat } from 'node:fs/promises'
 import { sitePages, legacyRedirects, SITE_ORIGIN } from '../src/data/siteMetadata.js'
 import { atlasNodeById } from '../src/data/atlasContent.js'
-import { galleryData } from '../src/data/galleryData.js'
+import { galleryData, photoGalleries } from '../src/data/galleryData.js'
 import { expeditionPages } from '../src/data/expeditionPages.js'
 import { filmCatalog } from '../src/data/filmCatalog.js'
 import { portfolioPhotos } from '../src/data/portfolioData.js'
@@ -13,7 +13,7 @@ const read = file => readFile(new URL(file, root), 'utf8')
 const decode = value => value.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>')
 const attribute = (html, key) => decode(html.match(new RegExp(`<meta (?:name|property)="${key}" content="([^"]*)"`))?.[1] || '')
 const canonicalPaths = new Set(sitePages.map(page => page.path))
-assert.equal(canonicalPaths.size, 7 + galleryData.length + expeditionPages.length)
+assert.equal(canonicalPaths.size, 7 + photoGalleries.length + expeditionPages.length)
 assert.equal(new Set(sitePages.map(page => page.title)).size, sitePages.length)
 assert(portfolioPhotos.length >= 15 && portfolioPhotos.length <= 20)
 assert.equal(new Set(portfolioPhotos.map(photo => photo.full)).size, portfolioPhotos.length)

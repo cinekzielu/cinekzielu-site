@@ -12,8 +12,8 @@ import { getAtlasMaterials } from './data/atlasContent'
 import { applyPageMetadata } from './pageMetadata'
 import { legacyRedirects, normalizePagePath } from './data/siteMetadata'
 import { NotFound } from './components/NotFound'
-import { galleryData } from './data/galleryData'
-import { expeditionCount } from './data/galleryNavigation'
+import { photoGalleries as galleryData } from './data/galleryData'
+import { expeditionCount, galleryCollectionCount } from './data/galleryNavigation'
 import { GalleryCards, GalleryIndex, GalleryPage } from './components/Galleries'
 import { ExpeditionIndex, ExpeditionPage, ExpeditionList } from './components/Expeditions'
 import { expeditionPages, findExpeditionPage } from './data/expeditionPages'
@@ -69,8 +69,8 @@ const homepageFeaturedExpeditions = [
     featuredDirectionLocation: direction.location, featuredDirectionDescription: direction.description, featuredDirectionTags: direction.tags,
     directionMeta: `${direction.continent} / ${direction.location}`, atlasCode: direction.code, routeAccent: 'rgba(221, 169, 92, 0.72)',
     statusLabel: `${materials.films.length} ${materials.films.length === 2 ? 'filmy' : 'filmów'}`,
-    timelineLabel: materials.galleries.length ? `${materials.galleries.length} ${materials.galleries.length === 1 ? 'galeria' : 'galerie'}` : 'YouTube',
-    elevationLabel: materials.photoCount ? `${materials.photoCount} zdjęć` : '',
+    timelineLabel: materials.galleries.length ? expeditionCount(materials.galleries.length) : 'YouTube',
+    elevationLabel: materials.photoCount ? galleryCollectionCount(materials.galleries) : '',
   }
 })
 

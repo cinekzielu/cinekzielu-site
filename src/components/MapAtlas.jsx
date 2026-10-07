@@ -1,13 +1,14 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { galleryHref, photoCount } from '../data/galleryNavigation'
+import { galleryHref, galleryItemCount, galleryMediaLabel, galleryLinkLabel } from '../data/galleryNavigation'
 import { Search, Play, Mountain } from 'lucide-react'
-import { atlasContentNodes, atlasNodeById, atlasQuickIds, readAtlasSelection, atlasAncestry, atlasListNodes, getAtlasMaterials, hasAtlasMaterials, searchAtlasNodes, atlasHref, atlasYears, readAtlasYear } from '../data/atlasContent'
+import { atlasContentNodes, atlasNodeById, atlasQuickIds, readAtlasSelection, atlasAncestry, atlasListNodes, getAtlasMaterials, hasAtlasMaterials, searchAtlasNodes, atlasYears, readAtlasYear } from '../data/atlasContent'
 import { TatryExplorer } from './TatryExplorer'
 import { AfricaMap } from './AfricaMap'
 import { FilmLink } from './SiteTools'
 import { atlasTerrainProfile, readAtlasContext } from '../data/atlasTerrain'
 import { TatryTerrainMap } from './TatryTerrainMap'
 import { atlasFilmHref } from '../data/moroccoPlaces'
+import { atlasViewHref, ATLAS_SAVE_VIEW, ATLAS_VIEW_SAVED } from '../data/atlasViewState'
 import '../mapStyles.css'
 import '../atlasExplorer.css'
 
@@ -139,7 +140,9 @@ export function MapAtlas({ standalone = false }) {
   const [showAllFilms, setShowAllFilms] = useState(false)
   const [hoveredId, setHoveredId] = useState(null)
   const [query, setQuery] = useState('')
-  const [onlyMaterials, setOnlyMaterials] = useState(true)
+  const [onlyMaterials, setOnlyMaterialsState] = useState(() => new URLSearchParams(window.location.search).get('miejsca') !== 'wszystkie')
+  const [historyRevision, setHistoryRevision] = useState(0)
+  const [, setViewRevision] = useState(0)
   const [zoom, setZoom] = useState(1)
   const scrollRef = useRef(null)
   const zoomCenter = useRef({ x: .5, y: .5 })
@@ -159,9 +162,11 @@ export function MapAtlas({ standalone = false }) {
   const europeOverlay = useMemo(() => parseEuropeOverlayShapes(europeCountryOverlaysSvgRaw), [])
   const worldOverlays = worldOverlay?.continents.length ? worldOverlay.continents : worldShapes.map(shape => ({ ...shape, paths: [shape.d] }))
   useEffect(() => {
-    const sync = () => { setSelectedId(readAtlasSelection()); setContextId(readAtlasContext(window.location.search)); setYear(readAtlasYear()); setShowAllFilms(false); setHoveredId(null); setQuery('') }
+    const sync = () => { setSelectedId(readAtlasSelection()); setContextId(readAtlasContext(window.location.search)); setYear(readAtlasYear()); setOnlyMaterialsState(new URLSearchParams(window.location.search).get('miejsca') !== 'wszystkie'); setHistoryRevision(value => value + 1); setShowAllFilms(false); setHoveredId(null); setQuery('') }
+    const saved = () => setViewRevision(value => value + 1)
     window.addEventListener('popstate', sync)
-    return () => window.removeEventListener('popstate', sync)
+    window.addEventListener(ATLAS_VIEW_SAVED,saved)
+    return () => { window.removeEventListener('popstate', sync); window.removeEventListener(ATLAS_VIEW_SAVED,saved) }
   }, [])
   useEffect(() => {
     if (standalone || window.location.hash !== '#map') return
@@ -183,11 +188,14 @@ export function MapAtlas({ standalone = false }) {
   }, [zoom])
   const select = (id, requestedYear = year) => {
     if (!atlasNodeById[id]) return
+    window.dispatchEvent(new Event(ATLAS_SAVE_VIEW))
     const defaultProfile = atlasTerrainProfile(id)
     const nextContext = terrain?.locations.some(point => point.id === id) && defaultProfile?.id !== terrain.id ? terrain.id : null
     const scope = nextContext || defaultProfile?.id || (atlasNodeById[id].view === 'tatry' ? 'tatry' : id)
     const nextYear = id === 'world' || atlasNodeById[id].kind === 'Kontynent' ? 'all' : requestedYear === 'all' || atlasYears(scope).includes(requestedYear) ? requestedYear : 'all'
     const url = new URL(window.location.href)
+    if (id !== selectedId || nextContext !== contextId) url.searchParams.delete('kadr')
+    if (!defaultProfile && atlasNodeById[id].view !== 'tatry') url.searchParams.delete('podklad')
     if (nextContext) url.searchParams.set('obszar',nextContext); else url.searchParams.delete('obszar')
     if (nextYear === 'all') url.searchParams.delete('rok'); else url.searchParams.set('rok', nextYear)
     if (id === 'world') url.searchParams.delete('atlas'); else url.searchParams.set('atlas', id)
@@ -195,6 +203,13 @@ export function MapAtlas({ standalone = false }) {
     const next = url.pathname + url.search + url.hash
     if (next !== window.location.pathname + window.location.search + window.location.hash) window.history.pushState({}, '', next)
     setSelectedId(id); setContextId(nextContext); setYear(nextYear); setShowAllFilms(false); setHoveredId(null); setQuery('')
+  }
+  const setOnlyMaterials = value => {
+    window.dispatchEvent(new Event(ATLAS_SAVE_VIEW))
+    const url = new URL(window.location.href)
+    if (value) url.searchParams.delete('miejsca'); else url.searchParams.set('miejsca','wszystkie')
+    window.history.replaceState(window.history.state,'',url.pathname + url.search + url.hash)
+    setOnlyMaterialsState(value)
   }
   const activateKey = (event, id) => {
     if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); select(id) }
@@ -210,7 +225,7 @@ export function MapAtlas({ standalone = false }) {
   const listed = candidates.filter(node => (!onlyMaterials && year === 'all') || hasAtlasMaterials(node.id, year) || node.id === selectedId)
   const typeLabel = (count, one, few, many) => `${count} ${count === 1 ? one : count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 12 || count % 100 > 14) ? few : many}`
   const filmLabel = count => typeLabel(count, 'film', 'filmy', 'filmów')
-  const summary = `${materials.galleries.length ? typeLabel(materials.galleries.length, 'galeria', 'galerie', 'galerii') + ' · ' : ''}${filmLabel(materials.films.length)}`
+  const summary = `${materials.galleries.length ? typeLabel(materials.galleries.length, 'wyprawa', 'wyprawy', 'wypraw') + ' · ' : ''}${filmLabel(materials.films.length)}`
   const showPanel = () => { panelRef.current?.scrollIntoView({ behavior: 'instant', block: 'start' }); panelRef.current?.focus({ preventScroll: true }) }
 
   return <div className={`cz-atlas ${standalone ? 'is-standalone' : ''}`}>
@@ -219,7 +234,7 @@ export function MapAtlas({ standalone = false }) {
         <button type="button" onClick={() => select('world')} aria-pressed={selectedId === 'world'}>Świat</button>
         {atlasQuickIds.map(id => <button type="button" key={id} onClick={() => select(id)} aria-pressed={ancestry.some(node => node.id === id)}>{atlasNodeById[id].name}</button>)}
       </div>
-      {!standalone && <a className="cz-atlas-expand" href={atlasHref(selectedId, year, contextId)}>Otwórz mapę ↗</a>}
+      {!standalone && <a className="cz-atlas-expand" href={atlasViewHref(window.location.search)}>Otwórz mapę ↗</a>}
     </div>
     <div className="atlasLayout cinematicAtlas">
       <div className="atlasMapWrap">
@@ -270,11 +285,11 @@ export function MapAtlas({ standalone = false }) {
         </div>
         <div className="cz-atlas-legend"><span><i /> {['morocco','switzerland'].includes(view) ? 'Miejsca z filmów' : 'Dostępne materiały'}</span>{!['morocco','switzerland'].includes(view) && <span><i className="is-empty" /> Pozostałe miejsca</span>}{['africa','morocco','switzerland'].includes(view) && <a className="cz-atlas-map-source" href="https://www.naturalearthdata.com/" target="_blank" rel="noreferrer">Natural Earth ↗</a>}{view === 'morocco' && <a className="cz-atlas-map-source" href="https://www.geonames.org/" target="_blank" rel="noreferrer">GeoNames ↗</a>}{view === 'switzerland' && <a className="cz-atlas-map-source" href="https://www.swisstopo.admin.ch/en/landscape-model-swissnames3d" target="_blank" rel="noreferrer">swisstopo ↗</a>}<span className="cz-atlas-map-note">{zoom > 1 ? 'Przewijaj powiększoną mapę' : 'Mapa poglądowa'}</span></div>
         </>}
-        {view === 'tatry' && <TatryExplorer selectedId={selectedId} onSelect={select} onlyMaterials={onlyMaterials} setOnlyMaterials={setOnlyMaterials} onShowMaterials={showPanel} year={year} />}
+        {view === 'tatry' && <TatryExplorer key={`tatry/${historyRevision}`} selectedId={selectedId} onSelect={select} onlyMaterials={onlyMaterials} setOnlyMaterials={setOnlyMaterials} onShowMaterials={showPanel} year={year} />}
         {isTerrain && <section className="cz-atlas-terrain" aria-label={`Mapa obszaru: ${terrain.name}`}>
           {atlasNodeById[terrain.id].related?.length > 0 && <nav className="cz-atlas-area-links" aria-label="Powiązane obszary"><span>Obszary</span>{atlasNodeById[terrain.id].related.map(id => <button type="button" key={id} onClick={() => select(id)}>{atlasNodeById[id].name} ↗</button>)}</nav>}
           {terrain.id === 'morocco-atlas' && <button type="button" className="cz-atlas-area-return" onClick={() => select('morocco')}>← Całe Maroko</button>}
-          <TatryTerrainMap key={terrain.id} countryId={terrain.countryId} points={terrainPoints} locations={terrain.locations} locationById={terrain.locationById} overviewPoints={terrain.overview} focusZoom={terrain.focusZoom} selectedId={selectedId} onSelect={select} regionId={terrain.id} resetLabel={terrain.resetLabel} surfaceLabel={`Mapa terenu: ${terrain.name}. Przesuwaj palcem lub strzałkami. Plus i minus przybliżają, Home pokazuje cały obszar.`} initialTone="dark" />
+          <TatryTerrainMap key={`${terrain.id}/${historyRevision}`} countryId={terrain.countryId} points={terrainPoints} locations={terrain.locations} locationById={terrain.locationById} overviewPoints={terrain.overview} focusZoom={terrain.focusZoom} selectedId={selectedId} onSelect={select} regionId={terrain.id} resetLabel={terrain.resetLabel} surfaceLabel={`Mapa terenu: ${terrain.name}. Przesuwaj palcem lub strzałkami. Plus i minus przybliżają, Home pokazuje cały obszar.`} initialTone="dark" />
           <div className="cz-atlas-terrain-hint"><span>Przeciągnij mapę · przybliż + / −</span><span>Miejsca z materiałami</span></div>
           {!terrainPoints.length && (materials.films.length > 0 || materials.galleries.length > 0) && <p className="cz-atlas-map-pending">Materiały znajdziesz w panelu wypraw. Miejsca tej podróży nie są jeszcze oznaczone na mapie.</p>}
         </section>}
@@ -284,7 +299,7 @@ export function MapAtlas({ standalone = false }) {
           <div className="cz-atlas-search"><Search size={16} aria-hidden="true" /><input type="search" aria-label="Szukaj miejsca na mapie" placeholder="Szukaj miejsca…" value={query} onChange={event => setQuery(event.target.value)} /></div>
           <div className="cz-atlas-place-list" role="group" aria-label="Miejsca na mapie">{listed.map(node => {
             const data = getAtlasMaterials(node.id, year)
-            return <button type="button" key={node.id} aria-pressed={node.id === selectedId} onClick={() => select(node.id)}><span>{node.name}</span><small>{data.films.length || data.galleries.length ? [data.galleries.length && typeLabel(data.galleries.length, 'galeria', 'galerie', 'galerii'), data.films.length && filmLabel(data.films.length)].filter(Boolean).join(' · ') : 'Brak materiałów'}</small></button>
+            return <button type="button" key={node.id} aria-pressed={node.id === selectedId} onClick={() => select(node.id)}><span>{node.name}</span><small>{data.films.length || data.galleries.length ? [data.galleries.length && typeLabel(data.galleries.length, 'wyprawa', 'wyprawy', 'wypraw'), data.films.length && filmLabel(data.films.length)].filter(Boolean).join(' · ') : 'Brak materiałów'}</small></button>
           })}</div>
           {!listed.length && <p className="cz-atlas-empty-search" role="status">{year === 'all' ? 'Brak wyników. Zmień nazwę lub wyłącz filtr „Z materiałami”.' : 'Brak oznaczonych miejsc dla tego roku. Wybierz inny rok lub wszystkie lata.'}</p>}
         </div></>}
@@ -293,11 +308,11 @@ export function MapAtlas({ standalone = false }) {
         <p className="cz-atlas-kicker">{selected.kind}{selected.altitude ? ` · ${selected.altitude}` : ''}</p>
         <h3>{selected.name}</h3>
         {selected.description && <p className="cz-atlas-description">{selected.description}</p>}
-        <div className="cz-atlas-stats"><div><strong>{materials.galleries.length}</strong><span>Galerie</span></div><div><strong>{materials.films.length}</strong><span>Filmy</span></div><div><strong>{materials.photoCount}</strong><span>Zdjęcia</span></div></div>
+        <div className="cz-atlas-stats"><div><strong>{materials.galleries.length}</strong><span>Wyprawy</span></div><div><strong>{materials.films.length}</strong><span>Filmy</span></div><div><strong>{materials.photoCount}</strong><span>{galleryMediaLabel(materials.galleries)}</span></div></div>
         {selected.related?.length > 0 && <div className="cz-atlas-related">{selected.related.map(id => <button type="button" key={id} onClick={() => select(id)}>{atlasNodeById[id].name} →</button>)}</div>}
-        {materials.galleries.length > 0 && <section className="cz-atlas-trips" aria-label="Wyprawy i galerie"><h4>Wyprawy i galerie</h4>{materials.galleries.map(gallery => <article key={gallery.id}>
+        {materials.galleries.length > 0 && <section className="cz-atlas-trips" aria-label="Wyprawy"><h4>Wyprawy</h4>{materials.galleries.map(gallery => <article key={gallery.id}>
           <a href={`/wyprawy/${gallery.id}`} tabIndex={-1} aria-hidden="true"><img src={gallery.coverImage} alt="" width={gallery.coverWidth} height={gallery.coverHeight} loading="lazy" /></a>
-          <div><a className="cz-atlas-trip-title" href={`/wyprawy/${gallery.id}`}>{gallery.title} <span>{gallery.year}</span> ↗</a><a className="cz-atlas-gallery-link" href={galleryHref(gallery)}>Galeria · {photoCount(gallery.photos.length)} ↗</a></div>
+          <div><a className="cz-atlas-trip-title" href={`/wyprawy/${gallery.id}`}>{gallery.title} <span>{gallery.year}</span> ↗</a><a className="cz-atlas-gallery-link" href={galleryHref(gallery)}>{galleryLinkLabel(gallery)} · {galleryItemCount(gallery)} ↗</a></div>
         </article>)}</section>}
         {materials.films.length > 0 && <section className="cz-atlas-films" aria-label="Filmy z tego miejsca"><h4>{selected.chapter ? 'Ten moment w filmie' : 'Filmy'} <span>{materials.films.length}</span></h4>{materials.films.slice(0, showAllFilms ? undefined : 3).map(film => <FilmLink key={film.id} href={atlasFilmHref(selected, film)} target="_blank" rel="noreferrer"><Play size={15} aria-hidden="true" /><span>{film.title}<small>{selected.chapter?.videoId === film.youtubeId ? `Oglądaj od ${selected.chapter.time}` : `${film.format} · ${film.duration}`}</small></span><span aria-hidden="true">▷</span></FilmLink>)}{materials.films.length > 3 && <button type="button" className="cz-atlas-library" aria-expanded={showAllFilms} onClick={() => setShowAllFilms(value => !value)}>{showAllFilms ? 'Zwiń filmy' : `Pokaż wszystkie filmy (${materials.films.length})`}</button>}</section>}
         {!materials.films.length && !materials.galleries.length && <div className="cz-atlas-no-content"><p>{year === 'all' ? 'Nie ma jeszcze opublikowanych materiałów z tego miejsca.' : 'Brak materiałów z wybranego roku.'}</p><button type="button" onClick={() => select(selected.parent || 'world')}>← {atlasNodeById[selected.parent || 'world'].name}</button></div>}

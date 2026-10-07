@@ -1,7 +1,7 @@
 import { atlasContentNodes, atlasAncestry, atlasHref, getAtlasMaterials, hasAtlasMaterials } from './atlasContent.js'
 import { expeditionPages, expeditionHref } from './expeditionPages.js'
-import { galleryData } from './galleryData.js'
-import { galleryHref, photoCount } from './galleryNavigation.js'
+import { galleryData, photoGalleries } from './galleryData.js'
+import { galleryHref, galleryItemCount } from './galleryNavigation.js'
 import { filmCatalog, filmRegionLabel, normalizeFilmSearch } from './filmCatalog.js'
 import { galleryAtlasIds } from './tripGeography.js'
 
@@ -18,10 +18,10 @@ const entry = data => ({ ...data, normalizedTitle:normalizeSearch(data.title), s
 export const siteSearchIndex = [
   ...atlasContentNodes.filter(place => place.id !== 'world' && hasAtlasMaterials(place.id)).map(place => {
     const materials = getAtlasMaterials(place.id)
-    return entry({ id:`place:${place.id}`, kind:'place', title:place.name, href:atlasHref(place.id), subtitle:[place.kind, materials.galleries.length && `${materials.galleries.length} gal.`, materials.films.length && `${materials.films.length} film.`].filter(Boolean).join(' · '), keywords:`${placeWords([place.id])} ${place.description || ''}` })
+    return entry({ id:`place:${place.id}`, kind:'place', title:place.name, href:atlasHref(place.id), subtitle:[place.kind, materials.galleries.length && `${materials.galleries.length} wyp.`, materials.films.length && `${materials.films.length} film.`].filter(Boolean).join(' · '), keywords:`${placeWords([place.id])} ${place.description || ''}` })
   }),
   ...expeditionPages.map(trip => entry({ id:`expedition:${trip.id}`, kind:'expedition', title:`${trip.title} ${trip.year}`, href:expeditionHref(trip), subtitle:`${trip.region} · ${trip.kind}`, image:trip.gallery.coverImage, keywords:`${trip.description} ${placeWords(galleryAtlasIds(trip.gallery))}` })),
-  ...galleryData.map(gallery => entry({ id:`gallery:${gallery.id}`, kind:'gallery', title:`${gallery.title} ${gallery.year}`, href:galleryHref(gallery), subtitle:photoCount(gallery.photos.length), image:gallery.coverImage, keywords:placeWords(galleryAtlasIds(gallery)) })),
+  ...photoGalleries.map(gallery => entry({ id:`gallery:${gallery.id}`, kind:'gallery', title:`${gallery.title} ${gallery.year}`, href:galleryHref(gallery), subtitle:galleryItemCount(gallery), image:gallery.coverImage, keywords:`${placeWords(galleryAtlasIds(gallery))} ${gallery.sourceLabel || ''}` })),
   ...filmCatalog.map(film => entry({ id:`film:${film.youtubeId}`, kind:'film', title:film.title, href:film.youtubeUrl, film, subtitle:`${filmRegionLabel(film.region)} · ${film.format} · ${film.duration}`, image:film.thumbnail, keywords:`${film.searchTerms || ''} ${film.series || ''} ${filmTripWords(film)} ${filmPlaces(film).map(place => place.name).join(' ')}` })),
 ]
 

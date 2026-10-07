@@ -20,8 +20,8 @@ export const filmCatalog = [
   video('rs4zN-7f60Q', 'Kościelec zimą · Żleb Zaruskiego', '24:12', 'tatry', 'Film', { expeditionId: 'koscielec-2026' }),
   video('QRSSYlhRGMM', 'Kościelec zimą', '1:57', 'tatry', 'Krótki film', { id: 'film-koscielec', expeditionId: 'koscielec-2026', publishedAt: '2026-03-15', homepageOrder: 2, homepageThumbnail: '/images/optimized/koscielec-thumb-960.webp', shortDescription: 'Krótki film z zimowego wejścia przez Żleb Zaruskiego.' }),
   video('7x1YlCGZvtI', 'Kończysta zimą', '24:59', 'tatry', 'Film', { expeditionId: 'konczysta-2026' }),
-  video('IxTLYy6bOKo', 'Kieżmarski Szczyt zimą', '28:21', 'tatry', 'Film', { searchTerms: 'Huncowski Szczyt' }),
-  video('0AtU5c83Y0M', 'Baranie Rogi zimą', '26:39', 'tatry'),
+  video('IxTLYy6bOKo', 'Kieżmarski Szczyt zimą', '28:21', 'tatry', 'Film', { searchTerms: 'Huncowski Szczyt', expeditionId: 'kiezmarski-szczyt-zima-2025' }),
+  video('0AtU5c83Y0M', 'Baranie Rogi zimą', '26:39', 'tatry', 'Film', { expeditionId: 'baranie-rogi-zima-2025' }),
   video('sRjEFylb_b8', 'Szatan zimą', '23:23', 'tatry'),
   video('ksi5aauYYBo', 'Bettmerhorn · Aletschgletscher', '14:57', 'szwajcaria', 'Film', { expeditionId: 'szwajcaria-2025', series: 'Szwajcaria · 06' }),
   video('nt6Upyoop1g', 'Zermatt · Szlak Pięciu Jezior', '16:04', 'szwajcaria', 'Film', { expeditionId: 'szwajcaria-2025', series: 'Szwajcaria · 05', searchTerms: 'Matterhorn 5 jezior' }),
@@ -35,8 +35,8 @@ export const filmCatalog = [
   video('PWbLPcNAh34', 'Mięguszowiecki Szczyt Wielki', '37:07', 'tatry'),
   video('zb8zqv8gpZk', 'Łomnica', '18:53', 'tatry', 'Film', { id: 'film-lomnica', publishedAt: '2025-07-18', homepageOrder: 1, homepageThumbnail: '/assets/thumbnails/films/lomnica-thumb.jpg', shortDescription: 'Wejście przez Łomnicką Przełęcz.', searchTerms: 'Łomnicka Przełęcz Lomnický štít' }),
   video('WGqn-Kley2w', 'Durny Szczyt', '17:40', 'tatry', 'Film', { id: 'film-durny-szczyt' }),
-  video('BiWk6apjJOg', 'Toubkal', '39:40', 'maroko', 'Film', { id: 'film-morocco-toubkal', series: 'Maroko · 02', searchTerms: 'Atlas' }),
-  video('McawfrouM_0', '10 dni w Maroku', '1:09:33', 'maroko', 'Film', { id: 'film-morocco-vlog', series: 'Maroko · 01', publishedAt: '2025-06-22', homepageOrder: 3, homepageThumbnail: '/images/optimized/maroko-thumb-960.webp', shortDescription: 'Rabat, Fez, Sahara i Marrakesz. Pierwsza część podróży.', searchTerms: 'Sahara Rabat Fez Marrakesz Marakesz' }),
+  video('BiWk6apjJOg', 'Toubkal', '39:40', 'maroko', 'Film', { id: 'film-morocco-toubkal', expeditionId: 'maroko-2025', series: 'Maroko · 02', searchTerms: 'Atlas' }),
+  video('McawfrouM_0', '10 dni w Maroku', '1:09:33', 'maroko', 'Film', { id: 'film-morocco-vlog', expeditionId: 'maroko-2025', series: 'Maroko · 01', publishedAt: '2025-06-22', homepageOrder: 3, homepageThumbnail: '/images/optimized/maroko-thumb-960.webp', shortDescription: 'Rabat, Fez, Sahara i Marrakesz. Pierwsza część podróży.', searchTerms: 'Sahara Rabat Fez Marrakesz Marakesz' }),
   video('jTsfNdsWHxg', 'Wysoka zimą', '12:52', 'tatry'),
 ]
 

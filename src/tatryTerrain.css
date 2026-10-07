@@ -44,6 +44,14 @@
 .cz-terrain-attribution{position:absolute;bottom:0;right:0;max-width:100%;padding:5px 8px;background:#171612ed;color:#c7bba7;font-size:9px;line-height:1.4;text-align:right}
 .cz-terrain-attribution a{color:inherit!important;text-decoration:none!important}
 .cz-terrain-attribution a:hover{text-decoration:underline!important}
+.cz-terrain-share{position:absolute;right:14px;bottom:38px;z-index:5;display:flex;align-items:center;gap:7px;min-height:44px;padding:0 12px;background:#171612ed;border:1px solid #b69a7066;border-radius:3px;color:#e8d0aa;font-size:10px;box-shadow:0 2px 10px #0003}
+.cz-terrain-share:hover{background:#3c3021}
+.cz-terrain-share-status{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.cz-terrain-share-manual{position:absolute;z-index:6;left:14px;right:14px;bottom:94px;max-width:400px;margin-left:auto;padding:18px;background:#1b1813f5;border:1px solid #c9a36d88;border-radius:3px;box-shadow:0 4px 25px #0008}
+.cz-terrain-share-manual label{display:block;padding-top:20px;font-size:12px;color:#ecd3ab}
+.cz-terrain-share-manual input{display:block;width:100%;min-height:44px;margin:12px 0 8px;padding:8px;border:1px solid #c9a36d66;border-radius:2px;background:#100e0b;color:#e5d7c3;font:inherit;font-size:16px;box-sizing:border-box}
+.cz-terrain-share-manual small{font-size:10px;color:#b7a58b}
+.cz-terrain-share-manual>button{position:absolute;top:0;right:0;display:grid;place-items:center;width:44px;height:44px;background:none;border:0;color:#ecd3ab}
 .cz-terrain-frame:fullscreen{width:100vw;height:100dvh;border:0;border-radius:0}
 .cz-terrain-frame:fullscreen .cz-terrain-surface{height:100dvh}
 @media(min-width:1600px){.cz-terrain-surface{height:580px}}
