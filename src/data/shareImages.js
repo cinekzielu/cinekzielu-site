@@ -87,5 +87,33 @@ export const shareImages = {
     "width": 1280,
     "height": 1489,
     "alt": "Marcin Zieliński na górskim szczycie"
+  },
+  "gerlach-zima-2025": {
+    "src": "/share/gerlach-zima-2025.jpg",
+    "width": 1600,
+    "height": 900,
+    "alt": "Ośnieżone granie i dolina pod błękitnym niebem",
+    "bytes": 465103
+  },
+  "maroko-2025": {
+    "src": "/share/maroko-2025.jpg",
+    "width": 1600,
+    "height": 900,
+    "alt": "Zachód słońca nad wydmami",
+    "bytes": 113390
+  },
+  "baranie-rogi-zima-2025": {
+    "src": "/share/baranie-rogi-zima-2025.jpg",
+    "width": 1600,
+    "height": 900,
+    "alt": "Zimowe granie ponad doliną wypełnioną chmurami",
+    "bytes": 236561
+  },
+  "kiezmarski-szczyt-zima-2025": {
+    "src": "/share/kiezmarski-szczyt-zima-2025.jpg",
+    "width": 1600,
+    "height": 900,
+    "alt": "Panorama ośnieżonych tatrzańskich grani pod błękitnym niebem",
+    "bytes": 262461
   }
 }

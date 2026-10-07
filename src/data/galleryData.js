@@ -1,4 +1,8 @@
 // Reviewed web exports only; original files and private source paths stay outside this project.
+import { moroccoGallery } from './moroccoGallery.js'
+import { gerlachGallery } from './gerlachGallery.js'
+import { baranieWinterGallery } from './baranieWinterGallery.js'
+import { kiezmarskiWinterGallery } from './kiezmarskiWinterGallery.js'
 export const galleryData = [
   {
     "id": "szwajcaria-2025",
@@ -2128,5 +2132,13 @@ export const galleryData = [
         "mobileSrc": "/assets/photos/galleries/krywan-2025/krywan-2025-08-480.webp"
       }
     ]
-  }
+  },
+  moroccoGallery,
+  gerlachGallery,
+  baranieWinterGallery,
+  kiezmarskiWinterGallery
 ]
+
+// Photography is the public gallery collection; video stills remain expedition materials.
+export const photoGalleries = galleryData.filter(item => item.mediaKind !== 'video-frames')
+export const videoFrameCollections = galleryData.filter(item => item.mediaKind === 'video-frames')

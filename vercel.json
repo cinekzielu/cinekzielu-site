@@ -14,7 +14,7 @@
     },
     {
       "source": "/wyprawy/gerlach-winter",
-      "destination": "/mapa?atlas=gerlach",
+      "destination": "/wyprawy/gerlach-zima-2025",
       "permanent": true
     },
     {
@@ -50,6 +50,26 @@
     {
       "source": "/wyprawy/romania-transfagarasan",
       "destination": "/mapa?atlas=romania",
+      "permanent": true
+    },
+    {
+      "source": "/galerie/maroko-2025",
+      "destination": "/wyprawy/maroko-2025#kadry",
+      "permanent": true
+    },
+    {
+      "source": "/galerie/gerlach-zima-2025",
+      "destination": "/wyprawy/gerlach-zima-2025#kadry",
+      "permanent": true
+    },
+    {
+      "source": "/galerie/baranie-rogi-zima-2025",
+      "destination": "/wyprawy/baranie-rogi-zima-2025#kadry",
+      "permanent": true
+    },
+    {
+      "source": "/galerie/kiezmarski-szczyt-zima-2025",
+      "destination": "/wyprawy/kiezmarski-szczyt-zima-2025#kadry",
       "permanent": true
     }
   ]

@@ -3,6 +3,8 @@ import { Play, Search, X } from 'lucide-react'
 import { filmCatalog, filmRegions, filmRegionLabel, filterFilms } from '../data/filmCatalog'
 import { CollectionShell } from './CollectionShell'
 import { FilmLink } from './SiteTools'
+import { galleryData } from '../data/galleryData'
+import { galleryHref, galleryLinkLabel } from '../data/galleryNavigation'
 import '../filmStyles.css'
 
 const readFilters = () => {
@@ -12,6 +14,7 @@ const readFilters = () => {
 
 function FilmCard({ film, index }) {
   const [failedImage, setFailedImage] = useState(false)
+  const material = galleryData.find(item => item.id === film.expeditionId)
   return <article className="cz-film-card">
     <FilmLink className="cz-film-main" href={film.youtubeUrl} target="_blank" rel="noreferrer" aria-label={`${film.title} — ${film.format}, ${film.duration}, odtwórz film`}>
       <div className="cz-film-image">
@@ -22,7 +25,7 @@ function FilmCard({ film, index }) {
       <div className="cz-film-meta"><span>{film.series || filmRegionLabel(film.region)}</span><span>{film.format}</span></div>
       <h2>{film.title}<span aria-hidden="true">↗</span></h2>
     </FilmLink>
-    {film.expeditionId && <div className="cz-film-related"><a href={`/wyprawy/${film.expeditionId}`}>Wyprawa ↗</a><a href={`/galerie/${film.expeditionId}`}>Galeria ↗</a></div>}
+    {film.expeditionId && <div className="cz-film-related"><a href={`/wyprawy/${film.expeditionId}`}>Wyprawa ↗</a>{material && <a href={galleryHref(material)}>{galleryLinkLabel(material)} ↗</a>}</div>}
   </article>
 }
 

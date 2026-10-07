@@ -19,7 +19,7 @@ assert.equal(readAtlasSelection('?atlas=unknown'), 'world')
 assert.equal(readAtlasSelection('?atlas=%3Cscript%3E'), 'world')
 assert.equal(searchAtlasNodes('konczysta')[0].id, 'konczysta')
 assert.equal(searchAtlasNodes('murren')[0].id, 'murren-gimmelwald')
-for (const [id, expected] of Object.entries({ world: [28, 11, 220], europe: [26, 11, 220], poland: [7, 5, 77], tatry: [16, 8, 120], krywan: [0, 1, 8], 'zabi-kon': [1, 1, 13], switzerland: [8, 2, 84], alpy: [8, 2, 84], morocco: [2, 0, 0], konczysta: [1, 1, 24], koscielec: [2, 1, 17], swinica: [2, 2, 29], 'baranie-rogi': [2, 1, 14], 'lodowy-szczyt': [1, 1, 14], 'durny-szczyt': [1, 0, 0], gerlach: [0, 0, 0], 'lodowa-kopa': [1, 1, 14], 'szpiglasowy-wierch': [1, 2, 36], 'huncowski-szczyt': [1, 0, 0], 'walentkowy-wierch': [1, 1, 21], 'walentkowa-gran': [1, 1, 21], gorce: [0, 1, 16], turbacz: [0, 1, 16] })) {
+for (const [id, expected] of Object.entries({ world: [28, 15, 322], europe: [26, 14, 282], poland: [7, 5, 77], tatry: [16, 11, 182], krywan: [0, 1, 8], 'zabi-kon': [1, 1, 13], switzerland: [8, 2, 84], alpy: [8, 2, 84], morocco: [2, 1, 40], konczysta: [1, 1, 24], koscielec: [2, 1, 17], swinica: [2, 2, 29], 'baranie-rogi': [2, 2, 34], 'lodowy-szczyt': [1, 1, 14], 'durny-szczyt': [1, 0, 0], gerlach: [0, 1, 22], 'lodowa-kopa': [1, 1, 14], 'szpiglasowy-wierch': [1, 2, 36], 'huncowski-szczyt': [1, 1, 20], 'kiezmarski-szczyt': [1, 1, 20], 'walentkowy-wierch': [1, 1, 21], 'walentkowa-gran': [1, 1, 21], gorce: [0, 1, 16], turbacz: [0, 1, 16] })) {
   const result = getAtlasMaterials(id)
   assert.deepEqual([result.films.length, result.galleries.length, result.photoCount], expected, id)
 }

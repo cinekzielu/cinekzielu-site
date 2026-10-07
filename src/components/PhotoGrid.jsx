@@ -13,7 +13,8 @@ function useColumns(featured) {
   return columns
 }
 
-export function PhotoGrid({ gallery, featured = false }) {
+export function PhotoGrid({ gallery, featured = false, previewLimit = null }) {
+  const isVideoFrames = gallery.mediaKind === 'video-frames'
   const columns = useColumns(featured)
   const [current, setCurrent] = useState(null)
   const [imageFailed, setImageFailed] = useState(false)
@@ -42,8 +43,9 @@ export function PhotoGrid({ gallery, featured = false }) {
     }
   }, [isOpen])
 
-  const rows = featured ? [{ start: 0, items: gallery.photos.slice(0, 1) }] : []
-  for (let index = featured ? 1 : 0; index < gallery.photos.length; index += columns) rows.push({ start: index, items: gallery.photos.slice(index, index + columns) })
+  const visiblePhotos = previewLimit === null ? gallery.photos : gallery.photos.slice(0, previewLimit)
+  const rows = featured ? [{ start: 0, items: visiblePhotos.slice(0, 1) }] : []
+  for (let index = featured ? 1 : 0; index < visiblePhotos.length; index += columns) rows.push({ start: index, items: visiblePhotos.slice(index, index + columns) })
   const finishGesture = event => {
     const start = gesture.current
     gesture.current = null
@@ -53,7 +55,7 @@ export function PhotoGrid({ gallery, featured = false }) {
     if (Math.abs(dx) >= 60 && Math.abs(dx) > Math.abs(dy) * 1.5) step(dx < 0 ? 1 : -1)
   }
   return <>
-    <section className={`cz-gallery-grid${featured ? ' cz-portfolio-grid' : ''}`} aria-label={featured ? 'Wybrane fotografie' : `${gallery.title} — zdjęcia z wyprawy`}>
+    <section className={`cz-gallery-grid${featured ? ' cz-portfolio-grid' : ''}`} aria-label={featured ? 'Wybrane fotografie' : `${gallery.title} — ${isVideoFrames ? 'kadry z nagrań' : 'zdjęcia z wyprawy'}`}>
       {rows.map(row => <div className="cz-photo-row" key={row.start}>
         {row.items.map((item, column) => {
           const index = row.start + column
@@ -61,13 +63,13 @@ export function PhotoGrid({ gallery, featured = false }) {
           const rowRatio = row.items.reduce((sum, image) => sum + image.width / image.height, 0)
           const fraction = (item.width / item.height) / rowRatio
           const sizes = columns === 1 || lead ? '(max-width:600px) calc(100vw - 28px), (max-width:900px) calc(100vw - 40px), (max-width:1448px) calc(100vw - 88px), 1360px' : `(max-width:900px) calc(${100 * fraction}vw - ${(40 + 12 * (row.items.length - 1)) * fraction}px), (max-width:1448px) calc(${100 * fraction}vw - ${(88 + 16 * (row.items.length - 1)) * fraction}px), ${(1360 - 16 * (row.items.length - 1)) * fraction}px`
-          return <button className="cz-photo" type="button" key={item.src} style={{ '--ratio': item.width / item.height }} onClick={event => { trigger.current = event.currentTarget; setImageFailed(false); setCurrent(index) }} aria-label={`Otwórz zdjęcie ${String(index + 1).padStart(2, '0')} z ${gallery.photos.length}`}>
+          return <button className="cz-photo" type="button" key={item.src} style={{ '--ratio': item.width / item.height }} onClick={event => { trigger.current = event.currentTarget; setImageFailed(false); setCurrent(index) }} aria-label={`Otwórz ${isVideoFrames ? 'kadr' : 'zdjęcie'} ${String(index + 1).padStart(2, '0')} z ${gallery.photos.length}`}>
             <ResponsivePhoto photo={item} full={featured} sizes={sizes} loading={index === 0 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : undefined} />
           </button>
         })}
       </div>)}
     </section>
-    <dialog className="cz-lightbox" ref={dialog} aria-label={`${gallery.title} — podgląd fotografii`} onClose={() => setCurrent(null)} onKeyDown={event => {
+    <dialog className="cz-lightbox" ref={dialog} aria-label={`${gallery.title} — podgląd ${isVideoFrames ? 'kadru' : 'fotografii'}`} onClose={() => setCurrent(null)} onKeyDown={event => {
       if (event.altKey || event.ctrlKey || event.metaKey) return
       if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') { event.preventDefault(); step(event.key === 'ArrowRight' ? 1 : -1) }
     }}>
@@ -78,9 +80,9 @@ export function PhotoGrid({ gallery, featured = false }) {
         gesture.current = { id: event.pointerId, x: event.clientX, y: event.clientY }
         event.currentTarget.setPointerCapture(event.pointerId)
       }} onPointerUp={finishGesture} onPointerCancel={() => { gesture.current = null }}>
-        {photo && (imageFailed ? <div className="cz-photo-error" role="status"><p>Nie udało się wczytać zdjęcia.</p><button type="button" onClick={() => setImageFailed(false)}>Spróbuj ponownie</button></div> : <img key={photo.full} src={photo.full} alt={photo.alt} width={photo.width} height={photo.height} decoding="async" draggable="false" onError={() => setImageFailed(true)} />)}
+        {photo && (imageFailed ? <div className="cz-photo-error" role="status"><p>Nie udało się wczytać {isVideoFrames ? 'kadru' : 'zdjęcia'}.</p><button type="button" onClick={() => setImageFailed(false)}>Spróbuj ponownie</button></div> : <img key={photo.full} src={photo.full} alt={photo.alt} width={photo.width} height={photo.height} decoding="async" draggable="false" onError={() => setImageFailed(true)} />)}
       </div>
-      <div className="cz-lightbox-bottom"><button type="button" onClick={() => step(-1)} aria-label="Poprzednie zdjęcie">←</button>{photo?.sourceHref ? <a className="cz-lightbox-source" href={photo.sourceHref}>{photo.sourceLabel} ↗</a> : <span className="cz-lightbox-hint">Przesuń lub użyj strzałek</span>}<button type="button" onClick={() => step(1)} aria-label="Następne zdjęcie">→</button></div>
+      <div className="cz-lightbox-bottom"><button type="button" onClick={() => step(-1)} aria-label={isVideoFrames ? 'Poprzedni kadr' : 'Poprzednie zdjęcie'}>←</button>{photo?.sourceHref ? <a className="cz-lightbox-source" href={photo.sourceHref}>{photo.sourceLabel} ↗</a> : <span className="cz-lightbox-hint">Przesuń lub użyj strzałek</span>}<button type="button" onClick={() => step(1)} aria-label={isVideoFrames ? 'Następny kadr' : 'Następne zdjęcie'}>→</button></div>
     </dialog>
   </>
 }

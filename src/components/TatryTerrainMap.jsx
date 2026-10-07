@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Minus, Plus, Maximize2, Mountain, House, Tent, X, MapPin, Route, Waves, Snowflake, Trees, Castle, Camera } from 'lucide-react'
+import { Minus, Plus, Maximize2, Mountain, House, Tent, X, MapPin, Route, Waves, Snowflake, Trees, Castle, Camera, Link, Check } from 'lucide-react'
 import { atlasNodeById } from '../data/atlasContent'
 import { tatryLocations, tatryLocationById } from '../data/tatryAtlas'
 import { mercator, unproject, worldSize, fitTerrain, terrainMarkers, visibleTerrainTiles, reprojectTerrainTile, gestureTerrain, zoomTerrainAt, clampTerrainZoom, MIN_TERRAIN_ZOOM, MAX_TERRAIN_ZOOM } from '../data/terrainMap'
 import '../tatryTerrain.css'
 import { CountryOutline } from './CountryOutline'
+import { readTerrainView, readTerrainTone, setTerrainView, atlasViewHref, ATLAS_SAVE_VIEW, ATLAS_VIEW_SAVED } from '../data/atlasViewState'
 
 const centerOf = entries => ({ x: entries.reduce((sum, point) => sum + point.x, 0) / entries.length, y: entries.reduce((sum, point) => sum + point.y, 0) / entries.length })
 const pointDistance = entries => entries.length < 2 ? 0 : Math.hypot(entries[0].x - entries[1].x, entries[0].y - entries[1].y)
@@ -12,9 +13,13 @@ const markerIcons = { mountain:Mountain, village:House, hut:Tent, city:MapPin, r
 const initialView = (id, points, size, locations, locationById, overview, focusZoom) => locationById[id] ? { ...mercator(locationById[id]), zoom: focusZoom } : fitTerrain(overview || (points.length ? points : locations), size)
 
 export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0, locations = tatryLocations, locationById = tatryLocationById, regionId = 'tatry', resetLabel = 'Całe Tatry', surfaceLabel = 'Mapa terenu Tatr. Przesuwaj palcem lub strzałkami. Plus i minus przybliżają, Home pokazuje całe Tatry.', initialTone = 'natural', overviewPoints = null, focusZoom = 14, countryId = null }) {
+  const [bookmark] = useState(() => readTerrainView(window.location.search))
   const [size, setSize] = useState({ width: 800, height: 500 })
-  const [view, setView] = useState(() => initialView(selectedId, points, { width: 800, height: 500 }, locations, locationById, overviewPoints, focusZoom))
-  const [tone, setTone] = useState(initialTone)
+  const [view, setView] = useState(() => bookmark?.view || initialView(selectedId, points, { width: 800, height: 500 }, locations, locationById, overviewPoints, focusZoom))
+  const [tone, setTone] = useState(() => readTerrainTone(window.location.search) || initialTone)
+  const [shareState, setShareState] = useState(null)
+  const [shareUrl, setShareUrl] = useState('')
+  const shareInput = useRef(null), shareTimer = useRef(null)
   const [hovered, setHovered] = useState(null)
   const [tileStatus, setTileStatus] = useState({})
   const [retry, setRetry] = useState(0)
@@ -23,14 +28,59 @@ export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0
   const [fullscreenError, setFullscreenError] = useState(false)
   const [nearbyChoices, setNearbyChoices] = useState(null)
   const surface = useRef(null), frame = useRef(null)
-  const viewRef = useRef(view), sizeRef = useRef(size)
-  const gesture = useRef(null), pointers = useRef(new Map()), interacted = useRef(false)
+  const viewRef = useRef(view), sizeRef = useRef(size), toneRef = useRef(tone)
+  const gesture = useRef(null), pointers = useRef(new Map()), interacted = useRef(Boolean(bookmark))
   const selectionFromMap = useRef(null)
   const previousSelection = useRef(`${selectedId}/${focusRequest}`)
   const lastLoadedTiles = useRef([])
   const pointsRef = useRef(points), selectedRef = useRef(selectedId)
   const pendingFrame = useRef(null), pendingView = useRef(null)
   pointsRef.current = points; selectedRef.current = selectedId; sizeRef.current = size
+
+  const saveView = () => {
+    if (!interacted.current) return
+    const url = new URL(window.location.href)
+    // A departing map must never overwrite the history entry of another place.
+    if ((url.searchParams.get('atlas') || 'world') !== selectedRef.current) return
+    setTerrainView(url.searchParams,viewRef.current,toneRef.current)
+    const next = url.pathname + url.search + url.hash
+    if (next === window.location.pathname + window.location.search + window.location.hash) return
+    try {
+      window.history.replaceState(window.history.state,'',next)
+      window.dispatchEvent(new Event(ATLAS_VIEW_SAVED))
+    } catch { /* Map gestures remain usable if history updates are restricted. */ }
+  }
+  useEffect(() => {
+    const timer = setTimeout(saveView,350)
+    return () => clearTimeout(timer)
+  }, [view,tone,selectedId])
+  useEffect(() => {
+    const leaving = event => { if (event.target.closest?.('a[href]')) saveView() }
+    window.addEventListener(ATLAS_SAVE_VIEW,saveView)
+    window.addEventListener('pagehide',saveView)
+    document.addEventListener('click',leaving,true)
+    document.addEventListener('auxclick',leaving,true)
+    return () => {
+      window.removeEventListener(ATLAS_SAVE_VIEW,saveView)
+      window.removeEventListener('pagehide',saveView)
+      document.removeEventListener('click',leaving,true)
+      document.removeEventListener('auxclick',leaving,true)
+      clearTimeout(shareTimer.current)
+    }
+  }, [])
+  useEffect(() => { if (shareState === 'manual' || shareState === 'copied') { shareInput.current?.focus(); shareInput.current?.select() } }, [shareState])
+  const changeTone = next => {
+    interacted.current = true; toneRef.current = next; setTone(next); saveView()
+  }
+  const copyView = async () => {
+    interacted.current = true; saveView()
+    const url = window.location.origin + atlasViewHref(window.location.search,{view:viewRef.current,tone:toneRef.current})
+    setShareUrl(url); clearTimeout(shareTimer.current)
+    try {
+      await navigator.clipboard.writeText(url)
+      setShareState('copied')
+    } catch { setShareState('manual') }
+  }
 
   const commit = next => {
     const safe = { x: Math.max(0, Math.min(1, next.x)), y: Math.max(0, Math.min(1, next.y)), zoom: clampTerrainZoom(next.zoom) }
@@ -41,13 +91,15 @@ export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0
     if (pendingFrame.current !== null) return
     pendingFrame.current = requestAnimationFrame(() => { pendingFrame.current = null; commit(pendingView.current) })
   }
-  const zoom = (delta, anchor = { x: sizeRef.current.width / 2, y: sizeRef.current.height / 2 }) => {
+  const zoom = (delta, anchor = { x: sizeRef.current.width / 2, y: sizeRef.current.height / 2 }, saveImmediately = true) => {
     interacted.current = true; setHovered(null); setNearbyChoices(null)
     commit(zoomTerrainAt(viewRef.current, viewRef.current.zoom + delta, anchor, sizeRef.current))
+    if (saveImmediately) saveView()
   }
   const reset = () => {
     interacted.current = true; setHovered(null); setNearbyChoices(null)
     commit(fitTerrain(overviewPoints || locations, sizeRef.current))
+    saveView()
   }
   useEffect(() => {
     const observer = new ResizeObserver(([entry]) => {
@@ -65,8 +117,8 @@ export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0
     previousSelection.current = selectionKey
     const point = locationById[selectedId]
     setNearbyChoices(null)
-    if (selectionFromMap.current === selectedId) { selectionFromMap.current = null; return }
-    if (point) { interacted.current = true; commit({ ...mercator(point), zoom: Math.max(focusZoom, viewRef.current.zoom) }) }
+    if (selectionFromMap.current === selectedId) { selectionFromMap.current = null; saveView(); return }
+    if (point) { interacted.current = true; commit({ ...mercator(point), zoom: Math.max(focusZoom, viewRef.current.zoom) }); saveView() }
     else if (selectedId === regionId) reset()
   }, [selectedId, focusRequest])
   useEffect(() => {
@@ -75,7 +127,7 @@ export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0
       if (!event.ctrlKey && !event.metaKey) return
       event.preventDefault()
       const rect = element.getBoundingClientRect()
-      zoom(Math.max(-.5, Math.min(.5, -event.deltaY / 250)), { x: event.clientX - rect.left, y: event.clientY - rect.top })
+      zoom(Math.max(-.5, Math.min(.5, -event.deltaY / 250)), { x: event.clientX - rect.left, y: event.clientY - rect.top }, false)
     }
     element.addEventListener('wheel', wheel, { passive: false })
     return () => element.removeEventListener('wheel', wheel)
@@ -125,13 +177,16 @@ export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0
     pointers.current.delete(event.pointerId)
     if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId)
     startGesture()
+    saveView()
   }
   const pick = group => {
+    interacted.current = true
     if (group.points.length === 1) { selectionFromMap.current = group.points[0].id === selectedId ? null : group.points[0].id; onSelect(group.points[0].id); return }
     if (viewRef.current.zoom >= MAX_TERRAIN_ZOOM - .1) { setNearbyChoices(group.points); return }
     const fitted = fitTerrain(group.points, sizeRef.current, MAX_TERRAIN_ZOOM)
     interacted.current = true; setHovered(null)
     commit({ ...fitted, zoom: Math.max(fitted.zoom, Math.min(MAX_TERRAIN_ZOOM, viewRef.current.zoom + 1)) })
+    saveView()
     surface.current?.focus({ preventScroll: true })
   }
   const keyDown = event => {
@@ -163,7 +218,7 @@ export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0
 
   return <div ref={frame} className={`cz-terrain-frame ${expanded ? 'is-expanded' : ''} is-${tone}`}>
     <div className={`cz-terrain-surface ${dragging ? 'is-dragging' : ''}`} ref={surface} tabIndex={0} role="region" aria-label={surfaceLabel}
-      onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={pointerEnd} onPointerCancel={pointerEnd} onLostPointerCapture={pointerEnd} onKeyDown={keyDown}
+      onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={pointerEnd} onPointerCancel={pointerEnd} onLostPointerCapture={pointerEnd} onKeyDown={keyDown} onKeyUp={saveView}
       onDoubleClick={event => { if (event.target.closest('button,a')) return; const rect = event.currentTarget.getBoundingClientRect(); zoom(1, { x: event.clientX - rect.left, y: event.clientY - rect.top }) }}>
       {countryId && <CountryOutline countryId={countryId} view={view} size={size} />}
       <div className="cz-terrain-tiles" aria-hidden="true">
@@ -181,7 +236,7 @@ export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0
     </div>
     <div className="cz-terrain-top">
       <button type="button" className="cz-terrain-reset" onClick={reset}><Mountain size={15} aria-hidden="true" />{resetLabel}</button>
-      <div className="cz-terrain-tone" role="group" aria-label="Kolor mapy"><button type="button" aria-pressed={tone === 'dark'} onClick={() => setTone('dark')}>Ciemna</button><button type="button" aria-pressed={tone === 'natural'} onClick={() => setTone('natural')}>Naturalna</button></div>
+      <div className="cz-terrain-tone" role="group" aria-label="Kolor mapy"><button type="button" aria-pressed={tone === 'dark'} onClick={() => changeTone('dark')}>Ciemna</button><button type="button" aria-pressed={tone === 'natural'} onClick={() => changeTone('natural')}>Naturalna</button></div>
     </div>
     <div className="cz-terrain-controls" role="group" aria-label="Sterowanie mapą terenu">
       <button type="button" aria-label="Przybliż teren" disabled={view.zoom >= MAX_TERRAIN_ZOOM} onClick={() => zoom(1)}><Plus size={18} /></button>
@@ -192,6 +247,9 @@ export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0
     {failed > 0 && <div className="cz-terrain-error" role="status"><span>{loaded ? 'Część mapy nie została wczytana.' : 'Podkład mapy jest chwilowo niedostępny.'}</span><button type="button" onClick={() => { setTileStatus({}); setRetry(current => current + 1) }}>Ponów</button></div>}
     {fullscreenError && <div className="cz-terrain-error" role="status">Pełny ekran jest niedostępny w tej przeglądarce.<button type="button" onClick={() => setFullscreenError(false)}>Zamknij</button></div>}
     <div className="cz-terrain-scale" aria-hidden="true"><span>{scaleDistance >= 1000 ? `${scaleDistance / 1000} km` : `${scaleDistance} m`}</span><i style={{ width: scaleDistance / metersPerPixel }} /></div>
+    <button type="button" className="cz-terrain-share" onClick={copyView} aria-label="Skopiuj link do widoku mapy">{shareState === 'copied' ? <Check size={14} aria-hidden="true" /> : <Link size={14} aria-hidden="true" />}<span>{shareState === 'copied' ? 'Skopiowano' : 'Kopiuj widok'}</span></button>
+    {shareState === 'copied' && <span className="cz-terrain-share-status" role="status">Link do widoku mapy skopiowany.</span>}
+    {(shareState === 'manual' || shareState === 'copied') && <div className="cz-terrain-share-manual"><button type="button" aria-label="Zamknij link do mapy" onClick={() => setShareState(null)}><X size={15} /></button><label>Link do tego widoku<input ref={shareInput} aria-label="Link do widoku mapy" readOnly value={shareUrl} onFocus={event => event.target.select()} /></label><small>{shareState === 'copied' ? 'Możesz też skopiować link z tego pola.' : 'Zaznacz link i skopiuj go.'}</small></div>}
     <div className="cz-terrain-attribution">© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a> · SRTM · <a href="https://opentopomap.org/about" target="_blank" rel="noreferrer">OpenTopoMap (CC BY-SA)</a> · <a href="https://top-o-map.com/" target="_blank" rel="noreferrer">Top-O-Map</a>{countryId && <> · <a href="https://www.naturalearthdata.com/" target="_blank" rel="noreferrer">Obrys: Natural Earth</a></>}</div>
   </div>
 }

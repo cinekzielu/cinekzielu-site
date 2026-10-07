@@ -22,3 +22,8 @@
 @media(max-width:520px){.cz-expedition-nav{gap:18px;font-size:11px}.cz-expedition-row,.cz-expedition-list.is-compact .cz-expedition-row{grid-template-columns:minmax(0,1fr) 20px;gap:16px;padding:26px 0}.cz-expedition-row-image{grid-column:1/-1}.cz-expedition-row h2,.cz-expedition-list.is-compact h2{font-size:29px;margin:8px 0 12px}.cz-expedition-row-arrow{font-size:24px}.cz-expedition-hero h1{font-size:42px}.cz-expedition-facts{gap:20px 30px}.cz-expedition-film-list h3{font-size:17px}.cz-expedition-film-list>a{gap:16px}.cz-expedition-photo-preview{flex-direction:column;gap:12px}.cz-expedition-photo-preview img{flex:none;width:100%}.cz-expedition-section-heading{align-items:center;gap:12px}.cz-expedition-section-heading h2{font-size:24px}.cz-expedition-section-heading>a{font-size:10px}.cz-expedition-index-intro{font-size:12px}}
 @media(prefers-reduced-motion:reduce){.cz-expeditions *,.cz-expedition-row *{transition:none!important;scroll-behavior:auto!important}}
 @media(max-width:760px){.cz-expedition-hero-image img{max-height:420px}}
+
+.cz-expedition-frames-intro{font-size:13px;line-height:1.7;color:#b7aa9b;margin:-10px 0 24px}
+.cz-expedition-frames-toggle{display:block;margin:24px auto 0;padding:14px 20px;border:1px solid rgba(201,163,109,.5);background:transparent;color:#e2c99e;font:inherit;font-size:12px;cursor:pointer}
+.cz-expedition-frames-toggle:hover{background:rgba(201,163,109,.08)}
+.cz-expedition-frames-toggle:focus-visible{outline:2px solid #c9a36d;outline-offset:4px}
