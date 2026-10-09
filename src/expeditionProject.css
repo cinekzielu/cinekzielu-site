@@ -1,0 +1,26 @@
+.cz-project-name{margin:0 0 14px;color:#c9a36d;font-size:14px;letter-spacing:.12em;text-transform:uppercase}
+.cz-project-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;margin:0 0 60px;padding:30px 0;border-top:1px solid rgba(214,198,168,.25);border-bottom:1px solid rgba(214,198,168,.25)}
+.cz-project-stats dt{font-size:11px;color:#b7aa9b;line-height:1.5}
+.cz-project-stats dd{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;margin:12px 0 0;font-size:clamp(28px,3.4vw,44px);font-weight:350;letter-spacing:-.035em;color:#e2c99e;font-variant-numeric:tabular-nums}
+.cz-project-stats dd span{font-size:13px;letter-spacing:0;color:#b7aa9b}
+.cz-project-summits,.cz-project-films{scroll-margin-top:28px}
+.cz-project-summit-list{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:20px;list-style:none;padding:0;margin:0}
+.cz-project-summit-list li{min-width:0;padding:22px 0;border-top:1px solid rgba(214,198,168,.18)}
+.cz-project-summit-number{font-size:11px;color:#c9a36d;letter-spacing:.15em}
+.cz-project-summit-list h3{font-size:clamp(16px,1.7vw,22px);font-weight:450;letter-spacing:-.025em;margin:24px 0 8px;overflow-wrap:anywhere}
+.cz-project-summit-status{display:block;font-size:11px;color:#b7aa9b}
+.cz-project-summit-list a{display:inline-block;margin-top:22px;padding:10px 0;font-size:11px;color:#e2c99e}
+.cz-project-atlas{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:24px;margin:14px 0 56px;background:rgba(201,163,109,.045);border:1px solid rgba(214,198,168,.18)}
+.cz-project-atlas h3{margin:0 0 8px;font-size:18px;font-weight:450}
+.cz-project-atlas p,.cz-project-intro{font-size:13px;line-height:1.8;color:#b7aa9b;margin:0}
+.cz-project-atlas a{flex-shrink:0;font-size:12px;color:#e2c99e;padding:12px 0}
+.cz-project-intro{max-width:68ch;margin:-6px 0 26px}
+.cz-project-film-plan{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 40px;list-style:none;padding:0;margin:0 0 40px}
+.cz-project-film-plan li{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding:22px 0;border-top:1px solid rgba(214,198,168,.18);scroll-margin-top:28px}
+.cz-project-film-plan h3{font-size:18px;font-weight:450;letter-spacing:-.015em;line-height:1.4;margin:6px 0 0}
+.cz-project-film-status{font-size:10px;color:#b7aa9b;border:1px solid rgba(214,198,168,.25);padding:7px 9px}
+.cz-project-film-plan a{font-size:12px;color:#e2c99e;padding:10px 0}
+.cz-project-teaser-note{font-size:13px;line-height:1.8;color:#b7aa9b;max-width:68ch;margin:-8px 0 24px}
+@media(max-width:1000px){.cz-project-summit-list{grid-template-columns:repeat(3,minmax(0,1fr))}.cz-project-summit-list h3{font-size:22px}}
+@media(max-width:760px){.cz-project-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 20px;margin-bottom:40px}.cz-project-stats dd{font-size:34px}.cz-project-summit-list{grid-template-columns:repeat(2,minmax(0,1fr))}.cz-project-atlas{align-items:flex-start;flex-direction:column;gap:12px;margin-bottom:40px}.cz-project-film-plan{grid-template-columns:1fr}.cz-project-summits .cz-expedition-section-heading,.cz-project-films .cz-expedition-section-heading{align-items:flex-start;flex-direction:column;gap:10px}}
+@media(max-width:380px){.cz-project-summit-list{grid-template-columns:1fr}.cz-project-summit-list h3{margin-top:14px}.cz-project-stats dd{font-size:30px}.cz-project-atlas{padding:18px}}

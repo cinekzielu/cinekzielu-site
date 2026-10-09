@@ -1,6 +1,29 @@
+import { alpsProject } from './alpsProject.js'
+import { galleryData } from './galleryData.js'
+
 const img = (name) => `/images/${name}`
 
 export const expeditionsData = [
+  {
+    id: alpsProject.id,
+    title: 'Alpy 2026',
+    subtitle: alpsProject.name,
+    location: 'Alpy',
+    region: 'Alpy',
+    type: 'mountain-expedition',
+    season: 'summer',
+    year: 2026,
+    status: 'published',
+    expeditionStatus: alpsProject.expeditionStatus,
+    productionStatus: alpsProject.productionStatus,
+    mapNodeId: alpsProject.atlas.id,
+    shortDescription: alpsProject.description,
+    tags: ['Alpy', alpsProject.name, ...alpsProject.summits.map(summit => summit.name)],
+    youtubeUrl: '',
+    galleryId: alpsProject.id,
+    coverImage: galleryData.find(gallery => gallery.id === alpsProject.id).coverImage,
+    project: alpsProject,
+  },
   {
     id: 'gerlach-winter',
     title: 'Gerlach zimą',

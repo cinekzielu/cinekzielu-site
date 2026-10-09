@@ -1,4 +1,5 @@
 import { galleryData } from './galleryData.js'
+import { alpsProject } from './alpsProject.js'
 
 // Dates come from reviewed photo metadata; years also match the approved galleries.
 // Route wording comes from verified film titles or the owner's description.
@@ -20,8 +21,9 @@ const details = {
   },
   'alpy-2026': {
     sortDate: '2026-08',
-    region: 'Alpy', date: 'Sierpień 2026', kind: 'Wyprawa alpejska',
-    description: 'Fotografie z sierpniowej wyprawy w Alpy.',
+    region: 'Alpy', date: 'Sierpień 2026', kind: 'Projekt pięciu szczytów',
+    description: alpsProject.description,
+    project: alpsProject,
   },
   'baranie-rogi-lodowy-szczyt-2026': {
     sortDate: '2026-07',
