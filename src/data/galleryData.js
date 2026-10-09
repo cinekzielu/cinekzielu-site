@@ -372,7 +372,7 @@ export const galleryData = [
       "europe",
       "alpy"
     ],
-    "relatedExpeditionIds": [],
+    "relatedExpeditionIds": ["alpy-2026"],
     "films": [
       {
         "id": "l3KltGrKz2U",
