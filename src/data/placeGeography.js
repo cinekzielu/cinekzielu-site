@@ -2,6 +2,7 @@ import { tatryLocations } from './tatryAtlas.js'
 import { switzerlandPlaces } from './switzerlandPlaces.js'
 import { moroccoPlaces } from './moroccoPlaces.js'
 import { sicilyPlaces, hungaryPlaces } from './summer2026Places.js'
+import { alpsCountryIds, alpsPlaces } from './alpsPlaces.js'
 
 // Country membership of the existing sourced points. Border summits can belong
 // to both countries; the same film/gallery is still counted only once per view.
@@ -11,6 +12,7 @@ export const countryPlaceIds = {
   hungary:hungaryPlaces.map(place => place.id),
   poland:['giewont','koscielec',...border],
   slovakia:tatryLocations.filter(point => !['giewont','koscielec'].includes(point.id)).map(point => point.id),
-  switzerland:switzerlandPlaces.map(place => place.id),
+  ...Object.fromEntries(alpsCountryIds.map(id => [id, alpsPlaces.filter(place => place.parent === id).map(place => place.id)])),
+  switzerland:[...switzerlandPlaces.map(place => place.id), ...alpsPlaces.filter(place => place.parent === 'switzerland').map(place => place.id)],
   morocco:moroccoPlaces.map(place => place.id),
 }

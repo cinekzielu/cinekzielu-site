@@ -26,7 +26,7 @@ for (const [id, expected] of Object.entries({ world: [29, 17, 386], europe: [27,
 assert.deepEqual(atlasListNodes('poland').map(node => node.id), ['jura', 'gorce'])
 assert.deepEqual(atlasListNodes('gorce').map(node => node.id), ['turbacz'])
 assert.deepEqual(atlasListNodes('turbacz').map(node => node.id), ['turbacz'])
-assert.equal(atlasListNodes('switzerland').length, 6)
+assert.equal(atlasListNodes('switzerland').length, 7)
 assert.deepEqual(atlasListNodes('fronalpstock'), atlasListNodes('switzerland'))
 assert(atlasListNodes('tatry').some(node => node.id === 'walentkowy-wierch'))
 const source = await readFile(new URL('../src/assets/maps/world-continent-overlays.svg', import.meta.url))

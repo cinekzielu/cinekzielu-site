@@ -19,7 +19,7 @@ export function PhotographyCollections({ home = false, activeId = null }) {
 export function PhotographyPreview() {
   return <section id="gallery-preview" className="section sectionDarker reveal cz-photography-preview">
     <div className="container">
-      <div className="cz-photography-preview-heading"><div><p>Fotografia</p><h2>Góry. Światło. Przestrzeń.</h2></div><a href="/fotografia">Zobacz portfolio ↗</a></div>
+      <div className="cz-photography-preview-heading"><div><p>Fotografia</p><h2>Wybrane fotografie</h2></div><a href="/fotografia">Zobacz portfolio ↗</a></div>
       <PhotographyCollections home />
       <div className="cz-photography-preview-footer"><span>Wybrane fotografie z Tatr i Alp.</span><a href="/galerie">Galerie z wypraw ↗</a></div>
     </div>

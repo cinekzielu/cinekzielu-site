@@ -5,13 +5,15 @@ import { moroccoPlaces, isMoroccoAtlas } from './moroccoPlaces.js'
 import { tatryLocations } from './tatryAtlas.js'
 import { countryPlaceIds } from './placeGeography.js'
 import { sicilyPlaces, hungaryPlaces } from './summer2026Places.js'
+import { alpsCountryIds, alpsPlaces } from './alpsPlaces.js'
 
 const swiss = switzerlandPlaces.map(place => ({...place,lng:place.lon}))
 const morocco = moroccoPlaces.map(place => ({...place,lng:place.lon}))
 const countries = {
   italy:sicilyPlaces.map(place => ({...place,lng:place.lon})),
   hungary:hungaryPlaces.map(place => ({...place,lng:place.lon})),
-  switzerland: swiss,
+  ...Object.fromEntries(alpsCountryIds.map(id => [id, alpsPlaces.filter(place => place.parent === id)])),
+  switzerland: [...swiss, ...alpsPlaces.filter(place => place.parent === 'switzerland')],
   morocco,
   poland: tatryLocations.filter(point => countryPlaceIds.poland.includes(point.id)),
   slovakia: tatryLocations.filter(point => countryPlaceIds.slovakia.includes(point.id)),
@@ -33,7 +35,7 @@ export function atlasTerrainProfile(id) {
   else scope = [...path].reverse().find(node => node.kind === 'Kraj' || node.kind === 'Region')?.id
   if (!scope || scope === 'tatry') return null
   const node = atlasNodeById[scope]
-  const locations = scope === 'sicily' ? countries.italy : scope === 'alpy' ? swiss : scope === 'morocco-atlas' ? morocco.filter(point => point.group) : countries[scope] || []
+  const locations = scope === 'sicily' ? countries.italy : scope === 'alpy' ? [...swiss, ...alpsPlaces] : scope === 'morocco-atlas' ? morocco.filter(point => point.group) : countries[scope] || []
   const bounds = countryBounds[scope] || regionBounds[scope]
   return {
     id:scope, name:node.name, locations, countryId:node.kind === 'Kraj' ? scope : null,

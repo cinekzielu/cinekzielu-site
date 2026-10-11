@@ -17,7 +17,8 @@ for (const id of ['switzerland','alpy']) {
   assert.equal(new Set(all.films.map(film=>film.youtubeId)).size,all.films.length)
   assert.deepEqual(atlasYears(id),['2026','2025'])
   const profile=atlasTerrainProfile(id)
-  assert.equal(profile.locations.filter(point => getAtlasMaterials(point.id,'2026').films.length).length,0,'Country-level 2026 evidence must not become summit visits')
+  assert.equal(profile.locations.filter(point => getAtlasMaterials(point.id,'2026').films.length).length,0,'Trip teaser is not a released summit episode')
+  assert.equal(profile.locations.filter(point => getAtlasMaterials(point.id,'2026').galleries.length).length,id === 'alpy' ? 5 : 1,'Only author-confirmed 2026 summit visits')
 }
 assert.equal(getAtlasMaterials('lomnica','2025').films.length,0,'A publication year is not an expedition year')
 assert.equal(getAtlasMaterials('lomnica','undated').films.length,1)
