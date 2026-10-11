@@ -209,9 +209,11 @@ export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0
   const backdrop = lastLoadedTiles.current.filter(tile => !tiles.some(current => current.key === tile.key)).map(tile => reprojectTerrainTile(tile, view, size)).filter(tile => tile.left < size.width && tile.top < size.height && tile.left + tile.size > 0 && tile.top + tile.size > 0)
   useEffect(() => { if (loaded === tiles.length) lastLoadedTiles.current = tiles }, [tiles, loaded])
   const groups = terrainMarkers(points, view, size)
+  // Embedded trip stories may supply their own points without adding atlas nodes.
+  const nameOf = id => atlasNodeById[id]?.name || locationById[id]?.name || id
   const activeGroup = groups.find(group => group.points.some(point => point.id === selectedId))
   const labelGroup = groups.find(group => group.id === hovered) || activeGroup
-  const label = labelGroup ? labelGroup.points.length === 1 ? atlasNodeById[labelGroup.points[0].id].name : labelGroup === activeGroup && !hovered ? atlasNodeById[selectedId].name : `${labelGroup.points.slice(0, 2).map(point => atlasNodeById[point.id].name).join(' · ')}${labelGroup.points.length > 2 ? '…' : ''}` : null
+  const label = labelGroup ? labelGroup.points.length === 1 ? nameOf(labelGroup.points[0].id) : labelGroup === activeGroup && !hovered ? nameOf(selectedId) : `${labelGroup.points.slice(0, 2).map(point => nameOf(point.id)).join(' · ')}${labelGroup.points.length > 2 ? '…' : ''}` : null
   const labelWidth = label ? Math.min(200, Math.max(90, label.length * 6 + 20)) : 0
   const latitude = unproject(view).lat
   const metersPerPixel = 40075016.686 * Math.cos(latitude * Math.PI / 180) / worldSize(view.zoom)
@@ -229,11 +231,11 @@ export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0
         onError={() => setTileStatus(current => current[tile.key] === 'error' ? current : { ...current, [tile.key]: 'error' })} />)}</div>
       {groups.map(group => { const Icon = markerIcons[group.points[0].icon] || Mountain; return <button type="button" key={group.id} style={{ left: group.x, top: group.y }} className={`cz-terrain-marker ${group.points.length > 1 ? 'is-stack' : ''} ${activeGroup === group ? 'is-active' : ''}`}
         tabIndex={group.x >= 22 && group.x <= size.width - 22 && group.y >= 22 && group.y <= size.height - 22 ? 0 : -1}
-        aria-label={group.points.length === 1 ? `Wybierz: ${atlasNodeById[group.points[0].id].name}` : `Przybliż ${regionId === 'tatry' ? 'szczyty' : 'miejsca'}: ${group.points.map(point => atlasNodeById[point.id].name).join(', ')}`}
+        aria-label={group.points.length === 1 ? `Wybierz: ${nameOf(group.points[0].id)}` : `Przybliż ${regionId === 'tatry' ? 'szczyty' : 'miejsca'}: ${group.points.map(point => nameOf(point.id)).join(', ')}`}
         aria-pressed={group.points.length === 1 ? group.points[0].id === selectedId : undefined}
         onClick={() => pick(group)} onPointerEnter={() => !dragging && setHovered(group.id)} onPointerLeave={() => setHovered(null)} onFocus={() => setHovered(group.id)} onBlur={() => setHovered(null)}><span>{group.points.length > 1 ? group.points.length : <Icon size={13} aria-hidden="true" />}</span></button>})}
       {label && <div className="cz-terrain-label" style={{ width: labelWidth, left: Math.max(8, Math.min(size.width - labelWidth - 8, labelGroup.x - labelWidth / 2)), top: Math.max(64, labelGroup.y - 56) }}>{label}{labelGroup.points.length > 1 && <small>Kliknij, aby przybliżyć</small>}</div>}
-      {nearbyChoices && <div className="cz-terrain-nearby"><button className="cz-terrain-close" aria-label="Zamknij wybór miejsca" onClick={() => setNearbyChoices(null)}><X size={15} /></button>{nearbyChoices.map(point => <button type="button" key={point.id} onClick={() => { selectionFromMap.current = point.id; onSelect(point.id); setNearbyChoices(null) }}>{atlasNodeById[point.id].name} →</button>)}</div>}
+      {nearbyChoices && <div className="cz-terrain-nearby"><button className="cz-terrain-close" aria-label="Zamknij wybór miejsca" onClick={() => setNearbyChoices(null)}><X size={15} /></button>{nearbyChoices.map(point => <button type="button" key={point.id} onClick={() => { selectionFromMap.current = point.id; onSelect(point.id); setNearbyChoices(null) }}>{nameOf(point.id)} →</button>)}</div>}
     </div>
     <div className="cz-terrain-top">
       <button type="button" className="cz-terrain-reset" onClick={reset}><Mountain size={15} aria-hidden="true" />{resetLabel}</button>

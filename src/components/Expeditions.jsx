@@ -10,6 +10,7 @@ import { galleryHref, galleryMapLinks, galleryItemCount, isVideoCollection } fro
 import { relatedExpeditions } from '../data/relatedExpeditions'
 import { MoroccoStory, MoroccoStoryHero } from './MoroccoStory'
 import { TravelTimeline } from './TravelTimeline'
+import { AlpsStory, AlpsStoryHero } from './AlpsStory'
 import '../expeditionStyles.css'
 
 export function ExpeditionList({ expeditions = expeditionPages, compact = false }) {
@@ -89,13 +90,14 @@ export function ExpeditionPage({ slug }) {
   const { gallery } = expedition
   const videoFrames = isVideoCollection(gallery)
   const hasStory = expedition.id === 'maroko-2025'
+  const hasAlpsStory = expedition.id === 'alpy-2026'
   const cover = gallery.photos.find(photo => photo.src === gallery.coverImage)
   const preview = gallery.previewPhotoIndices
     ? gallery.previewPhotoIndices.map(index => gallery.photos[index]).filter(Boolean)
     : gallery.photos.filter(photo => photo.src !== gallery.coverImage).slice(0, 3)
   return <ExpeditionShell detail>
     <article>
-      {hasStory ? <MoroccoStoryHero /> : <div className="cz-expedition-hero">
+      {hasStory ? <MoroccoStoryHero /> : hasAlpsStory ? <AlpsStoryHero /> : <div className="cz-expedition-hero">
         <div className="cz-expedition-hero-image"><ResponsivePhoto photo={cover} full sizes="(max-width:760px) calc(100vw - 28px), (max-width:1240px) 55vw, 660px" fetchPriority="high" /></div>
         <div className="cz-expedition-hero-body">
           <p className="cz-expedition-eyebrow">{expedition.kind}</p>
@@ -113,6 +115,7 @@ export function ExpeditionPage({ slug }) {
         </div>
       </div>}
       {hasStory && <MoroccoStory />}
+      {hasAlpsStory && <AlpsStory />}
       {gallery.films.length > 0 && <section id="filmy" className="cz-expedition-films" aria-labelledby="expedition-films-title">
         <div className="cz-expedition-section-heading"><h2 id="expedition-films-title">{gallery.films[0].label === 'Zwiastun' ? 'Zwiastun' : 'Filmy'}</h2><span>YouTube</span></div>
         <div className="cz-expedition-film-list">{gallery.films.map((film, index) => <FilmLink href={film.url} key={film.id} target="_blank" rel="noreferrer" aria-label={`${film.title} — ${film.label}, odtwórz film`}>
