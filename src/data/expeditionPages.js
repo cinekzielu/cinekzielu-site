@@ -3,6 +3,16 @@ import { galleryData } from './galleryData.js'
 // Dates come from reviewed photo metadata; years also match the approved galleries.
 // Route wording comes from verified film titles or the owner's description.
 const details = {
+  'katania-2026': {
+    sortDate: '2026-06-15',
+    region: 'Sycylia · Włochy', date: '15–19 czerwca 2026', kind: 'Podróż',
+    description: 'Katania, wybrzeże Taorminy i wędrówka po zboczach Etny. Architektura, uliczne detale i wulkaniczne krajobrazy w fotografiach z Sycylii.',
+  },
+  'hungaroring-2026': {
+    sortDate: '2026-07-24',
+    region: 'Mogyoród · Węgry', date: '24–26 lipca 2026', kind: 'Formuła 1',
+    description: 'Weekend na Hungaroringu. Bolidy, trybuny i atmosfera toru — fotografie oraz krótki film z F1, F2, F3 i Porsche Supercup.',
+  },
   'baranie-rogi-zima-2025': {
     sortDate: '2025-11-30',
     region: 'Tatry Wysokie', date: '30 listopada 2025', kind: 'Zimowe wejście',

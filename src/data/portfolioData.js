@@ -1,4 +1,4 @@
-import { galleryData } from './galleryData.js'
+import { photoGalleries as galleryData } from './galleryData.js'
 
 // Curated from existing galleries. Removed gallery photos disappear here automatically.
 const selection = [
@@ -81,3 +81,16 @@ export const portfolioPhotos = selection.flatMap(({ galleryId, src }) => {
   const photo = gallery?.photos.find(item => item.src === src)
   return photo ? [{ ...photo, sourceHref: `/galerie/${gallery.id}`, sourceLabel: `${gallery.title} ${gallery.year}` }] : []
 })
+
+// Explicit image references keep themes stable when the portfolio order changes.
+const collections = [
+  { id: 'jeziora', title: 'Jeziora', files: ['alpy-2026-01', 'szwajcaria-01', 'szwajcaria-03', 'szpiglasowy-wierch-2025-01', 'alpy-2026-40'] },
+  { id: 'granie', title: 'Granie', files: ['alpy-2026-02', 'liptowskie-mury-2026-01', 'baranie-rogi-lodowy-szczyt-2026-08', 'alpy-2026-22'] },
+  { id: 'zima', title: 'Zima', files: ['turbacz-2026-01', 'konczysta-2026-02', 'konczysta-2026-11', 'koscielec-2026-16', 'turbacz-2026-03'] },
+]
+
+export const photographyCollections = collections.map(({ files, ...collection }) => ({
+  ...collection,
+  photos: files.flatMap(file => portfolioPhotos.filter(photo => photo.src.endsWith(`/${file}-small.webp`))),
+}))
+export const photographyCollectionHref = collection => `/fotografia?kolekcja=${collection.id}`

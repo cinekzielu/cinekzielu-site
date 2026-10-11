@@ -7,6 +7,9 @@ import { FilmLink } from './SiteTools'
 import React, { useEffect, useState } from 'react'
 import { expeditionPages, expeditionHref, findExpeditionPage, filmCount, sortExpeditionsNewest } from '../data/expeditionPages'
 import { galleryHref, galleryMapLinks, galleryItemCount, isVideoCollection } from '../data/galleryNavigation'
+import { relatedExpeditions } from '../data/relatedExpeditions'
+import { MoroccoStory, MoroccoStoryHero } from './MoroccoStory'
+import { TravelTimeline } from './TravelTimeline'
 import '../expeditionStyles.css'
 
 export function ExpeditionList({ expeditions = expeditionPages, compact = false }) {
@@ -27,13 +30,46 @@ function ExpeditionShell({ children, detail = false }) {
   return <CollectionShell section="wyprawy" className="cz-expeditions" detail={detail}>{children}</CollectionShell>
 }
 
+function RelatedExpeditions({ expedition }) {
+  const related = relatedExpeditions(expedition)
+  return <section id="powiazane" className="cz-related-expeditions" aria-label="Powiązane wyprawy">
+    {related.length > 0 && <>
+      <div className="cz-expedition-section-heading"><h2>Z tej samej okolicy</h2></div>
+      <div className="cz-related-grid">{related.map(trip => <a className="cz-related-card" key={trip.id} href={expeditionHref(trip)}>
+        <div className="cz-related-image"><ResponsivePhoto photo={trip.gallery.photos.find(photo => photo.src === trip.gallery.coverImage)} sizes="(max-width:600px) calc(100vw - 28px), (max-width:1448px) 31vw, 437px" style={{ objectPosition: trip.gallery.coverPosition }} loading="lazy" /></div>
+        <div className="cz-related-caption"><span className="cz-expedition-eyebrow">{trip.region} · {trip.kind}</span><h3>{trip.title} <span>{trip.year}</span></h3><div><span className="cz-expedition-material-count">{galleryItemCount(trip.gallery)}{trip.gallery.films.length > 0 && ` · ${filmCount(trip.gallery.films)}`}</span><span aria-hidden="true">↗</span></div></div>
+      </a>)}</div>
+    </>}
+    <a className="cz-related-all" href="/wyprawy">Wszystkie wyprawy ↗</a>
+  </section>
+}
+
 export function ExpeditionIndex() {
-  const view = useCollectionFilters(expeditionPages)
+  const view = useCollectionFilters(expeditionPages, { preserveSearchKeys: ['widok'] })
+  const readMode = () => new URLSearchParams(window.location.search).get('widok') === 'os' ? 'os' : 'lista'
+  const [mode, setMode] = useState(readMode)
+  useEffect(() => {
+    const sync = () => setMode(readMode())
+    window.addEventListener('popstate', sync)
+    return () => window.removeEventListener('popstate', sync)
+  }, [])
+  const changeMode = next => {
+    if (next === mode) return
+    const params = new URLSearchParams(window.location.search)
+    if (next === 'os') params.set('widok', 'os')
+    else params.delete('widok')
+    window.history.pushState({}, '', window.location.pathname + (params.size ? `?${params}` : ''))
+    setMode(next)
+  }
   return <ExpeditionShell>
     <div className="cz-gallery-intro"><h1>Wyprawy</h1><span className="cz-gallery-count">{[...view.options.years].join(' · ')}</span></div>
     <p className="cz-expedition-index-intro">Od najnowszych. Zdjęcia, filmy, miejsca.</p>
+    <div className="cz-trip-view-switch" role="group" aria-label="Widok wypraw">
+      <button type="button" aria-pressed={mode === 'lista'} onClick={() => changeMode('lista')}>Lista</button>
+      <button type="button" aria-pressed={mode === 'os'} onClick={() => changeMode('os')}>Oś podróży</button>
+    </div>
     <CollectionFilters view={view} emptyLabel="Brak pasujących wypraw" />
-    <ExpeditionList expeditions={view.matches} />
+    {mode === 'os' ? <TravelTimeline expeditions={view.matches} /> : <ExpeditionList expeditions={view.matches} />}
   </ExpeditionShell>
 }
 
@@ -42,7 +78,7 @@ export function ExpeditionPage({ slug }) {
   const [allFrames, setAllFrames] = useState(false)
   useEffect(() => {
     const sectionId = window.location.hash.slice(1)
-    if (!['filmy', 'kadry'].includes(sectionId)) return
+    if (!['filmy', 'kadry', 'powiazane', 'opowiesc'].includes(sectionId)) return
     let frame
     const scrollToFilms = () => { frame = window.requestAnimationFrame(() => document.getElementById(sectionId)?.scrollIntoView({ behavior: 'instant', block: 'start' })) }
     scrollToFilms()
@@ -52,12 +88,14 @@ export function ExpeditionPage({ slug }) {
   if (!expedition) return <ExpeditionShell detail><div className="cz-gallery-intro"><h1>Nie znaleziono wyprawy</h1></div><a className="cz-gallery-text-link" href="/wyprawy">Zobacz wszystkie wyprawy →</a></ExpeditionShell>
   const { gallery } = expedition
   const videoFrames = isVideoCollection(gallery)
+  const hasStory = expedition.id === 'maroko-2025'
   const cover = gallery.photos.find(photo => photo.src === gallery.coverImage)
-  const preview = gallery.photos.filter(photo => photo.src !== gallery.coverImage).slice(0, 3)
-  const next = expeditionPages[(expeditionPages.indexOf(expedition) + 1) % expeditionPages.length]
+  const preview = gallery.previewPhotoIndices
+    ? gallery.previewPhotoIndices.map(index => gallery.photos[index]).filter(Boolean)
+    : gallery.photos.filter(photo => photo.src !== gallery.coverImage).slice(0, 3)
   return <ExpeditionShell detail>
     <article>
-      <div className="cz-expedition-hero">
+      {hasStory ? <MoroccoStoryHero /> : <div className="cz-expedition-hero">
         <div className="cz-expedition-hero-image"><ResponsivePhoto photo={cover} full sizes="(max-width:760px) calc(100vw - 28px), (max-width:1240px) 55vw, 660px" fetchPriority="high" /></div>
         <div className="cz-expedition-hero-body">
           <p className="cz-expedition-eyebrow">{expedition.kind}</p>
@@ -73,7 +111,8 @@ export function ExpeditionPage({ slug }) {
             {galleryMapLinks(gallery).map(place => <a key={place.id} href={place.href}>Na mapie: {place.label} ↗</a>)}
           </nav>
         </div>
-      </div>
+      </div>}
+      {hasStory && <MoroccoStory />}
       {gallery.films.length > 0 && <section id="filmy" className="cz-expedition-films" aria-labelledby="expedition-films-title">
         <div className="cz-expedition-section-heading"><h2 id="expedition-films-title">{gallery.films[0].label === 'Zwiastun' ? 'Zwiastun' : 'Filmy'}</h2><span>YouTube</span></div>
         <div className="cz-expedition-film-list">{gallery.films.map((film, index) => <FilmLink href={film.url} key={film.id} target="_blank" rel="noreferrer" aria-label={`${film.title} — ${film.label}, odtwórz film`}>
@@ -92,6 +131,6 @@ export function ExpeditionPage({ slug }) {
         </a>
       </section>}
     </article>
-    <div className="cz-gallery-next"><span>Kolejna wyprawa</span><a href={expeditionHref(next)}>{next.title} <span className="cz-gallery-year">{next.year}</span> ↗</a></div>
+    <RelatedExpeditions expedition={expedition} />
   </ExpeditionShell>
 }

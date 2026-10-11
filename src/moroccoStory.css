@@ -1,0 +1,47 @@
+/* Clip horizontal overflow without creating a second scrolling ancestor for
+   the story's sticky map. Limited to this expedition page. */
+html.cz-story-page,html.cz-story-page body{overflow-x:clip}
+html.cz-story-page{scroll-behavior:auto}
+.cz-story-hero{position:relative;isolation:isolate;min-height:560px;height:min(720px,78svh);overflow:hidden;background:#272017;margin:12px 0 0}
+.cz-story-hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.cz-story-hero:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#0c0a08b8,#15110a15),linear-gradient(0deg,#100d09df,transparent 80%)}
+.cz-story-hero-content{position:absolute;bottom:70px;left:6%;right:6%;color:#f5f0e7}
+.cz-story-kicker{color:#ccb386;font-size:11px;letter-spacing:.18em;text-transform:uppercase;margin:0 0 16px;line-height:1.6}
+.cz-story-hero h1{font-size:clamp(68px,10vw,142px);font-weight:550;line-height:1;letter-spacing:-.065em;margin:0 0 20px}
+.cz-story-subtitle{font-size:clamp(23px,3vw,38px);letter-spacing:-.025em;margin:0 0 16px;line-height:1.2}
+.cz-story-hero-meta{font-size:14px;color:#ddd0bd;line-height:1.6}
+.cz-story-hero nav{display:flex;align-items:center;gap:16px 26px;flex-wrap:wrap;margin-top:32px}
+.cz-story-hero nav a{min-height:44px;display:inline-flex;align-items:center;color:#f0e6d7;font-size:13px;text-decoration:none}
+.cz-story-hero nav .cz-story-start{padding:0 20px;background:#e7d6b3;color:#1b1811;border-radius:3px}
+.cz-story-source{position:absolute;bottom:20px;right:26px;font-size:10px;color:#d3c4b0;letter-spacing:.05em}
+.cz-story{padding-top:88px;scroll-margin-top:24px}
+.cz-story-intro{max-width:650px}.cz-story-intro h2,.cz-story-end h2{font-weight:500;font-size:clamp(30px,4vw,48px);letter-spacing:-.035em;line-height:1.15;margin:0 0 20px}
+.cz-story-intro>p:last-child{font-size:15px;line-height:1.8;color:#bdb2a3}
+.cz-story-chapters{display:flex;flex-wrap:wrap;gap:6px 18px;padding:22px 0 32px;margin-bottom:40px;border-bottom:1px solid #b9986040}
+.cz-story-chapters a{display:inline-flex;align-items:center;gap:8px;min-height:44px;text-decoration:none;color:#b4aa9b;font-size:12px}
+.cz-story-chapters a span{color:#8f7956;font-size:10px;font-variant-numeric:tabular-nums}
+.cz-story-chapters a[aria-current],.cz-story-chapters a:hover{color:#edd5ad}
+.cz-story-layout{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(340px,1fr);gap:60px;align-items:start;position:relative}
+.cz-story-map{grid-column:2;grid-row:1;position:sticky;top:24px;min-width:0}
+.cz-story-map-heading{display:flex;align-items:center;gap:16px;margin:0 0 16px;min-height:38px}.cz-story-map-heading>span{color:#c3a574;font-size:11px;font-variant-numeric:tabular-nums;white-space:nowrap}.cz-story-map-heading>strong{font-weight:400;font-size:18px}
+.cz-story-map .cz-terrain-surface{height:min(460px,60svh);min-height:260px}
+.cz-story-map .cz-terrain-frame:fullscreen .cz-terrain-surface{height:100dvh}
+.cz-story-map-footer{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;color:#9e9282;font-size:10px;padding-top:12px;line-height:1.7}
+.cz-story-map-footer a{color:#d7bd93;min-height:44px;display:inline-flex;align-items:center;text-decoration:none}
+.cz-story-map-loading{height:400px;display:grid;place-items:center;background:#26231d;color:#bba887}
+.cz-story-map-toggle{display:none}
+.cz-story-stops{grid-column:1;grid-row:1;min-width:0}
+.cz-story-stop{padding-bottom:65px;margin-bottom:48px;border-bottom:1px solid #b998602b;scroll-margin-top:30px}
+.cz-story-stop:last-child{margin-bottom:0;border:0;padding-bottom:0}
+.cz-story-stop-heading{display:flex;align-items:flex-start;gap:22px}.cz-story-number{font-size:12px;color:#ba9c6c;font-variant-numeric:tabular-nums;padding-top:6px}
+.cz-story-stop-heading .cz-story-kicker{font-size:9px;margin-bottom:8px}.cz-story-stop h3{font-size:clamp(28px,3vw,40px);font-weight:500;letter-spacing:-.03em;margin:0;line-height:1.15}
+.cz-story-description{font-size:14px;color:#bfb3a2;line-height:1.8;margin:20px 0 26px;max-width:520px}
+.cz-story-stop .cz-gallery-grid{margin:0;gap:10px}.cz-story-stop .cz-photo-row{gap:10px}.cz-story-stop .cz-photo{border-radius:2px}
+.cz-story-stop-footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-top:12px}
+.cz-story-stop-footer>span{font-size:10px;color:#978c7b}.cz-story-stop-footer>a{display:inline-flex;align-items:center;min-height:44px;font-size:12px;color:#e1c496;text-decoration:none}
+.cz-story-end{margin-top:88px;padding:52px 0;border-top:1px solid #b9986040;border-bottom:1px solid #b9986040;text-align:center}.cz-story-end a{display:inline-flex;align-items:center;min-height:44px;color:#dfc697;font-size:13px;text-decoration:none}
+.cz-story a:focus-visible,.cz-story button:focus-visible,.cz-story-hero a:focus-visible{outline:2px solid #dfbb76;outline-offset:4px}
+@media(max-width:900px){.cz-story-map #cz-story-map-content{position:absolute;top:100%;left:0;width:100%;background:#181510;box-shadow:0 16px 32px #0007;border-bottom:1px solid #b9986055}}
+@media(max-width:1100px){.cz-story-layout{gap:28px}}
+@media(max-width:900px){.cz-story-layout{display:flex;flex-direction:column;gap:28px}.cz-story-map{width:100%;top:0;z-index:8;background:#181510;border-bottom:1px solid #b9986040}.cz-story-map-toggle{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;min-height:60px;padding:10px 14px;background:#211c15;color:#ebd5b2;border:1px solid #b9986055;font-family:inherit;font-size:12px;text-align:left}.cz-story-map-toggle span{font-size:10px;color:#bba988;max-width:60%;text-align:right;line-height:1.5}.cz-story-map-heading{display:none}.cz-story-map .cz-terrain-surface{height:min(330px,48svh)}.cz-story-map-footer{padding:0 10px;font-size:9px}.cz-story-stops{width:100%}.cz-story-stop{scroll-margin-top:88px}.cz-story-map-loading{height:280px}}
+@media(max-width:600px){.cz-story-hero{min-height:520px;height:76svh}.cz-story-hero-content{bottom:58px;left:24px;right:20px}.cz-story-hero h1{font-size:74px}.cz-story-subtitle{font-size:25px}.cz-story-hero-meta{font-size:12px;max-width:220px}.cz-story-hero nav{gap:8px 18px;margin-top:24px}.cz-story-hero nav a{font-size:11px}.cz-story-hero nav .cz-story-start{width:100%;justify-content:center}.cz-story-source{right:20px;font-size:9px}.cz-story{padding-top:52px}.cz-story-chapters{gap:0 15px;padding-bottom:20px;margin-bottom:28px}.cz-story-chapters a{font-size:11px}.cz-story-stop{padding-bottom:32px;margin-bottom:32px}.cz-story-stop-heading{gap:14px}.cz-story-description{font-size:13px}.cz-story-end{margin-top:48px;padding:36px 0}}

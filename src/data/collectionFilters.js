@@ -6,6 +6,8 @@ const places = [
   { id: 'alpy', label: 'Alpy', nodeId: 'alpy' },
   { id: 'szwajcaria', label: 'Szwajcaria', nodeId: 'switzerland' },
   { id: 'maroko', label: 'Maroko', nodeId: 'morocco' },
+  { id: 'wlochy', label: 'Włochy', nodeId: 'italy' },
+  { id: 'wegry', label: 'Węgry', nodeId: 'hungary' },
   { id: 'jura', label: 'Jura', nodeId: 'jura' },
 ]
 const galleryOf = item => item.gallery || item
