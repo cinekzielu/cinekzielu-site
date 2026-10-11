@@ -31,7 +31,7 @@ const details = {
   'alpy-2026': {
     sortDate: '2026-08',
     region: 'Alpy', date: 'Sierpień 2026', kind: 'Wyprawa alpejska',
-    description: 'Fotografie z sierpniowej wyprawy w Alpy.',
+    description: 'Across the Alps: Triglav, Grossglockner, Dufourspitze, Grauspitz i Zugspitze. Pięć zdobytych szczytów pięciu krajów, fotografie i opowieść z sierpniowej wyprawy.',
   },
   'baranie-rogi-lodowy-szczyt-2026': {
     sortDate: '2026-07',

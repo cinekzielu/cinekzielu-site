@@ -13,7 +13,7 @@ function useColumns(featured) {
   return columns
 }
 
-export function PhotoGrid({ gallery, featured = false, previewLimit = null }) {
+export function PhotoGrid({ gallery, featured = false, previewLimit = null, eagerFirst = true }) {
   const isVideoFrames = gallery.mediaKind === 'video-frames'
   const columns = useColumns(featured)
   const [current, setCurrent] = useState(null)
@@ -64,7 +64,7 @@ export function PhotoGrid({ gallery, featured = false, previewLimit = null }) {
           const fraction = (item.width / item.height) / rowRatio
           const sizes = columns === 1 || lead ? '(max-width:600px) calc(100vw - 28px), (max-width:900px) calc(100vw - 40px), (max-width:1448px) calc(100vw - 88px), 1360px' : `(max-width:900px) calc(${100 * fraction}vw - ${(40 + 12 * (row.items.length - 1)) * fraction}px), (max-width:1448px) calc(${100 * fraction}vw - ${(88 + 16 * (row.items.length - 1)) * fraction}px), ${(1360 - 16 * (row.items.length - 1)) * fraction}px`
           return <button className="cz-photo" type="button" key={item.src} style={{ '--ratio': item.width / item.height }} onClick={event => { trigger.current = event.currentTarget; setImageFailed(false); setCurrent(index) }} aria-label={`Otwórz ${isVideoFrames ? 'kadr' : 'zdjęcie'} ${String(index + 1).padStart(2, '0')} z ${gallery.photos.length}`}>
-            <ResponsivePhoto photo={item} full={featured} sizes={sizes} loading={index === 0 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : undefined} />
+            <ResponsivePhoto photo={item} full={featured} sizes={sizes} loading={eagerFirst && index === 0 ? 'eager' : 'lazy'} fetchPriority={eagerFirst && index === 0 ? 'high' : undefined} />
           </button>
         })}
       </div>)}
