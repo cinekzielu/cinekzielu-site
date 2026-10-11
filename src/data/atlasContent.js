@@ -7,6 +7,7 @@ import { switzerlandPlaces } from './switzerlandPlaces.js'
 import { galleryAtlasIds, filmMatchesRegion } from './tripGeography.js'
 import { countryPlaceIds } from './placeGeography.js'
 import { sicilyPlaces, hungaryPlaces } from './summer2026Places.js'
+import { alpsCountryIds, alpsPlaces } from './alpsPlaces.js'
 
 // Content associations only. Geometry, SVG IDs and summit coordinates remain in their original sources.
 const summitFilms = {
@@ -20,6 +21,7 @@ const summitFilms = {
 
 const countries = europeAtlasNodes.filter(node => ['country', 'microstate'].includes(node.type)).map(node => ({
   id: node.id, name: node.label, kind: 'Kraj', parent: 'europe', view: 'terrain',
+  ...(alpsCountryIds.includes(node.id) ? { related: ['alpy'], description: `Across the Alps 2026 · ${alpsPlaces.find(place => place.parent === node.id).name}. Miejsca i materiały z podróży.` } : {}),
   ...(node.id === 'italy' ? { related:['sicily'], description:'Sycylia: Katania, Taormina i wulkaniczne krajobrazy Etny.' } : {}),
   ...(node.id === 'hungary' ? { regions:['wegry'], description:'Hungaroring — fotografie i film z weekendu Formuły 1.' } : {}),
   ...(node.id === 'switzerland' ? { regions: ['szwajcaria'], related:['alpy'], description:'Miejsca i materiały ze Szwajcarii. Wybierz rok lub zobacz wszystkie podróże.' } : {}),
@@ -37,7 +39,7 @@ export const atlasContentNodes = [
   ...sicilyPlaces,
   ...hungaryPlaces,
   { id: 'tatry', name: 'Tatry', kind: 'Region', parent: 'europe', view: 'tatry', regions: ['tatry'], description: 'Zimowe wejścia, granie i filmy ze szczytów.' },
-  { id: 'alpy', name: 'Alpy', kind: 'Region', parent: 'europe', view: 'terrain', regions: ['alpy'], related:['switzerland'], description: 'Alpy ponad granicami krajów. Wspólna mapa miejsc i wypraw z różnych lat.' },
+  { id: 'alpy', name: 'Alpy', kind: 'Region', parent: 'europe', view: 'terrain', regions: ['alpy'], related:alpsCountryIds, description: 'Alpy ponad granicami krajów. Wspólna mapa miejsc i wypraw z różnych lat.' },
   { id: 'jura', name: 'Jura', kind: 'Region', parent: 'poland', view: 'terrain', regions: ['jura'], description: 'Wspinanie w Dolinie Kobylańskiej.' },
   { id: 'gorce', name: 'Gorce', kind: 'Region', parent: 'poland', view: 'terrain', related: ['turbacz'], description: 'Zimowa wyprawa na Turbacz.' },
   { id: 'turbacz', name: 'Turbacz', kind: 'Szczyt', parent: 'gorce', view: 'terrain', description: 'Fotografie z zimowej wyprawy w styczniu 2026.' },
@@ -51,6 +53,7 @@ export const atlasContentNodes = [
   { id: 'walentkowa-gran', name: 'Walentkowa Grań', kind: 'Przejście grani', parent: 'tatry', view: 'tatry', filmIds: ['ITjvjmavnNs'] },
   { id: 'walentkowy-wierch', name: 'Walentkowy Wierch', kind: 'Szczyt', parent: 'tatry', view: 'tatry', filmIds: ['ITjvjmavnNs'] },
   ...switzerlandPlaces.map(place => ({...place, view:'terrain'})),
+  ...alpsPlaces,
   {...moroccoAtlas, view:'terrain'},
   ...moroccoPlaces.map(place => ({...place, view:'terrain'})),
 ]
@@ -70,7 +73,7 @@ export function atlasAncestry(id) {
 // Show places inside the selected country/region, retaining siblings at a leaf.
 export function atlasListNodes(id) {
   const path = atlasAncestry(id)
-  if (id === 'alpy') return switzerlandPlaces.map(place => atlasNodeById[place.id])
+  if (id === 'alpy') return [...switzerlandPlaces, ...alpsPlaces].map(place => atlasNodeById[place.id])
   if (path.some(node => node.id === 'morocco')) return moroccoMapPlaces(id).map(node => atlasNodeById[node.id])
   for (const ancestor of [...path].reverse()) {
     if (ancestor.id === 'world') return atlasQuickIds.map(key => atlasNodeById[key])

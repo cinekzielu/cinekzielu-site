@@ -2,6 +2,7 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { Mountain, Menu, Play, X } from 'lucide-react'
 import './styles.css'
+import { AlpsHomeFeature } from './components/AlpsHomeFeature'
 import { contentData } from './data/contentData'
 import { filmsData } from './data/filmsData'
 import { FilmIndex } from './components/Films'
@@ -302,6 +303,8 @@ function App() {
       </section>
 
       <section id="map" className="section sectionDarker reveal"><div className="container"><SectionHeader icon={iconMap} label="MAPA WYPRAW" title="Mapa wypraw" text="Wybierz miejsce, aby zobaczyć zdjęcia i filmy z wypraw." /><React.Suspense fallback={<p role="status">Wczytywanie mapy…</p>}><MapAtlas /></React.Suspense></div></section>
+
+      <AlpsHomeFeature />
 
       <section id="films" className="section sectionDark reveal">
         <div className="container">

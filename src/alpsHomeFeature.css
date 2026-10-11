@@ -1,0 +1,18 @@
+.cz-alps-feature.section { padding-top: 12px; }
+.cz-alps-feature-card { display: grid; grid-template-columns: 1.1fr 1fr; overflow: hidden; border: 1px solid rgba(193,158,92,.25); border-radius: 24px; background: #1c1915; }
+.cz-alps-feature-photo { display: block; min-width: 0; }
+.cz-alps-feature-photo img { display: block; width: 100%; height: 100%; min-height: 320px; max-height: 400px; object-fit: cover; }
+.cz-alps-feature-copy { align-self: center; padding: clamp(24px,4vw,56px); }
+.cz-alps-feature-eyebrow { margin: 0 0 18px; color: #c5a46c; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; }
+.cz-alps-feature-copy h2 { margin: 0; font-size: clamp(28px,3.4vw,46px); line-height: 1.1; letter-spacing: -.035em; }
+.cz-alps-feature-lead { margin: 18px 0 28px; color: #b9b1a4; font-size: 17px; }
+.cz-alps-feature-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 16px 24px; }
+.cz-alps-feature-trailer { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: #d5c4a6; text-decoration: none; font-size: 14px; }
+.cz-alps-feature-trailer:hover { color: #fff; }
+.cz-alps-feature-actions a:focus-visible { outline: 2px solid #c5a46c; outline-offset: 5px; }
+@media (max-width:700px) {
+  .cz-alps-feature-card { grid-template-columns: 1fr; border-radius: 20px; }
+  .cz-alps-feature-photo img { height: auto; min-height: 0; max-height: none; aspect-ratio: 8/5; }
+  .cz-alps-feature-copy { padding: 26px 22px; }
+  .cz-alps-feature-lead { font-size: 16px; }
+}

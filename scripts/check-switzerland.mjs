@@ -8,7 +8,7 @@ const geometry = JSON.parse(await readFile(new URL('../src/data/switzerlandMapPa
 const ids = ['saxer-lucke','fronalpstock','augstmatthorn','murren-gimmelwald','zermatt','bettmerhorn']
 assert.deepEqual(switzerlandPlaces.map(place=>place.id),ids, 'Preserve the existing Swiss destination IDs')
 assert.equal(atlasNodeById.switzerland.view,'terrain')
-assert.deepEqual(atlasListNodes('switzerland').map(place=>place.id),ids)
+assert.deepEqual(atlasListNodes('switzerland').map(place=>place.id),[...ids, 'dufourspitze'])
 assert.equal(geometry.viewBox,'0 0 800 600')
 assert(geometry.countries.find(country=>country.id==='che')?.paths.length)
 assert(geometry.lakes.length >= 2)
@@ -17,7 +17,7 @@ for (const place of switzerlandPlaces) {
   assert.equal(atlasNodeById[place.id].view,'terrain')
   assert.equal(readAtlasSelection(`?atlas=${place.id}`),place.id)
   assert.deepEqual(atlasAncestry(place.id).map(node=>node.id),['world','europe','switzerland',place.id])
-  assert.deepEqual(atlasListNodes(place.id).map(node=>node.id),ids)
+  assert.deepEqual(atlasListNodes(place.id).map(node=>node.id),[...ids, 'dufourspitze'])
   assert(place.coordinateSource.startsWith('https://api3.geo.admin.ch/'))
   assert(Number.isInteger(place.coordinateRecord))
   assert(place.lat>45.8 && place.lat<47.8 && place.lon>5.9 && place.lon<10.6)

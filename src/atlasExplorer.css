@@ -43,6 +43,14 @@
 @media(prefers-reduced-motion:reduce){.cz-atlas *{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
 .cz-atlas-year{display:flex;align-items:center;gap:10px;flex-shrink:0;font-size:10px;color:var(--atlas-muted)}
+.cz-atlas-visit{padding:18px;margin:0 0 24px;border:1px solid var(--atlas-line);background:#c9a36d06;border-radius:3px}
+.cz-atlas-visit>p{margin:0 0 10px;font-size:10px;line-height:1.6;color:#c9a36d}
+.cz-atlas-visit dl{display:grid;grid-template-columns:1fr 1fr;gap:16px 12px;margin:18px 0}
+.cz-atlas-visit dt{font-size:10px;color:var(--atlas-muted);margin-bottom:5px}
+.cz-atlas-visit dd{margin:0;font-size:17px;white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--atlas-ink)}
+.cz-atlas-visit small{display:block;font-size:11px;line-height:1.7;color:var(--atlas-muted)}
+.cz-atlas-visit>a{display:flex;align-items:center;min-height:44px;padding-top:12px;margin-top:12px;border-top:1px solid var(--atlas-line);color:#e5c99d;font-size:12px;line-height:1.6}
+.cz-atlas-visit>a:hover{text-decoration:underline}.cz-atlas-visit>a:focus-visible{outline:2px solid #c9a36d;outline-offset:4px}
 .cz-atlas-year select{min-height:44px;max-width:185px;padding:0 30px 0 12px;border:1px solid var(--atlas-line);border-radius:2px;background:#1b1916;color:#e5c99d;font:inherit;font-size:12px;cursor:pointer;color-scheme:dark}
 .cz-atlas-area-links{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px;font-size:10px;color:var(--atlas-muted)}
 .cz-atlas-area-links>span{margin-right:8px}
@@ -50,6 +58,6 @@
 .cz-atlas-area-return{margin:0 0 12px}
 .cz-atlas-terrain-hint{display:flex;justify-content:space-between;gap:12px;margin:12px 0 20px;font-size:10px;color:var(--atlas-muted);line-height:1.6}
 .cz-atlas-map-pending{font-size:12px;line-height:1.8;color:var(--atlas-muted);padding:14px;border-left:2px solid #a88d66;margin:0 0 22px;background:#c9a36d06}
-.cz-atlas-films>button.cz-atlas-library{min-height:44px;background:transparent;border:0;font:inherit;font-size:11px;cursor:pointer;text-align:left}
+.cz-atlas-films>button.cz-atlas-library,.cz-atlas-trips>button.cz-atlas-library{min-height:44px;background:transparent;border:0;font:inherit;font-size:11px;cursor:pointer;text-align:left}
 @media(max-width:1100px){.cz-atlas-year{margin-left:auto}}
 @media(max-width:520px){.cz-atlas-year{width:100%;justify-content:space-between;margin:6px 0 10px}.cz-atlas-year select{font-size:14px}.cz-atlas-terrain-hint{font-size:9px;flex-wrap:wrap}}
