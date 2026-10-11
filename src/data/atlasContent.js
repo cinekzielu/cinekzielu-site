@@ -6,6 +6,7 @@ import { moroccoPlaces, moroccoAtlas, moroccoMapPlaces } from './moroccoPlaces.j
 import { switzerlandPlaces } from './switzerlandPlaces.js'
 import { galleryAtlasIds, filmMatchesRegion } from './tripGeography.js'
 import { countryPlaceIds } from './placeGeography.js'
+import { sicilyPlaces, hungaryPlaces } from './summer2026Places.js'
 
 // Content associations only. Geometry, SVG IDs and summit coordinates remain in their original sources.
 const summitFilms = {
@@ -19,6 +20,8 @@ const summitFilms = {
 
 const countries = europeAtlasNodes.filter(node => ['country', 'microstate'].includes(node.type)).map(node => ({
   id: node.id, name: node.label, kind: 'Kraj', parent: 'europe', view: 'terrain',
+  ...(node.id === 'italy' ? { related:['sicily'], description:'Sycylia: Katania, Taormina i wulkaniczne krajobrazy Etny.' } : {}),
+  ...(node.id === 'hungary' ? { regions:['wegry'], description:'Hungaroring — fotografie i film z weekendu Formuły 1.' } : {}),
   ...(node.id === 'switzerland' ? { regions: ['szwajcaria'], related:['alpy'], description:'Miejsca i materiały ze Szwajcarii. Wybierz rok lub zobacz wszystkie podróże.' } : {}),
   ...(node.id === 'poland' ? { regions: ['jura'], filmIds: ['rs4zN-7f60Q', 'QRSSYlhRGMM', 'BJC4tc71d50'], related: ['tatry', 'gorce', 'jura'] } : {}),
   ...(node.id === 'slovakia' ? { related: ['tatry'], filmIds: Object.entries(summitFilms).filter(([id]) => !['koscielec', 'swinica', 'mieguszowiecki-szczyt-wielki'].includes(id)).flatMap(([, films]) => films) } : {}),
@@ -26,10 +29,13 @@ const countries = europeAtlasNodes.filter(node => ['country', 'microstate'].incl
 
 export const atlasContentNodes = [
   { id: 'world', name: 'Świat', kind: 'Mapa wypraw', view: 'world', all: true, description: 'Wybierz miejsce i zobacz materiały z podróży.' },
-  { id: 'europe', name: 'Europa', kind: 'Kontynent', parent: 'world', view: 'europe', regions: ['tatry', 'szwajcaria', 'alpy', 'jura'], description: 'Tatry, Alpy i wspinanie na Jurze.' },
+  { id: 'europe', name: 'Europa', kind: 'Kontynent', parent: 'world', view: 'europe', regions: ['tatry', 'szwajcaria', 'alpy', 'jura', 'wegry'], description: 'Góry, miasta i miejsca z podróży po Europie.' },
   { id: 'africa', name: 'Afryka', kind: 'Kontynent', parent: 'world', view: 'africa', regions: ['maroko'], related: ['morocco'], description: 'Filmy z podróży po Maroku.' },
   ...travelAtlasData.continents.filter(node => !['europe', 'africa'].includes(node.id)).map(node => ({ id: node.id, name: node.name, kind: 'Kontynent', parent: 'world', view: 'world' })),
   ...countries,
+  { id:'sicily', name:'Sycylia', kind:'Region', parent:'italy', view:'terrain', description:'Katania, Taormina i zbocza Etny. Fotografie z podróży w czerwcu 2026.' },
+  ...sicilyPlaces,
+  ...hungaryPlaces,
   { id: 'tatry', name: 'Tatry', kind: 'Region', parent: 'europe', view: 'tatry', regions: ['tatry'], description: 'Zimowe wejścia, granie i filmy ze szczytów.' },
   { id: 'alpy', name: 'Alpy', kind: 'Region', parent: 'europe', view: 'terrain', regions: ['alpy'], related:['switzerland'], description: 'Alpy ponad granicami krajów. Wspólna mapa miejsc i wypraw z różnych lat.' },
   { id: 'jura', name: 'Jura', kind: 'Region', parent: 'poland', view: 'terrain', regions: ['jura'], description: 'Wspinanie w Dolinie Kobylańskiej.' },

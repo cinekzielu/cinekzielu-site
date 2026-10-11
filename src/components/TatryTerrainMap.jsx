@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Minus, Plus, Maximize2, Mountain, House, Tent, X, MapPin, Route, Waves, Snowflake, Trees, Castle, Camera, Link, Check } from 'lucide-react'
+import { Minus, Plus, Maximize2, Mountain, House, Tent, X, MapPin, Route, Waves, Snowflake, Trees, Castle, Camera, Link, Check, Flag } from 'lucide-react'
 import { atlasNodeById } from '../data/atlasContent'
 import { tatryLocations, tatryLocationById } from '../data/tatryAtlas'
 import { mercator, unproject, worldSize, fitTerrain, terrainMarkers, visibleTerrainTiles, reprojectTerrainTile, gestureTerrain, zoomTerrainAt, clampTerrainZoom, MIN_TERRAIN_ZOOM, MAX_TERRAIN_ZOOM } from '../data/terrainMap'
@@ -9,14 +9,14 @@ import { readTerrainView, readTerrainTone, setTerrainView, atlasViewHref, ATLAS_
 
 const centerOf = entries => ({ x: entries.reduce((sum, point) => sum + point.x, 0) / entries.length, y: entries.reduce((sum, point) => sum + point.y, 0) / entries.length })
 const pointDistance = entries => entries.length < 2 ? 0 : Math.hypot(entries[0].x - entries[1].x, entries[0].y - entries[1].y)
-const markerIcons = { mountain:Mountain, village:House, hut:Tent, city:MapPin, route:Route, lakes:Waves, glacier:Snowflake, forest:Trees, castle:Castle, film:Camera, waterfall:Waves }
+const markerIcons = { mountain:Mountain, village:House, hut:Tent, city:MapPin, route:Route, lakes:Waves, glacier:Snowflake, forest:Trees, castle:Castle, film:Camera, waterfall:Waves, race:Flag }
 const initialView = (id, points, size, locations, locationById, overview, focusZoom) => locationById[id] ? { ...mercator(locationById[id]), zoom: focusZoom } : fitTerrain(overview || (points.length ? points : locations), size)
 
-export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0, locations = tatryLocations, locationById = tatryLocationById, regionId = 'tatry', resetLabel = 'Całe Tatry', surfaceLabel = 'Mapa terenu Tatr. Przesuwaj palcem lub strzałkami. Plus i minus przybliżają, Home pokazuje całe Tatry.', initialTone = 'natural', overviewPoints = null, focusZoom = 14, countryId = null }) {
-  const [bookmark] = useState(() => readTerrainView(window.location.search))
+export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0, locations = tatryLocations, locationById = tatryLocationById, regionId = 'tatry', resetLabel = 'Całe Tatry', surfaceLabel = 'Mapa terenu Tatr. Przesuwaj palcem lub strzałkami. Plus i minus przybliżają, Home pokazuje całe Tatry.', initialTone = 'natural', overviewPoints = null, focusZoom = 14, countryId = null, embedded = false }) {
+  const [bookmark] = useState(() => embedded ? null : readTerrainView(window.location.search))
   const [size, setSize] = useState({ width: 800, height: 500 })
   const [view, setView] = useState(() => bookmark?.view || initialView(selectedId, points, { width: 800, height: 500 }, locations, locationById, overviewPoints, focusZoom))
-  const [tone, setTone] = useState(() => readTerrainTone(window.location.search) || initialTone)
+  const [tone, setTone] = useState(() => (!embedded && readTerrainTone(window.location.search)) || initialTone)
   const [shareState, setShareState] = useState(null)
   const [shareUrl, setShareUrl] = useState('')
   const shareInput = useRef(null), shareTimer = useRef(null)
@@ -38,6 +38,7 @@ export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0
   pointsRef.current = points; selectedRef.current = selectedId; sizeRef.current = size
 
   const saveView = () => {
+    if (embedded) return
     if (!interacted.current) return
     const url = new URL(window.location.href)
     // A departing map must never overwrite the history entry of another place.
@@ -118,7 +119,7 @@ export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0
     const point = locationById[selectedId]
     setNearbyChoices(null)
     if (selectionFromMap.current === selectedId) { selectionFromMap.current = null; saveView(); return }
-    if (point) { interacted.current = true; commit({ ...mercator(point), zoom: Math.max(focusZoom, viewRef.current.zoom) }); saveView() }
+    if (point) { interacted.current = true; commit({ ...mercator(point), zoom: embedded ? focusZoom : Math.max(focusZoom, viewRef.current.zoom) }); saveView() }
     else if (selectedId === regionId) reset()
   }, [selectedId, focusRequest])
   useEffect(() => {
@@ -247,7 +248,7 @@ export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0
     {failed > 0 && <div className="cz-terrain-error" role="status"><span>{loaded ? 'Część mapy nie została wczytana.' : 'Podkład mapy jest chwilowo niedostępny.'}</span><button type="button" onClick={() => { setTileStatus({}); setRetry(current => current + 1) }}>Ponów</button></div>}
     {fullscreenError && <div className="cz-terrain-error" role="status">Pełny ekran jest niedostępny w tej przeglądarce.<button type="button" onClick={() => setFullscreenError(false)}>Zamknij</button></div>}
     <div className="cz-terrain-scale" aria-hidden="true"><span>{scaleDistance >= 1000 ? `${scaleDistance / 1000} km` : `${scaleDistance} m`}</span><i style={{ width: scaleDistance / metersPerPixel }} /></div>
-    <button type="button" className="cz-terrain-share" onClick={copyView} aria-label="Skopiuj link do widoku mapy">{shareState === 'copied' ? <Check size={14} aria-hidden="true" /> : <Link size={14} aria-hidden="true" />}<span>{shareState === 'copied' ? 'Skopiowano' : 'Kopiuj widok'}</span></button>
+    {!embedded && <button type="button" className="cz-terrain-share" onClick={copyView} aria-label="Skopiuj link do widoku mapy">{shareState === 'copied' ? <Check size={14} aria-hidden="true" /> : <Link size={14} aria-hidden="true" />}<span>{shareState === 'copied' ? 'Skopiowano' : 'Kopiuj widok'}</span></button>}
     {shareState === 'copied' && <span className="cz-terrain-share-status" role="status">Link do widoku mapy skopiowany.</span>}
     {(shareState === 'manual' || shareState === 'copied') && <div className="cz-terrain-share-manual"><button type="button" aria-label="Zamknij link do mapy" onClick={() => setShareState(null)}><X size={15} /></button><label>Link do tego widoku<input ref={shareInput} aria-label="Link do widoku mapy" readOnly value={shareUrl} onFocus={event => event.target.select()} /></label><small>{shareState === 'copied' ? 'Możesz też skopiować link z tego pola.' : 'Zaznacz link i skopiuj go.'}</small></div>}
     <div className="cz-terrain-attribution">© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a> · SRTM · <a href="https://opentopomap.org/about" target="_blank" rel="noreferrer">OpenTopoMap (CC BY-SA)</a> · <a href="https://top-o-map.com/" target="_blank" rel="noreferrer">Top-O-Map</a>{countryId && <> · <a href="https://www.naturalearthdata.com/" target="_blank" rel="noreferrer">Obrys: Natural Earth</a></>}</div>

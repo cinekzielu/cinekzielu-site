@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { allCollectionFilters, collectionOptions, readCollectionFilters, collectionFilterSearch, filterCollections } from '../data/collectionFilters'
 import '../collectionFilters.css'
 
-export function useCollectionFilters(items) {
+export function useCollectionFilters(items, { preserveSearchKeys = [] } = {}) {
   const options = useMemo(() => collectionOptions(items), [items])
   const [filters, setFilters] = useState(() => readCollectionFilters(window.location.search, options))
   useEffect(() => {
@@ -12,7 +12,10 @@ export function useCollectionFilters(items) {
   }, [options])
 
   const update = next => {
-    const search = collectionFilterSearch(next)
+    const params = new URLSearchParams(collectionFilterSearch(next))
+    const current = new URLSearchParams(window.location.search)
+    preserveSearchKeys.forEach(key => { if (current.has(key)) params.set(key, current.get(key)) })
+    const search = params.size ? `?${params}` : ''
     if (search !== window.location.search) window.history.pushState({}, '', window.location.pathname + search)
     setFilters(next)
   }

@@ -1,4 +1,18 @@
 export const shareImages = {
+  "katania-2026": {
+    "src": "/share/katania-2026.jpg",
+    "width": 1600,
+    "height": 1067,
+    "alt": "Dachy Katanii z Etną na horyzoncie",
+    "bytes": 372747
+  },
+  "hungaroring-2026": {
+    "src": "/share/hungaroring-2026.jpg",
+    "width": 1600,
+    "height": 1067,
+    "alt": "Pomarańczowy bolid na torze i rozmyte tło",
+    "bytes": 269046
+  },
   "szwajcaria-2025": {
     "src": "/share/szwajcaria-2025.jpg",
     "width": 1600,

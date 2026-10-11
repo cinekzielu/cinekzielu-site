@@ -3,7 +3,11 @@ import { moroccoGallery } from './moroccoGallery.js'
 import { gerlachGallery } from './gerlachGallery.js'
 import { baranieWinterGallery } from './baranieWinterGallery.js'
 import { kiezmarskiWinterGallery } from './kiezmarskiWinterGallery.js'
+import { cataniaGallery } from './cataniaGallery.js'
+import { hungaroringGallery } from './hungaroringGallery.js'
 export const galleryData = [
+  hungaroringGallery,
+  cataniaGallery,
   {
     "id": "szwajcaria-2025",
     "title": "Szwajcaria",

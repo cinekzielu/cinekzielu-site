@@ -11,6 +11,7 @@ const video = (youtubeId, title, duration, region, format = 'Film', extra = {}) 
 
 export const filmCatalog = [
   video('0YhbiEncSmo', 'Żabi Koń · free solo', '37:57', 'tatry', 'Film', { expeditionId: 'zabi-kon-2026' }),
+  video('eWK-80Idong', 'Hungaroring 2026', '1:24', 'wegry', 'Krótki film', { expeditionId: 'hungaroring-2026', publishedAt: '2026-07-30', searchTerms: 'Formuła 1 F1 F2 F3 Porsche Supercup Mogyoród motorsport Sony A6700' }),
   video('eB5BItG2tfk', 'Lodowy Szczyt przez Lodową Kopę', '44:08', 'tatry', 'Film', { expeditionId: 'baranie-rogi-lodowy-szczyt-2026', searchTerms: 'lato' }),
   video('l3KltGrKz2U', 'Across the Alps', '1:34', 'alpy', 'Zwiastun', { expeditionId: 'alpy-2026', publishedAt: '2026-07-15' }),
   video('85Up2O2uc50', 'Baranie Rogi', '21:31', 'tatry', 'Film', { expeditionId: 'baranie-rogi-lodowy-szczyt-2026', searchTerms: 'lato' }),
@@ -44,6 +45,7 @@ export const filmRegions = [
   { id: 'wszystkie', label: 'Wszystkie' }, { id: 'tatry', label: 'Tatry' },
   { id: 'szwajcaria', label: 'Szwajcaria' }, { id: 'alpy', label: 'Alpy' },
   { id: 'jura', label: 'Jura' }, { id: 'maroko', label: 'Maroko' },
+  { id: 'wegry', label: 'Węgry' },
 ]
 export const filmRegionLabel = (id) => filmRegions.find(region => region.id === id)?.label || ''
 export const findFilm = (id) => filmCatalog.find(film => film.youtubeId === id || film.id === id)

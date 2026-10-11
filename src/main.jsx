@@ -6,13 +6,12 @@ import { contentData } from './data/contentData'
 import { filmsData } from './data/filmsData'
 import { FilmIndex } from './components/Films'
 import { SiteToolsProvider, SearchTrigger, FilmLink } from './components/SiteTools'
-import { PhotographyPage } from './components/Photography'
+import { PhotographyPage, PhotographyPreview } from './components/Photography'
 import { AboutPage } from './components/About'
 import { getAtlasMaterials } from './data/atlasContent'
 import { applyPageMetadata } from './pageMetadata'
 import { legacyRedirects, normalizePagePath } from './data/siteMetadata'
 import { NotFound } from './components/NotFound'
-import { photoGalleries as galleryData } from './data/galleryData'
 import { expeditionCount, galleryCollectionCount } from './data/galleryNavigation'
 import { GalleryCards, GalleryIndex, GalleryPage } from './components/Galleries'
 import { ExpeditionIndex, ExpeditionPage, ExpeditionList } from './components/Expeditions'
@@ -20,7 +19,6 @@ import { expeditionPages, findExpeditionPage } from './data/expeditionPages'
 import iconMap from './assets/icons/icon-map.svg'
 import iconCamera from './assets/icons/icon-camera.svg'
 import iconFilm from './assets/icons/icon-film.svg'
-import iconGallery from './assets/icons/icon-gallery.svg'
 import iconLocationMark from './assets/icons/icon-location-mark.svg'
 
 const MapPage = React.lazy(() => import('./components/MapPage').then(module => ({ default: module.MapPage })))
@@ -530,13 +528,7 @@ function App() {
         </div>
       </section>
 
-      <section id="gallery-preview" className="section sectionDarker reveal">
-        <div className="container">
-          <SectionHeader icon={iconGallery} label="GALERIE" title="Zdjęcia z wypraw" />
-          <GalleryCards galleries={galleryData.slice(0, 3)} compact />
-          <a className="cz-gallery-text-link" href="/galerie">Wszystkie galerie · {expeditionCount(galleryData.length)} →</a>
-        </div>
-      </section>
+      <PhotographyPreview />
 
       <footer id="footer" className="footerSignature">
         <div className="footerSeparator" aria-hidden="true" />

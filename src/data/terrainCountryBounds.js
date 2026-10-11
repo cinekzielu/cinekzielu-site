@@ -1,5 +1,7 @@
 // Viewport bounds only; not visit evidence. Natural Earth Admin 0 1:50m (public domain); metropolitan France and mainland Norway viewport
+// Hungary viewport: same Natural Earth Admin 0 geometry at 1:10m.
 export const countryBounds = {
+  "hungary": [[45.741343, 16.094035], [48.569233, 22.877601]],
   "poland": [
     [
       49.020752,

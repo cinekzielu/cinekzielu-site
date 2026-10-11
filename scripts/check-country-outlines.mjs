@@ -38,7 +38,7 @@ for (const node of atlasContentNodes.filter(node => node.kind === 'Kraj')) {
     }
   }
 }
-assert.equal(outlines.size,14)
+assert.equal(outlines.size,15)
 function contains(id,point) {
   const {x,y}=mercator(point)
   let inside=false
@@ -54,7 +54,9 @@ assert(contains('switzerland',{lat:46.948,lng:7.447}))
 assert(!contains('switzerland',{lat:48.208,lng:16.373}))
 assert(contains('slovenia',{lat:46.057,lng:14.505}))
 assert(contains('morocco',{lat:34.02,lng:-6.84}))
-for(const id of ['alpy','jura','gorce','morocco-atlas']) assert.equal(atlasTerrainProfile(id).countryId,null)
+assert(contains('hungary',{lat:47.582649,lng:19.250024}))
+assert(!contains('hungary',{lat:48.208,lng:16.373}))
+for(const id of ['alpy','jura','gorce','morocco-atlas','sicily']) assert.equal(atlasTerrainProfile(id).countryId,null)
 assert.equal(atlasTerrainProfile('tatry'),null)
 assert.equal(atlasTerrainProfile('saxer-lucke').countryId,'switzerland')
-console.log('Country outlines OK: 14 countries, geographic containment, closed rings, viewport alignment after pan/zoom, separate regions.')
+console.log('Country outlines OK: 15 countries, geographic containment, closed rings, viewport alignment after pan/zoom, separate regions.')
