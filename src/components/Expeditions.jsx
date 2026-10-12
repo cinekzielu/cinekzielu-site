@@ -6,7 +6,7 @@ import { findFilm } from '../data/filmCatalog'
 import { FilmLink } from './SiteTools'
 import React, { useEffect, useState } from 'react'
 import { expeditionPages, expeditionHref, findExpeditionPage, filmCount, sortExpeditionsNewest } from '../data/expeditionPages'
-import { galleryHref, galleryMapLinks, galleryItemCount, isVideoCollection } from '../data/galleryNavigation'
+import { galleryHref, galleryMapLinks, galleryItemCount, isVideoCollection, isTripPhotoCollection } from '../data/galleryNavigation'
 import { relatedExpeditions } from '../data/relatedExpeditions'
 import { MoroccoStory, MoroccoStoryHero } from './MoroccoStory'
 import { TravelTimeline } from './TravelTimeline'
@@ -79,7 +79,7 @@ export function ExpeditionPage({ slug }) {
   const [allFrames, setAllFrames] = useState(false)
   useEffect(() => {
     const sectionId = window.location.hash.slice(1)
-    if (!['filmy', 'kadry', 'powiazane', 'opowiesc'].includes(sectionId)) return
+    if (!['filmy', 'kadry', 'zdjecia', 'powiazane', 'opowiesc'].includes(sectionId)) return
     let frame
     const scrollToFilms = () => { frame = window.requestAnimationFrame(() => document.getElementById(sectionId)?.scrollIntoView({ behavior: 'instant', block: 'start' })) }
     scrollToFilms()
@@ -89,6 +89,7 @@ export function ExpeditionPage({ slug }) {
   if (!expedition) return <ExpeditionShell detail><div className="cz-gallery-intro"><h1>Nie znaleziono wyprawy</h1></div><a className="cz-gallery-text-link" href="/wyprawy">Zobacz wszystkie wyprawy →</a></ExpeditionShell>
   const { gallery } = expedition
   const videoFrames = isVideoCollection(gallery)
+  const tripPhotos = isTripPhotoCollection(gallery)
   const hasStory = expedition.id === 'maroko-2025'
   const hasAlpsStory = expedition.id === 'alpy-2026'
   const cover = gallery.photos.find(photo => photo.src === gallery.coverImage)
@@ -107,7 +108,7 @@ export function ExpeditionPage({ slug }) {
           <nav className="cz-expedition-actions" aria-label="Materiały z wyprawy">
             {videoFrames && gallery.films.length > 0
               ? <FilmLink className="cz-expedition-primary" href={gallery.films[0].url}>{gallery.films.length > 1 ? 'Obejrzyj pierwszą część' : 'Obejrzyj film'} <span aria-hidden="true">▷</span></FilmLink>
-              : <a className="cz-expedition-primary" href={galleryHref(gallery)}>{videoFrames ? 'Kadry z wyprawy' : 'Galeria'} · {galleryItemCount(gallery)} <span aria-hidden="true">↗</span></a>}
+              : <a className="cz-expedition-primary" href={galleryHref(gallery)}>{tripPhotos ? 'Zdjęcia z wyprawy' : videoFrames ? 'Kadry z wyprawy' : 'Galeria'} · {galleryItemCount(gallery)} <span aria-hidden="true">↗</span></a>}
             {videoFrames && gallery.films.length > 0 && <a href="#kadry">Kadry z wyprawy ↓</a>}
             {gallery.films.length > 0 && <a href="#filmy">{gallery.films[0].label === 'Zwiastun' ? 'Zwiastun' : gallery.films.length === 1 ? 'Film z wyprawy' : 'Filmy z wyprawy'} ↓</a>}
             {galleryMapLinks(gallery).map(place => <a key={place.id} href={place.href}>Na mapie: {place.label} ↗</a>)}
@@ -116,17 +117,21 @@ export function ExpeditionPage({ slug }) {
       </div>}
       {hasStory && <MoroccoStory />}
       {hasAlpsStory && <AlpsStory />}
+      {expedition.id === 'rumunia-2024' && <section className="cz-trip-preparation" aria-labelledby="trip-preparation-title">
+        <img src="/assets/photos/romania-pakowanie.webp" width="1182" height="1200" loading="lazy" alt="Rower, sakwy i wyposażenie przygotowane do wyprawy po Rumunii" />
+        <div><p className="cz-expedition-eyebrow">Rumunia 2024</p><h2 id="trip-preparation-title">Przed wyjazdem</h2><p>Rower, sakwy, namiot i rzeczy na drogę. Tak wyglądały przygotowania do lipcowej wyprawy.</p><a href="#zdjecia">Zdjęcia z podróży ↓</a></div>
+      </section>}
       {gallery.films.length > 0 && <section id="filmy" className="cz-expedition-films" aria-labelledby="expedition-films-title">
         <div className="cz-expedition-section-heading"><h2 id="expedition-films-title">{gallery.films[0].label === 'Zwiastun' ? 'Zwiastun' : 'Filmy'}</h2><span>YouTube</span></div>
         <div className="cz-expedition-film-list">{gallery.films.map((film, index) => <FilmLink href={film.url} key={film.id} target="_blank" rel="noreferrer" aria-label={`${film.title} — ${film.label}, odtwórz film`}>
           <span className="cz-expedition-film-number">{String(index + 1).padStart(2, '0')}</span><div><span className="cz-expedition-film-label">{film.label} · {findFilm(film.id)?.duration}</span><h3>{film.title}</h3></div><span className="cz-expedition-film-play" aria-hidden="true">↗</span>
         </FilmLink>)}</div>
       </section>}
-      {videoFrames ? <section id="kadry" className="cz-expedition-photos cz-expedition-frames" aria-labelledby="expedition-frames-title">
-        <div className="cz-expedition-section-heading"><h2 id="expedition-frames-title">Kadry z wyprawy</h2><span>{galleryItemCount(gallery)} · {gallery.sourceLabel}</span></div>
-        <p className="cz-expedition-frames-intro">{gallery.films.length ? 'Kilka ujęć z drogi. Cała historia w filmie.' : 'Wybrane ujęcia z nagrań wyprawy.'}</p>
+      {videoFrames || tripPhotos ? <section id={tripPhotos ? "zdjecia" : "kadry"} className="cz-expedition-photos cz-expedition-frames" aria-labelledby="expedition-frames-title">
+        <div className="cz-expedition-section-heading"><h2 id="expedition-frames-title">{tripPhotos ? "Zdjęcia z wyprawy" : "Kadry z wyprawy"}</h2><span>{galleryItemCount(gallery)} · {gallery.sourceLabel}</span></div>
+        <p className="cz-expedition-frames-intro">{tripPhotos ? (gallery.photoIntro || 'Wybrane zdjęcia z wyprawy.') : gallery.films.length ? 'Kilka ujęć z drogi. Cała historia w filmie.' : 'Wybrane ujęcia z nagrań wyprawy.'}</p>
         <div id="expedition-frame-grid"><PhotoGrid gallery={gallery} previewLimit={allFrames ? null : 3} /></div>
-        <button type="button" className="cz-expedition-frames-toggle" aria-expanded={allFrames} aria-controls="expedition-frame-grid" onClick={() => setAllFrames(value => !value)}>{allFrames ? 'Zwiń kadry ↑' : `Zobacz wszystkie kadry · ${gallery.photos.length} ↓`}</button>
+        <button type="button" className="cz-expedition-frames-toggle" aria-expanded={allFrames} aria-controls="expedition-frame-grid" onClick={() => setAllFrames(value => !value)}>{allFrames ? (tripPhotos ? 'Zwiń zdjęcia ↑' : 'Zwiń kadry ↑') : `Zobacz wszystkie ${tripPhotos ? 'zdjęcia' : 'kadry'} · ${gallery.photos.length} ↓`}</button>
       </section> : <section className="cz-expedition-photos" aria-labelledby="expedition-photos-title">
         <div className="cz-expedition-section-heading"><h2 id="expedition-photos-title">{gallery.mediaKind === 'video-frames' ? `Kadry z nagrań${gallery.sourceLabel ? ' ' + gallery.sourceLabel : ''}` : 'Zdjęcia'}</h2><a href={galleryHref(gallery)}>Cała galeria · {galleryItemCount(gallery)} ↗</a></div>
         <a className="cz-expedition-photo-preview" href={galleryHref(gallery)} aria-label={`Zobacz galerię: ${expedition.title} ${expedition.year}`}>

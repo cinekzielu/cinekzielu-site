@@ -5,7 +5,15 @@ import { baranieWinterGallery } from './baranieWinterGallery.js'
 import { kiezmarskiWinterGallery } from './kiezmarskiWinterGallery.js'
 import { cataniaGallery } from './cataniaGallery.js'
 import { hungaroringGallery } from './hungaroringGallery.js'
+import { durnyLomnicaGallery } from './durnyLomnicaGallery.js'
+import { romaniaGallery } from './romaniaGallery.js'
+import { mswPosredniaGallery } from './mswPosredniaGallery.js'
+import { wysokaGanekRysyGallery } from './wysokaGanekRysyGallery.js'
 export const galleryData = [
+  mswPosredniaGallery,
+  wysokaGanekRysyGallery,
+  durnyLomnicaGallery,
+  romaniaGallery,
   hungaroringGallery,
   cataniaGallery,
   {
@@ -2144,5 +2152,5 @@ export const galleryData = [
 ]
 
 // Photography is the public gallery collection; video stills remain expedition materials.
-export const photoGalleries = galleryData.filter(item => item.mediaKind !== 'video-frames')
+export const photoGalleries = galleryData.filter(item => !['video-frames', 'trip-photos'].includes(item.mediaKind))
 export const videoFrameCollections = galleryData.filter(item => item.mediaKind === 'video-frames')

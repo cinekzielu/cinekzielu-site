@@ -3,53 +3,13 @@
   "trailingSlash": false,
   "redirects": [
     {
-      "source": "/index",
-      "destination": "/",
+      "source": "/galerie/mieguszowiecki-posrednia-gran-2025",
+      "destination": "/wyprawy/mieguszowiecki-posrednia-gran-2025#kadry",
       "permanent": true
     },
     {
-      "source": "/wyprawy/switzerland-trip",
-      "destination": "/wyprawy/szwajcaria-2025",
-      "permanent": true
-    },
-    {
-      "source": "/wyprawy/gerlach-winter",
-      "destination": "/wyprawy/gerlach-zima-2025",
-      "permanent": true
-    },
-    {
-      "source": "/wyprawy/lomnica-expedition",
-      "destination": "/mapa?atlas=lomnica",
-      "permanent": true
-    },
-    {
-      "source": "/wyprawy/lomnica",
-      "destination": "/mapa?atlas=lomnica",
-      "permanent": true
-    },
-    {
-      "source": "/wyprawy/durny-szczyt",
-      "destination": "/mapa?atlas=durny-szczyt",
-      "permanent": true
-    },
-    {
-      "source": "/wyprawy/koscielec-winter",
-      "destination": "/wyprawy/koscielec-2026",
-      "permanent": true
-    },
-    {
-      "source": "/wyprawy/morocco-toubkal",
-      "destination": "/mapa?atlas=morocco",
-      "permanent": true
-    },
-    {
-      "source": "/wyprawy/zermatt",
-      "destination": "/mapa?atlas=zermatt",
-      "permanent": true
-    },
-    {
-      "source": "/wyprawy/romania-transfagarasan",
-      "destination": "/mapa?atlas=romania",
+      "source": "/galerie/durny-lomnica-2025",
+      "destination": "/wyprawy/durny-lomnica-2025#kadry",
       "permanent": true
     },
     {
@@ -70,6 +30,56 @@
     {
       "source": "/galerie/kiezmarski-szczyt-zima-2025",
       "destination": "/wyprawy/kiezmarski-szczyt-zima-2025#kadry",
+      "permanent": true
+    },
+    {
+      "source": "/index",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/wyprawy/switzerland-trip",
+      "destination": "/wyprawy/szwajcaria-2025",
+      "permanent": true
+    },
+    {
+      "source": "/wyprawy/gerlach-winter",
+      "destination": "/wyprawy/gerlach-zima-2025",
+      "permanent": true
+    },
+    {
+      "source": "/wyprawy/lomnica-expedition",
+      "destination": "/wyprawy/durny-lomnica-2025",
+      "permanent": true
+    },
+    {
+      "source": "/wyprawy/lomnica",
+      "destination": "/wyprawy/durny-lomnica-2025",
+      "permanent": true
+    },
+    {
+      "source": "/wyprawy/durny-szczyt",
+      "destination": "/wyprawy/durny-lomnica-2025",
+      "permanent": true
+    },
+    {
+      "source": "/wyprawy/koscielec-winter",
+      "destination": "/wyprawy/koscielec-2026",
+      "permanent": true
+    },
+    {
+      "source": "/wyprawy/morocco-toubkal",
+      "destination": "/mapa?atlas=morocco",
+      "permanent": true
+    },
+    {
+      "source": "/wyprawy/zermatt",
+      "destination": "/mapa?atlas=zermatt",
+      "permanent": true
+    },
+    {
+      "source": "/wyprawy/romania-transfagarasan",
+      "destination": "/wyprawy/rumunia-2024",
       "permanent": true
     }
   ]

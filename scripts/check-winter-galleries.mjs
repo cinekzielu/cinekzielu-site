@@ -40,6 +40,6 @@ for(const [id,node,film,date] of cases){
 assert.equal(hashes.size,40)
 assert(getAtlasMaterials('huncowski-szczyt','2025').galleries.some(x=>x.id===cases[1][0]))
 assert.deepEqual(getAtlasMaterials('baranie-rogi','2026').galleries.map(x=>x.id),['baranie-rogi-lodowy-szczyt-2026'])
-assert.equal(galleryData.filter(x=>x.mediaKind!=='video-frames').reduce((n,g)=>n+g.photos.length,0),284)
-assert.equal(sitePages.length,37)
+assert.equal(galleryData.filter(x=>!['video-frames','trip-photos'].includes(x.mediaKind)).reduce((n,g)=>n+g.photos.length,0),284)
+assert.equal(sitePages.length,41)
 console.log('PASS: two winter DJI galleries, 40 unique frames, dates, film/region/year associations, existing summer trip preserved, responsive assets and metadata.')

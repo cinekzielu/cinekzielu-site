@@ -1,6 +1,7 @@
 export const isVideoCollection = gallery => gallery.mediaKind === 'video-frames'
-export const galleryLinkLabel = gallery => isVideoCollection(gallery) ? 'Kadry z wyprawy' : 'Galeria'
-export const galleryHref = gallery => isVideoCollection(gallery) ? `/wyprawy/${gallery.id}#kadry` : `/galerie/${gallery.id}`
+export const isTripPhotoCollection = gallery => gallery.mediaKind === 'trip-photos'
+export const galleryLinkLabel = gallery => isTripPhotoCollection(gallery) ? 'Zdjęcia z wyprawy' : isVideoCollection(gallery) ? 'Kadry z wyprawy' : 'Galeria'
+export const galleryHref = gallery => isTripPhotoCollection(gallery) ? `/wyprawy/${gallery.id}#zdjecia` : isVideoCollection(gallery) ? `/wyprawy/${gallery.id}#kadry` : `/galerie/${gallery.id}`
 export const galleryMapHref = (gallery) => `/mapa?atlas=${gallery.mapNodeId}`
 export const galleryMapLinks = (gallery) => (gallery.mapPlaces || [{ id: gallery.mapNodeId, label: gallery.mapLabel }]).map(place => ({ ...place, href: `/mapa?atlas=${place.id}` }))
 export const photoCount = (count) => `${count} ${count === 1 ? 'zdjęcie' : count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 12 || count % 100 > 14) ? 'zdjęcia' : 'zdjęć'}`

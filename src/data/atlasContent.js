@@ -22,6 +22,7 @@ const summitFilms = {
 const countries = europeAtlasNodes.filter(node => ['country', 'microstate'].includes(node.type)).map(node => ({
   id: node.id, name: node.label, kind: 'Kraj', parent: 'europe', view: 'terrain',
   ...(alpsCountryIds.includes(node.id) ? { related: ['alpy'], description: `Across the Alps 2026 · ${alpsPlaces.find(place => place.parent === node.id).name}. Miejsca i materiały z podróży.` } : {}),
+  ...(node.id === 'romania' ? { description: 'Rowerowa wyprawa przez Rumunię w lipcu 2024. Zdjęcia z drogi i biwaków.' } : {}),
   ...(node.id === 'italy' ? { related:['sicily'], description:'Sycylia: Katania, Taormina i wulkaniczne krajobrazy Etny.' } : {}),
   ...(node.id === 'hungary' ? { regions:['wegry'], description:'Hungaroring — fotografie i film z weekendu Formuły 1.' } : {}),
   ...(node.id === 'switzerland' ? { regions: ['szwajcaria'], related:['alpy'], description:'Miejsca i materiały ze Szwajcarii. Wybierz rok lub zobacz wszystkie podróże.' } : {}),

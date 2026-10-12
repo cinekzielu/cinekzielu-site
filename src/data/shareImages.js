@@ -129,5 +129,33 @@ export const shareImages = {
     "height": 900,
     "alt": "Panorama ośnieżonych tatrzańskich grani pod błękitnym niebem",
     "bytes": 262461
+  },
+  "durny-lomnica-2025": {
+    "src": "/share/durny-lomnica-2025.jpg",
+    "width": 1600,
+    "height": 900,
+    "alt": "Skalista grań ponad doliną",
+    "bytes": 629934
+  },
+  "rumunia-2024": {
+    "src": "/share/rumunia-2024.jpg",
+    "width": 1600,
+    "height": 1205,
+    "alt": "Rowerzysta z sakwami ponad serpentynami",
+    "bytes": 595450
+  },
+  "mieguszowiecki-posrednia-gran-2025": {
+    "src": "/share/mieguszowiecki-posrednia-gran-2025.jpg",
+    "width": 1600,
+    "height": 900,
+    "alt": "Przejrzysta woda górskiego stawu",
+    "bytes": 553991
+  },
+  "wysoka-ganek-rysy-2026": {
+    "src": "/share/wysoka-ganek-rysy-2026.jpg",
+    "width": 1600,
+    "height": 722,
+    "alt": "Wspólna wyprawa — postać na skalnym wierzchołku",
+    "bytes": 193944
   }
 }

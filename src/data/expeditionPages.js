@@ -3,6 +3,22 @@ import { galleryData } from './galleryData.js'
 // Dates come from reviewed photo metadata; years also match the approved galleries.
 // Route wording comes from verified film titles or the owner's description.
 const details = {
+  'mieguszowiecki-posrednia-gran-2025': {
+    sortDate: '2025-07-05', region: 'Tatry Wysokie', date: '5–6 lipca 2025', kind: 'Dwa dni w Tatrach',
+    description: 'Mięguszowiecki Szczyt Wielki i Pośrednia Grań. Dwa lipcowe dni w Tatrach, dwa filmy i kadry z podejść, wspinaczki oraz zejść.',
+  },
+  'wysoka-ganek-rysy-2026': {
+    sortDate: '2026-08-09', region: 'Tatry Wysokie', date: '9 sierpnia 2026', kind: 'Letnia wyprawa',
+    description: 'Wysoka, Ganek i Rysy. Zdjęcia z sierpniowej wyprawy: nocne podejście, wspinaczka, ekipa i widoki z grani.',
+  },
+  'durny-lomnica-2025': {
+    sortDate: '2025-06-14', region: 'Tatry Wysokie', date: '14–15 czerwca 2025', kind: 'Letnia wyprawa',
+    description: 'Durny Szczyt i Łomnica podczas czerwcowego weekendu w Tatrach. Dwa filmy oraz wybrane kadry z podejścia, grani i zejścia.',
+  },
+  'rumunia-2024': {
+    sortDate: '2024-07-05', region: 'Rumunia · Karpaty', date: '5–14 lipca 2024', kind: 'Wyprawa rowerowa',
+    description: 'Rowerowa wyprawa przez Rumunię. Sakwy, biwaki i górskie drogi — zapis wyjazdu z lipca 2024 w zdjęciach z telefonu.',
+  },
   'katania-2026': {
     sortDate: '2026-06-15',
     region: 'Sycylia · Włochy', date: '15–19 czerwca 2026', kind: 'Podróż',

@@ -20,8 +20,9 @@ for (const id of ['switzerland','alpy']) {
   assert.equal(profile.locations.filter(point => getAtlasMaterials(point.id,'2026').films.length).length,0,'Trip teaser is not a released summit episode')
   assert.equal(profile.locations.filter(point => getAtlasMaterials(point.id,'2026').galleries.length).length,id === 'alpy' ? 5 : 1,'Only author-confirmed 2026 summit visits')
 }
-assert.equal(getAtlasMaterials('lomnica','2025').films.length,0,'A publication year is not an expedition year')
-assert.equal(getAtlasMaterials('lomnica','undated').films.length,1)
+assert.equal(getAtlasMaterials('lomnica','2025').films.length,1,'Trip year confirmed by the original June 2025 recordings')
+assert.equal(getAtlasMaterials('lomnica','undated').films.length,0)
+assert.equal(getAtlasMaterials('wysoka','2025').films.length,0,'A film without a dated trip must remain undated')
 assert.equal(readAtlasYear('?atlas=switzerland&rok=2026'),'2026')
 assert.equal(readAtlasYear('?rok=garbage'),'all')
 assert.equal(readAtlasContext('?atlas=saxer-lucke&obszar=alpy'),'alpy')

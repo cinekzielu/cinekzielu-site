@@ -16,7 +16,7 @@ export const sitePages = [
   page('/galerie', 'Galerie z wypraw — Cinek Zielu', `${galleryCollectionCount(photoGalleries)} z ${photoGalleries.length} wypraw. Szwajcaria, Alpy, Tatry i Gorce w fotografiach Marcina Zielińskiego.`, shareImages['alpy-2026']),
   page('/wyprawy', 'Wyprawy — fotografie, filmy i miejsca | Cinek Zielu', 'Wyprawy w Alpy, Tatry, Gorce, do Szwajcarii i Maroka. Fotografie, kadry z nagrań, filmy oraz miejsca na mapie — Cinek Zielu.', shareImages['alpy-2026']),
   ...photoGalleries.map(gallery => page(`/galerie/${gallery.id}`, `${gallery.title} ${gallery.year} — galeria | Cinek Zielu`, gallery.mediaKind === 'video-frames' ? `${gallery.title} ${gallery.year} — ${galleryItemCount(gallery)} z oryginalnych nagrań${gallery.sourceLabel ? ' ' + gallery.sourceLabel : ''} Marcina Zielińskiego. Zobacz galerię, filmy i miejsce na mapie.` : `${gallery.title} ${gallery.year} — ${gallery.photos.length} fotografii z wyprawy. Zobacz galerię${gallery.films.length ? ', filmy' : ''} i miejsce na mapie. Fotografie Marcina Zielińskiego.`, shareImages[gallery.id])),
-  ...expeditionPages.map(expedition => page(`/wyprawy/${expedition.id}`, `${expedition.title} ${expedition.year} — wyprawa | Cinek Zielu`, `${expedition.description} Zobacz ${expedition.gallery.mediaKind === 'video-frames' ? 'kadry z nagrań' : 'galerię zdjęć'}${expedition.gallery.films.length ? ', filmy' : ''} i miejsce na mapie.`, shareImages[expedition.id])),
+  ...expeditionPages.map(expedition => page(`/wyprawy/${expedition.id}`, `${expedition.title} ${expedition.year} — wyprawa | Cinek Zielu`, `${expedition.description} Zobacz ${expedition.gallery.mediaKind === 'video-frames' ? 'kadry z nagrań' : expedition.gallery.mediaKind === 'trip-photos' ? 'zdjęcia z wyprawy' : 'galerię zdjęć'}${expedition.gallery.films.length ? ', filmy' : ''} i miejsce na mapie.`, shareImages[expedition.id])),
 ]
 
 // Old draft URLs lead to verified material instead of unfinished story pages.
@@ -26,13 +26,13 @@ export const legacyRedirects = {
   '/index.html': '/',
   '/wyprawy/switzerland-trip': '/wyprawy/szwajcaria-2025',
   '/wyprawy/gerlach-winter': '/wyprawy/gerlach-zima-2025',
-  '/wyprawy/lomnica-expedition': '/mapa?atlas=lomnica',
-  '/wyprawy/lomnica': '/mapa?atlas=lomnica',
-  '/wyprawy/durny-szczyt': '/mapa?atlas=durny-szczyt',
+  '/wyprawy/lomnica-expedition': '/wyprawy/durny-lomnica-2025',
+  '/wyprawy/lomnica': '/wyprawy/durny-lomnica-2025',
+  '/wyprawy/durny-szczyt': '/wyprawy/durny-lomnica-2025',
   '/wyprawy/koscielec-winter': '/wyprawy/koscielec-2026',
   '/wyprawy/morocco-toubkal': '/mapa?atlas=morocco',
   '/wyprawy/zermatt': '/mapa?atlas=zermatt',
-  '/wyprawy/romania-transfagarasan': '/mapa?atlas=romania',
+  '/wyprawy/romania-transfagarasan': '/wyprawy/rumunia-2024',
 }
 const byPath = Object.fromEntries(sitePages.map(item => [item.path, item]))
 export function getPageMetadata(pathname) {
