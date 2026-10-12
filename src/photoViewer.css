@@ -1,0 +1,22 @@
+.cz-photo-viewer[open]{display:flex;flex-direction:column;gap:10px}
+.cz-photo-viewer .cz-lightbox-top{flex-shrink:0;height:44px}
+.cz-photo-viewer-tools{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;flex-shrink:0}
+.cz-photo-viewer-tools>div{display:flex;gap:4px}
+.cz-photo-viewer-tools .cz-photo-viewer-actions{gap:8px;align-items:center}
+.cz-photo-viewer .cz-photo-inquiry{display:inline-flex;align-items:center;justify-content:center;min-height:44px;box-sizing:border-box;padding:10px 14px;border:1px solid #66533a;color:#e2c99e;text-decoration:none;font-size:12px;white-space:nowrap}
+.cz-photo-inquiry:hover{background:#242019}
+.cz-photo-inquiry:focus-visible{outline:2px solid #c9a36d;outline-offset:2px}
+.cz-photo-viewer button:disabled{opacity:.35;cursor:default}
+.cz-photo-viewer button:focus-visible,.cz-photo-share input:focus-visible{outline:2px solid #c9a36d;outline-offset:2px}
+.cz-photo-viewport{flex:1;min-height:0;min-width:0;overflow:auto;touch-action:pan-y pinch-zoom;user-select:none;overscroll-behavior:contain;cursor:zoom-in;scrollbar-width:thin;scrollbar-color:#66533a #10100f}
+.cz-photo-viewport.is-zoomed{touch-action:pan-x pan-y pinch-zoom;cursor:grab}
+.cz-photo-viewport.is-zoomed:active{cursor:grabbing}
+.cz-photo-canvas{min-width:100%;min-height:100%;display:grid;place-items:center}
+.cz-photo-viewer .cz-photo-canvas img{display:block;max-width:none;max-height:none;object-fit:contain;flex-shrink:0}
+.cz-photo-viewer .cz-lightbox-bottom{width:100%;flex-shrink:0;min-height:48px}
+.cz-photo-viewer-info{display:flex;align-items:center;flex-direction:column;gap:4px}
+.cz-photo-share{flex-shrink:0;font-size:11px;color:#b7aa9b;display:grid;gap:5px}
+.cz-photo-share label{display:flex;align-items:center;gap:10px}
+.cz-photo-share input{flex:1;min-width:0;width:100%;background:#1b1915;border:1px solid #66533a;padding:8px;color:#eee;font:inherit;min-height:36px;box-sizing:border-box}
+@media(max-width:600px){.cz-photo-viewer{padding:12px}.cz-photo-viewer-tools button{font-size:12px;padding:10px 12px}.cz-photo-share label{display:block}.cz-photo-share input{margin-top:4px;font-size:16px}.cz-photo-viewer .cz-lightbox-hint{font-size:10px}.cz-photo-viewer-info{gap:0}}
+@media(max-width:600px){.cz-photo-viewer-actions{width:100%}.cz-photo-viewer-actions>*{flex:1}.cz-photo-viewer .cz-photo-inquiry{font-size:12px;padding:10px}}

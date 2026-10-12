@@ -1,6 +1,7 @@
 import { galleryAtlasIds } from './tripGeography.js'
 
 const places = [
+  { id: 'rumunia', label: 'Rumunia', nodeId: 'romania' },
   { id: 'tatry', label: 'Tatry', nodeId: 'tatry' },
   { id: 'gorce', label: 'Gorce', regionId: 'gorce' },
   { id: 'alpy', label: 'Alpy', nodeId: 'alpy' },

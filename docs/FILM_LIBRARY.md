@@ -40,3 +40,14 @@ Nie wyliczano dat wypraw ani dokładnych dat publikacji z względnych etykiet Yo
 ## Dalszy etap
 
 Metadane podstron są nadal ustawiane w przeglądarce. Przed publikacją warto przygotować statyczne HTML z metadanymi dla linków społecznościowych, ujednolicić canonical strony głównej (bazowy HTML wciąż wskazuje dawny adres Vercel) i dodać sitemap. Ten etap nie zmienia atlasu ani jego dużego osobnego pliku JS.
+
+
+# Update: format and duration filters
+
+Local follow-up to published PR158; not published yet.
+
+The existing film grid and 29 verified catalogue entries remain. Added format buttons (full films, short forms, trailers), duration selection, format labels on thumbnails and a clear-all action. The format comes from existing editorial metadata and is independent of duration.
+
+Duration intervals in seconds: <=300, >300–1200, >1200–2400, >2400. Hour-long durations are parsed correctly. Place, query, format and duration combine; URL parameters are miejsce, szukaj, format and czas. Reload and browser history restore filters. Invalid enumerated values fall back to all. No new video facts or individual film pages.
+
+Validation: build and all 18 checks passed, including check-film-library.mjs for boundary coverage, format combinations, geographic compatibility, Polish search and URL round trips. Browser: 1280px desktop and emulated 390/320px, no overflow; combined filters, reload, back, empty/reset, film dialog and no observed console errors. Physical phone and full YouTube playback not tested.

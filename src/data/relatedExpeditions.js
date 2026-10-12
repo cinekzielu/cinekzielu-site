@@ -17,7 +17,8 @@ export function relatedExpeditions(expedition, items = expeditionPages) {
   const currentAreas = areaIds(expedition)
   const currentPlaces = places(expedition)
   const score = candidate =>
-    (places(candidate).some(id => currentPlaces.includes(id)) ? 8 : 0) +
+    // A shared summit outranks season/year ties as the catalogue grows.
+    (places(candidate).some(id => currentPlaces.includes(id)) ? 12 : 0) +
     (winter(expedition) === winter(candidate) ? 6 : 0) +
     (candidate.year === expedition.year ? 2 : 0) +
     (candidate.kind === expedition.kind ? 1 : 0)
