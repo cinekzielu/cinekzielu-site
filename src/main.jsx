@@ -9,6 +9,7 @@ import { FilmIndex } from './components/Films'
 import { SiteToolsProvider, SearchTrigger, FilmLink } from './components/SiteTools'
 import { PhotographyPage, PhotographyPreview } from './components/Photography'
 import { AboutPage } from './components/About'
+import { SummitsPage } from './components/Summits'
 import { getAtlasMaterials } from './data/atlasContent'
 import { applyPageMetadata } from './pageMetadata'
 import { legacyRedirects, normalizePagePath } from './data/siteMetadata'
@@ -304,6 +305,7 @@ function App() {
 
       <section id="map" className="section sectionDarker reveal"><div className="container"><SectionHeader icon={iconMap} label="MAPA WYPRAW" title="Mapa wypraw" text="Wybierz miejsce, aby zobaczyć zdjęcia i filmy z wypraw." /><React.Suspense fallback={<p role="status">Wczytywanie mapy…</p>}><MapAtlas /></React.Suspense></div></section>
 
+      <div className="container"><a className="cz-gallery-text-link" href="/szczyty">Moje szczyty →</a></div>
       <AlpsHomeFeature />
 
       <section id="films" className="section sectionDark reveal">
@@ -582,6 +584,7 @@ try { pageSlug = pageRoute?.[2] ? decodeURIComponent(pageRoute[2]) : null } catc
 let page = pathname === '/' ? <App /> : <NotFound />
 if (pathname === '/mapa') page = <React.Suspense fallback={<p role="status">Wczytywanie mapy…</p>}><MapPage /></React.Suspense>
 if (pathname === '/filmy') page = <FilmIndex />
+if (pathname === '/szczyty') page = <SummitsPage />
 if (pathname === '/fotografia') page = <PhotographyPage />
 if (pathname === '/o-mnie') page = <AboutPage />
 if (pageRoute?.[1] === 'galerie') page = pageSlug ? <GalleryPage slug={pageSlug} /> : <GalleryIndex />

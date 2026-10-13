@@ -20,6 +20,17 @@
 .cz-atlas .atlasCountryChip>span{display:block;border:1px solid #c9a36d55;background:#191613e8;border-radius:2px;padding:4px 6px;white-space:nowrap}
 .cz-atlas .atlasCountryMarker.isSelected .atlasCountryChip{background:none;color:#f5e1bf;box-shadow:none}.cz-atlas .atlasCountryChip:hover{transform:none;background:none}.cz-atlas .atlasCountryMarker.isSelected .atlasCountryChip>span,.cz-atlas .atlasCountryChip:hover>span{background:#342a1e;border-color:#c9a36d}
 .cz-atlas .atlasCountryDot.isMuted{opacity:.35;filter:none}
+.cz-atlas .europeCountryOverlayPath{stroke-width:1;vector-effect:non-scaling-stroke;pointer-events:fill}
+.cz-atlas .europeCountryOverlayGroup:focus-visible{outline:none}
+.cz-atlas .europeCountryOverlayGroup:focus-visible .europeCountryOverlayPath{stroke:#f5d7a6;stroke-width:2;fill:#c9a36d33}
+.cz-europe-marker{pointer-events:none}
+.cz-europe-leader{stroke:#c9a36d;stroke-width:.7;vector-effect:non-scaling-stroke;opacity:.65}
+.cz-europe-dot{fill:#6b6152;stroke:#151312;stroke-width:.5;pointer-events:none}
+.cz-europe-dot.has-materials{fill:#e2c99e}
+.cz-europe-label{pointer-events:all;cursor:pointer}
+.cz-europe-label rect{fill:#191613ed;stroke:#c9a36d66;stroke-width:.7;vector-effect:non-scaling-stroke}
+.cz-europe-label text{fill:#e4dacb;font-size:5.5px;pointer-events:none}
+.cz-europe-marker.is-hovered .cz-europe-label rect,.cz-europe-label:hover rect{fill:#342a1e;stroke:#e2c99e}
 .cz-atlas-canvas-wrap{position:relative}.cz-atlas-regions{position:absolute;top:18px;left:18px;z-index:4;display:flex;flex-direction:column;gap:5px;padding:11px;background:#171411ed;border:1px solid var(--atlas-line);border-radius:3px;min-width:122px}.cz-atlas-regions>span{padding:0 7px 7px;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:#ac9a80}.cz-atlas-regions button{display:flex;align-items:center;gap:9px;min-height:44px;padding:8px 10px;border:1px solid transparent;background:transparent;color:#d9c8ad;font-size:12px}.cz-atlas-regions button>span:last-child{margin-left:auto;color:#c9a36d}.cz-atlas-regions button:hover,.cz-atlas-regions button[aria-pressed=true]{background:#c9a36d0d;border-color:#c9a36d55}.cz-atlas-regions svg{color:#c9a36d}
 @media(max-width:520px){.cz-atlas-regions{left:10px;top:10px;min-width:103px;padding:6px;gap:2px}.cz-atlas-regions>span{padding:4px 6px 3px;font-size:8px}.cz-atlas-regions button{font-size:11px;padding:6px;gap:7px}.cz-atlas .atlasStage.isEuropeView .atlasCountryChip{font-size:14px;padding:2px}.cz-atlas .atlasCountryChip>span{padding:4px 6px}}
 .cz-atlas .tatryLayer{padding:0}.cz-atlas .tatryScene{transform:none}.cz-atlas .tatryBaseMap{inset:0;border-radius:0}.cz-atlas .tatryBaseMap::after{box-shadow:none}.cz-atlas .tatryBaseMapImage{filter:grayscale(.5) sepia(.18) contrast(1.15) brightness(.85);opacity:.88}.cz-atlas .tatryAtlasCoordinates,.cz-atlas .tatryAtlasScale{display:none}

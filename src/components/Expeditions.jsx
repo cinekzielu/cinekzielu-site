@@ -64,7 +64,7 @@ export function ExpeditionIndex() {
   }
   return <ExpeditionShell>
     <div className="cz-gallery-intro"><h1>Wyprawy</h1><span className="cz-gallery-count">{[...view.options.years].join(' · ')}</span></div>
-    <p className="cz-expedition-index-intro">Od najnowszych. Zdjęcia, filmy, miejsca.</p>
+    <p className="cz-expedition-index-intro">Od najnowszych. Zdjęcia, filmy, miejsca. <a href="/szczyty">Moje szczyty ↗</a></p>
     <div className="cz-trip-view-switch" role="group" aria-label="Widok wypraw">
       <button type="button" aria-pressed={mode === 'lista'} onClick={() => changeMode('lista')}>Lista</button>
       <button type="button" aria-pressed={mode === 'os'} onClick={() => changeMode('os')}>Oś podróży</button>
