@@ -2,7 +2,7 @@ import React, { useEffect, useId, useRef, useState } from 'react'
 import '../galleryStyles.css'
 import { SearchTrigger } from './SiteTools'
 
-const sections = [ { id: 'fotografia', label: 'Fotografia' }, { id: 'wyprawy', label: 'Wyprawy' }, { id: 'filmy', label: 'Filmy' }, { id: 'mapa', label: 'Mapa' }, { id: 'galerie', label: 'Galerie' }, { id: 'o-mnie', label: 'O mnie' } ]
+const sections = [ { id: 'fotografia', label: 'Fotografia' }, { id: 'wyprawy', label: 'Wyprawy' }, { id: 'szczyty', label: 'Moje szczyty' }, { id: 'filmy', label: 'Filmy' }, { id: 'mapa', label: 'Mapa' }, { id: 'galerie', label: 'Galerie' }, { id: 'o-mnie', label: 'O mnie' } ]
 
 export function CollectionShell({ children, section, detail = false, className = '' }) {
   const [menuOpen, setMenuOpen] = useState(false)

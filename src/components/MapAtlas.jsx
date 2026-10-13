@@ -16,7 +16,7 @@ import worldAtlasBaseAsset from '../assets/maps/world-atlas-dark.webp'
 import europeAtlasDarkAsset from '../assets/maps/europe-atlas-dark.webp'
 import worldOverlayPaths from '../data/worldRefinedPaths.json'
 import europeCountryOverlaysSvgRaw from '../assets/maps/europe-country-overlays.svg?raw'
-import { europeAtlasNodes } from '../data/europeAtlasData'
+import { europeMapLabels } from '../data/europeMapLabels'
 
 const worldShapes = [
   { id: 'north-america', d: 'M52 100l20-22 40-22 48-16 54 2 40 12 26 18 6 18-12 16-20 12-26 6-20 14-24 6-22-2-16 10-20 6-20-6-14-14-14-20z' },
@@ -179,7 +179,9 @@ export function MapAtlas({ standalone = false }) {
     return () => { cancelAnimationFrame(frame); window.removeEventListener('load', scroll) }
   }, [standalone])
   useEffect(() => {
-    setZoom(1)
+    const compactEurope = view === 'europe' && scrollRef.current?.clientWidth < 520
+    zoomCenter.current = compactEurope ? { x: .46, y: .6 } : { x: .5, y: .5 }
+    setZoom(compactEurope ? 2 : 1)
     scrollRef.current?.scrollTo({ left: 0, top: 0 })
   }, [view, terrain?.id])
   useEffect(() => {
@@ -265,21 +267,27 @@ export function MapAtlas({ standalone = false }) {
             {view === 'africa' && <AfricaMap selectedCountry={selectedCountry} onSelect={select} summary={filmLabel(getAtlasMaterials('morocco').films.length)} />}
             {view === 'europe' && <svg viewBox="0 0 560 360" className="atlasSvg atlasWorldSvg isEuropeView" role="group" aria-label="Mapa Europy — wybierz kraj">
               <image href={europeAtlasDarkAsset} x="22" y="20" width="516" height="318" preserveAspectRatio="xMidYMid slice" />
-              {europeOverlay && <svg x="22" y="20" width="516" height="318" viewBox={europeOverlay.viewBox} preserveAspectRatio="xMidYMid slice" className="europeCountryOverlaySvg" aria-hidden="true">
-                {[...europeOverlay.countryOverlayShapes, ...europeOverlay.specialRegionOverlayShapes].map(shape => atlasNodeById[shape.id] ? <g key={shape.id} onClick={() => select(shape.id)} onMouseEnter={() => setHoveredId(shape.id)} onMouseLeave={() => setHoveredId(null)} className={`europeCountryOverlayGroup ${selectedCountry === shape.id ? 'isSelected' : ''} ${hoveredId === shape.id ? 'isHovered' : ''}`}>
+              {europeOverlay && <svg x="22" y="20" width="516" height="318" viewBox={europeOverlay.viewBox} preserveAspectRatio="xMidYMid slice" className="europeCountryOverlaySvg">
+                {europeOverlay.countryOverlayShapes.filter(shape => europeMapLabels[shape.id]).map(shape => <g key={shape.id} data-country={shape.id} role="button" tabIndex={0} aria-label={`Wybierz: ${atlasNodeById[shape.id].name}`} onClick={() => select(shape.id)} onKeyDown={event => activateKey(event, shape.id)} onMouseEnter={() => setHoveredId(shape.id)} onMouseLeave={event => { if (event.relatedTarget?.closest?.(`[data-country-label="${shape.id}"]`)) return; setHoveredId(null) }} onFocus={() => setHoveredId(shape.id)} onBlur={() => setHoveredId(null)} className={`europeCountryOverlayGroup ${selectedCountry === shape.id ? 'isSelected' : ''} ${hoveredId === shape.id ? 'isHovered' : ''}`}>
                   {shape.paths.map((d, i) => <path key={i} d={d} className={`europeCountryOverlayPath ${hasAtlasMaterials(shape.id) ? 'has-materials' : ''}`} />)}
-                </g> : null)}
+                  <title>{atlasNodeById[shape.id].name}</title>
+                </g>)}
+                {Object.entries(europeMapLabels).map(([id, marker]) => {
+                  const available = hasAtlasMaterials(id)
+                  const hovered = hoveredId === id
+                  const [x, y] = marker.point
+                  const [lx, ly] = marker.label
+                  const leader = Math.hypot(lx - x, ly - y) > 10
+                  return <g key={id} className={`cz-europe-marker ${hovered ? 'is-hovered' : ''}`} data-country-label={id}>
+                    {(available || hovered) && leader && <line x1={x} y1={y} x2={lx} y2={ly} className="cz-europe-leader" />}
+                    <circle cx={x} cy={y} r={id === 'liechtenstein' ? 1.3 : 1.5} className={`cz-europe-dot ${available ? 'has-materials' : ''}`} />
+                    {(available || hovered) && <g role={available ? "button" : undefined} tabIndex={available ? -1 : undefined} aria-hidden={!available || undefined} style={{ pointerEvents: available ? "all" : "none" }} aria-label={`Wybierz: ${atlasNodeById[id].name}`} onClick={() => select(id)} onKeyDown={event => activateKey(event, id)} onMouseEnter={() => setHoveredId(id)} onMouseLeave={event => { if (event.relatedTarget?.closest?.(`[data-country="${id}"]`)) return; setHoveredId(null) }} className="cz-europe-label">
+                      <rect x={lx - marker.width / 2} y={ly - 5} width={marker.width} height="10" rx="1" />
+                      <text x={lx} y={ly} dominantBaseline="central" textAnchor="middle">{atlasNodeById[id].name}</text>
+                    </g>}
+                  </g>
+                })}
               </svg>}
-              {europeAtlasNodes.filter(node => node.type !== 'continent' && node.id !== 'tatry').map(node => {
-                const available = hasAtlasMaterials(node.id)
-                const active = selectedCountry === node.id
-                const hovered = hoveredId === node.id
-                const show = available || active || hovered
-                return <g key={node.id} className={`atlasCountryMarker ${active ? 'isSelected' : ''} ${hovered ? 'isHovered' : ''}`}>
-                  <circle cx={node.position.x - 9} cy={node.position.y - 2} r={available ? 3.2 : 2} className={`atlasCountryDot ${available ? 'isVisited' : 'isMuted'}`} />
-                  {show && <foreignObject x={node.position.x + (node.labelOffset?.x || 0)} y={node.position.y - 14 + (node.labelOffset?.y || 0)} width={node.position.chipWidth || 104} height="36"><button type="button" className="atlasCountryChip" aria-label={`Wybierz: ${node.label}`} aria-pressed={active} onClick={() => select(node.id)} onMouseEnter={() => setHoveredId(node.id)} onMouseLeave={() => setHoveredId(null)}><span>{node.label}</span></button></foreignObject>}
-                </g>
-              })}
             </svg>}
 
           </div>
