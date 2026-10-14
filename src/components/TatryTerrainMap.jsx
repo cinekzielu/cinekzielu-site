@@ -6,6 +6,7 @@ import { mercator, unproject, worldSize, fitTerrain, terrainMarkers, visibleTerr
 import '../tatryTerrain.css'
 import { CountryOutline } from './CountryOutline'
 import { readTerrainView, readTerrainTone, setTerrainView, atlasViewHref, ATLAS_SAVE_VIEW, ATLAS_VIEW_SAVED } from '../data/atlasViewState'
+import { atlasShareHref } from '../data/sharePages'
 
 const centerOf = entries => ({ x: entries.reduce((sum, point) => sum + point.x, 0) / entries.length, y: entries.reduce((sum, point) => sum + point.y, 0) / entries.length })
 const pointDistance = entries => entries.length < 2 ? 0 : Math.hypot(entries[0].x - entries[1].x, entries[0].y - entries[1].y)
@@ -75,7 +76,7 @@ export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0
   }
   const copyView = async () => {
     interacted.current = true; saveView()
-    const url = window.location.origin + atlasViewHref(window.location.search,{view:viewRef.current,tone:toneRef.current})
+    const url = window.location.origin + atlasShareHref(atlasViewHref(window.location.search,{view:viewRef.current,tone:toneRef.current}))
     setShareUrl(url); clearTimeout(shareTimer.current)
     try {
       await navigator.clipboard.writeText(url)

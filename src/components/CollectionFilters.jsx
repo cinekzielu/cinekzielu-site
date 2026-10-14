@@ -1,12 +1,15 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { allCollectionFilters, collectionOptions, readCollectionFilters, collectionFilterSearch, filterCollections } from '../data/collectionFilters'
 import '../collectionFilters.css'
+import { useInitialLocation } from '../PageLocation'
 
 export function useCollectionFilters(items, { preserveSearchKeys = [] } = {}) {
+  const initial = useInitialLocation()
   const options = useMemo(() => collectionOptions(items), [items])
-  const [filters, setFilters] = useState(() => readCollectionFilters(window.location.search, options))
+  const [filters, setFilters] = useState(() => readCollectionFilters(initial.search, options))
   useEffect(() => {
     const sync = () => setFilters(readCollectionFilters(window.location.search, options))
+    sync()
     window.addEventListener('popstate', sync)
     return () => window.removeEventListener('popstate', sync)
   }, [options])

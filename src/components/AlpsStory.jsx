@@ -26,11 +26,12 @@ export function AlpsStoryHero() {
 
 export function AlpsStory() {
   const [active, setActive] = useState(alpsStory[0].id)
-  const [mapOpen, setMapOpen] = useState(() => window.matchMedia('(min-width:701px)').matches)
+  const [mapOpen, setMapOpen] = useState(false)
   const [nearby, setNearby] = useState(false)
   const [mapSelected, setMapSelected] = useState(null)
   const root = useRef(null)
   useEffect(() => {
+    setMapOpen(window.matchMedia('(min-width:701px)').matches)
     document.documentElement.classList.add('cz-alps-page')
     const observer = new IntersectionObserver(entries => {
       if (entries.some(entry => entry.isIntersecting)) { setNearby(true); observer.disconnect() }

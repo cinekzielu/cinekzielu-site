@@ -5,6 +5,8 @@ import { FilmLink } from './SiteTools'
 import { summits, summitSeasons, summitRanges, summitYears, defaultSummitFilters, readSummitFilters, summitFiltersHref, filterSummits, ascentFilms, summitCountLabel } from '../data/summits'
 import '../summitStyles.css'
 
+import { useInitialLocation } from '../PageLocation'
+
 const readFilters = () => readSummitFilters(window.location.search)
 const height = number => number.toLocaleString('pl-PL')
 
@@ -21,10 +23,12 @@ function Ascent({ ascent, name }) {
 }
 
 export function SummitsPage() {
-  const [filters, setFilters] = useState(readFilters)
+  const initial = useInitialLocation()
+  const [filters, setFilters] = useState(() => readSummitFilters(initial.search))
   const input = useRef(null)
   useEffect(() => {
     const sync = () => setFilters(readFilters())
+    sync()
     window.addEventListener('popstate', sync)
     return () => window.removeEventListener('popstate', sync)
   }, [])

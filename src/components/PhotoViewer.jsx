@@ -1,6 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { fittedPhotoSize, photoViewUrl } from '../data/photoView'
 import { photoInquiry } from '../data/photoInquiry'
+import { photoSharePath } from '../data/sharePages'
 import '../photoViewer.css'
 
 export function PhotoViewer({ gallery, current, onStep, onClose, shareable, trigger }) {
@@ -45,7 +46,8 @@ export function PhotoViewer({ gallery, current, onStep, onClose, shareable, trig
   const step = delta => { setZoom(1); setFailed(false); setShare(null); setCopyStatus(''); shareRevision.current++; gesture.current = null; onStep(delta) }
   const copyLink = async () => {
     const revision = ++shareRevision.current
-    const url = photoViewUrl(window.location.href, photo)
+    const path = photoSharePath(gallery.id, photo)
+    const url = path ? new URL(path, window.location.href).href : photoViewUrl(window.location.href, photo)
     setShare(url)
     setCopyStatus('Link do zdjęcia — możesz go zaznaczyć i skopiować.')
     try {

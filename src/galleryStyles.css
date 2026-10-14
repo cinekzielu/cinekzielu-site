@@ -18,6 +18,8 @@
 .cz-gallery-cards-compact .cz-gallery-caption{flex-wrap:wrap;gap:8px}.cz-gallery-cards-compact h2{font-size:24px}.cz-gallery-cards-compact .cz-gallery-arrow{display:none}
 .cz-gallery-text-link{display:inline-block;margin-top:28px;color:#c9a36d;font-size:13px;padding:8px 0}
 .cz-gallery-grid{display:grid;gap:16px}.cz-photo-row{display:flex;gap:16px;align-items:flex-start}
+/* Keep prerendered rows readable on phones before JavaScript regrouping. */
+@media(max-width:600px){.cz-photo-row{flex-direction:column}}
 .cz-photo{display:block;flex:var(--ratio) 1 0;min-width:0;border:0;border-radius:0;background:#201d19;padding:0;line-height:0;cursor:pointer}
 .cz-photo img{display:block;width:100%;height:auto;transition:filter .2s}.cz-photo:hover img{filter:brightness(1.05)}
 .cz-gallery-footer{display:flex;justify-content:space-between;gap:20px;margin-top:38px;padding:24px 0 32px;border-top:1px solid rgba(214,198,168,.18);font-size:10px;color:#b7aa9b}
