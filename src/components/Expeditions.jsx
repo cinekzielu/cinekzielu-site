@@ -13,6 +13,7 @@ import { TravelTimeline } from './TravelTimeline'
 import { AlpsStory, AlpsStoryHero } from './AlpsStory'
 import { TripRoute } from './TripRoute'
 import '../expeditionStyles.css'
+import { useInitialLocation } from '../PageLocation'
 
 export function ExpeditionList({ expeditions = expeditionPages, compact = false }) {
   return <div className={`cz-expedition-list${compact ? ' is-compact' : ''}`}>
@@ -47,11 +48,13 @@ function RelatedExpeditions({ expedition }) {
 }
 
 export function ExpeditionIndex() {
+  const initial = useInitialLocation()
   const view = useCollectionFilters(expeditionPages, { preserveSearchKeys: ['widok'] })
   const readMode = () => new URLSearchParams(window.location.search).get('widok') === 'os' ? 'os' : 'lista'
-  const [mode, setMode] = useState(readMode)
+  const [mode, setMode] = useState(() => new URLSearchParams(initial.search).get('widok') === 'os' ? 'os' : 'lista')
   useEffect(() => {
     const sync = () => setMode(readMode())
+    sync()
     window.addEventListener('popstate', sync)
     return () => window.removeEventListener('popstate', sync)
   }, [])

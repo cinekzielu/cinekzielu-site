@@ -1,0 +1,10 @@
+.cz-collection-share{display:flex;flex-wrap:wrap;align-items:flex-start;gap:12px;margin:0 0 24px;min-width:0}
+.cz-collection-share-button{background:transparent;border:1px solid rgba(221,169,92,.35);border-radius:7px;color:var(--accent,#dda95c);font:inherit;font-size:13px;padding:9px 13px;cursor:pointer}
+.cz-collection-share-button:hover{border-color:var(--accent,#dda95c);background:rgba(221,169,92,.06)}
+.cz-collection-share-field{display:grid;grid-template-columns:minmax(0,1fr) 30px;gap:7px 8px;flex:1 1 300px;min-width:0;max-width:700px;padding:12px 14px;border:1px solid rgba(221,169,92,.25);border-radius:8px;background:#191714}
+.cz-collection-share-field label{display:grid;gap:7px;min-width:0;color:#c7bdad;font-size:12px}
+.cz-collection-share-field input{box-sizing:border-box;min-width:0;width:100%;border:1px solid #4c4337;border-radius:4px;background:#100f0d;color:#eee9df;padding:9px;font:inherit;font-size:13px}
+.cz-collection-share-field>button{align-self:start;border:0;background:transparent;color:#d3c8b5;font:inherit;font-size:22px;line-height:1;cursor:pointer;padding:4px}
+.cz-collection-share-field small{grid-column:1/-1;color:#b9ac98;font-size:12px}
+.cz-collection-share :is(button,input):focus-visible{outline:2px solid #dda95c;outline-offset:3px}
+@media(max-width:600px){.cz-collection-share-field{flex-basis:100%}}

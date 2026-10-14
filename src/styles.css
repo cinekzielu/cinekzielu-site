@@ -2302,8 +2302,8 @@ img {
 /* === ETAP 4.1B — scroll reveal === */
 
 .reveal {
-  opacity: 0;
-  transform: translateY(34px);
+  opacity: 1;
+  transform: none;
   transition:
     opacity 0.85s ease,
     transform 0.85s ease;
@@ -2341,8 +2341,8 @@ img {
 .reveal:not(.isVisible) .postCard,
 .reveal:not(.isVisible) .socialBox,
 .reveal:not(.isVisible) .contactBox {
-  opacity: 0;
-  transform: translateY(18px);
+  opacity: 1;
+  transform: none;
 }
 
 .reveal.isVisible .filmCard:nth-child(1),

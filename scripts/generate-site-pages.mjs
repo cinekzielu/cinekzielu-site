@@ -1,7 +1,7 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
-import { sitePages, getPageMetadata, legacyRedirects, pageStructuredData, SITE_ORIGIN } from '../src/data/siteMetadata.js'
+import { fileURLToPath, pathToFileURL } from 'node:url'
+import { sitePages, sharePageMetadata, getPageMetadata, legacyRedirects, pageStructuredData, SITE_ORIGIN } from '../src/data/siteMetadata.js'
 
 const project = fileURLToPath(new URL('../', import.meta.url))
 const escape = text => String(text).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]))
@@ -22,11 +22,26 @@ export function renderHead(page) {
 }
 export async function generateSitePages() {
   const dist = path.join(project, 'dist')
+  // Vite compiles the same React components for build-time rendering only.
+  // No server/runtime service or additional dependency is deployed.
+  const { build } = await import('vite')
+  const serverDir = path.join(project, '.vite', 'prerender')
+  await build({ configFile: false, root: project, publicDir: false, logLevel: 'warn',
+    build: { ssr: 'src/entry-server.jsx', outDir: serverDir, emptyOutDir: true, minify: false,
+      rollupOptions: { output: { entryFileNames: 'entry-server.mjs', chunkFileNames: '[name]-[hash].mjs' } } } })
+  const { renderPage } = await import(pathToFileURL(path.join(serverDir, 'entry-server.mjs')).href + `?build=${Date.now()}`)
   const template = await readFile(path.join(dist, 'index.html'), 'utf8')
   const metadataBlock = /<!-- site-metadata:start -->[\s\S]*?<!-- site-metadata:end -->/
   if (!metadataBlock.test(template)) throw new Error('Metadata markers missing from built HTML')
-  const documentFor = page => template.replace(metadataBlock, () => renderHead(page))
-  for (const page of sitePages) {
+  const documentFor = page => {
+    const location = page.view || { pathname: page.path, search: '' }
+    const html = renderPage(location)
+    if (!html.includes('<h1')) throw new Error(`Missing rendered heading: ${page.path}`)
+    const bootstrap = JSON.stringify(location).replace(/</g, '\\u003c')
+    return template.replace(metadataBlock, () => renderHead(page))
+      .replace('<div id="root"></div>', () => `<div id="root">${html}</div><script id="cz-page-location" type="application/json">${bootstrap}</script>`)
+  }
+  for (const page of [...sitePages, ...sharePageMetadata]) {
     const file = path.join(dist, page.path === '/' ? 'index.html' : page.path.slice(1) + '.html')
     await mkdir(path.dirname(file), { recursive: true })
     await writeFile(file, documentFor(page))
@@ -40,5 +55,5 @@ export async function generateSitePages() {
   await writeFile(path.join(dist, '404.html'), documentFor(getPageMetadata('/404')))
   await writeFile(path.join(dist, 'sitemap.xml'), '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + sitePages.map(page => `  <url><loc>${escape(page.canonical)}</loc></url>`).join('\n') + '\n</urlset>\n')
   await writeFile(path.join(dist, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${SITE_ORIGIN}/sitemap.xml\n`)
-  console.log(`Static metadata: ${sitePages.length} pages, legacy redirects, 404, sitemap and robots.txt.`)
+  console.log(`Prerendered: ${sitePages.length} pages + ${sharePageMetadata.length} share views; legacy redirects, 404, sitemap and robots.txt.`)
 }

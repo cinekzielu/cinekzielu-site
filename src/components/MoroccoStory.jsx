@@ -27,8 +27,8 @@ export function MoroccoStoryHero() {
 }
 
 export function MoroccoStory() {
-  const [activeId, setActiveId] = useState(() => (stopFromHash() || moroccoStory[0]).places[0].id)
-  const [mapOpen, setMapOpen] = useState(() => window.matchMedia('(min-width:901px)').matches)
+  const [activeId, setActiveId] = useState(moroccoStory[0].places[0].id)
+  const [mapOpen, setMapOpen] = useState(false)
   const [nearby, setNearby] = useState(false)
   const root = useRef(null)
   const active = moroccoStoryForPlace(activeId) || moroccoStory[0]
@@ -37,6 +37,7 @@ export function MoroccoStory() {
     document.documentElement.classList.add('cz-story-page')
     const media = window.matchMedia('(min-width:901px)')
     const resize = () => setMapOpen(media.matches)
+    resize()
     media.addEventListener('change', resize)
     const loader = new IntersectionObserver(entries => {
       if (entries.some(entry => entry.isIntersecting)) { setNearby(true); loader.disconnect() }

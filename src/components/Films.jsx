@@ -8,6 +8,8 @@ import { galleryData } from '../data/galleryData'
 import { galleryHref, galleryLinkLabel } from '../data/galleryNavigation'
 import '../filmStyles.css'
 
+import { useInitialLocation } from '../PageLocation'
+
 const readFilters = () => readFilmFilters(window.location.search)
 
 function FilmCard({ film, index }) {
@@ -29,10 +31,12 @@ function FilmCard({ film, index }) {
 }
 
 export function FilmIndex() {
-  const [filters, setFilters] = useState(readFilters)
+  const initial = useInitialLocation()
+  const [filters, setFilters] = useState(() => readFilmFilters(initial.search))
   const searchInput = useRef(null)
   useEffect(() => {
     const sync = () => setFilters(readFilters())
+    sync()
     window.addEventListener('popstate', sync)
     return () => window.removeEventListener('popstate', sync)
   }, [])
