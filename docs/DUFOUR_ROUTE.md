@@ -1,0 +1,13 @@
+# Dufourspitze — trasa i profil
+
+Trasa w `/wyprawy/alpy-2026#dufour-trasa`, wewnątrz rozdziału Dufourspitze. Podkład i sterowanie korzystają z istniejącego `TatryTerrainMap`, z dodatkowymi opcjonalnymi właściwościami `renderOverlay` i `trackFocus`. Pozostałe mapy zachowują dotychczasowe działanie. Bez nowych bibliotek.
+
+`DufourRoute` jest zgodnym wstecznie wejściem do wspólnego `TripRoute` / `TripRouteView` (opis w `TRIP_ROUTES.md`). Dopiero zbliżenie sekcji do ekranu lub bezpośrednie otwarcie kotwicy ładuje osobny moduł z 5253 punktami i mapą. Po profilu można przesuwać wskaźnik albo używać dotyku; suwak wspiera klawiaturę. Aktywny punkt jest wspólny z mapą. Przycisk „Pokaż punkt na mapie” centruje widok bez zmiany skali; „Cała trasa” przywraca zasięg zapisu. Przycisk „Dufourspitze · 4634 m” wybiera próbkę najbliższą współrzędnym szczytu, a nie maksimum GPS. Dostępny naturalny i ciemny podkład, zoom, przesuwanie i istniejąca obsługa pełnego ekranu.
+
+Źródło: GPX wskazany przez autora, aktywność Strava 19880087238, zapis 22–24 sierpnia 2026. Publiczny moduł roboczy zawiera wyłącznie współrzędne zaokrąglone do 6 miejsc, wysokość, indeks odcinka i dystans skumulowany. Oryginał, dokładne czasy i dokumentacja przygotowania pozostają prywatne, poza repozytorium. Żadne dane GPX nie są wysyłane do Stravy lub dostawcy map; pobierane są tylko istniejące kafle podkładu danego obszaru. Publikacja tras została zatwierdzona przez autora 14 października 2026.
+
+Rysunek jest uproszczoną kopią pełnych 127542 próbek: zachowano globalne skrajne wysokości i końce segmentów, próbki po zmianie położenia o 8 m lub wysokości o 4 m. Przerwy dłuższe niż pięć minut rozdzielają zapis (pięć odcinków); nie dodano łączących linii ani dystansu. Pozycje dystansowe profilu pochodzą z pełnego zapisu, nie z uproszczonej linii. Brak wymyślonych śladów i przypisań zdjęć do GPS.
+
+Dystans GPS 56,40 km nie zastępuje przekazanych wcześniej statystyk wyprawy 50,26 km / 4127 m / 24:24:59. Surowy zapis może zawierać szum i obejmuje trzy dni; nie jest deklarowany jako dystans wyłącznie marszu. Maksimum GPS 4648 m jest opisane oddzielnie od wysokości szczytu 4634 m. Nie wyliczono nowych sum podejść ani czasu ruchu.
+
+Kontrole: build i kontrola metadanych, `scripts/check-dufour-route.mjs`, kontrole atlasu, opowieści alpejskiej, stanu mapy i widoków udostępniania; ręczne sprawdzenie rzeczywistej mapy, profilu, zoomu i klawiatury na komputerze i emulowanych małych ekranach. Bez testu na fizycznym telefonie. Dostępność kafli zależy od zewnętrznego dostawcy; przy błędzie istniejący komunikat i przycisk ponowienia pozostają dostępne.

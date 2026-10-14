@@ -11,6 +11,7 @@ import { relatedExpeditions } from '../data/relatedExpeditions'
 import { MoroccoStory, MoroccoStoryHero } from './MoroccoStory'
 import { TravelTimeline } from './TravelTimeline'
 import { AlpsStory, AlpsStoryHero } from './AlpsStory'
+import { TripRoute } from './TripRoute'
 import '../expeditionStyles.css'
 
 export function ExpeditionList({ expeditions = expeditionPages, compact = false }) {
@@ -79,7 +80,7 @@ export function ExpeditionPage({ slug }) {
   const [allFrames, setAllFrames] = useState(false)
   useEffect(() => {
     const sectionId = window.location.hash.slice(1)
-    if (!['filmy', 'kadry', 'zdjecia', 'powiazane', 'opowiesc'].includes(sectionId)) return
+    if (!['filmy', 'kadry', 'zdjecia', 'powiazane', 'opowiesc', 'trasa'].includes(sectionId)) return
     let frame
     const scrollToFilms = () => { frame = window.requestAnimationFrame(() => document.getElementById(sectionId)?.scrollIntoView({ behavior: 'instant', block: 'start' })) }
     scrollToFilms()
@@ -110,6 +111,7 @@ export function ExpeditionPage({ slug }) {
               ? <FilmLink className="cz-expedition-primary" href={gallery.films[0].url}>{gallery.films.length > 1 ? 'Obejrzyj pierwszą część' : 'Obejrzyj film'} <span aria-hidden="true">▷</span></FilmLink>
               : <a className="cz-expedition-primary" href={galleryHref(gallery)}>{tripPhotos ? 'Zdjęcia z wyprawy' : videoFrames ? 'Kadry z wyprawy' : 'Galeria'} · {galleryItemCount(gallery)} <span aria-hidden="true">↗</span></a>}
             {videoFrames && gallery.films.length > 0 && <a href="#kadry">Kadry z wyprawy ↓</a>}
+            {expedition.id === 'wysoka-ganek-rysy-2026' && <a href="#trasa">Trasa i profil ↓</a>}
             {gallery.films.length > 0 && <a href="#filmy">{gallery.films[0].label === 'Zwiastun' ? 'Zwiastun' : gallery.films.length === 1 ? 'Film z wyprawy' : 'Filmy z wyprawy'} ↓</a>}
             {galleryMapLinks(gallery).map(place => <a key={place.id} href={place.href}>Na mapie: {place.label} ↗</a>)}
           </nav>
@@ -117,6 +119,7 @@ export function ExpeditionPage({ slug }) {
       </div>}
       {hasStory && <MoroccoStory />}
       {hasAlpsStory && <AlpsStory />}
+      {expedition.id === 'wysoka-ganek-rysy-2026' && <TripRoute routeId="ganek-wysoka-rysy" headingLevel={2} />}
       {expedition.id === 'rumunia-2024' && <section className="cz-trip-preparation" aria-labelledby="trip-preparation-title">
         <img src="/assets/photos/romania-pakowanie.webp" width="1182" height="1200" loading="lazy" alt="Rower, sakwy i wyposażenie przygotowane do wyprawy po Rumunii" />
         <div><p className="cz-expedition-eyebrow">Rumunia 2024</p><h2 id="trip-preparation-title">Przed wyjazdem</h2><p>Rower, sakwy, namiot i rzeczy na drogę. Tak wyglądały przygotowania do lipcowej wyprawy.</p><a href="#zdjecia">Zdjęcia z podróży ↓</a></div>
