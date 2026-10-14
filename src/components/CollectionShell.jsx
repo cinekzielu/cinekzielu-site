@@ -33,7 +33,7 @@ export function CollectionShell({ children, section, detail = false, className =
         </nav>
       </header>
       <main id="tresc">{children}</main>
-      <footer className="cz-gallery-footer"><a href="/o-mnie">Marcin Zieliński</a><nav aria-label="Stopka"><a href="/o-mnie#kontakt">Kontakt</a><a href="https://www.youtube.com/@cinek_zielu" target="_blank" rel="noreferrer">YouTube ↗</a></nav></footer>
+      <footer className="cz-gallery-footer"><a href="/o-mnie">Marcin Zieliński</a><nav aria-label="Stopka"><a href="/trasy">Trasy</a><a href="/o-mnie#kontakt">Kontakt</a><a href="https://www.youtube.com/@cinek_zielu" target="_blank" rel="noreferrer">YouTube ↗</a></nav></footer>
     </div>
   </div>
 }

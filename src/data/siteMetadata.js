@@ -1,3 +1,5 @@
+import routeCatalog from './routeCatalog.json' with { type: 'json' }
+import { tripRoutes } from './tripRoutes.js'
 import { photoGalleries, videoFrameCollections } from './galleryData.js'
 import { expeditionPages } from './expeditionPages.js'
 import { shareImages } from './shareImages.js'
@@ -20,6 +22,7 @@ export const sitePages = [
   page('/filmy', 'Filmy z gór i podróży — Cinek Zielu', 'Filmy z Tatr, Szwajcarii, Alp, Jury, Maroka i Hungaroringu. Wybierz miejsce, znajdź film i zobacz materiały z wyprawy.', shareImages['maroko-2025']),
   page('/szczyty', 'Moje szczyty — Cinek Zielu', 'Letnie i zimowe wejścia w Tatry, Alpy, Gorce i Atlas Wysoki. Wysokości, lata wejść, fotografie, filmy i wyprawy.', shareImages['konczysta-2026']),
   page('/galerie', 'Galerie z wypraw — Cinek Zielu', `${galleryCollectionCount(photoGalleries)} z ${photoGalleries.length} wypraw. Alpy, Tatry, Szwajcaria, Sycylia i Hungaroring w fotografiach Marcina Zielińskiego.`, shareImages['szwajcaria-2025']),
+  page('/trasy', 'Trasy GPX — Alpy i Tatry | Cinek Zielu', 'Sześć zapisów przejść w Alpach i Tatrach. Mapy terenu, profile wysokości i materiały z wypraw Cinek Zielu.', shareImages['alpy-2026']),
   page('/wyprawy', 'Wyprawy — fotografie, filmy i miejsca | Cinek Zielu', 'Górskie i rowerowe wyprawy, podróże oraz Hungaroring. Fotografie, kadry z nagrań, filmy i miejsca na mapie — Cinek Zielu.', shareImages['alpy-2026']),
   ...photoGalleries.map(gallery => page(`/galerie/${gallery.id}`, `${gallery.title} ${gallery.year} — galeria | Cinek Zielu`, gallery.mediaKind === 'video-frames' ? `${gallery.title} ${gallery.year} — ${galleryItemCount(gallery)} z oryginalnych nagrań${gallery.sourceLabel ? ' ' + gallery.sourceLabel : ''} Marcina Zielińskiego. Zobacz galerię, filmy i miejsce na mapie.` : `${gallery.title} ${gallery.year} — ${gallery.photos.length} fotografii z wyprawy. Zobacz galerię${gallery.films.length ? ', filmy' : ''} i miejsce na mapie. Fotografie Marcina Zielińskiego.`, shareImages[gallery.id])),
   ...expeditionPages.map(expedition => page(`/wyprawy/${expedition.id}`, `${expedition.title} ${expedition.year} — wyprawa | Cinek Zielu`, `${expedition.description} Zobacz ${expedition.gallery.mediaKind === 'video-frames' ? 'kadry z nagrań' : expedition.gallery.mediaKind === 'trip-photos' ? 'zdjęcia z wyprawy' : 'galerię zdjęć'}${expedition.gallery.films.length ? ', filmy' : ''} i miejsce na mapie.`, shareImages[expedition.id])),
@@ -99,6 +102,9 @@ export function pageStructuredData(metadata) {
   } else if (metadata.path === '/wyprawy') {
     base['@type'] = 'CollectionPage'
     base.mainEntity = itemList(expeditionPages.map(item => ({ name: `${item.title} ${item.year}`, url: `${SITE_ORIGIN}/wyprawy/${item.id}` })))
+  } else if (metadata.path === '/trasy') {
+    base['@type'] = 'CollectionPage'
+    base.mainEntity = itemList(routeCatalog.map(row => ({ name: tripRoutes[row.id].title, url: `${SITE_ORIGIN}/wyprawy/${row.trip}#${tripRoutes[row.id].anchor}` })))
   } else if (metadata.path === '/filmy') {
     base['@type'] = 'CollectionPage'
     base.mainEntity = itemList(filmCatalog.map(film => ({ name: film.title, url: film.youtubeUrl })))
