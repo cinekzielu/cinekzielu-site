@@ -7,7 +7,7 @@ import { VideoPlayer } from './VideoPlayer'
 import '../siteTools.css'
 
 const Tools = createContext(null)
-const resultIcons = { place:MapPin, gallery:Camera, expedition:Mountain, film:Play }
+const resultIcons = { route:MapPin, place:MapPin, gallery:Camera, expedition:Mountain, film:Play }
 
 export function SearchTrigger({ onOpen }) {
   const tools = useContext(Tools)

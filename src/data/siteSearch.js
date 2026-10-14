@@ -5,7 +5,10 @@ import { galleryHref, galleryItemCount } from './galleryNavigation.js'
 import { filmCatalog, filmRegionLabel, normalizeFilmSearch } from './filmCatalog.js'
 import { galleryAtlasIds } from './tripGeography.js'
 
-export const searchKinds = [{ id:'all', label:'Wszystko' }, { id:'place', label:'Miejsca' }, { id:'expedition', label:'Wyprawy' }, { id:'gallery', label:'Galerie' }, { id:'film', label:'Filmy' }]
+import routeCatalog from './routeCatalog.json' with { type: 'json' }
+import { tripRoutes } from './tripRoutes.js'
+
+export const searchKinds = [{ id:'all', label:'Wszystko' }, { id:'place', label:'Miejsca' }, { id:'route', label:'Trasy' }, { id:'expedition', label:'Wyprawy' }, { id:'gallery', label:'Galerie' }, { id:'film', label:'Filmy' }]
 export const normalizeSearch = value => normalizeFilmSearch(value || '').replace(/[^a-z0-9]+/g,' ').trim()
 const placeWords = ids => ids.flatMap(id => atlasAncestry(id).map(place => place.name)).join(' ')
 const filmPlaces = film => atlasContentNodes.filter(place => place.filmIds?.includes(film.youtubeId))
@@ -16,6 +19,7 @@ const filmTripWords = film => {
 const entry = data => ({ ...data, normalizedTitle:normalizeSearch(data.title), searchText:normalizeSearch(`${data.title} ${data.subtitle} ${data.keywords || ''}`) })
 
 export const siteSearchIndex = [
+  ...routeCatalog.map(row => entry({ id:`route:${row.id}`, kind:'route', title:`${tripRoutes[row.id].title} — trasa`, href:`/wyprawy/${row.trip}#${tripRoutes[row.id].anchor}`, subtitle:`${row.region} · ${tripRoutes[row.id].dates}`, keywords:`GPX profil wysokości mapa trasy ${row.country}` })),
   ...atlasContentNodes.filter(place => place.id !== 'world' && hasAtlasMaterials(place.id)).map(place => {
     const materials = getAtlasMaterials(place.id)
     return entry({ id:`place:${place.id}`, kind:'place', title:place.name, href:atlasHref(place.id), subtitle:[place.kind, materials.galleries.length && `${materials.galleries.length} wyp.`, materials.films.length && `${materials.films.length} film.`].filter(Boolean).join(' · '), keywords:`${placeWords([place.id])} ${place.description || ''}` })

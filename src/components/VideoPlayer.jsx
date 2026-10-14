@@ -2,12 +2,15 @@ import React, { useEffect, useRef, useState } from 'react'
 import { ExternalLink, RotateCcw } from 'lucide-react'
 import { filmRegionLabel } from '../data/filmCatalog'
 import { formatVideoTime, loadYouTubeAPI } from '../data/videoPlayer'
+import { findExpeditionPage } from '../data/expeditionPages'
+import { galleryHref, galleryLinkLabel } from '../data/galleryNavigation'
 
 export function VideoPlayer({ video, onRestart }) {
   const mount = useRef(null)
   const [status, setStatus] = useState('loading')
   const [errorCode, setErrorCode] = useState(null)
   const { film, start, href } = video
+  const expedition = findExpeditionPage(film.expeditionId)
   useEffect(() => {
     let cancelled = false, player
     const holder = document.createElement('div')
@@ -40,7 +43,7 @@ export function VideoPlayer({ video, onRestart }) {
     <div className="cz-video-details"><p>{filmRegionLabel(film.region)} · {film.format} · {film.duration}{start > 0 && <span>Od {formatVideoTime(start)}</span>}</p>
       <div className="cz-video-actions">
         {start > 0 && <button type="button" onClick={onRestart}><RotateCcw size={14} aria-hidden="true" />Od początku</button>}
-        {film.expeditionId && <><a href={`/wyprawy/${film.expeditionId}`}>Wyprawa ↗</a><a href={`/galerie/${film.expeditionId}`}>Galeria ↗</a></>}
+        {expedition && <><a href={`/wyprawy/${expedition.id}`}>Wyprawa ↗</a><a href={galleryHref(expedition.gallery)}>{galleryLinkLabel(expedition.gallery)} ↗</a></>}
         <a href={href} target="_blank" rel="noreferrer">Na YouTube <ExternalLink size={13} aria-hidden="true" /></a>
       </div>
     </div>

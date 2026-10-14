@@ -11,6 +11,7 @@ import { relatedExpeditions } from '../data/relatedExpeditions'
 import { MoroccoStory, MoroccoStoryHero } from './MoroccoStory'
 import { TravelTimeline } from './TravelTimeline'
 import { AlpsStory, AlpsStoryHero } from './AlpsStory'
+import { BaranieSeasons } from './BaranieSeasons'
 import { TripRoute } from './TripRoute'
 import '../expeditionStyles.css'
 import { useInitialLocation } from '../PageLocation'
@@ -68,7 +69,7 @@ export function ExpeditionIndex() {
   }
   return <ExpeditionShell>
     <div className="cz-gallery-intro"><h1>Wyprawy</h1><span className="cz-gallery-count">{[...view.options.years].join(' · ')}</span></div>
-    <p className="cz-expedition-index-intro">Od najnowszych. Zdjęcia, filmy, miejsca. <a href="/szczyty">Moje szczyty ↗</a></p>
+    <p className="cz-expedition-index-intro">Od najnowszych. Zdjęcia, filmy, miejsca. <a href="/szczyty">Moje szczyty ↗</a> · <a href="/trasy">Trasy GPX ↗</a></p>
     <div className="cz-trip-view-switch" role="group" aria-label="Widok wypraw">
       <button type="button" aria-pressed={mode === 'lista'} onClick={() => changeMode('lista')}>Lista</button>
       <button type="button" aria-pressed={mode === 'os'} onClick={() => changeMode('os')}>Oś podróży</button>
@@ -83,7 +84,7 @@ export function ExpeditionPage({ slug }) {
   const [allFrames, setAllFrames] = useState(false)
   useEffect(() => {
     const sectionId = window.location.hash.slice(1)
-    if (!['filmy', 'kadry', 'zdjecia', 'powiazane', 'opowiesc', 'trasa'].includes(sectionId)) return
+    if (!['filmy', 'kadry', 'zdjecia', 'powiazane', 'opowiesc', 'trasa', 'dwa-sezony'].includes(sectionId)) return
     let frame
     const scrollToFilms = () => { frame = window.requestAnimationFrame(() => document.getElementById(sectionId)?.scrollIntoView({ behavior: 'instant', block: 'start' })) }
     scrollToFilms()
@@ -116,6 +117,7 @@ export function ExpeditionPage({ slug }) {
             {videoFrames && gallery.films.length > 0 && <a href="#kadry">Kadry z wyprawy ↓</a>}
             {expedition.id === 'wysoka-ganek-rysy-2026' && <a href="#trasa">Trasa i profil ↓</a>}
             {gallery.films.length > 0 && <a href="#filmy">{gallery.films[0].label === 'Zwiastun' ? 'Zwiastun' : gallery.films.length === 1 ? 'Film z wyprawy' : 'Filmy z wyprawy'} ↓</a>}
+            {['baranie-rogi-lodowy-szczyt-2026', 'baranie-rogi-zima-2025'].includes(expedition.id) && <a href="#dwa-sezony">Lato i zima ↓</a>}
             {galleryMapLinks(gallery).map(place => <a key={place.id} href={place.href}>Na mapie: {place.label} ↗</a>)}
           </nav>
         </div>
@@ -144,6 +146,7 @@ export function ExpeditionPage({ slug }) {
           {preview.map(photo => <ResponsivePhoto key={photo.src} photo={photo} sizes="(max-width:520px) calc(100vw - 28px), (max-width:1448px) 32vw, 440px" loading="lazy" style={{ '--ratio': photo.width / photo.height }} />)}
         </a>
       </section>}
+      {['baranie-rogi-lodowy-szczyt-2026', 'baranie-rogi-zima-2025'].includes(expedition.id) && <BaranieSeasons />}
     </article>
     <RelatedExpeditions expedition={expedition} />
   </ExpeditionShell>

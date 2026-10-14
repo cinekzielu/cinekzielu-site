@@ -43,6 +43,7 @@ export function TripRoute({ routeId, headingLevel = 4 }) {
     <div id={`${route.id}-route-content`} hidden={!open}>
       {nearby && open ? <Suspense fallback={<p className="cz-route-loading" role="status">Wczytywanie trasy…</p>}><View headingLevel={headingLevel + 1} onReady={ready} /></Suspense> : <p className="cz-route-loading">Mapa i profil wczytają się po przewinięciu do tej sekcji.</p>}
     </div>
+    <a className="cz-route-strava" href="/trasy">Wszystkie trasy ↗</a>
     {route.stravaUrl && <a className="cz-route-strava" href={route.stravaUrl} target="_blank" rel="noreferrer">Zobacz aktywność na Stravie ↗</a>}
   </section>
 }

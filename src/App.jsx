@@ -11,6 +11,7 @@ import { FilmIndex } from './components/Films'
 import { SiteToolsProvider, SearchTrigger, FilmLink } from './components/SiteTools'
 import { PhotographyPage, PhotographyPreview } from './components/Photography'
 import { AboutPage } from './components/About'
+import { RouteCatalog } from './components/RouteCatalog'
 import { SummitsPage } from './components/Summits'
 import { getAtlasMaterials } from './data/atlasContent'
 import { NotFound } from './components/NotFound'
@@ -583,6 +584,7 @@ export function SitePage({ location }) {
   let page = pathname === '/' ? <App /> : <NotFound />
   if (pathname === '/mapa') page = <ClientContent fallback={<MapPageOverview />}><MapPage /></ClientContent>
   if (pathname === '/filmy') page = <FilmIndex />
+  if (pathname === '/trasy') page = <RouteCatalog />
   if (pathname === '/szczyty') page = <SummitsPage />
   if (pathname === '/fotografia') page = <PhotographyPage />
   if (pathname === '/o-mnie') page = <AboutPage />
