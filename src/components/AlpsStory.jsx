@@ -3,6 +3,8 @@ import { alpsStory, alpsStoryGallery, alpsStoryHash, alpsTotals, alpsLocations, 
 import { ResponsivePhoto } from './ResponsivePhoto'
 import { PhotoGrid } from './PhotoGrid'
 import { FilmLink } from './SiteTools'
+import { DufourRoute } from './DufourRoute'
+import { TripRoute } from './TripRoute'
 import '../alpsStory.css'
 
 const TerrainMap = lazy(() => import('./TatryTerrainMap').then(module => ({ default: module.TatryTerrainMap })))
@@ -85,6 +87,8 @@ export function AlpsStory() {
         <p className="cz-alps-description">{chapter.description}</p>
         <dl className="cz-alps-stage-stats"><div><dt>Dystans</dt><dd>{number(chapter.distance, 2)} km</dd></div><div><dt>Podejścia</dt><dd>+{number(chapter.ascent)} m</dd></div><div><dt>Czas ruchu</dt><dd>{chapter.movingTime}</dd></div></dl>
         {chapter.statsNote && <p className="cz-alps-stats-note">{chapter.statsNote}</p>}
+        {chapter.id === 'dufourspitze' && <DufourRoute />}
+        {chapter.id !== 'dufourspitze' && <TripRoute routeId={chapter.id} />}
         {chapter.photos.length > 0 && <StoryPhotos title={chapter.title} photos={chapter.photos} />}
         {chapter.days?.map((day, index) => <div className="cz-alps-day" key={day.title}><p className="cz-alps-kicker">Dzień {index + 1} / 3</p><h4>{day.title}</h4><p className="cz-alps-description">{day.description}</p><StoryPhotos title={`Dufourspitze · ${day.title}`} photos={day.photos} /></div>)}
       </section>{chapter.pause && <aside className="cz-alps-pause" aria-label={`Przerwa po ${chapter.title}`}><p className="cz-alps-kicker">Między szczytami · {chapter.number} → {String(Number(chapter.number) + 1).padStart(2, '0')}</p><h3>{chapter.pause.title}</h3><p className="cz-alps-description">{chapter.pause.description}</p>{chapter.pause.photos.length > 0 && <StoryPhotos title={chapter.pause.title} photos={chapter.pause.photos} featured={false} />}</aside>}</React.Fragment>)}</div>

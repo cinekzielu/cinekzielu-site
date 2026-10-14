@@ -12,7 +12,7 @@ const pointDistance = entries => entries.length < 2 ? 0 : Math.hypot(entries[0].
 const markerIcons = { mountain:Mountain, village:House, hut:Tent, city:MapPin, route:Route, lakes:Waves, glacier:Snowflake, forest:Trees, castle:Castle, film:Camera, waterfall:Waves, race:Flag }
 const initialView = (id, points, size, locations, locationById, overview, focusZoom) => locationById[id] ? { ...mercator(locationById[id]), zoom: focusZoom } : fitTerrain(overview || (points.length ? points : locations), size)
 
-export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0, locations = tatryLocations, locationById = tatryLocationById, regionId = 'tatry', resetLabel = 'Całe Tatry', surfaceLabel = 'Mapa terenu Tatr. Przesuwaj palcem lub strzałkami. Plus i minus przybliżają, Home pokazuje całe Tatry.', initialTone = 'natural', overviewPoints = null, focusZoom = 14, countryId = null, embedded = false }) {
+export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0, locations = tatryLocations, locationById = tatryLocationById, regionId = 'tatry', resetLabel = 'Całe Tatry', surfaceLabel = 'Mapa terenu Tatr. Przesuwaj palcem lub strzałkami. Plus i minus przybliżają, Home pokazuje całe Tatry.', initialTone = 'natural', overviewPoints = null, focusZoom = 14, countryId = null, embedded = false, renderOverlay = null, trackFocus = null }) {
   const [bookmark] = useState(() => embedded ? null : readTerrainView(window.location.search))
   const [size, setSize] = useState({ width: 800, height: 500 })
   const [view, setView] = useState(() => bookmark?.view || initialView(selectedId, points, { width: 800, height: 500 }, locations, locationById, overviewPoints, focusZoom))
@@ -87,6 +87,11 @@ export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0
     const safe = { x: Math.max(0, Math.min(1, next.x)), y: Math.max(0, Math.min(1, next.y)), zoom: clampTerrainZoom(next.zoom) }
     viewRef.current = safe; setView(safe)
   }
+  useEffect(() => {
+    if (!trackFocus) return
+    interacted.current = true
+    commit({ ...mercator(trackFocus), zoom: viewRef.current.zoom })
+  }, [trackFocus])
   const schedule = next => {
     pendingView.current = next
     if (pendingFrame.current !== null) return
@@ -229,6 +234,7 @@ export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0
         {tiles.map(tile => <img key={`${retry}/${tile.key}`} src={tile.src} alt="" draggable={false} referrerPolicy="strict-origin-when-cross-origin" style={{ left: tile.left, top: tile.top, width: tile.size + .5, height: tile.size + .5 }}
         onLoad={() => setTileStatus(current => current[tile.key] === 'loaded' ? current : { ...current, [tile.key]: 'loaded' })}
         onError={() => setTileStatus(current => current[tile.key] === 'error' ? current : { ...current, [tile.key]: 'error' })} />)}</div>
+      {renderOverlay?.(view, size)}
       {groups.map(group => { const Icon = markerIcons[group.points[0].icon] || Mountain; return <button type="button" key={group.id} style={{ left: group.x, top: group.y }} className={`cz-terrain-marker ${group.points.length > 1 ? 'is-stack' : ''} ${activeGroup === group ? 'is-active' : ''}`}
         tabIndex={group.x >= 22 && group.x <= size.width - 22 && group.y >= 22 && group.y <= size.height - 22 ? 0 : -1}
         aria-label={group.points.length === 1 ? `Wybierz: ${nameOf(group.points[0].id)}` : `Przybliż ${regionId === 'tatry' ? 'szczyty' : 'miejsca'}: ${group.points.map(point => nameOf(point.id)).join(', ')}`}
