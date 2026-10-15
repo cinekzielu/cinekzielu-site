@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Minus, Plus, Maximize2, Mountain, House, Tent, X, MapPin, Route, Waves, Snowflake, Trees, Castle, Camera, Link, Check, Flag } from 'lucide-react'
+import { Minus, Plus, Maximize2, Mountain, House, Tent, X, MapPin, Route, Waves, Snowflake, Trees, Castle, Camera, Link, Check, Flag, Star } from 'lucide-react'
 import { atlasNodeById } from '../data/atlasContent'
 import { tatryLocations, tatryLocationById } from '../data/tatryAtlas'
 import { mercator, unproject, worldSize, fitTerrain, terrainMarkers, visibleTerrainTiles, reprojectTerrainTile, gestureTerrain, zoomTerrainAt, clampTerrainZoom, MIN_TERRAIN_ZOOM, MAX_TERRAIN_ZOOM } from '../data/terrainMap'
@@ -10,7 +10,7 @@ import { atlasShareHref } from '../data/sharePages'
 
 const centerOf = entries => ({ x: entries.reduce((sum, point) => sum + point.x, 0) / entries.length, y: entries.reduce((sum, point) => sum + point.y, 0) / entries.length })
 const pointDistance = entries => entries.length < 2 ? 0 : Math.hypot(entries[0].x - entries[1].x, entries[0].y - entries[1].y)
-const markerIcons = { mountain:Mountain, village:House, hut:Tent, city:MapPin, route:Route, lakes:Waves, glacier:Snowflake, forest:Trees, castle:Castle, film:Camera, waterfall:Waves, race:Flag }
+const markerIcons = { planned:Star, mountain:Mountain, village:House, hut:Tent, city:MapPin, route:Route, lakes:Waves, glacier:Snowflake, forest:Trees, castle:Castle, film:Camera, waterfall:Waves, race:Flag }
 const initialView = (id, points, size, locations, locationById, overview, focusZoom) => locationById[id] ? { ...mercator(locationById[id]), zoom: focusZoom } : fitTerrain(overview || (points.length ? points : locations), size)
 
 export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0, locations = tatryLocations, locationById = tatryLocationById, regionId = 'tatry', resetLabel = 'Całe Tatry', surfaceLabel = 'Mapa terenu Tatr. Przesuwaj palcem lub strzałkami. Plus i minus przybliżają, Home pokazuje całe Tatry.', initialTone = 'natural', overviewPoints = null, focusZoom = 14, countryId = null, embedded = false, renderOverlay = null, trackFocus = null }) {
@@ -236,12 +236,12 @@ export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0
         onLoad={() => setTileStatus(current => current[tile.key] === 'loaded' ? current : { ...current, [tile.key]: 'loaded' })}
         onError={() => setTileStatus(current => current[tile.key] === 'error' ? current : { ...current, [tile.key]: 'error' })} />)}</div>
       {renderOverlay?.(view, size)}
-      {groups.map(group => { const Icon = markerIcons[group.points[0].icon] || Mountain; return <button type="button" key={group.id} style={{ left: group.x, top: group.y }} className={`cz-terrain-marker ${group.points.length > 1 ? 'is-stack' : ''} ${activeGroup === group ? 'is-active' : ''}`}
+      {groups.map(group => { const Icon = markerIcons[group.points[0].icon] || Mountain; return <button type="button" key={group.id} style={{ left: group.x, top: group.y }} className={`cz-terrain-marker ${group.points.length > 1 ? 'is-stack' : ''} ${group.points.length === 1 && group.points[0].status === 'planned' ? 'is-planned' : ''} ${activeGroup === group ? 'is-active' : ''}`}
         tabIndex={group.x >= 22 && group.x <= size.width - 22 && group.y >= 22 && group.y <= size.height - 22 ? 0 : -1}
-        aria-label={group.points.length === 1 ? `Wybierz: ${nameOf(group.points[0].id)}` : `Przybliż ${regionId === 'tatry' ? 'szczyty' : 'miejsca'}: ${group.points.map(point => nameOf(point.id)).join(', ')}`}
+        aria-label={group.points.length === 1 ? `Wybierz: ${nameOf(group.points[0].id)}${group.points[0].status === 'planned' ? ' — w planach' : ''}` : `Przybliż ${regionId === 'tatry' ? 'szczyty' : 'miejsca'}: ${group.points.map(point => nameOf(point.id)).join(', ')}`}
         aria-pressed={group.points.length === 1 ? group.points[0].id === selectedId : undefined}
         onClick={() => pick(group)} onPointerEnter={() => !dragging && setHovered(group.id)} onPointerLeave={() => setHovered(null)} onFocus={() => setHovered(group.id)} onBlur={() => setHovered(null)}><span>{group.points.length > 1 ? group.points.length : <Icon size={13} aria-hidden="true" />}</span></button>})}
-      {label && <div className="cz-terrain-label" style={{ width: labelWidth, left: Math.max(8, Math.min(size.width - labelWidth - 8, labelGroup.x - labelWidth / 2)), top: Math.max(64, labelGroup.y - 56) }}>{label}{labelGroup.points.length > 1 && <small>Kliknij, aby przybliżyć</small>}</div>}
+      {label && <div className="cz-terrain-label" style={{ width: labelWidth, left: Math.max(8, Math.min(size.width - labelWidth - 8, labelGroup.x - labelWidth / 2)), top: Math.max(64, labelGroup.y - 56) }}>{label}{labelGroup.points.length === 1 && labelGroup.points[0].status === 'planned' && <small className="is-planned">☆ W planach</small>}{labelGroup.points.length > 1 && <small>Kliknij, aby przybliżyć</small>}</div>}
       {nearbyChoices && <div className="cz-terrain-nearby"><button className="cz-terrain-close" aria-label="Zamknij wybór miejsca" onClick={() => setNearbyChoices(null)}><X size={15} /></button>{nearbyChoices.map(point => <button type="button" key={point.id} onClick={() => { selectionFromMap.current = point.id; onSelect(point.id); setNearbyChoices(null) }}>{nameOf(point.id)} →</button>)}</div>}
     </div>
     <div className="cz-terrain-top">

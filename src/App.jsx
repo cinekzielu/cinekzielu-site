@@ -2,13 +2,14 @@ import React from 'react'
 import { PageLocationProvider } from './PageLocation'
 import { ClientContent } from './components/ClientContent'
 import { AtlasOverview, MapPageOverview } from './components/AtlasOverview'
-import { Mountain, Menu, Play, X } from 'lucide-react'
+import { Mountain, Play } from 'lucide-react'
 import './styles.css'
+import { SiteHeader } from './components/SiteHeader'
 import { AlpsHomeFeature } from './components/AlpsHomeFeature'
 import { contentData } from './data/contentData'
 import { filmsData } from './data/filmsData'
 import { FilmIndex } from './components/Films'
-import { SiteToolsProvider, SearchTrigger, FilmLink } from './components/SiteTools'
+import { SiteToolsProvider, FilmLink } from './components/SiteTools'
 import { PhotographyPage, PhotographyPreview } from './components/Photography'
 import { AboutPage } from './components/About'
 import { RouteCatalog } from './components/RouteCatalog'
@@ -75,17 +76,6 @@ const homepageFeaturedExpeditions = [
   }
 })
 
-const mobileNavLinks = [
-  { href: '/fotografia', label: 'Fotografia' },
-  { href: '#expeditions', label: 'Wyprawy' },
-  { href: '#films', label: 'Filmy' },
-  { href: '#map', label: 'Mapa' },
-  { href: '#gallery-preview', label: 'Galerie' },
-  { href: '/o-mnie', label: 'O mnie' },
-  { href: '/o-mnie#kontakt', label: 'Kontakt' },
-]
-
-const mobileMenuVariant = 'A'
 const parseExpeditionSlugFromPath = (pathname) => {
   const match = pathname.match(/^\/wyprawy\/([^/]+)\/?$/)
   if (!match) return null
@@ -93,9 +83,6 @@ const parseExpeditionSlugFromPath = (pathname) => {
 }
 
 function App() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
-  const menuRef = React.useRef(null)
-  const menuButtonRef = React.useRef(null)
   const [activeExpeditionSlug, setActiveExpeditionSlug] = React.useState(null)
   const [isExpeditionNotFound, setIsExpeditionNotFound] = React.useState(false)
   const activeExpedition = React.useMemo(
@@ -140,28 +127,6 @@ function App() {
       elements.forEach((element) => observer.unobserve(element))
     }
   }, [])
-
-  React.useEffect(() => {
-    if (!isMobileMenuOpen) return
-    const previous = document.body.style.overflow
-    const links = [...menuRef.current.querySelectorAll('a')]
-    const controls = [document.querySelector('.homepage .cz-search-trigger'), menuButtonRef.current, ...links].filter(Boolean)
-    const media = window.matchMedia('(min-width:901px)')
-    const close = () => { setIsMobileMenuOpen(false); menuButtonRef.current?.focus() }
-    const keydown = event => {
-      if (event.key === 'Escape') { event.preventDefault(); close() }
-      if (event.key === 'Tab') {
-        if (event.shiftKey && document.activeElement === controls[0]) { event.preventDefault(); controls.at(-1)?.focus() }
-        else if (!event.shiftKey && document.activeElement === controls.at(-1)) { event.preventDefault(); controls[0]?.focus() }
-      }
-    }
-    const resize = () => { if (media.matches) setIsMobileMenuOpen(false) }
-    document.body.style.overflow = 'hidden'
-    links[0]?.focus()
-    window.addEventListener('keydown', keydown)
-    media.addEventListener('change', resize)
-    return () => { document.body.style.overflow = previous; window.removeEventListener('keydown', keydown); media.removeEventListener('change', resize) }
-  }, [isMobileMenuOpen])
 
   React.useEffect(() => {
     const syncExpeditionFromUrl = () => {
@@ -232,42 +197,7 @@ function App() {
         <div className="cinematicFog fogOne"></div>
         <div className="cinematicFog fogTwo"></div>
         <div className="glow"></div>
-        <nav className={`nav container mobileVariant${mobileMenuVariant}`}>
-          <div>
-            <div className="logo">Cinek Zielu</div>
-            <div className="sublogo">Marcin Zieliński • Góry • Podróże • Film</div>
-          </div>
-          <div className="navLinks">
-            {mobileNavLinks.map((item) => (
-              <a href={item.href} key={item.href}>
-                {item.label}
-              </a>
-            ))}
-          </div>
-          <SearchTrigger onOpen={() => setIsMobileMenuOpen(false)} />
-          <button
-            className="hamburgerButton"
-            ref={menuButtonRef}
-            aria-controls="mobile-navigation"
-            type="button"
-            aria-label={isMobileMenuOpen ? 'Zamknij menu' : 'Otwórz menu'}
-            aria-expanded={isMobileMenuOpen}
-            onClick={() => setIsMobileMenuOpen((current) => !current)}
-          >
-            {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
-          </button>
-        </nav>
-        <div
-          className={`mobileMenuBackdrop ${isMobileMenuOpen ? 'isOpen' : ''}`}
-          onClick={() => setIsMobileMenuOpen(false)}
-        />
-        <div ref={menuRef} id="mobile-navigation" role="navigation" aria-label="Menu mobilne" inert={!isMobileMenuOpen} className={`mobileMenu mobileVariant${mobileMenuVariant} ${isMobileMenuOpen ? 'isOpen' : ''}`}>
-          {mobileNavLinks.map((item) => (
-            <a href={item.href} key={item.href} onClick={() => { setIsMobileMenuOpen(false); requestAnimationFrame(() => { const target = item.href.startsWith('#') ? document.querySelector(item.href) : null; if (target) { target.tabIndex = -1; target.focus({ preventScroll: true }) } }) }}>
-              {item.label}
-            </a>
-          ))}
-        </div>
+        <div className="cz-gallery-wrap cz-home-header"><SiteHeader /></div>
 
         <div className="heroGrid container" id="home-content" tabIndex={-1}>
           <div className="heroText">

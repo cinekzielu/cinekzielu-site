@@ -7,7 +7,7 @@ import { shareImages } from './shareImages.js'
 // This is the published PR160 atlas, not every locally staged map addition.
 // Adding new places to this list is a separate editorial/publication decision.
 export const sharedAtlasIds = [
-  'world', 'europe', 'africa', 'north-america', 'south-america', 'asia', 'oceania',
+  'matterhorn', 'world', 'europe', 'africa', 'north-america', 'south-america', 'asia', 'oceania',
   'poland', 'slovakia', 'switzerland', 'austria', 'germany', 'slovenia', 'italy',
   'hungary', 'france', 'norway', 'spain', 'romania', 'greece', 'liechtenstein',
   'sicily', 'catania', 'taormina', 'etna', 'hungaroring', 'tatry', 'alpy', 'jura',
@@ -56,7 +56,7 @@ const mapPages = sharedAtlasIds.map(id => {
   const gallery = materials.galleries.find(item => shareImages[item.id])
   return {
     path: `/udostepnij/mapa/${id}`, kind: 'atlas', atlasId: id,
-    title: `${place.name} — mapa | Cinek Zielu`,
+    title: `${place.name} — ${place.status === 'planned' ? 'w planach' : 'mapa'} | Cinek Zielu`,
     description: `${place.name} w atlasie Cinek Zielu. ${place.description || 'Zobacz miejsce na mapie i powiązane materiały.'}`,
     image: ['world', 'europe'].includes(id) ? shareImages.default : shareImages[gallery?.id] || shareImages.default,
     view: { pathname: '/mapa', search: `?atlas=${encodeURIComponent(id)}` },

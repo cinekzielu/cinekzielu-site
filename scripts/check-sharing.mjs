@@ -16,7 +16,7 @@ assert.equal(sitePages.length, 43, 'Share views must not add trips or canonical 
 assert.equal(sharePages.length, photos.length + photographyCollections.length + sharedAtlasIds.length)
 assert.equal(new Set(sharePages.map(page => page.path)).size, sharePages.length)
 assert.equal(sharePageMetadata.length, sharePages.length)
-assert.equal(sharedAtlasIds.length, 84)
+assert.equal(sharedAtlasIds.length, 85)
 const canonicalPaths = new Set(sitePages.map(page => page.path))
 function webpDimensions(bytes) {
   assert.equal(bytes.toString('ascii', 0, 4), 'RIFF')

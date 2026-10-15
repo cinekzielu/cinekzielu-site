@@ -1,3 +1,5 @@
+import { showPlannedSummit } from '../data/plannedSummits'
+import '../plannedSummits.css'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { galleryHref, galleryItemCount, galleryMediaLabel, galleryLinkLabel } from '../data/galleryNavigation'
 import { Search, Play, Mountain } from 'lucide-react'
@@ -157,7 +159,7 @@ export function MapAtlas({ standalone = false }) {
   const years = atlasYears(yearScope)
   const materials = getAtlasMaterials(selectedId, year)
   useEffect(() => { setShowAllTrips(false) }, [selectedId, year, contextId])
-  const terrainPoints = (terrain?.locations || []).filter(point => (!onlyMaterials && year === 'all') || hasAtlasMaterials(point.id, year))
+  const terrainPoints = (terrain?.locations || []).filter(point => (!onlyMaterials && year === 'all') || hasAtlasMaterials(point.id, year) || showPlannedSummit(point.id, year))
   const selectedCountry = ancestry.find(node => node.kind === 'Kraj')?.id
   const selectedContinent = ancestry.find(node => node.kind === 'Kontynent')?.id
   const worldOverlay = worldOverlayPaths
@@ -196,7 +198,7 @@ export function MapAtlas({ standalone = false }) {
     const defaultProfile = atlasTerrainProfile(id)
     const nextContext = terrain?.locations.some(point => point.id === id) && defaultProfile?.id !== terrain.id ? terrain.id : null
     const scope = nextContext || defaultProfile?.id || (atlasNodeById[id].view === 'tatry' ? 'tatry' : id)
-    const nextYear = id === 'world' || atlasNodeById[id].kind === 'Kontynent' ? 'all' : requestedYear === 'all' || atlasYears(scope).includes(requestedYear) ? requestedYear : 'all'
+    const nextYear = atlasNodeById[id].status === 'planned' || id === 'world' || atlasNodeById[id].kind === 'Kontynent' ? 'all' : requestedYear === 'all' || atlasYears(scope).includes(requestedYear) ? requestedYear : 'all'
     const url = new URL(window.location.href)
     if (id !== selectedId || nextContext !== contextId) url.searchParams.delete('kadr')
     if (!defaultProfile && atlasNodeById[id].view !== 'tatry') url.searchParams.delete('podklad')
@@ -226,10 +228,10 @@ export function MapAtlas({ standalone = false }) {
   let candidates = atlasListNodes(selectedId)
   if (terrain) candidates = [...new Map([...atlasListNodes(terrain.id), ...terrain.locations.map(point => atlasNodeById[point.id])].map(node => [node.id,node])).values()]
   if (query.trim()) candidates = searchAtlasNodes(query, atlasContentNodes.filter(node => node.id !== 'world'))
-  const listed = candidates.filter(node => (!onlyMaterials && year === 'all') || hasAtlasMaterials(node.id, year) || node.id === selectedId)
+  const listed = candidates.filter(node => (!onlyMaterials && year === 'all') || hasAtlasMaterials(node.id, year) || showPlannedSummit(node.id, year) || node.id === selectedId)
   const typeLabel = (count, one, few, many) => `${count} ${count === 1 ? one : count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 12 || count % 100 > 14) ? few : many}`
   const filmLabel = count => typeLabel(count, 'film', 'filmy', 'filmów')
-  const summary = `${materials.galleries.length ? typeLabel(materials.galleries.length, 'wyprawa', 'wyprawy', 'wypraw') + ' · ' : ''}${filmLabel(materials.films.length)}`
+  const summary = selected.status === 'planned' ? 'W planach' : `${materials.galleries.length ? typeLabel(materials.galleries.length, 'wyprawa', 'wyprawy', 'wypraw') + ' · ' : ''}${filmLabel(materials.films.length)}`
   const showPanel = () => { panelRef.current?.scrollIntoView({ behavior: 'instant', block: 'start' }); panelRef.current?.focus({ preventScroll: true }) }
 
   return <div className={`cz-atlas ${standalone ? 'is-standalone' : ''}`}>
@@ -300,21 +302,22 @@ export function MapAtlas({ standalone = false }) {
           {atlasNodeById[terrain.id].related?.length > 0 && <nav className="cz-atlas-area-links" aria-label="Powiązane obszary"><span>Obszary</span>{atlasNodeById[terrain.id].related.map(id => <button type="button" key={id} onClick={() => select(id)}>{atlasNodeById[id].name} ↗</button>)}</nav>}
           {terrain.id === 'morocco-atlas' && <button type="button" className="cz-atlas-area-return" onClick={() => select('morocco')}>← Całe Maroko</button>}
           <TatryTerrainMap key={`${terrain.id}/${historyRevision}`} countryId={terrain.countryId} points={terrainPoints} locations={terrain.locations} locationById={terrain.locationById} overviewPoints={terrain.overview} focusZoom={terrain.focusZoom} selectedId={selectedId} onSelect={select} regionId={terrain.id} resetLabel={terrain.resetLabel} surfaceLabel={`Mapa terenu: ${terrain.name}. Przesuwaj palcem lub strzałkami. Plus i minus przybliżają, Home pokazuje cały obszar.`} initialTone="dark" />
-          <div className="cz-atlas-terrain-hint"><span>Przeciągnij mapę · przybliż + / −</span><span>Miejsca z materiałami</span></div>
+          <div className="cz-atlas-terrain-hint"><span>Przeciągnij mapę · przybliż + / −</span><span>{terrain.locations.some(point => showPlannedSummit(point.id, year)) ? '☆ Cel w planach' : 'Miejsca z materiałami'}</span></div>
           {!terrainPoints.length && (materials.films.length > 0 || materials.galleries.length > 0) && <p className="cz-atlas-map-pending">Materiały znajdziesz w panelu wypraw. Miejsca tej podróży nie są jeszcze oznaczone na mapie.</p>}
         </section>}
-        {view !== 'tatry' && <><button type="button" className="cz-atlas-mobile-materials" onClick={showPanel}><span>{selected.name}<small>{summary}</small></span><span>Materiały ↓</span></button>
+        {view !== 'tatry' && <><button type="button" className="cz-atlas-mobile-materials" onClick={showPanel}><span>{selected.name}<small>{summary}</small></span><span>{selected.status === 'planned' ? 'Cel ↓' : 'Materiały ↓'}</span></button>
         <div className="cz-atlas-picker">
-          <div className="cz-atlas-picker-heading"><h3>Wybierz miejsce</h3><label><input type="checkbox" checked={onlyMaterials} onChange={event => setOnlyMaterials(event.target.checked)} /> Z materiałami</label></div>
+          <div className="cz-atlas-picker-heading"><h3>Wybierz miejsce</h3><label><input type="checkbox" checked={onlyMaterials} onChange={event => setOnlyMaterials(event.target.checked)} /> {listed.some(node => node.status === 'planned') ? 'Materiały i plany' : 'Z materiałami'}</label></div>
           <div className="cz-atlas-search"><Search size={16} aria-hidden="true" /><input type="search" aria-label="Szukaj miejsca na mapie" placeholder="Szukaj miejsca…" value={query} onChange={event => setQuery(event.target.value)} /></div>
           <div className="cz-atlas-place-list" role="group" aria-label="Miejsca na mapie">{listed.map(node => {
             const data = getAtlasMaterials(node.id, year)
-            return <button type="button" key={node.id} aria-pressed={node.id === selectedId} onClick={() => select(node.id)}><span>{node.name}</span><small>{data.films.length || data.galleries.length ? [data.galleries.length && typeLabel(data.galleries.length, 'wyprawa', 'wyprawy', 'wypraw'), data.films.length && filmLabel(data.films.length)].filter(Boolean).join(' · ') : 'Brak materiałów'}</small></button>
+            return <button type="button" key={node.id} className={node.status === 'planned' ? 'is-planned' : undefined} aria-pressed={node.id === selectedId} onClick={() => select(node.id)}><span>{node.status === 'planned' && '☆ '}{node.name}</span><small>{node.status === 'planned' ? 'W planach' : data.films.length || data.galleries.length ? [data.galleries.length && typeLabel(data.galleries.length, 'wyprawa', 'wyprawy', 'wypraw'), data.films.length && filmLabel(data.films.length)].filter(Boolean).join(' · ') : 'Brak materiałów'}</small></button>
           })}</div>
           {!listed.length && <p className="cz-atlas-empty-search" role="status">{year === 'all' ? 'Brak wyników. Zmień nazwę lub wyłącz filtr „Z materiałami”.' : 'Brak oznaczonych miejsc dla tego roku. Wybierz inny rok lub wszystkie lata.'}</p>}
         </div></>}
       </div>
       <aside className="cz-atlas-detail" ref={panelRef} tabIndex={-1} aria-label={`Materiały: ${selected.name}`}>
+        {selected.status === 'planned' && <span className="cz-atlas-planned-status">☆ W planach</span>}
         <p className="cz-atlas-kicker">{selected.kind}{selected.altitude ? ` · ${selected.altitude}` : ''}</p>
         <h3>{selected.name}</h3>
         {selected.description && <p className="cz-atlas-description">{selected.description}</p>}
@@ -329,14 +332,15 @@ export function MapAtlas({ standalone = false }) {
           <small>{selected.visit.note}</small>
           <a href={selected.visit.href}>Zobacz rozdział: {selected.name} →</a>
         </section>}
-        <div className="cz-atlas-stats"><div><strong>{materials.galleries.length}</strong><span>Wyprawy</span></div><div><strong>{materials.films.length}</strong><span>Filmy</span></div><div><strong>{materials.photoCount}</strong><span>{galleryMediaLabel(materials.galleries)}</span></div></div>
+        {selected.status === 'planned' && <div className="cz-atlas-planned-note"><span>{selected.countryLabel}</span><p>Planowane wejście — poza listą zdobytych szczytów.</p><a href="/szczyty#w-planach">Moje szczyty · w planach ↗</a><a href={selected.altitudeSource} target="_blank" rel="noreferrer">Wysokość: SAC ↗</a></div>}
+        {selected.status !== 'planned' && <div className="cz-atlas-stats"><div><strong>{materials.galleries.length}</strong><span>Wyprawy</span></div><div><strong>{materials.films.length}</strong><span>Filmy</span></div><div><strong>{materials.photoCount}</strong><span>{galleryMediaLabel(materials.galleries)}</span></div></div>}
         {selected.related?.length > 0 && <div className="cz-atlas-related">{selected.related.map(id => <button type="button" key={id} onClick={() => select(id)}>{atlasNodeById[id].name} →</button>)}</div>}
         {materials.galleries.length > 0 && <section className="cz-atlas-trips" aria-label="Wyprawy"><h4>Wyprawy</h4>{materials.galleries.slice(0, showAllTrips ? undefined : 3).map(gallery => <article key={gallery.id}>
           <a href={`/wyprawy/${gallery.id}`} tabIndex={-1} aria-hidden="true"><img src={gallery.coverImage} alt="" width={gallery.coverWidth} height={gallery.coverHeight} loading="lazy" /></a>
           <div><a className="cz-atlas-trip-title" href={`/wyprawy/${gallery.id}`}>{gallery.title} <span>{gallery.year}</span> ↗</a><a className="cz-atlas-gallery-link" href={galleryHref(gallery)}>{selected.visit?.expeditionId === gallery.id ? 'Galeria całej wyprawy' : galleryLinkLabel(gallery)} · {galleryItemCount(gallery)} ↗</a></div>
         </article>)}{materials.galleries.length > 3 && <button type="button" className="cz-atlas-library" aria-expanded={showAllTrips} onClick={() => setShowAllTrips(value => !value)}>{showAllTrips ? 'Zwiń wyprawy' : `Pokaż wszystkie wyprawy (${materials.galleries.length})`}</button>}</section>}
         {materials.films.length > 0 && <section className="cz-atlas-films" aria-label="Filmy z tego miejsca"><h4>{selected.chapter ? 'Ten moment w filmie' : 'Filmy'} <span>{materials.films.length}</span></h4>{materials.films.slice(0, showAllFilms ? undefined : 3).map(film => <FilmLink key={film.id} href={atlasFilmHref(selected, film)} target="_blank" rel="noreferrer"><Play size={15} aria-hidden="true" /><span>{film.title}<small>{selected.chapter?.videoId === film.youtubeId ? `Oglądaj od ${selected.chapter.time}` : `${film.format} · ${film.duration}`}</small></span><span aria-hidden="true">▷</span></FilmLink>)}{materials.films.length > 3 && <button type="button" className="cz-atlas-library" aria-expanded={showAllFilms} onClick={() => setShowAllFilms(value => !value)}>{showAllFilms ? 'Zwiń filmy' : `Pokaż wszystkie filmy (${materials.films.length})`}</button>}</section>}
-        {!materials.films.length && !materials.galleries.length && <div className="cz-atlas-no-content"><p>{year === 'all' ? 'Nie ma jeszcze opublikowanych materiałów z tego miejsca.' : 'Brak materiałów z wybranego roku.'}</p><button type="button" onClick={() => select(selected.parent || 'world')}>← {atlasNodeById[selected.parent || 'world'].name}</button></div>}
+        {selected.status !== 'planned' && !materials.films.length && !materials.galleries.length && <div className="cz-atlas-no-content"><p>{year === 'all' ? 'Nie ma jeszcze opublikowanych materiałów z tego miejsca.' : 'Brak materiałów z wybranego roku.'}</p><button type="button" onClick={() => select(selected.parent || 'world')}>← {atlasNodeById[selected.parent || 'world'].name}</button></div>}
       </aside>
     </div>
     <span className="cz-atlas-announcement" role="status" aria-live="polite" aria-atomic="true">{selected.name}: {summary}</span>
