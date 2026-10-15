@@ -42,9 +42,9 @@ for (const [id, country, distance, ascent, movingTime] of expected) {
   assert(searchSite(node.name).some(item => item.id === 'expedition:alpy-2026'))
 }
 assert.match(atlasNodeById.dufourspitze.visit.note, /trzydniowy/)
-assert.equal(atlasTerrainProfile('alpy').locations.length, 11)
-assert.equal(atlasListNodes('alpy').length, 11)
-assert.equal(atlasTerrainProfile('switzerland').locations.length, 7)
+assert.equal(atlasTerrainProfile('alpy').locations.length, 12)
+assert.equal(atlasListNodes('alpy').length, 12)
+assert.equal(atlasTerrainProfile('switzerland').locations.length, 8)
 for (const place of ['slowenia', 'austria', 'niemcy', 'liechtenstein']) {
   assert.deepEqual(filterCollections(galleryData, {place, year:'wszystkie'}).map(item => item.id), ['alpy-2026'])
 }

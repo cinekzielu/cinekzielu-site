@@ -1,3 +1,4 @@
+import { plannedSummits } from './plannedSummits.js'
 import { atlasContentNodes, atlasAncestry, atlasHref, getAtlasMaterials, hasAtlasMaterials } from './atlasContent.js'
 import { expeditionPages, expeditionHref } from './expeditionPages.js'
 import { galleryData, photoGalleries } from './galleryData.js'
@@ -19,6 +20,7 @@ const filmTripWords = film => {
 const entry = data => ({ ...data, normalizedTitle:normalizeSearch(data.title), searchText:normalizeSearch(`${data.title} ${data.subtitle} ${data.keywords || ''}`) })
 
 export const siteSearchIndex = [
+  ...plannedSummits.map(peak => entry({ id:`planned:${peak.id}`, kind:'place', title:peak.name, href:atlasHref(peak.id), subtitle:`W planach · ${peak.altitude} · ${peak.countryLabel}`, keywords:`${peak.range} plan cel bucket list Monte Cervino Mont Cervin` })),
   ...routeCatalog.map(row => entry({ id:`route:${row.id}`, kind:'route', title:`${tripRoutes[row.id].title} — trasa`, href:`/wyprawy/${row.trip}#${tripRoutes[row.id].anchor}`, subtitle:`${row.region} · ${tripRoutes[row.id].dates}`, keywords:`GPX profil wysokości mapa trasy ${row.country}` })),
   ...atlasContentNodes.filter(place => place.id !== 'world' && hasAtlasMaterials(place.id)).map(place => {
     const materials = getAtlasMaterials(place.id)

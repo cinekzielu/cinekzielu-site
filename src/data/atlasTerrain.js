@@ -1,3 +1,4 @@
+import { plannedSummits } from './plannedSummits.js'
 import { countryBounds } from './terrainCountryBounds.js'
 import { atlasAncestry, atlasNodeById } from './atlasContent.js'
 import { switzerlandPlaces } from './switzerlandPlaces.js'
@@ -35,7 +36,8 @@ export function atlasTerrainProfile(id) {
   else scope = [...path].reverse().find(node => node.kind === 'Kraj' || node.kind === 'Region')?.id
   if (!scope || scope === 'tatry') return null
   const node = atlasNodeById[scope]
-  const locations = scope === 'sicily' ? countries.italy : scope === 'alpy' ? [...swiss, ...alpsPlaces] : scope === 'morocco-atlas' ? morocco.filter(point => point.group) : countries[scope] || []
+  const existingLocations = scope === 'sicily' ? countries.italy : scope === 'alpy' ? [...swiss, ...alpsPlaces] : scope === 'morocco-atlas' ? morocco.filter(point => point.group) : countries[scope] || []
+  const locations = [...existingLocations, ...plannedSummits.filter(peak => scope === 'alpy' || peak.countryIds.includes(scope))]
   const bounds = countryBounds[scope] || regionBounds[scope]
   return {
     id:scope, name:node.name, locations, countryId:node.kind === 'Kraj' ? scope : null,

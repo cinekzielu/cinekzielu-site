@@ -1,3 +1,4 @@
+import { plannedSummits } from './plannedSummits.js'
 import { travelAtlasData } from './travelData.js'
 import { europeAtlasNodes } from './europeAtlasData.js'
 import { galleryData } from './galleryData.js'
@@ -55,6 +56,7 @@ export const atlasContentNodes = [
   { id: 'walentkowy-wierch', name: 'Walentkowy Wierch', kind: 'Szczyt', parent: 'tatry', view: 'tatry', filmIds: ['ITjvjmavnNs'] },
   ...switzerlandPlaces.map(place => ({...place, view:'terrain'})),
   ...alpsPlaces,
+  ...plannedSummits,
   {...moroccoAtlas, view:'terrain'},
   ...moroccoPlaces.map(place => ({...place, view:'terrain'})),
 ]
@@ -74,7 +76,7 @@ export function atlasAncestry(id) {
 // Show places inside the selected country/region, retaining siblings at a leaf.
 export function atlasListNodes(id) {
   const path = atlasAncestry(id)
-  if (id === 'alpy') return [...switzerlandPlaces, ...alpsPlaces].map(place => atlasNodeById[place.id])
+  if (id === 'alpy') return [...switzerlandPlaces, ...alpsPlaces, ...plannedSummits].map(place => atlasNodeById[place.id])
   if (path.some(node => node.id === 'morocco')) return moroccoMapPlaces(id).map(node => atlasNodeById[node.id])
   for (const ancestor of [...path].reverse()) {
     if (ancestor.id === 'world') return atlasQuickIds.map(key => atlasNodeById[key])
@@ -102,7 +104,7 @@ export const atlasYears = id => {
 }
 export const readAtlasYear = (search = window.location.search) => {
   const params = new URLSearchParams(search), year = params.get('rok'), id = readAtlasSelection(search)
-  if (id === 'world' || atlasNodeById[id].kind === 'Kontynent') return 'all'
+  if (atlasNodeById[id].status === 'planned' || id === 'world' || atlasNodeById[id].kind === 'Kontynent') return 'all'
   const context = atlasNodeById[params.get('obszar')]
   const scope = context && ['Kraj','Region'].includes(context.kind) ? context.id : [...atlasAncestry(id)].reverse().find(node => ['Kraj','Region'].includes(node.kind))?.id || id
   return atlasYears(scope).includes(year) ? year : 'all'
