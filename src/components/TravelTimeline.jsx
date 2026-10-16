@@ -3,6 +3,7 @@ import { ResponsivePhoto } from './ResponsivePhoto'
 import { expeditionHref, sortExpeditionsNewest, filmCount } from '../data/expeditionPages'
 import { galleryHref, galleryLinkLabel, galleryItemCount, expeditionCount } from '../data/galleryNavigation'
 import '../travelTimeline.css'
+import { SaveButton } from './SavedItems'
 
 export function TravelTimeline({ expeditions }) {
   const sorted = sortExpeditionsNewest(expeditions)
@@ -29,6 +30,7 @@ export function TravelTimeline({ expeditions }) {
                 <nav className="cz-timeline-links" aria-label={`Materiały: ${trip.title}`}>
                   <a href={galleryHref(trip.gallery)}>{galleryLinkLabel(trip.gallery)}</a>
                   {trip.gallery.films.length > 0 && <a href={`${expeditionHref(trip)}#filmy`}>Filmy</a>}
+                  <SaveButton itemKey={`trip:${trip.id}`} />
                 </nav>
               </div>
             </article>

@@ -15,10 +15,11 @@ import { BaranieSeasons } from './BaranieSeasons'
 import { TripRoute } from './TripRoute'
 import '../expeditionStyles.css'
 import { useInitialLocation } from '../PageLocation'
+import { SaveButton } from './SavedItems'
 
 export function ExpeditionList({ expeditions = expeditionPages, compact = false }) {
   return <div className={`cz-expedition-list${compact ? ' is-compact' : ''}`}>
-    {sortExpeditionsNewest(expeditions).map((expedition, index) => <a className="cz-expedition-row" key={expedition.id} href={expeditionHref(expedition)} aria-label={`Wyprawa: ${expedition.title} ${expedition.year}`}>
+    {sortExpeditionsNewest(expeditions).map((expedition, index) => <div className="cz-expedition-save-row" key={expedition.id}><a className="cz-expedition-row" href={expeditionHref(expedition)} aria-label={`Wyprawa: ${expedition.title} ${expedition.year}`}>
       <div className="cz-expedition-row-image"><ResponsivePhoto photo={expedition.gallery.photos.find(photo => photo.src === expedition.gallery.coverImage)} sizes="(max-width:520px) calc(100vw - 28px), (max-width:760px) 150px, (max-width:1000px) 220px, 260px" style={{ objectPosition: expedition.gallery.coverPosition }} loading={compact || index > 0 ? 'lazy' : 'eager'} /></div>
       <div className="cz-expedition-row-body">
         <span className="cz-expedition-eyebrow">{expedition.region} · {expedition.kind}</span>
@@ -26,7 +27,7 @@ export function ExpeditionList({ expeditions = expeditionPages, compact = false 
         <span className="cz-expedition-material-count">{galleryItemCount(expedition.gallery)}{expedition.gallery.films.length > 0 && ` · ${filmCount(expedition.gallery.films)}`}</span>
       </div>
       <span className="cz-expedition-row-arrow" aria-hidden="true">↗</span>
-    </a>)}
+    </a><SaveButton itemKey={`trip:${expedition.id}`} iconOnly /></div>)}
   </div>
 }
 
@@ -103,6 +104,7 @@ export function ExpeditionPage({ slug }) {
     : gallery.photos.filter(photo => photo.src !== gallery.coverImage).slice(0, 3)
   return <ExpeditionShell detail>
     <article>
+      <div className="cz-trip-save-bar"><SaveButton itemKey={`trip:${expedition.id}`} /></div>
       {hasStory ? <MoroccoStoryHero /> : hasAlpsStory ? <AlpsStoryHero /> : <div className="cz-expedition-hero">
         <div className="cz-expedition-hero-image"><ResponsivePhoto photo={cover} full sizes="(max-width:760px) calc(100vw - 28px), (max-width:1240px) 55vw, 660px" fetchPriority="high" /></div>
         <div className="cz-expedition-hero-body">

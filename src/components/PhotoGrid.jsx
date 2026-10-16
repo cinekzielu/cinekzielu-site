@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import { ResponsivePhoto } from './ResponsivePhoto'
 import { PhotoViewer } from './PhotoViewer'
 import { linkedPhotoIndex, photoViewUrl } from '../data/photoView'
+import { SaveButton } from './SavedItems'
+import { savedPhotoKey } from '../data/savedItems'
 
 function useColumns(featured) {
   const get = () => window.matchMedia('(max-width:600px)').matches ? 1 : featured || window.matchMedia('(max-width:900px)').matches ? 2 : 3
@@ -53,9 +55,9 @@ export function PhotoGrid({ gallery, featured = false, previewLimit = null, eage
           const rowRatio = row.items.reduce((sum, image) => sum + image.width / image.height, 0)
           const fraction = (item.width / item.height) / rowRatio
           const sizes = columns === 1 || lead ? '(max-width:600px) calc(100vw - 28px), (max-width:900px) calc(100vw - 40px), (max-width:1448px) calc(100vw - 88px), 1360px' : `(max-width:600px) calc(100vw - 28px), (max-width:900px) calc(${100 * fraction}vw - ${(40 + 12 * (row.items.length - 1)) * fraction}px), (max-width:1448px) calc(${100 * fraction}vw - ${(88 + 16 * (row.items.length - 1)) * fraction}px), ${(1360 - 16 * (row.items.length - 1)) * fraction}px`
-          return <button className="cz-photo" type="button" key={item.src} style={{ '--ratio': item.width / item.height }} onClick={event => { trigger.current = event.currentTarget; setCurrent(index) }} aria-label={`Otwórz ${isVideoFrames ? 'kadr' : 'zdjęcie'} ${String(index + 1).padStart(2, '0')} z ${gallery.photos.length}`}>
+          return <div className="cz-photo-frame" key={item.src} style={{ '--ratio': item.width / item.height }}><button className="cz-photo" type="button" onClick={event => { trigger.current = event.currentTarget; setCurrent(index) }} aria-label={`Otwórz ${isVideoFrames ? 'kadr' : 'zdjęcie'} ${String(index + 1).padStart(2, '0')} z ${gallery.photos.length}`}>
             <ResponsivePhoto photo={item} full={featured} sizes={sizes} loading={eagerFirst && index === 0 ? 'eager' : 'lazy'} fetchPriority={eagerFirst && index === 0 ? 'high' : undefined} />
-          </button>
+          </button><SaveButton itemKey={savedPhotoKey(item)} iconOnly /></div>
         })}
       </div>)}
     </section>

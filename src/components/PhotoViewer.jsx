@@ -3,6 +3,8 @@ import { fittedPhotoSize, photoViewUrl } from '../data/photoView'
 import { photoInquiry } from '../data/photoInquiry'
 import { photoSharePath } from '../data/sharePages'
 import '../photoViewer.css'
+import { SaveButton } from './SavedItems'
+import { savedPhotoKey } from '../data/savedItems'
 
 export function PhotoViewer({ gallery, current, onStep, onClose, shareable, trigger }) {
   const photo = gallery.photos[current]
@@ -71,6 +73,7 @@ export function PhotoViewer({ gallery, current, onStep, onClose, shareable, trig
     <div className="cz-photo-viewer-tools" aria-label="Narzędzia podglądu">
       <div role="group" aria-label="Powiększenie zdjęcia"><button type="button" aria-label="Pomniejsz zdjęcie" disabled={zoom === 1 || failed} onClick={() => setZoom(value => Math.max(1, value - 1))}>−</button><button type="button" aria-label="Dopasuj całe zdjęcie" onClick={() => setZoom(1)}>{zoom === 1 ? 'Dopasuj' : `${zoom}×`}</button><button type="button" aria-label="Powiększ zdjęcie" disabled={zoom === 3 || failed} onClick={() => setZoom(value => Math.min(3, value + 1))}>+</button></div>
       <div className="cz-photo-viewer-actions">
+        <SaveButton key={photo.full} itemKey={savedPhotoKey(photo)} />
         {shareable && <button type="button" onClick={copyLink}>Kopiuj link</button>}
         {inquiry && <a className="cz-photo-inquiry" href={inquiry.href} title={`Otwórz wiadomość do ${inquiry.email} z linkiem do zdjęcia`}>Zapytaj o zdjęcie ↗</a>}
       </div>
