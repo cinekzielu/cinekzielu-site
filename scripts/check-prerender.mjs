@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { readFile, stat } from 'node:fs/promises'
-import { sitePages, sharePageMetadata, SITE_ORIGIN } from '../src/data/siteMetadata.js'
+import { sitePages, utilityPages, sharePageMetadata, SITE_ORIGIN } from '../src/data/siteMetadata.js'
 import { sharePages } from '../src/data/sharePages.js'
 import { photoGalleries } from '../src/data/galleryData.js'
 import { summits } from '../src/data/summits.js'
@@ -14,7 +14,7 @@ const htmlByPath = new Map()
 const resources = new Set()
 const links = new Set()
 let size = 0
-for (const page of [...sitePages, ...sharePageMetadata]) {
+for (const page of [...sitePages, ...utilityPages, ...sharePageMetadata]) {
   const html = await read(`${page.path === '/' ? 'index' : page.path.slice(1)}.html`)
   htmlByPath.set(page.path, html)
   size += Buffer.byteLength(html)

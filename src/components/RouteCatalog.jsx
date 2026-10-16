@@ -1,5 +1,6 @@
 import React, { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { CollectionShell } from './CollectionShell'
+import { SaveButton } from './SavedItems'
 import { RouteComparison } from './RouteComparison'
 import { useInitialLocation } from '../PageLocation'
 import { tripRoutes } from '../data/tripRoutes'
@@ -79,7 +80,7 @@ export function RouteCatalog() {
           return <article className="cz-route-catalog-row" data-selected={selected === row.id} key={row.id} onMouseEnter={() => setHovered(row.id)} onMouseLeave={() => setHovered(null)} onFocus={() => setHovered(row.id)} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setHovered(null) }}>
             <button className="cz-route-pick" type="button" aria-label={`Pokaż trasę: ${route.title}`} aria-pressed={selected === row.id} onClick={() => selectRoute(row.id)}><span>{row.region} · {route.dates}</span><h3>{route.title}<span aria-hidden="true">↗</span></h3></button>
             <div className="cz-route-row-metrics"><span>{number(row.distance / 1000, 1)} <small>km</small></span><span>↗ ≈ {number(row.ascentEstimate)} <small>m</small></span><span title={peak.name}>{peak.altitude.toLocaleString('pl-PL')} <small>m</small><small> szczyt</small></span></div>
-            <div className="cz-route-row-actions"><a href={routeHref(row, route)}>Trasa i wyprawa ↗</a><button type="button" aria-label={`${slot >= 0 ? 'Usuń z porównania' : 'Porównaj'}: ${route.title}`} aria-pressed={slot >= 0} disabled={slot < 0 && compare.length === 2} onClick={() => toggleCompare(row.id)}>{slot >= 0 ? `${slot === 0 ? 'A' : 'B'} · Wybrana ✓` : 'Porównaj +'}</button></div>
+            <div className="cz-route-row-actions"><a href={routeHref(row, route)}>Trasa i wyprawa ↗</a><button type="button" aria-label={`${slot >= 0 ? 'Usuń z porównania' : 'Porównaj'}: ${route.title}`} aria-pressed={slot >= 0} disabled={slot < 0 && compare.length === 2} onClick={() => toggleCompare(row.id)}>{slot >= 0 ? `${slot === 0 ? 'A' : 'B'} · Wybrana ✓` : 'Porównaj +'}</button><SaveButton itemKey={`route:${row.id}`} iconOnly /></div>
           </article>
         })}</div>
         <p className="cz-route-selection-note" role="status">{compare.length === 2 ? 'Wybrano dwie trasy. Usuń jedną z wyboru, aby dodać inną.' : 'Zaznacz dwie trasy do porównania. Możesz łączyć Alpy i Tatry.'}</p>

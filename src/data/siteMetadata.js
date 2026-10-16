@@ -50,7 +50,9 @@ export const legacyRedirects = {
   '/wyprawy/zermatt': '/mapa?atlas=zermatt',
   '/wyprawy/romania-transfagarasan': '/wyprawy/rumunia-2024',
 }
-const byPath = new Map(sitePages.map(item => [item.path, item]))
+// Browser-private lists are useful pages, but not public search results.
+export const utilityPages = [{ ...page('/zapisane', 'Zapisane | Cinek Zielu', 'Wyprawy, trasy i fotografie zapisane w tej przeglądarce.'), noindex: true }]
+const byPath = new Map([...sitePages, ...utilityPages].map(item => [item.path, item]))
 const sharedByPath = new Map(sharePageMetadata.map(item => [item.path, item]))
 export function getPageMetadata(pathname) {
   const path = normalizePagePath(pathname)

@@ -1,7 +1,7 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
-import { sitePages, sharePageMetadata, getPageMetadata, legacyRedirects, pageStructuredData, SITE_ORIGIN } from '../src/data/siteMetadata.js'
+import { sitePages, utilityPages, sharePageMetadata, getPageMetadata, legacyRedirects, pageStructuredData, SITE_ORIGIN } from '../src/data/siteMetadata.js'
 
 const project = fileURLToPath(new URL('../', import.meta.url))
 const escape = text => String(text).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]))
@@ -41,7 +41,7 @@ export async function generateSitePages() {
     return template.replace(metadataBlock, () => renderHead(page))
       .replace('<div id="root"></div>', () => `<div id="root">${html}</div><script id="cz-page-location" type="application/json">${bootstrap}</script>`)
   }
-  for (const page of [...sitePages, ...sharePageMetadata]) {
+  for (const page of [...sitePages, ...utilityPages, ...sharePageMetadata]) {
     const file = path.join(dist, page.path === '/' ? 'index.html' : page.path.slice(1) + '.html')
     await mkdir(path.dirname(file), { recursive: true })
     await writeFile(file, documentFor(page))

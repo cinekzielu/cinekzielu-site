@@ -1,4 +1,6 @@
 import React from 'react'
+import { SavedProvider } from './components/SavedItems'
+import { SavedPage } from './components/SavedPage'
 import { PageLocationProvider } from './PageLocation'
 import { ClientContent } from './components/ClientContent'
 import { AtlasOverview, MapPageOverview } from './components/AtlasOverview'
@@ -515,10 +517,11 @@ export function SitePage({ location }) {
   if (pathname === '/mapa') page = <ClientContent fallback={<MapPageOverview />}><MapPage /></ClientContent>
   if (pathname === '/filmy') page = <FilmIndex />
   if (pathname === '/trasy') page = <RouteCatalog />
+  if (pathname === '/zapisane') page = <SavedPage />
   if (pathname === '/szczyty') page = <SummitsPage />
   if (pathname === '/fotografia') page = <PhotographyPage />
   if (pathname === '/o-mnie') page = <AboutPage />
   if (pageRoute?.[1] === 'galerie') page = pageSlug ? <GalleryPage slug={pageSlug} /> : <GalleryIndex />
   if (pageRoute?.[1] === 'wyprawy') page = pageSlug ? <ExpeditionPage slug={pageSlug} /> : <ExpeditionIndex />
-  return <PageLocationProvider value={location}><SiteToolsProvider>{page}</SiteToolsProvider></PageLocationProvider>
+  return <PageLocationProvider value={location}><SavedProvider><SiteToolsProvider>{page}</SiteToolsProvider></SavedProvider></PageLocationProvider>
 }
