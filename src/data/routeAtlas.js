@@ -54,3 +54,34 @@ export function comparisonPaths(track, scale, width = 700) {
   }
   return paths
 }
+
+// Interpolate only inside one recorded section; never bridge a recording gap.
+export function comparisonSample(track, distance) {
+  const points = track.points
+  if (!points.length || !Number.isFinite(distance)) return { kind: 'missing' }
+  if (distance < points[0][4] || distance > points.at(-1)[4]) return { kind: 'outside' }
+  let low = 0, high = points.length - 1
+  while (low < high) {
+    const mid = Math.floor((low + high) / 2)
+    if (points[mid][4] < distance) low = mid + 1
+    else high = mid
+  }
+  const right = points[low], left = points[Math.max(0, low - 1)]
+  if (right[4] === distance) return { kind: 'point', lat: right[0], lng: right[1], elevation: right[2], distance }
+  if (left[3] !== right[3]) return { kind: 'gap' }
+  const fraction = (distance - left[4]) / (right[4] - left[4])
+  return { kind: 'point', lat: left[0] + (right[0] - left[0]) * fraction, lng: left[1] + (right[1] - left[1]) * fraction, elevation: left[2] + (right[2] - left[2]) * fraction, distance }
+}
+
+export function readComparisonDistance(search, maxDistance) {
+  const value = new URLSearchParams(search).get('km')
+  if (!value || !/^\d+(\.\d{1,3})?$/.test(value)) return 0
+  const distance = Number(value) * 1000
+  return Number.isFinite(distance) ? Math.max(0, Math.min(maxDistance, distance)) : 0
+}
+
+export function comparisonShareHref(state, distance) {
+  const href = routeAtlasHref(state)
+  if (state.compare.length !== 2) return href
+  return `${href}&km=${(Math.max(0, distance) / 1000).toFixed(2)}#porownanie`
+}
