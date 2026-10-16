@@ -1,5 +1,6 @@
 // Run after updating an existing public track. Original GPX files are not read.
 import { readFile, writeFile } from 'node:fs/promises'
+import { estimateAscent } from '../src/data/routeAtlas.js'
 const root = new URL('../src/data/', import.meta.url)
 const file = new URL('routeCatalog.json', root)
 const catalog = JSON.parse(await readFile(file, 'utf8'))
@@ -7,6 +8,7 @@ for (const row of catalog) {
   const path = row.id === 'dufourspitze' ? 'dufourTrack.json' : `tracks/${row.id}.json`
   const track = JSON.parse(await readFile(new URL(path, root), 'utf8'))
   row.distance = track.distance
+  row.ascentEstimate = estimateAscent(track.points)
   row.profiles = [...new Set(track.points.map(point => point[3]))].sort((a, b) => a - b).map(segment => {
     const points = track.points.filter(point => point[3] === segment)
     const step = Math.max(1, Math.floor(points.length / 70))
