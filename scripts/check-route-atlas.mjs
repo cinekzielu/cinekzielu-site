@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 import catalog from '../src/data/routeCatalog.json' with { type: 'json' }
-import { estimateAscent, comparisonScale, comparisonPaths, readRouteAtlas, routeAtlasHref, highestPeak } from '../src/data/routeAtlas.js'
+import { estimateAscent, comparisonScale, comparisonPaths, readRouteAtlas, routeAtlasHref, highestPeak, comparisonSample, readComparisonDistance, comparisonShareHref } from '../src/data/routeAtlas.js'
 import { tripRoutes } from '../src/data/tripRoutes.js'
 
 const sample = (elevation, section = 0, distance = 0) => [46, 9, elevation, section, distance]
@@ -29,6 +29,23 @@ for (const [i, track] of tracks.entries()) {
 const short = { distance:1000,minElevation:1000,maxElevation:2000,points:[sample(1000,0,0),sample(2000,0,1000)] }
 const long = { ...short,distance:2000,points:[...short.points,sample(1000,0,2000)] }
 const shared = comparisonScale([short,long])
+assert.equal(comparisonSample(short,500).elevation,1500)
+assert.equal(comparisonSample(short,1000).elevation,2000)
+assert.equal(comparisonSample(short,1001).kind,'outside')
+assert.equal(comparisonSample(short,-1).kind,'outside')
+const gapTrack = { points:[[46,9,1000,0,0],[46.1,9.1,1500,0,500],[47,10,2000,1,700],[47.1,10.1,2200,1,900]] }
+assert.equal(comparisonSample(gapTrack,600).kind,'gap','Never interpolate across missing GPS')
+assert.equal(comparisonSample(gapTrack,700).lat,47)
+assert.equal(comparisonSample(gapTrack,800).elevation,2100)
+assert.equal(comparisonSample({points:[]},0).kind,'missing')
+assert.equal(readComparisonDistance('?km=12.34',20000),12340)
+assert.equal(readComparisonDistance('?km=-2',20000),0)
+assert.equal(readComparisonDistance('?km=Infinity',20000),0)
+assert.equal(readComparisonDistance('?km=200',20000),20000)
+const sharedUrl = comparisonShareHref(state,12340)
+assert(sharedUrl.endsWith('&km=12.34#porownanie'))
+assert.deepEqual(readRouteAtlas(sharedUrl.split('?')[1].split('#')[0]),state)
+assert.equal(readComparisonDistance(new URL(sharedUrl,'https://www.cinekzielu.pl').search,20000),12340)
 assert.equal(comparisonPaths(long,shared)[0].split(' L')[1],comparisonPaths(short,shared)[0].split(' L')[1], 'Same distance/elevation must occupy exactly the same coordinate on both profiles')
 const html = await readFile(new URL('../dist/trasy.html',import.meta.url),'utf8')
 assert(html.includes('id="porownanie"') && html.includes('aria-label="Mapa tras"'))
