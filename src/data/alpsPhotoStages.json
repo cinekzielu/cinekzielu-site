@@ -1,0 +1,122 @@
+[
+  {
+    "id": "triglav",
+    "title": "Triglav",
+    "date": "18 sierpnia",
+    "routeId": "triglav",
+    "photos": [
+      4,
+      2,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  {
+    "id": "grossglockner",
+    "title": "Grossglockner",
+    "date": "19 sierpnia",
+    "routeId": "grossglockner",
+    "photos": [
+      9,
+      10,
+      11
+    ]
+  },
+  {
+    "id": "przerwa-austria",
+    "title": "Między Austrią a Szwajcarią",
+    "date": "20–21 sierpnia",
+    "routeId": null,
+    "photos": [
+      12,
+      13
+    ]
+  },
+  {
+    "id": "dufour-podejscie",
+    "title": "Dufourspitze · podejście",
+    "date": "22 sierpnia",
+    "routeId": "dufourspitze",
+    "photos": [
+      3,
+      14,
+      15,
+      16,
+      1,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+    ]
+  },
+  {
+    "id": "dufour-szczyt",
+    "title": "Dufourspitze · dzień szczytowy",
+    "date": "23 sierpnia",
+    "routeId": "dufourspitze",
+    "photos": [
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33
+    ]
+  },
+  {
+    "id": "dufour-powrot",
+    "title": "Dufourspitze · powrót",
+    "date": "24 sierpnia",
+    "routeId": "dufourspitze",
+    "photos": [
+      34,
+      35,
+      36,
+      37,
+      38,
+      39
+    ]
+  },
+  {
+    "id": "przerwa-szwajcaria",
+    "title": "Przerwa po Dufourspitze",
+    "date": "25 sierpnia",
+    "routeId": null,
+    "photos": [
+      40,
+      41,
+      42
+    ]
+  },
+  {
+    "id": "grauspitz",
+    "title": "Grauspitz",
+    "date": "26 sierpnia",
+    "routeId": "grauspitz",
+    "photos": [
+      43,
+      44,
+      45,
+      46
+    ]
+  },
+  {
+    "id": "zugspitze",
+    "title": "Zugspitze",
+    "date": "28 sierpnia",
+    "routeId": "zugspitze",
+    "photos": [
+      47,
+      48
+    ]
+  }
+]

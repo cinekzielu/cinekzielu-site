@@ -1,5 +1,6 @@
 import React, { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { tripRoutes } from '../data/tripRoutes'
+import { RoutePhotoStages } from './AlpsPhotoStages'
 import '../tripRoute.css'
 
 const views = Object.fromEntries(Object.entries(tripRoutes).map(([id, route]) => [id, lazy(async () => {
@@ -42,6 +43,7 @@ export function TripRoute({ routeId, headingLevel = 4 }) {
     <p className="cz-route-summit-height">{route.peaks.length > 1 ? 'Najwyższy szczyt' : 'Wysokość szczytu'}: <strong>{highest.name} · {highest.altitude} m n.p.m.</strong></p>
     <div id={`${route.id}-route-content`} hidden={!open}>
       {nearby && open ? <Suspense fallback={<p className="cz-route-loading" role="status">Wczytywanie trasy…</p>}><View headingLevel={headingLevel + 1} onReady={ready} /></Suspense> : <p className="cz-route-loading">Mapa i profil wczytają się po przewinięciu do tej sekcji.</p>}
+      {nearby && open && <RoutePhotoStages key={routeId} routeId={routeId} />}
     </div>
     <a className="cz-route-strava" href="/trasy">Wszystkie trasy ↗</a>
     {route.stravaUrl && <a className="cz-route-strava" href={route.stravaUrl} target="_blank" rel="noreferrer">Zobacz aktywność na Stravie ↗</a>}

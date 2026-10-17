@@ -1,0 +1,13 @@
+.cz-photo-stages{margin:30px 0;padding:24px 0;border-top:1px solid #c7a77135}
+.cz-photo-stage-heading{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:16px}
+.cz-photo-stage-heading :is(h2,h3){font-size:21px;font-weight:500;margin:0}.cz-photo-stage-heading span{font-size:12px;color:#bfb29d}
+.cz-photo-stage-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.cz-photo-stage-tabs button,.cz-route-photo-actions button{color:#c9b99d;background:transparent;border:1px solid #c7a77140;padding:10px 14px;min-height:44px;font:inherit;font-size:12px;cursor:pointer;text-align:left}
+.cz-photo-stage-tabs button[aria-pressed=true]{color:#f2d5a3;border-color:#d5b57c;background:#c9a36912}
+.cz-photo-stage-tabs small{display:block;font-size:10px;margin-top:4px;color:#a99f90}
+.cz-photo-stages p{font-size:12px;color:#b5a995;line-height:1.7}.cz-photo-stages a{color:#dfbf89;font-size:12px;text-underline-offset:4px}
+.cz-route-photos .cz-gallery-grid{margin:16px 0 0}.cz-route-photo-actions{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-top:16px}
+.cz-photo-stages :focus-visible{outline:2px solid #e4bf80;outline-offset:3px}
+@media(max-width:600px){.cz-photo-stage-tabs{flex-wrap:nowrap;overflow-x:auto;padding:3px 2px 10px}.cz-photo-stage-tabs button{flex-shrink:0;max-width:230px}.cz-photo-stage-heading :is(h2,h3){font-size:18px}.cz-route-photo-actions a{display:inline-flex;align-items:center;min-height:44px}}
+.cz-route-photos .cz-photo-stage-heading h3{font-size:21px;letter-spacing:normal;margin:0}
+@media(max-width:600px){.cz-route-photos .cz-photo-stage-heading h3{font-size:18px}}

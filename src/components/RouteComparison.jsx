@@ -33,7 +33,7 @@ export function RouteComparison({ selected, tracks, onChange, onShowPoint, atlas
     window.addEventListener('popstate', restore)
     return () => window.removeEventListener('popstate', restore)
   }, [maxDistance])
-  useEffect(() => { setShare(null) }, [distance, atlasState.region, atlasState.selected])
+  useEffect(() => { setShare(null) }, [distance, atlasState.region, atlasState.distance, atlasState.ascent, atlasState.selected])
   useEffect(() => { if (share) { shareInput.current?.focus(); shareInput.current?.select() } }, [share])
   useEffect(() => {
     const observer = new ResizeObserver(([entry]) => setWidth(Math.max(260, entry.contentRect.width)))

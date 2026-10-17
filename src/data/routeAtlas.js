@@ -4,15 +4,39 @@ export const routeIds = new Set(catalog.map(row => row.id))
 export const highestPeak = route => route.peaks.reduce((a, b) => a.altitude > b.altitude ? a : b)
 export const routeHref = (row, route) => `/wyprawy/${row.trip}#${route.anchor}`
 
+export const distanceFilters = [
+  { id: 'all', label: 'Dowolny dystans', min: -Infinity, max: Infinity },
+  { id: 'do-20', label: 'Do 20 km', min: -Infinity, max: 20000 },
+  { id: '20-40', label: 'Ponad 20 do 40 km', min: 20000, max: 40000 },
+  { id: 'ponad-40', label: 'Ponad 40 km', min: 40000, max: Infinity },
+]
+export const ascentFilters = [
+  { id: 'all', label: 'Dowolna suma podejść', min: -Infinity, max: Infinity },
+  { id: 'do-1500', label: 'Do 1500 m', min: -Infinity, max: 1500 },
+  { id: '1500-2500', label: 'Ponad 1500 do 2500 m', min: 1500, max: 2500 },
+  { id: 'ponad-2500', label: 'Ponad 2500 m', min: 2500, max: Infinity },
+]
+const inRange = (value, id, ranges) => {
+  const range = ranges.find(entry => entry.id === id) || ranges[0]
+  return value > range.min && value <= range.max
+}
+export function matchesRouteFilters(row, { region = 'all', distance = 'all', ascent = 'all' }) {
+  return (region === 'all' || row.region === region) && inRange(row.distance, distance, distanceFilters) && inRange(row.ascentEstimate, ascent, ascentFilters)
+}
+
 export function readRouteAtlas(search) {
   const params = new URLSearchParams(search)
   const region = ['Alpy', 'Tatry'].includes(params.get('pasmo')) ? params.get('pasmo') : 'all'
-  const selected = catalog.some(row => row.id === params.get('trasa') && (region === 'all' || row.region === region)) ? params.get('trasa') : null
-  return { region, selected, compare: [...new Set((params.get('porownaj') || '').split(',').filter(id => routeIds.has(id)))].slice(0, 2) }
+  const distance = distanceFilters.some(entry => entry.id === params.get('dystans')) ? params.get('dystans') : 'all'
+  const ascent = ascentFilters.some(entry => entry.id === params.get('podejscia')) ? params.get('podejscia') : 'all'
+  const selected = catalog.some(row => row.id === params.get('trasa') && matchesRouteFilters(row, { region, distance, ascent })) ? params.get('trasa') : null
+  return { region, distance, ascent, selected, compare: [...new Set((params.get('porownaj') || '').split(',').filter(id => routeIds.has(id)))].slice(0, 2) }
 }
-export function routeAtlasHref({ region, selected, compare }) {
+export function routeAtlasHref({ region, distance = 'all', ascent = 'all', selected, compare }) {
   const params = new URLSearchParams()
   if (region !== 'all') params.set('pasmo', region)
+  if (distance !== 'all') params.set('dystans', distance)
+  if (ascent !== 'all') params.set('podejscia', ascent)
   if (selected) params.set('trasa', selected)
   if (compare.length) params.set('porownaj', compare.join(','))
   return `/trasy${params.size ? `?${params}` : ''}`
