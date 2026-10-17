@@ -73,7 +73,7 @@ export default function TripRouteView({ track, route, headingLevel = 5, onReady 
       <input id={inputId} type="range" min="0" max={track.distance} value={distance} step="10" aria-valuetext={summary} onChange={event => setDistance(Number(event.target.value))} />
       <div className="cz-route-actions"><button type="button" disabled={!chosen} onClick={() => setFocus({ ...chosen })}>Pokaż punkt na mapie</button>{peaks.map(peak => <button type="button" key={peak.id} onClick={() => { const index = peakIndices[peak.id]; choose(index); setFocus({ ...points[index] }) }}>{peak.name} · {peak.altitude} m</button>)}</div>
     </div>
-    <p className="cz-route-note">Dystans profilu ({km(track.distance)}) jest liczony z GPS i może różnić się od statystyk aktywności. Wysokości na wykresie to odczyty GPS, a wysokości szczytów podajemy niezależnie od pomiaru.{segments.length > 1 && ' Przerwy powyżej 5 minut pozostają rozdzielone.'}</p>
+    <p className="cz-route-note">Dystans profilu ({km(track.distance)}) jest liczony z GPS i może różnić się od statystyk aktywności. Wysokości na wykresie to odczyty GPS, a wysokości szczytów podajemy niezależnie od pomiaru.{segments.length > 1 && ' Przerwy i oznaczone skoki w zapisie pozostają rozdzielone.'}</p>
     {peaks.filter(peak => peak.heightNote).map(peak => <p className="cz-route-note" key={peak.id}>{peak.name}: {peak.heightNote}</p>)}
   </div>
 }

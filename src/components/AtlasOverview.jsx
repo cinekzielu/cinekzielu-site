@@ -6,7 +6,7 @@ import { galleryHref, galleryLinkLabel } from '../data/galleryNavigation'
 import { CollectionShell } from './CollectionShell'
 import '../atlasOverview.css'
 
-export function AtlasOverview() {
+export function AtlasOverview({ note = 'Interaktywna mapa wymaga JavaScript. Materiały możesz otworzyć przez powyższe linki.', children }) {
   const { search } = useInitialLocation()
   const requested = new URLSearchParams(search).get('atlas') || 'world'
   const id = sharedAtlasIds.includes(requested) ? requested : 'world'
@@ -18,7 +18,9 @@ export function AtlasOverview() {
     <p>{place.description || 'Miejsca, fotografie i filmy z podróży.'}</p>
     {destinations.length > 0 && <nav aria-label="Obszary atlasu">{destinations.map(node => <a key={node.id} href={atlasSharePath(node.id)}>{node.name} ↗</a>)}</nav>}
     {materials.galleries.length > 0 && <div><h3>Wyprawy</h3><ul>{materials.galleries.slice(0, 3).map(gallery => <li key={gallery.id}><a href={`/wyprawy/${gallery.id}`}>{gallery.title} {gallery.year}</a> · <a href={galleryHref(gallery)}>{galleryLinkLabel(gallery)}</a></li>)}</ul><a href="/wyprawy">Wszystkie wyprawy ↗</a></div>}
-    <p className="cz-atlas-overview-note">Interaktywna mapa wymaga JavaScript. Materiały możesz otworzyć przez powyższe linki.</p>
+    <p className="cz-atlas-overview-note">{note}</p>
+    {children}
+    <a className="cz-atlas-full-link" href={`/mapa?atlas=${id}`}>Otwórz pełny atlas ↗</a>
   </div>
 }
 

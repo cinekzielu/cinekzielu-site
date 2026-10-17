@@ -6,7 +6,7 @@ import { tripRoutes } from '../data/tripRoutes'
 
 export default function RouteAtlasMap({ rows, tracks, selected, highlighted, profilePoint, onSelect }) {
   const geometries = useMemo(() => Object.fromEntries(rows.filter(row => tracks[row.id]).map(row => [row.id, buildTrackGeometry(tracks[row.id])])), [rows, tracks])
-  const markers = useMemo(() => [...rows.map(row => ({ ...tripRoutes[row.id].peaks[0], id: `route-${row.id}`, name: tripRoutes[row.id].title, icon: 'route' })), ...(profilePoint ? [{ ...profilePoint, id: 'profile-point', name: `${profilePoint.slot === 0 ? 'A' : 'B'} · ${(profilePoint.distance / 1000).toLocaleString('pl-PL', { maximumFractionDigits: 2 })} km · punkt profilu`, icon: 'city' }] : [])], [rows, profilePoint])
+  const markers = useMemo(() => [...rows.map(row => ({ ...(tripRoutes[row.id].peaks[0] || tripRoutes[row.id].marker), id: `route-${row.id}`, name: `${tripRoutes[row.id].title} · ${tripRoutes[row.id].dates}`, icon: 'route' })), ...(profilePoint ? [{ ...profilePoint, id: 'profile-point', name: `${profilePoint.slot === 0 ? 'A' : 'B'} · ${(profilePoint.distance / 1000).toLocaleString('pl-PL', { maximumFractionDigits: 2 })} km · punkt profilu`, icon: 'city' }] : [])], [rows, profilePoint])
   const byId = useMemo(() => Object.fromEntries(markers.map(point => [point.id, point])), [markers])
   const overview = useMemo(() => Object.values(geometries).flatMap(geometry => geometry.points), [geometries])
   const focus = geometries[selected]?.points || overview

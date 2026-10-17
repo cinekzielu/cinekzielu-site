@@ -1,0 +1,758 @@
+[
+  {
+    "id": "grzes-rakon-2024",
+    "title": "Grześ i Rakoń",
+    "anchor": "trasa-grzes-rakon-2024",
+    "dates": "5 stycznia 2024",
+    "intro": "Przebieg przejścia zapisany w GPX.",
+    "peaks": [],
+    "marker": {
+      "lat": 49.282701,
+      "lng": 19.842185
+    },
+    "trip": null
+  },
+  {
+    "id": "piec-stawow-2024",
+    "title": "Dolina Pięciu Stawów",
+    "anchor": "trasa-piec-stawow-2024",
+    "dates": "6 stycznia 2024",
+    "intro": "Przebieg przejścia zapisany w GPX.",
+    "peaks": [],
+    "marker": {
+      "lat": 49.255713,
+      "lng": 20.103529
+    },
+    "trip": null
+  },
+  {
+    "id": "slawkowski-2024",
+    "title": "Sławkowski Szczyt",
+    "anchor": "trasa-slawkowski-2024",
+    "dates": "3 marca 2024",
+    "intro": "Przebieg przejścia zapisany w GPX. Nagłe skoki GPS pozostają rozdzielone i nie zwiększają dystansu.",
+    "peaks": [],
+    "marker": {
+      "lat": 49.141444,
+      "lng": 20.221261
+    },
+    "trip": null
+  },
+  {
+    "id": "koscielec-orla-2024",
+    "title": "Kościelec i Orla Perć",
+    "anchor": "trasa-koscielec-orla-2024",
+    "dates": "4 sierpnia 2024",
+    "intro": "Przebieg przejścia zapisany w GPX.",
+    "peaks": [
+      {
+        "id": "koscielec",
+        "name": "Kościelec",
+        "altitude": 2155,
+        "lat": 49.2251794,
+        "lng": 20.0145834,
+        "source": "https://www.openstreetmap.org/node/355985949"
+      }
+    ],
+    "marker": {
+      "lat": 49.28913,
+      "lng": 20.032065
+    },
+    "trip": null
+  },
+  {
+    "id": "czerwona-lawka-2024",
+    "title": "Czerwona Ławka i Široká veža",
+    "anchor": "trasa-czerwona-lawka-2024",
+    "dates": "25 sierpnia 2024",
+    "intro": "Przebieg przejścia zapisany w GPX. Nagłe skoki GPS pozostają rozdzielone i nie zwiększają dystansu.",
+    "peaks": [],
+    "marker": {
+      "lat": 49.15118,
+      "lng": 20.258432
+    },
+    "trip": null
+  },
+  {
+    "id": "gerlach-2024",
+    "title": "Gerlach · wrzesień 2024",
+    "anchor": "trasa-gerlach-2024",
+    "dates": "12 września 2024",
+    "intro": "Przebieg przejścia zapisany w GPX.",
+    "peaks": [
+      {
+        "id": "gerlach",
+        "name": "Gerlach",
+        "altitude": 2654,
+        "lat": 49.1640319,
+        "lng": 20.1340595,
+        "source": "https://www.tatry.sk/wp-content/uploads/2026/02/mapa-zima-2025-26.pdf"
+      }
+    ],
+    "marker": {
+      "lat": 49.118916,
+      "lng": 20.1229
+    },
+    "trip": null
+  },
+  {
+    "id": "bradavica-2024",
+    "title": "Bradavica",
+    "anchor": "trasa-bradavica-2024",
+    "dates": "1 listopada 2024",
+    "intro": "Przebieg przejścia zapisany w GPX.",
+    "peaks": [],
+    "marker": {
+      "lat": 49.125926,
+      "lng": 20.184
+    },
+    "trip": null
+  },
+  {
+    "id": "lodowy-proba-2024",
+    "title": "Pod Lodowy Szczyt — próba",
+    "anchor": "trasa-lodowy-proba-2024",
+    "dates": "21 grudnia 2024",
+    "intro": "Próba wejścia na Lodowy Szczyt, zakończona przed szczytem.",
+    "peaks": [],
+    "marker": {
+      "lat": 49.1384,
+      "lng": 20.219749
+    },
+    "trip": null
+  },
+  {
+    "id": "gerlach-zima-2025",
+    "title": "Gerlach zimą",
+    "anchor": "trasa-gerlach-zima-2025",
+    "dates": "25 stycznia 2025",
+    "intro": "Zapis przejścia z tej wyprawy.",
+    "peaks": [
+      {
+        "id": "gerlach",
+        "name": "Gerlach",
+        "altitude": 2654,
+        "lat": 49.1640319,
+        "lng": 20.1340595,
+        "source": "https://www.tatry.sk/wp-content/uploads/2026/02/mapa-zima-2025-26.pdf"
+      }
+    ],
+    "marker": {
+      "lat": 49.118937,
+      "lng": 20.122821
+    },
+    "trip": "gerlach-zima-2025"
+  },
+  {
+    "id": "wysoka-2025",
+    "title": "Wysoka · luty 2025",
+    "anchor": "trasa-wysoka-2025",
+    "dates": "8 lutego 2025",
+    "intro": "Przebieg przejścia zapisany w GPX.",
+    "peaks": [
+      {
+        "id": "wysoka",
+        "name": "Wysoka",
+        "altitude": 2560,
+        "lat": 49.1726908,
+        "lng": 20.0941846,
+        "source": "https://www.tatry.sk/wp-content/uploads/2026/02/mapa-zima-2025-26.pdf"
+      }
+    ],
+    "marker": {
+      "lat": 49.126923,
+      "lng": 20.074525
+    },
+    "trip": null
+  },
+  {
+    "id": "szatan-2025",
+    "title": "Szatan · luty 2025",
+    "anchor": "trasa-szatan-2025",
+    "dates": "9 lutego 2025",
+    "intro": "Przebieg przejścia zapisany w GPX.",
+    "peaks": [
+      {
+        "id": "szatan",
+        "name": "Szatan",
+        "altitude": 2421,
+        "lat": 49.1631527,
+        "lng": 20.0528304,
+        "source": "https://www.openstreetmap.org/node/5131055060"
+      }
+    ],
+    "marker": {
+      "lat": 49.111725,
+      "lng": 20.070288
+    },
+    "trip": null
+  },
+  {
+    "id": "lodowy-2025",
+    "title": "Lodowy Szczyt · luty 2025",
+    "anchor": "trasa-lodowy-2025",
+    "dates": "22 lutego 2025",
+    "intro": "Przebieg przejścia zapisany w GPX.",
+    "peaks": [
+      {
+        "id": "lodowy-szczyt",
+        "name": "Lodowy Szczyt",
+        "altitude": 2627,
+        "lat": 49.1985452,
+        "lng": 20.1827652,
+        "source": "https://www.tanap.sk/wp-content/uploads/TATRY_2022-6.pdf"
+      }
+    ],
+    "marker": {
+      "lat": 49.136962,
+      "lng": 20.219519
+    },
+    "trip": null
+  },
+  {
+    "id": "baraniec-2025",
+    "title": "Baraniec",
+    "anchor": "trasa-baraniec-2025",
+    "dates": "23 lutego 2025",
+    "intro": "Przebieg przejścia zapisany w GPX.",
+    "peaks": [],
+    "marker": {
+      "lat": 49.144816,
+      "lng": 19.700862
+    },
+    "trip": null
+  },
+  {
+    "id": "toubkal-podejscie-2025",
+    "title": "Imlil — Refuge du Toubkal",
+    "anchor": "trasa-toubkal-podejscie-2025",
+    "dates": "4 maja 2025",
+    "intro": "Zapis przejścia z tej wyprawy.",
+    "peaks": [],
+    "marker": {
+      "lat": 31.135495,
+      "lng": -7.91975
+    },
+    "trip": "maroko-2025"
+  },
+  {
+    "id": "toubkal-2025",
+    "title": "Toubkal — wejście ze schroniska",
+    "anchor": "trasa-toubkal-2025",
+    "dates": "5 maja 2025",
+    "intro": "Zapis przejścia z tej wyprawy. Nagłe skoki GPS pozostają rozdzielone i nie zwiększają dystansu.",
+    "peaks": [
+      {
+        "id": "toubkal",
+        "name": "Toubkal",
+        "altitude": 4167,
+        "lat": 31.0598318,
+        "lng": -7.9149438,
+        "source": "https://www.openstreetmap.org/node/87828608"
+      }
+    ],
+    "marker": {
+      "lat": 31.0632,
+      "lng": -7.938292
+    },
+    "trip": "maroko-2025"
+  },
+  {
+    "id": "toubkal-zejscie-2025",
+    "title": "Toubkal — zejście ze schroniska",
+    "anchor": "trasa-toubkal-zejscie-2025",
+    "dates": "5 maja 2025",
+    "intro": "Zapis przejścia z tej wyprawy.",
+    "peaks": [],
+    "marker": {
+      "lat": 31.064187,
+      "lng": -7.937968
+    },
+    "trip": "maroko-2025"
+  },
+  {
+    "id": "durny-2025",
+    "title": "Durny Szczyt",
+    "anchor": "trasa-durny-2025",
+    "dates": "14 czerwca 2025",
+    "intro": "Zapis przejścia z tej wyprawy.",
+    "peaks": [
+      {
+        "id": "durny-szczyt",
+        "name": "Durny Szczyt",
+        "altitude": 2621,
+        "lat": 49.1975923,
+        "lng": 20.207996,
+        "source": "https://www.openstreetmap.org/node/385101740"
+      }
+    ],
+    "marker": {
+      "lat": 49.136717,
+      "lng": 20.219152
+    },
+    "trip": "durny-lomnica-2025"
+  },
+  {
+    "id": "lomnica-2025",
+    "title": "Łomnica",
+    "anchor": "trasa-lomnica-2025",
+    "dates": "15 czerwca 2025",
+    "intro": "Zapis przejścia z tej wyprawy.",
+    "peaks": [
+      {
+        "id": "lomnica",
+        "name": "Łomnica",
+        "altitude": 2634,
+        "lat": 49.1951431,
+        "lng": 20.2130329,
+        "source": "https://www.tanap.sk/wp-content/uploads/TATRY_2022-6.pdf"
+      }
+    ],
+    "marker": {
+      "lat": 49.169992,
+      "lng": 20.277858
+    },
+    "trip": "durny-lomnica-2025"
+  },
+  {
+    "id": "mieguszowiecki-2025",
+    "title": "Mięguszowiecki Szczyt Wielki",
+    "anchor": "trasa-mieguszowiecki-2025",
+    "dates": "5 lipca 2025",
+    "intro": "Zapis przejścia z tej wyprawy. Nagłe skoki GPS pozostają rozdzielone i nie zwiększają dystansu.",
+    "peaks": [
+      {
+        "id": "mieguszowiecki-szczyt-wielki",
+        "name": "Mięguszowiecki Szczyt Wielki",
+        "altitude": 2438,
+        "lat": 49.18703,
+        "lng": 20.0592982,
+        "source": "https://www.openstreetmap.org/node/615589377"
+      }
+    ],
+    "marker": {
+      "lat": 49.118807,
+      "lng": 20.079808
+    },
+    "trip": "mieguszowiecki-posrednia-gran-2025"
+  },
+  {
+    "id": "posrednia-gran-2025",
+    "title": "Pośrednia Grań",
+    "anchor": "trasa-posrednia-gran-2025",
+    "dates": "6 lipca 2025",
+    "intro": "Zapis przejścia z tej wyprawy.",
+    "peaks": [
+      {
+        "id": "posrednia-gran",
+        "name": "Pośrednia Grań",
+        "altitude": 2441,
+        "lat": 49.1849785,
+        "lng": 20.1943573,
+        "source": "https://www.openstreetmap.org/node/385113132"
+      }
+    ],
+    "marker": {
+      "lat": 49.13635,
+      "lng": 20.219482
+    },
+    "trip": "mieguszowiecki-posrednia-gran-2025"
+  },
+  {
+    "id": "kasprowy-2025",
+    "title": "Kasprowy Wierch",
+    "anchor": "trasa-kasprowy-2025",
+    "dates": "19 lipca 2025",
+    "intro": "Zapis przejścia z tej wyprawy.",
+    "peaks": [],
+    "marker": {
+      "lat": 49.268605,
+      "lng": 19.979926
+    },
+    "trip": "swinica-2025"
+  },
+  {
+    "id": "swinica-2025",
+    "title": "Świnica",
+    "anchor": "trasa-swinica-2025",
+    "dates": "20 lipca 2025",
+    "intro": "Zapis przejścia z tej wyprawy.",
+    "peaks": [
+      {
+        "id": "swinica",
+        "name": "Świnica",
+        "altitude": 2302,
+        "lat": 49.2194211,
+        "lng": 20.0093063,
+        "source": "https://www.openstreetmap.org/node/3343362920"
+      }
+    ],
+    "marker": {
+      "lat": 49.268286,
+      "lng": 19.979846
+    },
+    "trip": "swinica-2025"
+  },
+  {
+    "id": "saxer-lucke-2025",
+    "title": "Saxer Lücke",
+    "anchor": "trasa-saxer-lucke-2025",
+    "dates": "28 lipca 2025",
+    "intro": "Zapis przejścia z tej wyprawy.",
+    "peaks": [],
+    "marker": {
+      "lat": 47.286752,
+      "lng": 9.464464
+    },
+    "trip": "szwajcaria-2025"
+  },
+  {
+    "id": "fronalpstock-2025",
+    "title": "Klingenstock — Fronalpstock",
+    "anchor": "trasa-fronalpstock-2025",
+    "dates": "29 lipca 2025",
+    "intro": "Zapis przejścia z tej wyprawy.",
+    "peaks": [
+      {
+        "id": "fronalpstock",
+        "name": "Fronalpstock",
+        "altitude": 1922,
+        "lat": 46.968204498291016,
+        "lng": 8.637279510498047,
+        "source": "https://www.myswitzerland.com/de-ch/erlebnisse/fronalpstock-panorama-aussicht/"
+      }
+    ],
+    "marker": {
+      "lat": 46.977506,
+      "lng": 8.667214
+    },
+    "trip": "szwajcaria-2025"
+  },
+  {
+    "id": "augstmatthorn-2025",
+    "title": "Augstmatthorn",
+    "anchor": "trasa-augstmatthorn-2025",
+    "dates": "30 lipca 2025",
+    "intro": "Zapis przejścia z tej wyprawy.",
+    "peaks": [
+      {
+        "id": "augstmatthorn",
+        "name": "Augstmatthorn",
+        "altitude": 2136,
+        "lat": 46.74225997924805,
+        "lng": 7.92861270904541,
+        "source": "https://www.sac-cas.ch/en/huts-and-tours/sac-route-portal/augstmatthorn-106/mountain-hiking/"
+      }
+    ],
+    "marker": {
+      "lat": 46.697434,
+      "lng": 7.851766
+    },
+    "trip": "szwajcaria-2025"
+  },
+  {
+    "id": "murren-2025",
+    "title": "Via ferrata Mürren",
+    "anchor": "trasa-murren-2025",
+    "dates": "31 lipca 2025",
+    "intro": "Zapis przejścia z tej wyprawy.",
+    "peaks": [],
+    "marker": {
+      "lat": 46.559238,
+      "lng": 7.892937
+    },
+    "trip": "szwajcaria-2025"
+  },
+  {
+    "id": "zermatt-2025",
+    "title": "Zermatt — szlak pięciu jezior",
+    "anchor": "trasa-zermatt-2025",
+    "dates": "1 sierpnia 2025",
+    "intro": "Zapis przejścia z tej wyprawy.",
+    "peaks": [],
+    "marker": {
+      "lat": 46.02063,
+      "lng": 7.748694
+    },
+    "trip": "szwajcaria-2025"
+  },
+  {
+    "id": "bettmerhorn-2025",
+    "title": "Bettmerhorn",
+    "anchor": "trasa-bettmerhorn-2025",
+    "dates": "2 sierpnia 2025",
+    "intro": "Zapis przejścia z tej wyprawy.",
+    "peaks": [
+      {
+        "id": "bettmerhorn",
+        "name": "Bettmerhorn",
+        "altitude": 2857,
+        "lat": 46.41791534423828,
+        "lng": 8.082494735717773,
+        "source": "https://www.sac-cas.ch/de/huetten-und-touren/sac-tourenportal/bettmerhorn-166/berg-und-alpinwandern/"
+      }
+    ],
+    "marker": {
+      "lat": 46.412661,
+      "lng": 8.102863
+    },
+    "trip": "szwajcaria-2025"
+  },
+  {
+    "id": "szpiglasowy-2025",
+    "title": "Szpiglasowy Wierch",
+    "anchor": "trasa-szpiglasowy-2025",
+    "dates": "14 sierpnia 2025",
+    "intro": "Zapis przejścia z tej wyprawy.",
+    "peaks": [
+      {
+        "id": "szpiglasowy-wierch",
+        "name": "Szpiglasowy Wierch",
+        "altitude": 2172,
+        "lat": 49.1972908,
+        "lng": 20.0401058,
+        "source": "https://www.openstreetmap.org/node/452477062"
+      }
+    ],
+    "marker": {
+      "lat": 49.254382,
+      "lng": 20.102825
+    },
+    "trip": "szpiglasowy-wierch-2025"
+  },
+  {
+    "id": "krywan-2025",
+    "title": "Krywań",
+    "anchor": "trasa-krywan-2025",
+    "dates": "21 września 2025",
+    "intro": "Zapis przejścia z tej wyprawy.",
+    "peaks": [
+      {
+        "id": "krywan",
+        "name": "Krywań",
+        "altitude": 2494,
+        "lat": 49.1628335,
+        "lng": 20.0000452,
+        "source": "https://www.openstreetmap.org/node/260278694"
+      }
+    ],
+    "marker": {
+      "lat": 49.13431,
+      "lng": 19.969248
+    },
+    "trip": "krywan-2025"
+  },
+  {
+    "id": "baranie-rogi-zima-2025",
+    "title": "Baranie Rogi zimą",
+    "anchor": "trasa-baranie-rogi-zima-2025",
+    "dates": "30 listopada 2025",
+    "intro": "Zapis przejścia z tej wyprawy. Nagłe skoki GPS pozostają rozdzielone i nie zwiększają dystansu.",
+    "peaks": [
+      {
+        "id": "baranie-rogi",
+        "name": "Baranie Rogi",
+        "altitude": 2526,
+        "lat": 49.2016399,
+        "lng": 20.1971608,
+        "source": "https://www.openstreetmap.org/node/385126469"
+      }
+    ],
+    "marker": {
+      "lat": 49.136648,
+      "lng": 20.219163
+    },
+    "trip": "baranie-rogi-zima-2025"
+  },
+  {
+    "id": "kiezmarski-zima-2025",
+    "title": "Kieżmarski Szczyt zimą",
+    "anchor": "trasa-kiezmarski-zima-2025",
+    "dates": "1 grudnia 2025",
+    "intro": "Zapis przejścia z tej wyprawy. Nagłe skoki GPS pozostają rozdzielone i nie zwiększają dystansu.",
+    "peaks": [
+      {
+        "id": "kiezmarski-szczyt",
+        "name": "Kieżmarski Szczyt",
+        "altitude": 2556,
+        "lat": 49.1992348,
+        "lng": 20.2194606,
+        "source": "https://www.openstreetmap.org/node/380695970"
+      },
+      {
+        "id": "huncowski-szczyt",
+        "name": "Huncowski Szczyt",
+        "altitude": 2352,
+        "lat": 49.1979918,
+        "lng": 20.2251697,
+        "source": "https://www.openstreetmap.org/node/380695706"
+      }
+    ],
+    "marker": {
+      "lat": 49.169922,
+      "lng": 20.278253
+    },
+    "trip": "kiezmarski-szczyt-zima-2025"
+  },
+  {
+    "id": "turbacz-2026",
+    "title": "Turbacz",
+    "anchor": "trasa-turbacz-2026",
+    "dates": "10 stycznia 2026",
+    "intro": "Zapis przejścia z tej wyprawy. Nagłe skoki GPS pozostają rozdzielone i nie zwiększają dystansu.",
+    "peaks": [],
+    "marker": {
+      "lat": 49.504348,
+      "lng": 20.062646
+    },
+    "trip": "turbacz-2026"
+  },
+  {
+    "id": "konczysta-2026",
+    "title": "Kończysta",
+    "anchor": "trasa-konczysta-2026",
+    "dates": "8 lutego 2026",
+    "intro": "Zapis przejścia z tej wyprawy.",
+    "peaks": [
+      {
+        "id": "konczysta",
+        "name": "Kończysta",
+        "altitude": 2536,
+        "lat": 49.1573111,
+        "lng": 20.1140729,
+        "source": "https://www.openstreetmap.org/node/385118677"
+      }
+    ],
+    "marker": {
+      "lat": 49.11854,
+      "lng": 20.123468
+    },
+    "trip": "konczysta-2026"
+  },
+  {
+    "id": "koscielec-2026",
+    "title": "Kościelec",
+    "anchor": "trasa-koscielec-2026",
+    "dates": "7 marca 2026",
+    "intro": "Zapis przejścia z tej wyprawy.",
+    "peaks": [
+      {
+        "id": "koscielec",
+        "name": "Kościelec",
+        "altitude": 2155,
+        "lat": 49.2251794,
+        "lng": 20.0145834,
+        "source": "https://www.openstreetmap.org/node/355985949"
+      }
+    ],
+    "marker": {
+      "lat": 49.279356,
+      "lng": 19.979773
+    },
+    "trip": "koscielec-2026"
+  },
+  {
+    "id": "liptowskie-mury-2026",
+    "title": "Liptowskie Mury — Szpiglasowy i Świnica",
+    "anchor": "trasa-liptowskie-mury-2026",
+    "dates": "6 czerwca 2026",
+    "intro": "Zapis przejścia z tej wyprawy.",
+    "peaks": [
+      {
+        "id": "szpiglasowy-wierch",
+        "name": "Szpiglasowy Wierch",
+        "altitude": 2172,
+        "lat": 49.1972908,
+        "lng": 20.0401058,
+        "source": "https://www.openstreetmap.org/node/452477062"
+      },
+      {
+        "id": "swinica",
+        "name": "Świnica",
+        "altitude": 2302,
+        "lat": 49.2194211,
+        "lng": 20.0093063,
+        "source": "https://www.openstreetmap.org/node/3343362920"
+      }
+    ],
+    "marker": {
+      "lat": 49.254544,
+      "lng": 20.102974
+    },
+    "trip": "liptowskie-mury-2026"
+  },
+  {
+    "id": "baranie-rogi-lato-2026",
+    "title": "Baranie Rogi — Lodowa Przełęcz",
+    "anchor": "trasa-baranie-rogi-lato-2026",
+    "dates": "4 lipca 2026",
+    "intro": "Zapis przejścia z tej wyprawy.",
+    "peaks": [
+      {
+        "id": "baranie-rogi",
+        "name": "Baranie Rogi",
+        "altitude": 2526,
+        "lat": 49.2016399,
+        "lng": 20.1971608,
+        "source": "https://www.openstreetmap.org/node/385126469"
+      }
+    ],
+    "marker": {
+      "lat": 49.136383,
+      "lng": 20.219652
+    },
+    "trip": "baranie-rogi-lodowy-szczyt-2026"
+  },
+  {
+    "id": "lodowy-lato-2026",
+    "title": "Lodowa Kopa — Lodowy Szczyt",
+    "anchor": "trasa-lodowy-lato-2026",
+    "dates": "5 lipca 2026",
+    "intro": "Zapis przejścia z tej wyprawy. Nagłe skoki GPS pozostają rozdzielone i nie zwiększają dystansu.",
+    "peaks": [
+      {
+        "id": "lodowa-kopa",
+        "name": "Lodowa Kopa",
+        "altitude": 2602,
+        "lat": 49.1964482,
+        "lng": 20.1825885,
+        "source": "https://www.openstreetmap.org/node/6008115144"
+      },
+      {
+        "id": "lodowy-szczyt",
+        "name": "Lodowy Szczyt",
+        "altitude": 2627,
+        "lat": 49.1985452,
+        "lng": 20.1827652,
+        "source": "https://www.tanap.sk/wp-content/uploads/TATRY_2022-6.pdf"
+      }
+    ],
+    "marker": {
+      "lat": 49.193583,
+      "lng": 20.18167
+    },
+    "trip": "baranie-rogi-lodowy-szczyt-2026"
+  },
+  {
+    "id": "zabi-kon-2026",
+    "title": "Żabi Koń",
+    "anchor": "trasa-zabi-kon-2026",
+    "dates": "19 września 2026",
+    "intro": "Zapis przejścia z tej wyprawy.",
+    "peaks": [
+      {
+        "id": "zabi-kon",
+        "name": "Żabi Koń",
+        "altitude": 2291,
+        "lat": 49.1785869,
+        "lng": 20.0793064,
+        "source": "https://www.openstreetmap.org/node/3508683869"
+      }
+    ],
+    "marker": {
+      "lat": 49.127656,
+      "lng": 20.074001
+    },
+    "trip": "zabi-kon-2026"
+  }
+]

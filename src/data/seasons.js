@@ -17,7 +17,7 @@ export function getSeason(year) {
   const peaks = summits.map(peak => ({ ...peak, ascents: peak.ascents.filter(ascent => ascent.year === String(year)) })).filter(peak => peak.ascents.length).sort((a, b) => b.altitude - a.altitude)
   const ascents = peaks.flatMap(peak => peak.ascents)
   const films = filmCatalog.filter(film => tripIds.has(film.expeditionId))
-  const tracks = routes.filter(route => route.sortDate.startsWith(String(year)) && tripIds.has(route.trip))
+  const tracks = routes.filter(route => route.sortDate.startsWith(String(year)))
   const galleries = trips.map(trip => trip.gallery).filter(gallery => !isVideoCollection(gallery) && !isTripPhotoCollection(gallery))
   const assets = new Set(galleries.flatMap(gallery => gallery.photos.map(photo => photo.full)))
   const selectedTrips = featured[year].map(id => trips.find(trip => trip.id === id)).filter(Boolean)

@@ -6,6 +6,7 @@ import { comparisonPaths, comparisonScale, comparisonSample, comparisonShareHref
 const number = (value, digits = 0) => value.toLocaleString('pl-PL', { maximumFractionDigits: digits })
 export function RouteComparison({ selected, tracks, onChange, onShowPoint, atlasState }) {
   const container = useRef(null)
+  const section = useRef(null)
   const shareInput = useRef(null)
   const [width, setWidth] = useState(700)
   const [distance, setDistance] = useState(0)
@@ -16,6 +17,12 @@ export function RouteComparison({ selected, tracks, onChange, onShowPoint, atlas
   const scale = ready ? comparisonScale(selected.map(id => tracks[id])) : null
   const samples = ready ? selected.map(id => comparisonSample(tracks[id], distance)) : []
   const searchRef = useRef(null)
+  useEffect(() => {
+    if (!ready || window.location.hash !== '#porownanie') return
+    // Filtering the prerendered full list and loading profiles changes its height.
+    const frame = requestAnimationFrame(() => section.current?.scrollIntoView({ behavior: 'instant', block: 'start' }))
+    return () => cancelAnimationFrame(frame)
+  }, [ready])
   useEffect(() => {
     searchRef.current = window.location.search
     setDistance(readComparisonDistance(searchRef.current, maxDistance)); setShare(null)
@@ -52,13 +59,13 @@ export function RouteComparison({ selected, tracks, onChange, onShowPoint, atlas
     try { await navigator.clipboard.writeText(url); copied = true } catch { /* Manual link remains available. */ }
     setShare({ url, copied })
   }
-  return <section className="cz-route-comparison" id="porownanie" aria-labelledby="route-comparison-title">
+  return <section ref={section} className="cz-route-comparison" id="porownanie" aria-labelledby="route-comparison-title">
     <div className="cz-route-comparison-heading"><div><p className="cz-route-eyebrow">Dwie trasy · jedna skala</p><h2 id="route-comparison-title">Porównanie tras</h2></div><div className="cz-route-comparison-actions">{ready && <button type="button" onClick={copyComparison}>Udostępnij porównanie ↗</button>}{selected.length > 0 && <button type="button" onClick={() => onChange([])}>Wyczyść wybór</button>}</div></div>
     {share && <div className="cz-route-share"><p role="status">{share.copied ? 'Link skopiowany. Możesz też skopiować go z pola poniżej.' : 'Skopiuj link z pola poniżej.'}</p><label>Link do porównania<input ref={shareInput} readOnly value={share.url} onFocus={event => event.target.select()} /></label><button type="button" onClick={() => setShare(null)}>Zamknij</button></div>}
     <p className="cz-route-comparison-intro">Wybierz dwie trasy z listy lub poniżej. Profile pokazują rzeczywisty dystans i wysokość na wspólnych osiach.</p>
     <div className="cz-route-compare-selects">{[0, 1].map(slot => <label key={slot} className={`cz-route-compare-slot is-${slot}`}><span>{slot === 0 ? 'A' : 'B'} · Trasa</span><select aria-label={`Trasa ${slot === 0 ? 'A' : 'B'} do porównania`} value={selected[slot] || ''} disabled={slot === 1 && !selected[0]} onChange={event => {
       const next = [...selected]; next[slot] = event.target.value; onChange(next.filter(Boolean))
-    }}><option value="">{slot === 1 && !selected[0] ? 'Najpierw wybierz trasę A' : 'Wybierz trasę'}</option>{catalog.map(row => <option key={row.id} value={row.id} disabled={selected[1 - slot] === row.id}>{tripRoutes[row.id].title}</option>)}</select></label>)}</div>
+    }}><option value="">{slot === 1 && !selected[0] ? 'Najpierw wybierz trasę A' : 'Wybierz trasę'}</option>{catalog.map(row => <option key={row.id} value={row.id} disabled={selected[1 - slot] === row.id}>{tripRoutes[row.id].title} · {tripRoutes[row.id].dates}</option>)}</select></label>)}</div>
     <div ref={container} className="cz-route-compare-chart">
       {ready ? <>
         <div className="cz-route-compare-axis"><span>Wysokość GPS · m n.p.m.</span><span>Dystans · km</span></div>
@@ -73,8 +80,8 @@ export function RouteComparison({ selected, tracks, onChange, onShowPoint, atlas
         <div className="cz-route-point-readouts">{samples.map((sample, slot) => <div className={`cz-route-compare-slot is-${slot}`} key={selected[slot]}><span>{slot === 0 ? 'A' : 'B'} · {tripRoutes[selected[slot]].title}</span><strong>{sample.kind === 'point' ? `≈ ${number(sample.elevation)} m n.p.m.` : sample.kind === 'gap' ? 'Przerwa w zapisie GPS' : 'Poza zapisem tej trasy'}</strong><button type="button" disabled={sample.kind !== 'point'} onClick={() => onShowPoint({ ...sample, id: selected[slot], slot })}>Pokaż na mapie ↑</button></div>)}</div>
         <div className="cz-route-compare-details">{selected.map((id, slot) => { const row = catalog.find(row => row.id === id), route = tripRoutes[id], peak = highestPeak(route); return <article key={id} className={`cz-route-compare-slot is-${slot}`}>
           <span className="cz-route-compare-letter">{slot === 0 ? 'A' : 'B'}</span><h3>{route.title}</h3><p>{route.dates}</p>
-          <dl><div><dt>Dystans GPS</dt><dd>{number(row.distance / 1000, 1)} km</dd></div><div><dt>Suma podejść · GPS</dt><dd>≈ {number(row.ascentEstimate)} m</dd></div><div><dt>{route.peaks.length > 1 ? `Najwyżej · ${peak.name}` : 'Wysokość szczytu'}</dt><dd>{number(peak.altitude)} m</dd></div></dl>
-          <a href={routeHref(row, route)}>Trasa i wyprawa ↗</a>
+          <dl><div><dt>Dystans GPS</dt><dd>{number(row.distance / 1000, 1)} km</dd></div><div><dt>Suma podejść · GPS</dt><dd>≈ {number(row.ascentEstimate)} m</dd></div>{peak && <div><dt>{route.peaks.length > 1 ? `Najwyżej · ${peak.name}` : 'Wysokość szczytu'}</dt><dd>{number(peak.altitude)} m</dd></div>}</dl>
+          <a href={routeHref(row, route)}>{row.trip ? 'Trasa i wyprawa ↗' : 'Profil trasy ↗'}</a>
         </article> })}</div>
         <p className="cz-route-catalog-note">Profile zachowują przerwy w nagraniu. Wysokości na wykresie pochodzą z GPS; wysokości szczytów podajemy osobno, według przyjętych pomiarów. Dystans i suma podejść nie określają trudności ani czasu przejścia.</p>
       </> : <div className="cz-route-compare-empty" role="status">{selected.length === 2 ? 'Wczytywanie profili…' : selected.length === 1 ? 'Wybierz drugą trasę, żeby zestawić profile.' : 'Dwa profile, dystanse i sumy podejść pojawią się tutaj po wyborze tras.'}</div>}

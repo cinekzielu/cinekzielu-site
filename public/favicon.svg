@@ -1,19 +1,2 @@
-<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="512" height="512" rx="112" fill="#021313"/>
-
-  <path d="M100 156 L180 110 L216 144 L285 72 L344 148 L374 128 L438 146"
-        stroke="#F5F1E0"
-        stroke-width="30"
-        stroke-linecap="round"
-        stroke-linejoin="round"/>
-
-  <text x="256" y="400"
-        text-anchor="middle"
-        font-family="Alefa Slab One, Helvetica, sans-serif"
-        font-size="290"
-        font-weight="810"
-        fill="#F5F1E0"
-        letter-spacing="15">
-    CZ
-  </text>
-</svg>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img"><title>CINEK ZIELU — ikona strony</title><rect width="512" height="512" rx="88" fill="#171c19" /><g fill="#ffffff" transform="translate(55.52 99.19) scale(.716)"><path d="M436 0 L532 96 H244 C162 96 98 153 98 224 C98 251 108 278 127 297 L276 148 H560 L358 350 H454 L542 438 H173 L358 253 L319 214 L242 291 L220 269 L93 396 C35 350 0 288 0 224 C0 99 112 0 244 0 Z" /></g></svg>

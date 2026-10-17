@@ -1,4 +1,5 @@
 import routeCatalog from './routeCatalog.json' with { type: 'json' }
+import { routeHref } from './routeAtlas.js'
 import { tripRoutes } from './tripRoutes.js'
 import { photoGalleries, videoFrameCollections } from './galleryData.js'
 import { expeditionPages } from './expeditionPages.js'
@@ -22,7 +23,7 @@ export const sitePages = [
   page('/filmy', 'Filmy z gór i podróży — Cinek Zielu', 'Filmy z Tatr, Szwajcarii, Alp, Jury, Maroka i Hungaroringu. Wybierz miejsce, znajdź film i zobacz materiały z wyprawy.', shareImages['maroko-2025']),
   page('/szczyty', 'Moje szczyty — Cinek Zielu', 'Letnie i zimowe wejścia w Tatry, Alpy, Gorce i Atlas Wysoki. Wysokości, lata wejść, fotografie, filmy i wyprawy.', shareImages['konczysta-2026']),
   page('/galerie', 'Galerie z wypraw — Cinek Zielu', `${galleryCollectionCount(photoGalleries)} z ${photoGalleries.length} wypraw. Alpy, Tatry, Szwajcaria, Sycylia i Hungaroring w fotografiach Marcina Zielińskiego.`, shareImages['szwajcaria-2025']),
-  page('/trasy', 'Trasy GPX — Alpy i Tatry | Cinek Zielu', 'Atlas sześciu tras GPX w Alpach i Tatrach. Mapa terenu, lista przejść i porównanie profili wysokości z wypraw Cinek Zielu.', shareImages['alpy-2026']),
+  page('/trasy', 'Trasy GPX — atlas przejść | Cinek Zielu', `Atlas ${routeCatalog.length} tras GPX: Tatry, Alpy, Gorce i Atlas Wysoki. Mapa terenu, lista przejść i porównanie profili wysokości.`, shareImages['alpy-2026']),
   page('/sezony', 'Sezony — wyprawy i fotografie | Cinek Zielu', 'Podsumowania lat 2025 i 2026: wyprawy, zdobyte szczyty, fotografie, filmy i dostępne zapisy GPX.', shareImages['alpy-2026']),
   ...['2026', '2025'].map(year => page(`/sezony/${year}`, `Sezon ${year} — Cinek Zielu`, `Wyprawy i materiały z ${year} roku. Zdobyte szczyty, wybrane fotografie, filmy i dostępne zapisy tras.`, shareImages[year === '2026' ? 'alpy-2026' : 'szwajcaria-2025'])),
   page('/wyprawy', 'Wyprawy — fotografie, filmy i miejsca | Cinek Zielu', 'Górskie i rowerowe wyprawy, podróże oraz Hungaroring. Fotografie, kadry z nagrań, filmy i miejsca na mapie — Cinek Zielu.', shareImages['alpy-2026']),
@@ -108,7 +109,7 @@ export function pageStructuredData(metadata) {
     base.mainEntity = itemList(expeditionPages.map(item => ({ name: `${item.title} ${item.year}`, url: `${SITE_ORIGIN}/wyprawy/${item.id}` })))
   } else if (metadata.path === '/trasy') {
     base['@type'] = 'CollectionPage'
-    base.mainEntity = itemList(routeCatalog.map(row => ({ name: tripRoutes[row.id].title, url: `${SITE_ORIGIN}/wyprawy/${row.trip}#${tripRoutes[row.id].anchor}` })))
+    base.mainEntity = itemList(routeCatalog.map(row => ({ name: tripRoutes[row.id].title, url: SITE_ORIGIN + routeHref(row, tripRoutes[row.id]) })))
   } else if (metadata.path === '/filmy') {
     base['@type'] = 'CollectionPage'
     base.mainEntity = itemList(filmCatalog.map(film => ({ name: film.title, url: film.youtubeUrl })))

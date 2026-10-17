@@ -1,6 +1,7 @@
 import { alpsStory, alpsLocationById } from './alpsStory.js'
 import { tatryLocationById } from './tatryAtlas.js'
 import { summits } from './summits.js'
+import importedRoutes from './importedRoutes.json' with { type: 'json' }
 
 const dates = { triglav: '18 sierpnia 2026', grossglockner: '19 sierpnia 2026', dufourspitze: '22–24 sierpnia 2026', grauspitz: '26 sierpnia 2026', zugspitze: '28 sierpnia 2026' }
 const loaders = {
@@ -23,4 +24,8 @@ tripRoutes['ganek-wysoka-rysy'] = {
   intro: 'Wspólny zapis Ganku, Wysokiej i Rysów. Powrót zakończył się po północy.',
   peaks: ['ganek', 'wysoka', 'rysy'].map(id => { const peak = summits.find(item => item.id === id); return { ...tatryLocationById[id], name: peak.name, altitude: peak.altitude, heightNote: peak.heightNote } }),
   load: loaders['ganek-wysoka-rysy'],
+}
+
+for (const route of importedRoutes) {
+  tripRoutes[route.id] = { ...route, load: () => import(`./tracks/${route.id}.json`) }
 }
