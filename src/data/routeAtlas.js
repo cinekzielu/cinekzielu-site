@@ -1,8 +1,9 @@
 import catalog from './routeCatalog.json' with { type: 'json' }
 
 export const routeIds = new Set(catalog.map(row => row.id))
-export const highestPeak = route => route.peaks.reduce((a, b) => a.altitude > b.altitude ? a : b)
-export const routeHref = (row, route) => `/wyprawy/${row.trip}#${route.anchor}`
+export const highestPeak = route => route.peaks.reduce((a, b) => !a || b.altitude > a.altitude ? b : a, null)
+export const routeHref = (row, route) => row.trip ? `/wyprawy/${row.trip}#${route.anchor}` : `/trasy?trasa=${row.id}#profil`
+export const routeRegions = [...new Set(catalog.map(row => row.region))].sort((a,b) => a.localeCompare(b, 'pl'))
 
 export const distanceFilters = [
   { id: 'all', label: 'Dowolny dystans', min: -Infinity, max: Infinity },
@@ -26,7 +27,7 @@ export function matchesRouteFilters(row, { region = 'all', distance = 'all', asc
 
 export function readRouteAtlas(search) {
   const params = new URLSearchParams(search)
-  const region = ['Alpy', 'Tatry'].includes(params.get('pasmo')) ? params.get('pasmo') : 'all'
+  const region = routeRegions.includes(params.get('pasmo')) ? params.get('pasmo') : 'all'
   const distance = distanceFilters.some(entry => entry.id === params.get('dystans')) ? params.get('dystans') : 'all'
   const ascent = ascentFilters.some(entry => entry.id === params.get('podejscia')) ? params.get('podejscia') : 'all'
   const selected = catalog.some(row => row.id === params.get('trasa') && matchesRouteFilters(row, { region, distance, ascent })) ? params.get('trasa') : null

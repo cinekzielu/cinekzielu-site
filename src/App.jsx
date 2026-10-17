@@ -3,10 +3,13 @@ import { SavedProvider } from './components/SavedItems'
 import { SavedPage } from './components/SavedPage'
 import { PageLocationProvider } from './PageLocation'
 import { ClientContent } from './components/ClientContent'
-import { AtlasOverview, MapPageOverview } from './components/AtlasOverview'
+import { MapPageOverview } from './components/AtlasOverview'
+import { HomeAtlas } from './components/HomeAtlas'
 import { Mountain, Play } from 'lucide-react'
 import './styles.css'
 import './homepage.css'
+import './headingTypography.css'
+import './captionTypography.css'
 import { SiteHeader } from './components/SiteHeader'
 import { AlpsHomeFeature } from './components/AlpsHomeFeature'
 import { contentData } from './data/contentData'
@@ -29,7 +32,6 @@ import iconFilm from './assets/icons/icon-film.svg'
 import iconLocationMark from './assets/icons/icon-location-mark.svg'
 
 const MapPage = React.lazy(() => import('./components/MapPage').then(module => ({ default: module.MapPage })))
-const MapAtlas = React.lazy(() => import('./components/MapAtlas').then(module => ({ default: module.MapAtlas })))
 
 const socials = {
   youtube: 'https://www.youtube.com/@cinek_zielu',
@@ -225,7 +227,7 @@ function App() {
         </div>
       </section>
 
-      <section id="map" className="section sectionDarker reveal"><div className="container"><SectionHeader icon={iconMap} label="MAPA WYPRAW" title="Mapa wypraw" text="Wybierz miejsce, aby zobaczyć zdjęcia i filmy z wypraw." /><ClientContent fallback={<AtlasOverview />}><MapAtlas /></ClientContent></div></section>
+      <section id="map" className="section sectionDarker reveal"><div className="container"><SectionHeader icon={iconMap} label="MAPA WYPRAW" title="Mapa wypraw" text="Wybierz miejsce, aby zobaczyć zdjęcia i filmy z wypraw." /><HomeAtlas /></div></section>
 
       <div className="container"><a className="cz-gallery-text-link" href="/szczyty">Moje szczyty →</a></div>
       <AlpsHomeFeature />

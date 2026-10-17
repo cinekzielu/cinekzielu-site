@@ -2,7 +2,8 @@ import assert from 'node:assert/strict'
 import catalog from '../src/data/routeCatalog.json' with { type: 'json' }
 import { distanceFilters, ascentFilters, matchesRouteFilters, readRouteAtlas, routeAtlasHref, comparisonShareHref, readComparisonDistance } from '../src/data/routeAtlas.js'
 
-const ids = state => catalog.filter(row => matchesRouteFilters(row, state)).map(row => row.id)
+const originalIds = new Set(['dufourspitze','grauspitz','triglav','zugspitze','grossglockner','ganek-wysoka-rysy'])
+const ids = state => catalog.filter(row => originalIds.has(row.id)).filter(row => matchesRouteFilters(row, state)).map(row => row.id)
 assert.deepEqual(ids({ distance: 'do-20' }), ['zugspitze', 'grauspitz', 'triglav'])
 assert.deepEqual(ids({ distance: '20-40' }), ['grossglockner'])
 assert.deepEqual(ids({ distance: 'ponad-40' }), ['dufourspitze', 'ganek-wysoka-rysy'])

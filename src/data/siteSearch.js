@@ -7,6 +7,7 @@ import { filmCatalog, filmRegionLabel, normalizeFilmSearch } from './filmCatalog
 import { galleryAtlasIds } from './tripGeography.js'
 
 import routeCatalog from './routeCatalog.json' with { type: 'json' }
+import { routeHref } from './routeAtlas.js'
 import { tripRoutes } from './tripRoutes.js'
 import { seasonYears } from './seasons.js'
 
@@ -23,7 +24,7 @@ const entry = data => ({ ...data, normalizedTitle:normalizeSearch(data.title), s
 export const siteSearchIndex = [
   ...seasonYears.map(year => entry({ id:`season:${year}`, kind:'season', title:`Sezon ${year}`, href:`/sezony/${year}`, subtitle:'Wyprawy, szczyty, fotografie i filmy', keywords:`podsumowanie roku ${year} GPX` })),
   ...plannedSummits.map(peak => entry({ id:`planned:${peak.id}`, kind:'place', title:peak.name, href:atlasHref(peak.id), subtitle:`W planach · ${peak.altitude} · ${peak.countryLabel}`, keywords:`${peak.range} plan cel bucket list Monte Cervino Mont Cervin` })),
-  ...routeCatalog.map(row => entry({ id:`route:${row.id}`, kind:'route', title:`${tripRoutes[row.id].title} — trasa`, href:`/wyprawy/${row.trip}#${tripRoutes[row.id].anchor}`, subtitle:`${row.region} · ${tripRoutes[row.id].dates}`, keywords:`GPX profil wysokości mapa trasy ${row.country}` })),
+  ...routeCatalog.map(row => entry({ id:`route:${row.id}`, kind:'route', title:`${tripRoutes[row.id].title} — trasa`, href:routeHref(row, tripRoutes[row.id]), subtitle:`${row.region} · ${tripRoutes[row.id].dates}`, keywords:`GPX profil wysokości mapa trasy ${row.country}` })),
   ...atlasContentNodes.filter(place => place.id !== 'world' && hasAtlasMaterials(place.id)).map(place => {
     const materials = getAtlasMaterials(place.id)
     return entry({ id:`place:${place.id}`, kind:'place', title:place.name, href:atlasHref(place.id), subtitle:[place.kind, materials.galleries.length && `${materials.galleries.length} wyp.`, materials.films.length && `${materials.films.length} film.`].filter(Boolean).join(' · '), keywords:`${placeWords([place.id])} ${place.description || ''}` })

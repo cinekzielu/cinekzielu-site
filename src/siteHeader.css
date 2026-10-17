@@ -1,0 +1,23 @@
+.cz-site-header{position:relative;z-index:30}
+.cz-site-header .cz-gallery-brand{display:flex;align-items:center;flex-shrink:0;min-height:44px;line-height:1}
+.cz-site-header .cz-brand-logo{display:block;width:146px;height:auto;max-width:100%}
+@media(max-width:900px){.cz-site-header .cz-brand-logo{width:104px}}
+.cz-site-header .cz-nav-group{position:relative}
+.cz-site-header .cz-nav-group summary{display:flex;align-items:center;gap:7px;min-height:44px;list-style:none;cursor:pointer;white-space:nowrap}
+.cz-site-header .cz-nav-group summary::-webkit-details-marker{display:none}
+.cz-site-header .cz-nav-group[open] summary{color:#e2c99e}
+.cz-site-header .cz-nav-group[open] summary svg{transform:rotate(180deg)}
+.cz-site-header .cz-nav-submenu{position:absolute;top:calc(100% + 7px);left:-20px;min-width:248px;padding:8px;background:#191713;border:1px solid #d6c6a82e;box-shadow:0 16px 40px #0005;color:#eee8de}
+.cz-site-header .cz-nav-submenu a{display:flex;flex-direction:column;align-items:flex-start;gap:5px;padding:13px 12px;min-height:44px;line-height:1.4}
+.cz-site-header .cz-nav-submenu small{font-size:11px;font-weight:400;color:#b7aa9b}
+.cz-site-header .cz-nav-submenu a:hover,.cz-site-header .cz-nav-submenu a:focus-visible{background:#d0aa620d}
+.cz-site-header .cz-nav-submenu a[aria-current=page]{color:#e2c99e;background:#d0aa6212}
+.cz-site-header :is(a,button,summary):focus-visible{outline:2px solid #c9a36d;outline-offset:4px}
+@media(min-width:901px) and (max-width:1100px){.cz-site-header .cz-collection-nav{gap:12px}.cz-site-header .cz-nav-group summary{gap:4px}}
+@media(max-width:900px){
+ .cz-site-header .cz-collection-nav.is-open{display:flex;flex-direction:column;align-items:stretch;gap:0}
+ .cz-site-header .cz-collection-nav>a,.cz-site-header .cz-nav-group summary{padding:10px 8px;min-height:48px;box-sizing:border-box}
+ .cz-site-header .cz-nav-group summary{justify-content:space-between}
+ .cz-site-header .cz-nav-submenu{position:static;min-width:0;margin:0 0 8px;padding:0 8px;border:0;border-left:1px solid #c9a36d66;box-shadow:none}
+ .cz-site-header .cz-nav-submenu a{padding:10px 12px}
+}

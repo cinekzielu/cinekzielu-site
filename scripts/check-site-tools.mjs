@@ -7,7 +7,7 @@ import { filmCatalog } from '../src/data/filmCatalog.js'
 
 assert.equal(normalizeSearch('Łódź, ŚWINICA!'), 'lodz swinica')
 assert.deepEqual(searchSite('swinica'), searchSite('Świnica'))
-assert.deepEqual(new Set(searchSite('swinica').map(item => item.kind)), new Set(['place','expedition','gallery','film']))
+assert.deepEqual(new Set(searchSite('swinica').map(item => item.kind)), new Set(['place','route','expedition','gallery','film']))
 assert(searchSite('lodowa kopa').some(item => item.title === 'Lodowa Kopa'))
 assert.deepEqual(searchSite(''), [])
 assert.deepEqual(searchSite('   '), [])

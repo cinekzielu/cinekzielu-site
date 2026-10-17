@@ -1,0 +1,21 @@
+/* Approved Caption Regular 0.1; photo captions only, not interface hints. */
+@font-face {
+  font-family: 'Cinek Zielu Caption';
+  src: url('./assets/fonts/CinekZieluCaption-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+.cz-caption,
+.cz-home-portrait figcaption > span,
+.cz-photo-viewer .cz-lightbox-source {
+  font-family: 'Cinek Zielu Caption', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 400;
+  font-style: normal;
+  font-synthesis: none;
+  font-kerning: normal;
+  overflow-wrap: anywhere;
+}
