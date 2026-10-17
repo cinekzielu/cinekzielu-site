@@ -23,6 +23,8 @@ export const sitePages = [
   page('/szczyty', 'Moje szczyty — Cinek Zielu', 'Letnie i zimowe wejścia w Tatry, Alpy, Gorce i Atlas Wysoki. Wysokości, lata wejść, fotografie, filmy i wyprawy.', shareImages['konczysta-2026']),
   page('/galerie', 'Galerie z wypraw — Cinek Zielu', `${galleryCollectionCount(photoGalleries)} z ${photoGalleries.length} wypraw. Alpy, Tatry, Szwajcaria, Sycylia i Hungaroring w fotografiach Marcina Zielińskiego.`, shareImages['szwajcaria-2025']),
   page('/trasy', 'Trasy GPX — Alpy i Tatry | Cinek Zielu', 'Atlas sześciu tras GPX w Alpach i Tatrach. Mapa terenu, lista przejść i porównanie profili wysokości z wypraw Cinek Zielu.', shareImages['alpy-2026']),
+  page('/sezony', 'Sezony — wyprawy i fotografie | Cinek Zielu', 'Podsumowania lat 2025 i 2026: wyprawy, zdobyte szczyty, fotografie, filmy i dostępne zapisy GPX.', shareImages['alpy-2026']),
+  ...['2026', '2025'].map(year => page(`/sezony/${year}`, `Sezon ${year} — Cinek Zielu`, `Wyprawy i materiały z ${year} roku. Zdobyte szczyty, wybrane fotografie, filmy i dostępne zapisy tras.`, shareImages[year === '2026' ? 'alpy-2026' : 'szwajcaria-2025'])),
   page('/wyprawy', 'Wyprawy — fotografie, filmy i miejsca | Cinek Zielu', 'Górskie i rowerowe wyprawy, podróże oraz Hungaroring. Fotografie, kadry z nagrań, filmy i miejsca na mapie — Cinek Zielu.', shareImages['alpy-2026']),
   ...photoGalleries.map(gallery => page(`/galerie/${gallery.id}`, `${gallery.title} ${gallery.year} — galeria | Cinek Zielu`, gallery.mediaKind === 'video-frames' ? `${gallery.title} ${gallery.year} — ${galleryItemCount(gallery)} z oryginalnych nagrań${gallery.sourceLabel ? ' ' + gallery.sourceLabel : ''} Marcina Zielińskiego. Zobacz galerię, filmy i miejsce na mapie.` : `${gallery.title} ${gallery.year} — ${gallery.photos.length} fotografii z wyprawy. Zobacz galerię${gallery.films.length ? ', filmy' : ''} i miejsce na mapie. Fotografie Marcina Zielińskiego.`, shareImages[gallery.id])),
   ...expeditionPages.map(expedition => page(`/wyprawy/${expedition.id}`, `${expedition.title} ${expedition.year} — wyprawa | Cinek Zielu`, `${expedition.description} Zobacz ${expedition.gallery.mediaKind === 'video-frames' ? 'kadry z nagrań' : expedition.gallery.mediaKind === 'trip-photos' ? 'zdjęcia z wyprawy' : 'galerię zdjęć'}${expedition.gallery.films.length ? ', filmy' : ''} i miejsce na mapie.`, shareImages[expedition.id])),
@@ -120,7 +122,7 @@ export function pageStructuredData(metadata) {
   if (parts.length === 2) {
     base.breadcrumb = { '@type': 'BreadcrumbList', itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Cinek Zielu', item: SITE_ORIGIN + '/' },
-      { '@type': 'ListItem', position: 2, name: parts[0] === 'galerie' ? 'Galerie' : 'Wyprawy', item: SITE_ORIGIN + '/' + parts[0] },
+      { '@type': 'ListItem', position: 2, name: parts[0] === 'galerie' ? 'Galerie' : parts[0] === 'sezony' ? 'Sezony' : 'Wyprawy', item: SITE_ORIGIN + '/' + parts[0] },
       { '@type': 'ListItem', position: 3, name: metadata.title.split(' — ')[0], item: metadata.canonical },
     ] }
   }

@@ -35,3 +35,4 @@
 .cz-trip-route .cz-route-profile text{font-size:13px}
 
 .cz-trip-route .cz-route-summit-height{color:#c8bca5;font-size:13px;line-height:1.7;margin:0 0 20px}.cz-route-summit-height strong{color:#e8c78f;font-weight:500}
+.cz-route-actions button:disabled{opacity:.45;cursor:default}

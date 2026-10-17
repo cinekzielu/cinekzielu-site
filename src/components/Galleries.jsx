@@ -3,6 +3,7 @@ import { CollectionFilters, useCollectionFilters } from './CollectionFilters'
 import { findFilm } from '../data/filmCatalog'
 import React from 'react'
 import { PhotoGrid } from './PhotoGrid'
+import { AlpsGalleryStages } from './AlpsPhotoStages'
 import { FilmLink } from './SiteTools'
 import { ResponsivePhoto } from './ResponsivePhoto'
 import { photoGalleries as galleryData } from '../data/galleryData'
@@ -52,7 +53,7 @@ export function GalleryPage({ slug }) {
       {gallery.films.length > 0 && <FilmLink href={gallery.films[0].url} target="_blank" rel="noreferrer">{gallery.films[0].label === 'Zwiastun' ? 'Obejrzyj zwiastun' : 'Obejrzyj film'} ▷</FilmLink>}
       {gallery.films.length > 1 && <a href="#filmy">Wszystkie filmy ↓</a>}
     </nav>
-    <PhotoGrid gallery={gallery} shareable />
+    {gallery.id === 'alpy-2026' ? <AlpsGalleryStages gallery={gallery} /> : <PhotoGrid gallery={gallery} shareable />}
     {gallery.films.length > 1 && <section id="filmy" className="cz-gallery-films" aria-labelledby="gallery-films-title"><h2 id="gallery-films-title">Filmy z wyprawy</h2><div>{gallery.films.map(film => <FilmLink key={film.id} href={film.url} target="_blank" rel="noreferrer"><span>{film.label} · {findFilm(film.id)?.duration}</span>{film.title}<span aria-hidden="true">▷</span></FilmLink>)}</div></section>}
     <div className="cz-gallery-next"><span>Kolejna galeria</span><a href={galleryHref(next)}>{next.title} <span className="cz-gallery-year">{next.year}</span> ↗</a></div>
   </GalleryShell>

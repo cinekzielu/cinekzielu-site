@@ -8,8 +8,9 @@ import { galleryAtlasIds } from './tripGeography.js'
 
 import routeCatalog from './routeCatalog.json' with { type: 'json' }
 import { tripRoutes } from './tripRoutes.js'
+import { seasonYears } from './seasons.js'
 
-export const searchKinds = [{ id:'all', label:'Wszystko' }, { id:'place', label:'Miejsca' }, { id:'route', label:'Trasy' }, { id:'expedition', label:'Wyprawy' }, { id:'gallery', label:'Galerie' }, { id:'film', label:'Filmy' }]
+export const searchKinds = [{ id:'all', label:'Wszystko' }, { id:'place', label:'Miejsca' }, { id:'route', label:'Trasy' }, { id:'expedition', label:'Wyprawy' }, { id:'gallery', label:'Galerie' }, { id:'film', label:'Filmy' }, { id:'season', label:'Sezony' }]
 export const normalizeSearch = value => normalizeFilmSearch(value || '').replace(/[^a-z0-9]+/g,' ').trim()
 const placeWords = ids => ids.flatMap(id => atlasAncestry(id).map(place => place.name)).join(' ')
 const filmPlaces = film => atlasContentNodes.filter(place => place.filmIds?.includes(film.youtubeId))
@@ -20,6 +21,7 @@ const filmTripWords = film => {
 const entry = data => ({ ...data, normalizedTitle:normalizeSearch(data.title), searchText:normalizeSearch(`${data.title} ${data.subtitle} ${data.keywords || ''}`) })
 
 export const siteSearchIndex = [
+  ...seasonYears.map(year => entry({ id:`season:${year}`, kind:'season', title:`Sezon ${year}`, href:`/sezony/${year}`, subtitle:'Wyprawy, szczyty, fotografie i filmy', keywords:`podsumowanie roku ${year} GPX` })),
   ...plannedSummits.map(peak => entry({ id:`planned:${peak.id}`, kind:'place', title:peak.name, href:atlasHref(peak.id), subtitle:`W planach · ${peak.altitude} · ${peak.countryLabel}`, keywords:`${peak.range} plan cel bucket list Monte Cervino Mont Cervin` })),
   ...routeCatalog.map(row => entry({ id:`route:${row.id}`, kind:'route', title:`${tripRoutes[row.id].title} — trasa`, href:`/wyprawy/${row.trip}#${tripRoutes[row.id].anchor}`, subtitle:`${row.region} · ${tripRoutes[row.id].dates}`, keywords:`GPX profil wysokości mapa trasy ${row.country}` })),
   ...atlasContentNodes.filter(place => place.id !== 'world' && hasAtlasMaterials(place.id)).map(place => {

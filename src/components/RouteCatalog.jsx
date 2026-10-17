@@ -4,7 +4,7 @@ import { SaveButton } from './SavedItems'
 import { RouteComparison } from './RouteComparison'
 import { useInitialLocation } from '../PageLocation'
 import { tripRoutes } from '../data/tripRoutes'
-import { highestPeak, readRouteAtlas, routeAtlasHref, routeHref } from '../data/routeAtlas'
+import { highestPeak, readRouteAtlas, routeAtlasHref, routeHref, distanceFilters, ascentFilters, matchesRouteFilters } from '../data/routeAtlas'
 import catalog from '../data/routeCatalog.json'
 import '../routeCatalog.css'
 
@@ -20,7 +20,7 @@ export function RouteCatalog() {
   const [retry, setRetry] = useState(0)
   const [hovered, setHovered] = useState(null)
   const [profilePoint, setProfilePoint] = useState(null)
-  const { region, selected, compare } = state
+  const { region, distance, ascent, selected, compare } = state
   useEffect(() => {
     const sync = () => {
       if (searchRef.current === window.location.search) return
@@ -40,13 +40,18 @@ export function RouteCatalog() {
   }, [retry])
   const update = patch => {
     setProfilePoint(null)
-    const next = { ...state, ...patch }
+    const next = readRouteAtlas(routeAtlasHref({ ...state, ...patch }).split('?')[1] || '')
     setState(next)
-    const href = routeAtlasHref(next)
+    let href = routeAtlasHref(next)
+    const savedKm = new URLSearchParams(window.location.search).get('km')
+    if (next.compare.length === 2 && next.compare.join(',') === compare.join(',') && /^\d+(\.\d{1,3})?$/.test(savedKm || '')) href += `&km=${savedKm}`
     if (window.location.pathname + window.location.search !== href) window.history.pushState({}, '', href)
     searchRef.current = window.location.search
   }
-  const rows = useMemo(() => catalog.filter(row => region === 'all' || row.region === region), [region])
+  const rows = useMemo(() => catalog.filter(row => matchesRouteFilters(row, { region, distance, ascent })), [region, distance, ascent])
+  const filtered = region !== 'all' || distance !== 'all' || ascent !== 'all'
+  const hiddenComparison = compare.some(id => !rows.some(row => row.id === id))
+  const clearFilters = () => { setHovered(null); update({ region: 'all', distance: 'all', ascent: 'all' }) }
   const ready = rows.every(row => tracks[row.id])
   const selectedRow = catalog.find(row => row.id === selected)
   const toggleCompare = id => update({ compare: compare.includes(id) ? compare.filter(value => value !== id) : compare.length < 2 ? [...compare, id] : compare })
@@ -57,7 +62,7 @@ export function RouteCatalog() {
   const selectRegion = value => { setHovered(null); update({ region: value, selected: null }) }
   const showProfilePoint = point => {
     const row = catalog.find(entry => entry.id === point.id)
-    update({ selected: point.id, region: region === 'all' || region === row.region ? region : 'all' })
+    update({ selected: point.id, ...(matchesRouteFilters(row, state) ? {} : { region: 'all', distance: 'all', ascent: 'all' }) })
     setHovered(null); setProfilePoint(point)
     mapSection.current?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' })
     mapSection.current?.focus({ preventScroll: true })
@@ -66,12 +71,18 @@ export function RouteCatalog() {
     <div className="cz-gallery-intro"><h1>Trasy</h1><span className="cz-gallery-count">6 zapisów GPX · Alpy i Tatry</span></div>
     <p className="cz-route-catalog-intro">Moje przejścia na mapie. Wybierz trasę, zobacz jej przebieg albo porównaj dwa profile wysokości.</p>
     <div className="cz-route-catalog-tools"><div role="group" aria-label="Pasmo tras">{[['all', 'Wszystkie'], ['Alpy', 'Alpy'], ['Tatry', 'Tatry']].map(([value, label]) => <button key={value} type="button" aria-pressed={region === value} onClick={() => selectRegion(value)}>{label}</button>)}</div><a href="#porownanie">Porównaj trasy <span>{compare.length}/2</span> ↓</a></div>
+    <div className="cz-route-filters" role="group" aria-label="Filtry tras">
+      <label>Dystans zapisu<select value={distance} onChange={event => { setHovered(null); update({ distance: event.target.value }) }}>{distanceFilters.map(entry => <option key={entry.id} value={entry.id}>{entry.label}</option>)}</select></label>
+      <label>Suma podejść · GPS<select value={ascent} onChange={event => { setHovered(null); update({ ascent: event.target.value }) }}>{ascentFilters.map(entry => <option key={entry.id} value={entry.id}>{entry.label}</option>)}</select></label>
+      <div><span role="status">Trasy: {rows.length} z {catalog.length}</span>{filtered && <button type="button" onClick={clearFilters}>Wyczyść filtry</button>}</div>
+    </div>
+    {hiddenComparison && <p className="cz-route-filter-note">Wybrane porównanie pozostaje dostępne poniżej, także dla tras spoza filtrów. <a href="#porownanie">Przejdź do porównania ↓</a></p>}
     <div className="cz-route-atlas-layout">
       <section ref={mapSection} tabIndex={-1} className="cz-route-atlas-map" aria-label="Mapa tras">
-        <div className="cz-route-atlas-map-heading"><div><span className="cz-route-eyebrow">{selectedRow ? selectedRow.region : region === 'all' ? 'Alpy · Tatry' : region}</span><h2>{selected ? tripRoutes[selected].title : 'Wszystkie trasy'}</h2></div>{selected && <button type="button" onClick={() => { setHovered(null); update({ selected: null }) }}>Pokaż wszystkie</button>}</div>
-        {ready ? <Suspense fallback={<div className="cz-route-atlas-placeholder" role="status">Wczytywanie mapy…</div>}><AtlasMap rows={rows} tracks={tracks} selected={selected} highlighted={hovered} profilePoint={profilePoint} onSelect={id => { setHovered(null); update({ selected: id }) }} /></Suspense> : <div className="cz-route-atlas-placeholder" role="status">{loadError ? <><p>Nie udało się wczytać tras. Lista i odnośniki do wypraw są dostępne poniżej.</p><button type="button" onClick={() => setRetry(value => value + 1)}>Spróbuj ponownie</button></> : 'Wczytywanie mapy i tras…'}</div>}
+        <div className="cz-route-atlas-map-heading"><div><span className="cz-route-eyebrow">{selectedRow ? selectedRow.region : region === 'all' ? 'Alpy · Tatry' : region}</span><h2>{selected ? tripRoutes[selected].title : filtered ? 'Trasy z listy' : 'Wszystkie trasy'}</h2></div>{selected && <button type="button" onClick={() => { setHovered(null); update({ selected: null }) }}>Pokaż całą listę</button>}</div>
+        {!rows.length ? <div className="cz-route-atlas-placeholder cz-route-filter-empty"><h3>Brak tras dla tych filtrów</h3><p>Zmień zakres dystansu lub podejść, albo pokaż wszystkie dostępne zapisy.</p><button type="button" onClick={clearFilters}>Pokaż wszystkie trasy</button></div> : ready ? <Suspense fallback={<div className="cz-route-atlas-placeholder" role="status">Wczytywanie mapy…</div>}><AtlasMap rows={rows} tracks={tracks} selected={selected} highlighted={hovered} profilePoint={profilePoint} onSelect={id => { setHovered(null); update({ selected: id }) }} /></Suspense> : <div className="cz-route-atlas-placeholder" role="status">{loadError ? <><p>Nie udało się wczytać tras. Lista i odnośniki do wypraw są dostępne poniżej.</p><button type="button" onClick={() => setRetry(value => value + 1)}>Spróbuj ponownie</button></> : 'Wczytywanie mapy i tras…'}</div>}
         {profilePoint && <div className={`cz-route-map-point cz-route-compare-slot is-${profilePoint.slot}`}><span>{profilePoint.slot === 0 ? 'A' : 'B'} · {number(profilePoint.distance / 1000, 2)} km · ≈ {number(profilePoint.elevation)} m n.p.m.</span><a href="#porownanie">Wróć do porównania ↓</a></div>}
-        <div className="cz-route-atlas-map-caption"><span><i />{selected ? 'Wybrana trasa wyróżniona na złoto' : 'Kliknij punkt na mapie lub nazwę na liście'}</span>{selectedRow && <a href={routeHref(selectedRow, tripRoutes[selected])}>Profil i wyprawa ↗</a>}</div>
+        {!!rows.length && <div className="cz-route-atlas-map-caption"><span><i />{selected ? 'Wybrana trasa wyróżniona na złoto' : 'Kliknij punkt na mapie lub nazwę na liście'}</span>{selectedRow && <a href={routeHref(selectedRow, tripRoutes[selected])}>Profil i wyprawa ↗</a>}</div>}
       </section>
       <section className="cz-route-atlas-list" aria-label="Lista tras">
         <div className="cz-route-atlas-list-heading"><h2>Trasy</h2><span role="status">{rows.length} z {catalog.length} · od najnowszych</span></div>

@@ -1,13 +1,13 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { Search, X, MapPin, Camera, Mountain, Play, ArrowUpRight, ArrowLeft } from 'lucide-react'
+import { Search, X, MapPin, Camera, Mountain, Play, CalendarDays, ArrowUpRight, ArrowLeft } from 'lucide-react'
 import { searchKinds, searchSite } from '../data/siteSearch'
 import { resolveFilmLink } from '../data/videoPlayer'
 import { VideoPlayer } from './VideoPlayer'
 import '../siteTools.css'
 
 const Tools = createContext(null)
-const resultIcons = { route:MapPin, place:MapPin, gallery:Camera, expedition:Mountain, film:Play }
+const resultIcons = { route:MapPin, place:MapPin, gallery:Camera, expedition:Mountain, film:Play, season:CalendarDays }
 
 export function SearchTrigger({ onOpen }) {
   const tools = useContext(Tools)
@@ -38,7 +38,7 @@ function SearchResults({ query, filter, setFilter, play }) {
       {groups.filter(group => group.items.length && (filter === 'all' || group.id === filter)).map(group => <section key={group.id} aria-label={`Wyniki: ${group.label}`}>
         <h3>{group.label}<span>{group.items.length}</span></h3>
         <ul>{group.items.slice(0,expanded[group.id] || (filter === 'all' ? 3 : 10)).map(item => {
-          const Icon = resultIcons[item.kind]
+          const Icon = resultIcons[item.kind] || MapPin
           return <li key={item.id}><a className="cz-search-result" href={item.href} aria-haspopup={item.kind === 'film' ? 'dialog' : undefined} onClick={event => {
             if (item.kind !== 'film' || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return
             if (play(item.href,event.currentTarget)) event.preventDefault()

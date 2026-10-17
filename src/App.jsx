@@ -15,6 +15,7 @@ import { SiteToolsProvider, FilmLink } from './components/SiteTools'
 import { PhotographyPage, PhotographyPreview } from './components/Photography'
 import { AboutPage } from './components/About'
 import { RouteCatalog } from './components/RouteCatalog'
+import { SeasonsIndex, SeasonPage } from './components/Seasons'
 import { SummitsPage } from './components/Summits'
 import { getAtlasMaterials } from './data/atlasContent'
 import { NotFound } from './components/NotFound'
@@ -517,6 +518,8 @@ export function SitePage({ location }) {
   if (pathname === '/mapa') page = <ClientContent fallback={<MapPageOverview />}><MapPage /></ClientContent>
   if (pathname === '/filmy') page = <FilmIndex />
   if (pathname === '/trasy') page = <RouteCatalog />
+  if (pathname === '/sezony') page = <SeasonsIndex />
+  if (/^\/sezony\/(2025|2026)$/.test(pathname)) page = <SeasonPage year={pathname.split('/')[2]} />
   if (pathname === '/zapisane') page = <SavedPage />
   if (pathname === '/szczyty') page = <SummitsPage />
   if (pathname === '/fotografia') page = <PhotographyPage />
