@@ -6,6 +6,7 @@ import { ClientContent } from './components/ClientContent'
 import { AtlasOverview, MapPageOverview } from './components/AtlasOverview'
 import { Mountain, Play } from 'lucide-react'
 import './styles.css'
+import './homepage.css'
 import { SiteHeader } from './components/SiteHeader'
 import { AlpsHomeFeature } from './components/AlpsHomeFeature'
 import { contentData } from './data/contentData'
@@ -24,7 +25,6 @@ import { GalleryCards, GalleryIndex, GalleryPage } from './components/Galleries'
 import { ExpeditionIndex, ExpeditionPage, ExpeditionList } from './components/Expeditions'
 import { expeditionPages, findExpeditionPage } from './data/expeditionPages'
 import iconMap from './assets/icons/icon-map.svg'
-import iconCamera from './assets/icons/icon-camera.svg'
 import iconFilm from './assets/icons/icon-film.svg'
 import iconLocationMark from './assets/icons/icon-location-mark.svg'
 
@@ -195,45 +195,33 @@ function App() {
   return (
     <main className="homepage">
       <a className="cz-skip-link" href="#home-content">Przejdź do treści</a>
-      <section className="hero">
-        <div className="cinematicNoise"></div>
-        <div className="cinematicFog fogOne"></div>
-        <div className="cinematicFog fogTwo"></div>
-        <div className="glow"></div>
+      <section className="cz-home-hero">
         <div className="cz-gallery-wrap cz-home-header"><SiteHeader /></div>
 
-        <div className="heroGrid container" id="home-content" tabIndex={-1}>
-          <div className="heroText">
-            <div className="eyebrow">Cinek Zielu / Marcin Zieliński</div>
-            <h1 className="heroTitle">Wyprawy, filmy i historie z miejsc, które zostają ze mną na długo.</h1>
+        <div className="cz-home-intro container" id="home-content" tabIndex={-1}>
+          <div className="cz-home-copy">
+            <div className="cz-home-kicker">Marcin Zieliński / Cinek Zielu</div>
+            <h1>Moje wyprawy,<br /> zdjęcia i filmy.</h1>
             <p>
-              Chodzę po górach, podróżuję, filmuję i fotografuję. Czasem powstaje z tego dłuższa opowieść,
-              czasem krótka forma — zawsze zapis prawdziwej drogi i momentów po trasie.
+              Chodzę po górach i podróżuję z aparatem. Tutaj zbieram fotografie, filmy i trasy z moich wyjazdów.
             </p>
-            <div className="buttons">
-              <a className="button primary" href="#films">
-                <Play size={16} /> Obejrzyj filmy
+            <div className="cz-home-actions">
+              <a className="cz-home-action is-primary" href="#films">
+                <Play size={16} aria-hidden="true" /> Obejrzyj filmy
               </a>
-              <a className="button" href="/fotografia">
+              <a className="cz-home-action" href="/fotografia">
                 Zobacz fotografie
               </a>
-              <a className="button" href={socials.youtube} target="_blank" rel="noreferrer">
-                YouTube
+              <a className="cz-home-youtube" href={socials.youtube} target="_blank" rel="noreferrer">
+                YouTube <span aria-hidden="true">↗</span>
               </a>
             </div>
           </div>
 
-          <div className="heroCard">
-            <div className="heroImageWrap">
-              <img src="/images/optimized/hero-720.webp" srcSet="/images/optimized/hero-720.webp 720w, /images/optimized/hero-1280.webp 1280w" sizes="(max-width:900px) calc(100vw - 40px), (max-width:1400px) 44vw, 600px" width="1760" height="2048" fetchPriority="high" decoding="async" alt="Marcin Zieliński na górskim szczycie" className="heroImage" />
-              <div className="heroOverlay"></div>
-              <div className="heroBadge"><CzIcon src={iconCamera} /> Cinek Zielu</div>
-              <div className="heroCaption">
-                <h2>Marcin Zieliński</h2>
-                <p>Góry, podróże i filmowe kadry z miejsc, do których wracam myślami.</p>
-              </div>
-            </div>
-          </div>
+          <figure className="cz-home-portrait">
+            <img src="/images/optimized/hero-720.webp" srcSet="/images/optimized/hero-720.webp 720w, /images/optimized/hero-1280.webp 1280w" sizes="(max-width:600px) calc(100vw - 28px), (max-width:760px) min(520px, calc(100vw - 40px)), (max-width:1200px) 44vw, 520px" width="1760" height="2048" fetchPriority="high" decoding="async" alt="Marcin Zieliński na górskim szczycie" />
+            <figcaption><span>Marcin Zieliński</span><a href="/o-mnie">O mnie <span aria-hidden="true">↗</span></a></figcaption>
+          </figure>
         </div>
       </section>
 
@@ -316,8 +304,8 @@ function App() {
           <SectionHeader
             icon={iconLocationMark}
             label="WYBRANE KIERUNKI"
-            title="Miejsca, które prowadzą dalej"
-            text="Tatry, Maroko i Szwajcaria. Wybierz miejsce i zobacz materiały."
+            title="Tatry, Maroko i Szwajcaria"
+            text="Wybierz kierunek i zobacz zdjęcia, filmy oraz wyprawy."
           />
           <div className="featuredExpeditionsGrid">
             {homepageFeaturedExpeditions.map((expedition) => (
