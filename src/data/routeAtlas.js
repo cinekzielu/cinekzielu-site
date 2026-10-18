@@ -1,6 +1,10 @@
 import catalog from './routeCatalog.json' with { type: 'json' }
 import { canonicalRouteId } from './routeAliases.js'
 import importedRoutes from './importedRoutes.json' with { type: 'json' }
+import { routeMaterials, materialFilters } from './routeMaterials.js'
+import { readRouteArea, areaKey } from './routeArea.js'
+export { materialFilters } from './routeMaterials.js'
+export const routeYears = [...new Set(catalog.map(row => row.sortDate.slice(0, 4)))].sort().reverse()
 
 export const dayIds = new Map(importedRoutes.filter(route => route.dayIds).map(route => [route.id, route.dayIds]))
 
@@ -37,8 +41,11 @@ const inRange = (value, id, ranges) => {
   const range = ranges.find(entry => entry.id === id) || ranges[0]
   return value > range.min && value <= range.max
 }
-export function matchesRouteFilters(row, { region = 'all', distance = 'all', ascent = 'all' }) {
+export function matchesRouteFilters(row, { region = 'all', distance = 'all', ascent = 'all', year = 'all', material = 'all' }) {
+  const media = routeMaterials(row)
   return (region === 'all' || row.region === region) && inRange(row.distance, distance, distanceFilters) && inRange(row.ascentEstimate, ascent, ascentFilters)
+    && (year === 'all' || row.sortDate?.slice(0, 4) === year)
+    && (material === 'all' || material === 'zdjecia' && media.photos || material === 'film' && media.film || material === 'oba' && media.photos && media.film)
 }
 
 export function readRouteAtlas(search) {
@@ -46,8 +53,11 @@ export function readRouteAtlas(search) {
   const region = routeRegions.includes(params.get('pasmo')) ? params.get('pasmo') : 'all'
   const distance = distanceFilters.some(entry => entry.id === params.get('dystans')) ? params.get('dystans') : 'all'
   const ascent = ascentFilters.some(entry => entry.id === params.get('podejscia')) ? params.get('podejscia') : 'all'
+  const year = routeYears.includes(params.get('rok')) ? params.get('rok') : 'all'
+  const material = materialFilters.some(entry => entry.id === params.get('materialy')) ? params.get('materialy') : 'all'
+  const area = readRouteArea(params.get('obszar'))
   const requested = canonicalRouteId(params.get('trasa'))
-  const selected = catalog.some(row => row.id === requested && matchesRouteFilters(row, { region, distance, ascent })) ? requested : null
+  const selected = catalog.some(row => row.id === requested && matchesRouteFilters(row, { region, distance, ascent, year, material })) ? requested : null
   const view = params.get('widok') === 'lista' ? 'list' : 'map'
   const sort = routeSorts.some(entry => entry.id === params.get('sortuj')) ? params.get('sortuj') : 'newest'
   const compare = [], compareDays = ['all', 'all']
@@ -61,13 +71,16 @@ export function readRouteAtlas(search) {
     compare.push(id)
     if (compare.length === 2) break
   }
-  return { region, distance, ascent, selected, compare, compareDays, view, sort }
+  return { region, distance, ascent, year, material, area, selected, compare, compareDays, view, sort }
 }
-export function routeAtlasHref({ region, distance = 'all', ascent = 'all', selected, compare, compareDays = ['all', 'all'], view = 'map', sort = 'newest' }) {
+export function routeAtlasHref({ region = 'all', distance = 'all', ascent = 'all', year = 'all', material = 'all', area = null, selected, compare = [], compareDays = ['all', 'all'], view = 'map', sort = 'newest' }) {
   const params = new URLSearchParams()
   if (region !== 'all') params.set('pasmo', region)
   if (distance !== 'all') params.set('dystans', distance)
   if (ascent !== 'all') params.set('podejscia', ascent)
+  if (routeYears.includes(year)) params.set('rok', year)
+  if (material !== 'all' && materialFilters.some(entry => entry.id === material)) params.set('materialy', material)
+  if (area && readRouteArea(areaKey(area))) params.set('obszar', areaKey(area))
   if (view === 'list') params.set('widok', 'lista')
   if (sort !== 'newest' && routeSorts.some(entry => entry.id === sort)) params.set('sortuj', sort)
   if (selected) params.set('trasa', selected)

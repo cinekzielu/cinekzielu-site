@@ -1,4 +1,11 @@
 .cz-route-catalog-intro{color:#b6afa3;font-size:17px;max-width:680px;line-height:1.7;margin:0 0 30px}
+.cz-route-filter-explainer{font-size:12px;line-height:1.7;color:#b7ac98;margin:-10px 0 24px}
+.cz-route-area-tools,.cz-route-area-active{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 16px;font-size:12px;color:#c3b79f;line-height:1.6}
+.cz-route-area-tools button,.cz-route-area-active button{min-height:44px;padding:10px 14px;border:1px solid #8b7044;border-radius:3px;background:#d2ae6812;color:#ebcc99;font:inherit;cursor:pointer}
+.cz-route-area-tools button:disabled{opacity:.45;cursor:default}.cz-route-area-tools span{flex:1 1 180px}
+.cz-route-area-active{padding:14px 16px;border-left:2px solid #d9b678;background:#d2ae6809;justify-content:space-between}
+.cz-route-atlas-overlay .cz-route-area-outline{fill:#d9b67808;stroke:#d9b678;stroke-width:1.5;stroke-dasharray:6 5}
+@media(max-width:600px){.cz-route-area-tools{align-items:stretch}.cz-route-area-tools button{width:100%}.cz-route-area-active{padding:12px}.cz-route-area-active button{flex-shrink:0}}
 .cz-route-filters{display:flex;align-items:flex-end;flex-wrap:wrap;gap:16px;margin:0 0 26px;padding:20px;border:1px solid #40372b;background:#1c191355;border-radius:4px}
 .cz-route-filters label{display:grid;gap:8px;flex:1 1 200px;max-width:280px;font-size:12px;color:#bbad96;min-width:0}
 .cz-route-filters select{box-sizing:border-box;min-height:46px;width:100%;max-width:100%;padding:9px 12px;border:1px solid #635235;background:#1c1913;color:#eee2ce;font:inherit;font-size:14px;border-radius:3px}
