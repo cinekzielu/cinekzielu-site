@@ -28,6 +28,6 @@ for (const year of seasonYears) {
   assert.equal(pageStructuredData(meta).breadcrumb.itemListElement[1].name,'Sezony')
   console.log(`${year}: ${season.trips.length} trips, ${season.peaks.length} distinct peaks, ${season.ascents.length} ascents, ${season.photoCount} photographs, ${season.tracks.length} GPX`)
 }
-assert.equal(getSeason('2025').tracks.length,24)
-assert.equal(getSeason('2026').tracks.length,13)
+assert.equal(getSeason('2025').tracks.length,21)
+assert.equal(getSeason('2026').tracks.length,12)
 console.log('PASS: stage assignments, distinct year statistics, SEO/search.')

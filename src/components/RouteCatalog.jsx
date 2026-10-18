@@ -45,7 +45,7 @@ export function RouteCatalog() {
     setState(next)
     let href = routeAtlasHref(next)
     const savedKm = new URLSearchParams(window.location.search).get('km')
-    if (next.compare.length === 2 && next.compare.join(',') === compare.join(',') && /^\d+(\.\d{1,3})?$/.test(savedKm || '')) href += `&km=${savedKm}`
+    if (next.compare.length === 2 && next.compare.join(',') === compare.join(',') && next.compareDays.join(',') === state.compareDays.join(',') && /^\d+(\.\d{1,3})?$/.test(savedKm || '')) href += `&km=${savedKm}`
     if (window.location.pathname + window.location.search !== href) window.history.pushState({}, '', href)
     searchRef.current = window.location.search
   }
@@ -55,7 +55,7 @@ export function RouteCatalog() {
   const clearFilters = () => { setHovered(null); update({ region: 'all', distance: 'all', ascent: 'all' }) }
   const ready = rows.every(row => tracks[row.id])
   const selectedRow = catalog.find(row => row.id === selected)
-  const toggleCompare = id => update({ compare: compare.includes(id) ? compare.filter(value => value !== id) : compare.length < 2 ? [...compare, id] : compare })
+  const toggleCompare = id => update({ compare: compare.includes(id) ? compare.filter(value => value !== id) : compare.length < 2 ? [...compare, id] : compare, compareDays: ['all', 'all'] })
   const selectRoute = id => {
     update({ selected: id })
     if (window.matchMedia('(max-width: 820px)').matches) mapSection.current?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' })
@@ -69,7 +69,7 @@ export function RouteCatalog() {
     mapSection.current?.focus({ preventScroll: true })
   }
   return <CollectionShell section="wyprawy" detail className="cz-routes">
-    <div className="cz-gallery-intro"><h1>Trasy</h1><span className="cz-gallery-count">{catalog.length} zapisów GPX · {routeRegions.join(' · ')}</span></div>
+    <div className="cz-gallery-intro"><h1>Trasy</h1><span className="cz-gallery-count">{catalog.length} tras GPX · {routeRegions.join(' · ')}</span></div>
     <p className="cz-route-catalog-intro">Moje przejścia na mapie. Wybierz trasę, zobacz jej przebieg albo porównaj dwa profile wysokości.</p>
     <div className="cz-route-catalog-tools"><div role="group" aria-label="Pasmo tras">{[['all', 'Wszystkie'], ...routeRegions.map(name => [name, name])].map(([value, label]) => <button key={value} type="button" aria-pressed={region === value} onClick={() => selectRegion(value)}>{label}</button>)}</div><a href="#porownanie">Porównaj trasy <span>{compare.length}/2</span> ↓</a></div>
     <div className="cz-route-filters" role="group" aria-label="Filtry tras">
@@ -100,7 +100,7 @@ export function RouteCatalog() {
       </section>
     </div>
     {selected && <div id="profil"><TripRoute key={selected} routeId={selected} headingLevel={2} atlas /></div>}
-    <RouteComparison selected={compare} tracks={tracks} atlasState={state} onShowPoint={showProfilePoint} onChange={value => update({ compare: value })} />
+    <RouteComparison selected={compare} tracks={tracks} atlasState={state} onShowPoint={showProfilePoint} onChange={value => update({ compare: value, compareDays: ['all', 'all'] })} onDaysChange={compareDays => update({ compareDays })} />
     <p className="cz-route-catalog-note">Dystans i przybliżona suma podejść pochodzą z opublikowanych zapisów GPS. Suma podejść pomija drobne wahania wysokości poniżej 10 m i nie łączy przerw w nagraniu; może różnić się od statystyk Stravy. Wysokości szczytów są niezależne od GPS.</p>
     <nav className="cz-route-catalog-footer" aria-label="Powiązane zestawienia"><a href="/wyprawy">Wszystkie wyprawy ↗</a><a href="/szczyty">Moje szczyty ↗</a></nav>
   </CollectionShell>

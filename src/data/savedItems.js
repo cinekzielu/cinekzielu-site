@@ -3,6 +3,7 @@ import { photoGalleries } from './galleryData.js'
 import { photoViewId } from './photoView.js'
 import { tripRoutes } from './tripRoutes.js'
 import routeCatalog from './routeCatalog.json' with { type: 'json' }
+import { canonicalRouteId } from './routeAliases.js'
 
 // Store stable content IDs only. Titles, links and images always come from the
 // current catalog, never from browser storage.
@@ -32,7 +33,8 @@ export const savedPhotoKey = photo => photoKeys.get(photo?.full) || null
 
 export function cleanSavedKeys(keys) {
   if (!Array.isArray(keys)) return []
-  return [...new Set(keys.filter(key => typeof key === 'string' && savedByKey.has(key)))].slice(0, savedByKey.size)
+  const migrated = keys.map(key => typeof key === 'string' && key.startsWith('route:') ? `route:${canonicalRouteId(key.slice(6))}` : key)
+  return [...new Set(migrated.filter(key => typeof key === 'string' && savedByKey.has(key)))].slice(0, savedByKey.size)
 }
 export function decodeSaved(raw) {
   if (!raw || typeof raw !== 'string' || raw.length > 200000) return []

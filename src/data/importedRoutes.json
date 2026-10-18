@@ -223,24 +223,11 @@
     "trip": null
   },
   {
-    "id": "toubkal-podejscie-2025",
-    "title": "Imlil — Refuge du Toubkal",
-    "anchor": "trasa-toubkal-podejscie-2025",
-    "dates": "4 maja 2025",
-    "intro": "Zapis przejścia z tej wyprawy.",
-    "peaks": [],
-    "marker": {
-      "lat": 31.135495,
-      "lng": -7.91975
-    },
-    "trip": "maroko-2025"
-  },
-  {
     "id": "toubkal-2025",
-    "title": "Toubkal — wejście ze schroniska",
+    "title": "Toubkal — cała wyprawa",
     "anchor": "trasa-toubkal-2025",
-    "dates": "5 maja 2025",
-    "intro": "Zapis przejścia z tej wyprawy. Nagłe skoki GPS pozostają rozdzielone i nie zwiększają dystansu.",
+    "dates": "4–5 maja 2025",
+    "intro": "Trzy zapisy w jednej trasie: podejście z Imlil do schroniska, wejście na Toubkal i zejście. Przerwy między odcinkami pozostają widoczne, bez dopisywania brakującego śladu.",
     "peaks": [
       {
         "id": "toubkal",
@@ -252,23 +239,18 @@
       }
     ],
     "marker": {
-      "lat": 31.0632,
-      "lng": -7.938292
+      "lat": 31.135495,
+      "lng": -7.91975
     },
-    "trip": "maroko-2025"
-  },
-  {
-    "id": "toubkal-zejscie-2025",
-    "title": "Toubkal — zejście ze schroniska",
-    "anchor": "trasa-toubkal-zejscie-2025",
-    "dates": "5 maja 2025",
-    "intro": "Zapis przejścia z tej wyprawy.",
-    "peaks": [],
-    "marker": {
-      "lat": 31.064187,
-      "lng": -7.937968
-    },
-    "trip": "maroko-2025"
+    "trip": "maroko-2025",
+    "legacyAnchors": [
+      "trasa-toubkal-podejscie-2025",
+      "trasa-toubkal-zejscie-2025"
+    ],
+    "dayIds": [
+      "1",
+      "2"
+    ]
   },
   {
     "id": "durny-2025",
@@ -359,24 +341,11 @@
     "trip": "mieguszowiecki-posrednia-gran-2025"
   },
   {
-    "id": "kasprowy-2025",
-    "title": "Kasprowy Wierch",
-    "anchor": "trasa-kasprowy-2025",
-    "dates": "19 lipca 2025",
-    "intro": "Zapis przejścia z tej wyprawy.",
-    "peaks": [],
-    "marker": {
-      "lat": 49.268605,
-      "lng": 19.979926
-    },
-    "trip": "swinica-2025"
-  },
-  {
     "id": "swinica-2025",
-    "title": "Świnica",
+    "title": "Kasprowy Wierch i Świnica",
     "anchor": "trasa-swinica-2025",
-    "dates": "20 lipca 2025",
-    "intro": "Zapis przejścia z tej wyprawy.",
+    "dates": "19–20 lipca 2025",
+    "intro": "Dwa dni w jednej trasie. Wybierz całą wyprawę lub pojedynczy dzień; przerwa między zapisami pozostaje rozdzielona.",
     "peaks": [
       {
         "id": "swinica",
@@ -388,10 +357,17 @@
       }
     ],
     "marker": {
-      "lat": 49.268286,
-      "lng": 19.979846
+      "lat": 49.268605,
+      "lng": 19.979926
     },
-    "trip": "swinica-2025"
+    "trip": "swinica-2025",
+    "legacyAnchors": [
+      "trasa-kasprowy-2025"
+    ],
+    "dayIds": [
+      "1",
+      "2"
+    ]
   },
   {
     "id": "saxer-lucke-2025",
@@ -683,10 +659,10 @@
   },
   {
     "id": "baranie-rogi-lato-2026",
-    "title": "Baranie Rogi — Lodowa Przełęcz",
+    "title": "Baranie Rogi i Lodowy Szczyt",
     "anchor": "trasa-baranie-rogi-lato-2026",
-    "dates": "4 lipca 2026",
-    "intro": "Zapis przejścia z tej wyprawy.",
+    "dates": "4–5 lipca 2026",
+    "intro": "Dwa dni w jednej trasie. Wybierz całą wyprawę lub pojedynczy dzień; przerwa między zapisami pozostaje rozdzielona.",
     "peaks": [
       {
         "id": "baranie-rogi",
@@ -695,21 +671,7 @@
         "lat": 49.2016399,
         "lng": 20.1971608,
         "source": "https://www.openstreetmap.org/node/385126469"
-      }
-    ],
-    "marker": {
-      "lat": 49.136383,
-      "lng": 20.219652
-    },
-    "trip": "baranie-rogi-lodowy-szczyt-2026"
-  },
-  {
-    "id": "lodowy-lato-2026",
-    "title": "Lodowa Kopa — Lodowy Szczyt",
-    "anchor": "trasa-lodowy-lato-2026",
-    "dates": "5 lipca 2026",
-    "intro": "Zapis przejścia z tej wyprawy. Nagłe skoki GPS pozostają rozdzielone i nie zwiększają dystansu.",
-    "peaks": [
+      },
       {
         "id": "lodowa-kopa",
         "name": "Lodowa Kopa",
@@ -728,10 +690,17 @@
       }
     ],
     "marker": {
-      "lat": 49.193583,
-      "lng": 20.18167
+      "lat": 49.136383,
+      "lng": 20.219652
     },
-    "trip": "baranie-rogi-lodowy-szczyt-2026"
+    "trip": "baranie-rogi-lodowy-szczyt-2026",
+    "legacyAnchors": [
+      "trasa-lodowy-lato-2026"
+    ],
+    "dayIds": [
+      "1",
+      "2"
+    ]
   },
   {
     "id": "zabi-kon-2026",

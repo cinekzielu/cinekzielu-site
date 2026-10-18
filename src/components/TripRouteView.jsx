@@ -2,7 +2,8 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { TatryTerrainMap } from './TatryTerrainMap'
 import { terrainScreen, terrainSvgViewport } from '../data/terrainMap'
 import { buildTrackGeometry, closestTrackIndex } from '../data/routeGeometry'
-import { comparisonSample } from '../data/routeAtlas'
+import { comparisonSample, estimateAscent } from '../data/routeAtlas'
+import { routeDayView } from '../data/routeDays'
 
 const number = (value, digits = 0) => value.toLocaleString('pl-PL', { maximumFractionDigits: digits })
 const km = value => `${number(value / 1000, 2)} km`
@@ -23,6 +24,22 @@ function TrackOverlay({ view, size, point, geometry }) {
 }
 
 export default function TripRouteView({ track, route, headingLevel = 5, onReady }) {
+  const [dayId, setDayId] = useState('all')
+  const view = useMemo(() => routeDayView(track, route, dayId), [track, route, dayId])
+  const day = track.days?.find(day => day.id === dayId)
+  return <>
+    {track.days && <div className="cz-route-day-picker">
+      <div className="cz-route-day-buttons" role="group" aria-label="Cała wyprawa lub poszczególne dni">
+        <button type="button" aria-pressed={dayId === 'all'} onClick={() => setDayId('all')}>Cała wyprawa</button>
+        {track.days.map(day => <button key={day.id} type="button" aria-pressed={dayId === day.id} onClick={() => setDayId(day.id)}>Dzień {day.id} · {day.dates}</button>)}
+      </div>
+      <p className="cz-route-day-summary" role="status"><strong>{day ? day.title : 'Cała wyprawa'}</strong> · {km(view.track.distance)} · podejścia ≈ {number(estimateAscent(view.track.points))} m{day && ' · dystans od początku tego dnia'}</p>
+    </div>}
+    <RouteDayDetail key={dayId} track={view.track} route={view.route} headingLevel={headingLevel} onReady={onReady} day={day} />
+  </>
+}
+
+function RouteDayDetail({ track, route, headingLevel, onReady, day }) {
   const geometry = useMemo(() => buildTrackGeometry(track), [track])
   const { points, segments, profileY } = geometry
   const peaks = route.peaks
@@ -31,6 +48,7 @@ export default function TripRouteView({ track, route, headingLevel = 5, onReady 
   const Heading = `h${headingLevel}`
   const inputId = `${route.id}-point`
   const [distance, setDistance] = useState(0)
+  const [exactIndex, setExactIndex] = useState(null)
   const [focus, setFocus] = useState(null)
   const pointer = useRef(null)
   const profile = useRef(null)
@@ -45,18 +63,24 @@ export default function TripRouteView({ track, route, headingLevel = 5, onReady 
   const profileX = point => 52 + point.distance / track.distance * profileSpan
   const profilePaths = useMemo(() => segments.map(segment => segment.map((point, index) => `${index ? 'L' : 'M'}${52 + point.distance / track.distance * profileSpan},${profileY(point)}`).join(' ')), [profileSpan, geometry])
   const sample = comparisonSample(track, distance)
-  const chosen = sample.kind === 'point' ? { ...sample, ele: sample.elevation } : null
+  const chosen = exactIndex !== null ? points[exactIndex] : sample.kind === 'point' ? { ...sample, ele: sample.elevation } : null
   const summary = `${km(distance)} · ${chosen ? `${number(chosen.ele)} m n.p.m.` : 'Przerwa w zapisie'}`
   const overlay = useMemo(() => (view, size) => <TrackOverlay view={view} size={size} point={chosen} geometry={geometry} />, [chosen, geometry])
-  const choose = index => setDistance(points[index].distance)
+  const choose = index => { setExactIndex(index); setDistance(points[index].distance) }
   const nearest = event => {
+    setExactIndex(null)
     const rect = event.currentTarget.getBoundingClientRect()
     const distance = Math.max(0, Math.min(1, (event.clientX - rect.left - 52) / profileSpan)) * track.distance
     setDistance(distance)
   }
   return <div className="cz-route-view">
+    {track.stages?.length > 1 && <ol className="cz-route-stages" aria-label="Odcinki połączonej trasy">
+      {track.stages.map((stage, index) => <li key={stage.startIndex}><button type="button" onClick={() => { choose(stage.startIndex); setFocus({ ...points[stage.startIndex] }) }}>
+        <span>{index + 1}. {stage.title}</span><small>{stage.dates} · {km(stage.distance)}</small>
+      </button></li>)}
+    </ol>}
     <TatryTerrainMap embedded regionId={`${route.id}-route`} points={peaks} locations={peaks} locationById={peakById} overviewPoints={points} selectedId={null}
-      onSelect={id => { const index = peakIndices[id]; choose(index); setFocus({ ...points[index] }) }} resetLabel="Cała trasa" initialTone="natural"
+      onSelect={id => { const index = peakIndices[id]; choose(index); setFocus({ ...points[index] }) }} resetLabel={day ? 'Trasa tego dnia' : 'Cała trasa'} initialTone="natural"
       surfaceLabel={`Trasa ${route.title} na mapie terenu. Strzałki przesuwają mapę, plus i minus przybliżają, Home pokazuje całą trasę.`}
       renderOverlay={overlay} trackFocus={focus} />
     <div className="cz-route-profile-heading"><Heading>Profil wysokości</Heading><span>Pomiar GPS · m n.p.m.</span></div>
@@ -70,7 +94,7 @@ export default function TripRouteView({ track, route, headingLevel = 5, onReady 
       <line x1={profileX({ distance })} x2={profileX({ distance })} y1="24" y2="230" className="cz-route-cursor" />{chosen && <circle cx={profileX(chosen)} cy={profileY(chosen)} r="5" className="cz-route-profile-dot" />}
     </svg>
     <div className="cz-route-scrubber"><div><label htmlFor={inputId}>Punkt na trasie</label><output htmlFor={inputId} aria-live="off">{summary}</output></div>
-      <input id={inputId} type="range" min="0" max={track.distance} value={distance} step="10" aria-valuetext={summary} onChange={event => setDistance(Number(event.target.value))} />
+      <input id={inputId} type="range" min="0" max={track.distance} value={distance} step="10" aria-valuetext={summary} onChange={event => { setExactIndex(null); setDistance(Number(event.target.value)) }} />
       <div className="cz-route-actions"><button type="button" disabled={!chosen} onClick={() => setFocus({ ...chosen })}>Pokaż punkt na mapie</button>{peaks.map(peak => <button type="button" key={peak.id} onClick={() => { const index = peakIndices[peak.id]; choose(index); setFocus({ ...points[index] }) }}>{peak.name} · {peak.altitude} m</button>)}</div>
     </div>
     <p className="cz-route-note">Dystans profilu ({km(track.distance)}) jest liczony z GPS i może różnić się od statystyk aktywności. Wysokości na wykresie to odczyty GPS, a wysokości szczytów podajemy niezależnie od pomiaru.{segments.length > 1 && ' Przerwy i oznaczone skoki w zapisie pozostają rozdzielone.'}</p>

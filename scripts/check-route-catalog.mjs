@@ -7,7 +7,7 @@ import { sitePages, pageStructuredData, getPageMetadata } from '../src/data/site
 import { searchSite } from '../src/data/siteSearch.js'
 import { galleryData } from '../src/data/galleryData.js'
 
-assert.equal(catalog.length, 45)
+assert.equal(catalog.length, 41)
 assert.equal(new Set(catalog.map(row => row.id)).size, catalog.length)
 assert.deepEqual(catalog.map(row => row.sortDate), catalog.map(row => row.sortDate).sort().reverse())
 const page = await readFile(new URL('../dist/trasy.html', import.meta.url), 'utf8')
