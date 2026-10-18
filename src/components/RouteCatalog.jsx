@@ -4,6 +4,8 @@ import { SaveButton } from './SavedItems'
 import { TripRoute } from './TripRoute'
 import { RoutePhotoPreview } from './RoutePhotoPreview'
 import { SimilarRoutes } from './RelatedRoutes'
+import { RouteCard } from './RouteCard'
+import { summarizeRoutes } from '../data/routeSummary'
 import { RouteComparison } from './RouteComparison'
 import { useInitialLocation } from '../PageLocation'
 import { tripRoutes } from '../data/tripRoutes'
@@ -53,6 +55,7 @@ export function RouteCatalog() {
     searchRef.current = window.location.search
   }
   const rows = useMemo(() => sortRoutes(catalog.filter(row => matchesRouteFilters(row, { region, distance, ascent })), sort), [region, distance, ascent, sort])
+  const summary = useMemo(() => summarizeRoutes(rows), [rows])
   const filtered = region !== 'all' || distance !== 'all' || ascent !== 'all'
   const hiddenComparison = compare.some(id => !rows.some(row => row.id === id))
   const clearFilters = () => { setHovered(null); update({ region: 'all', distance: 'all', ascent: 'all' }) }
@@ -75,12 +78,13 @@ export function RouteCatalog() {
     <div className="cz-gallery-intro"><h1>Trasy</h1><span className="cz-gallery-count">{catalog.length} tras GPX · {routeRegions.join(' · ')}</span></div>
     <p className="cz-route-catalog-intro">Moje przejścia na mapie. Wybierz trasę, zobacz jej przebieg albo porównaj dwa profile wysokości.</p>
     <div className="cz-route-catalog-tools"><div role="group" aria-label="Pasmo tras">{[['all', 'Wszystkie'], ...routeRegions.map(name => [name, name])].map(([value, label]) => <button key={value} type="button" aria-pressed={region === value} onClick={() => selectRegion(value)}>{label}</button>)}</div><a href="#porownanie">Porównaj trasy <span>{compare.length}/2</span> ↓</a></div>
-    <div className="cz-route-view-tools"><div role="group" aria-label="Widok tras">{[['map', 'Mapa'], ['list', 'Lista']].map(([value, label]) => <button type="button" key={value} aria-pressed={view === value} onClick={() => update({ view: value })}>{label}</button>)}</div><label>Sortowanie<select value={sort} onChange={event => update({ sort: event.target.value })}>{routeSorts.map(entry => <option key={entry.id} value={entry.id}>{entry.label}</option>)}</select></label></div>
+    <div className="cz-route-view-tools"><div role="group" aria-label="Widok tras">{[['map', 'Mapa'], ['list', 'Lista']].map(([value, label]) => <button type="button" key={value} aria-pressed={view === value} onClick={() => update({ view: value })}>{label}</button>)}</div><a href="#karta-trasy">Karta trasy ↓</a><label>Sortowanie<select value={sort} onChange={event => update({ sort: event.target.value })}>{routeSorts.map(entry => <option key={entry.id} value={entry.id}>{entry.label}</option>)}</select></label></div>
     <div className="cz-route-filters" role="group" aria-label="Filtry tras">
       <label>Dystans zapisu<select value={distance} onChange={event => { setHovered(null); update({ distance: event.target.value }) }}>{distanceFilters.map(entry => <option key={entry.id} value={entry.id}>{entry.label}</option>)}</select></label>
       <label>Suma podejść · GPS<select value={ascent} onChange={event => { setHovered(null); update({ ascent: event.target.value }) }}>{ascentFilters.map(entry => <option key={entry.id} value={entry.id}>{entry.label}</option>)}</select></label>
       <div><span role="status">Trasy: {rows.length} z {catalog.length}</span>{filtered && <button type="button" onClick={clearFilters}>Wyczyść filtry</button>}</div>
     </div>
+    <section className="cz-route-summary" aria-label="Podsumowanie wybranych tras"><dl><div><dt>Zapisanych tras</dt><dd>{summary.count}</dd></div><div><dt>Łączny dystans · km</dt><dd>{number(summary.distance / 1000, 1)}</dd></div><div><dt>Suma podejść · m</dt><dd>≈ {number(summary.ascent)}</dd></div></dl><p>{filtered ? 'Podsumowanie tras zgodnych z filtrami.' : 'Podsumowanie dodanych zapisów GPS.'} Cała wyprawa liczona raz, bez ponownego doliczania jej dni.</p></section>
     {hiddenComparison && <p className="cz-route-filter-note">Wybrane porównanie pozostaje dostępne poniżej, także dla tras spoza filtrów. <a href="#porownanie">Przejdź do porównania ↓</a></p>}
     <div className={`cz-route-atlas-layout ${view === 'list' ? 'is-list' : ''}`}>
       {view === 'map' && <section ref={mapSection} tabIndex={-1} className="cz-route-atlas-map" aria-label="Mapa tras">
@@ -105,6 +109,7 @@ export function RouteCatalog() {
         <p className="cz-route-selection-note">To część moich górskich przejść. Kolejne trasy będą uzupełniane.</p>
       </section>
     </div>
+    <RouteCard selected={selected} />
     {selected && <div id="profil"><SimilarRoutes routeId={selected} /><div id="profil-trasy"><TripRoute key={selected} routeId={selected} headingLevel={2} atlas /></div></div>}
     {loadError && view === 'list' && <div className="cz-route-compare-empty" role="status"><p>Nie udało się wczytać profili do porównania.</p><button className="cz-route-same-days" type="button" onClick={() => setRetry(value => value + 1)}>Spróbuj ponownie</button></div>}
     <RouteComparison selected={compare} tracks={tracks} atlasState={state} onShowPoint={showProfilePoint} onChange={(value, days = ['all', 'all']) => update({ compare: value, compareDays: days })} onDaysChange={compareDays => update({ compareDays })} />
