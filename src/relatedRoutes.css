@@ -1,0 +1,26 @@
+.cz-related{padding:30px 0;border-top:1px solid #51432e;margin-top:30px}
+.cz-related-heading{display:flex;justify-content:space-between;align-items:center;gap:18px}
+.cz-related-kicker,.cz-related-date{color:#b7a78e;font-size:11px;line-height:1.7}
+.cz-related h2{font-size:30px;font-weight:450;margin:8px 0}
+.cz-related-heading>a,.cz-related nav a,.cz-summit-routes a{color:#e0bd80;font-size:12px;display:inline-flex;align-items:center;min-height:44px}
+.cz-related-intro{color:#b6aa97;font-size:13px;line-height:1.8;max-width:700px;margin:8px 0 24px}
+.cz-related-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.cz-related-grid article{padding:22px;background:#1c1913;border:1px solid #40372b;border-radius:4px;display:flex;flex-direction:column;min-width:0}
+.cz-related h3,.cz-summit-routes h3{font-size:21px;font-weight:450;line-height:1.35;margin:8px 0 12px;overflow-wrap:anywhere}
+.cz-related h3 a,.cz-summit-routes h3 a{font-size:inherit;color:#eee2ce;min-height:0}
+.cz-related-metrics{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:12px;color:#c5b89f;line-height:1.7;margin:0 0 10px;font-variant-numeric:tabular-nums}
+.cz-related-reasons{font-size:11px;color:#bbae99;line-height:1.8;margin:0 0 12px}
+.cz-related-grid nav{display:flex;justify-content:space-between;gap:10px;margin-top:auto;flex-wrap:wrap}
+.cz-related-grid nav .cz-related-compare{padding:0 14px;border:1px solid #635033;border-radius:3px}
+.cz-related-peaks{display:flex;align-items:center;flex-wrap:wrap;gap:0 24px;margin-top:18px;font-size:12px;color:#bbae99}
+.cz-summit-routes{margin:16px 0 0;border:1px solid #40372b;border-radius:4px;background:#1c191355;padding:0 18px}
+.cz-summit-routes summary{cursor:pointer;color:#e0bd80;font-size:13px;padding:15px 0;min-height:44px;box-sizing:border-box}
+.cz-summit-routes summary span{margin-left:12px;color:#b7a78e}
+.cz-summit-routes>p{color:#b7a78e;font-size:11px;line-height:1.7;margin:0 0 8px}
+.cz-summit-routes article{display:flex;justify-content:space-between;align-items:center;gap:20px;border-top:1px solid #40372b;padding:14px 0}
+.cz-summit-routes article>div{min-width:0}.cz-summit-routes article nav{display:flex;gap:8px 20px;flex-wrap:wrap;flex-shrink:0}
+.cz-summit-routes-compare{border-top:1px solid #40372b;width:100%;padding:8px 0}
+.cz-related a:focus-visible,.cz-summit-routes :is(a,summary):focus-visible{outline:2px solid #d2ae68;outline-offset:3px}
+#profil-trasy{scroll-margin-top:24px}
+@media(max-width:850px){.cz-related-grid{grid-template-columns:1fr}.cz-summit-routes article{align-items:flex-start;flex-direction:column;gap:0}.cz-related-grid article{padding:18px}.cz-related-heading{align-items:flex-start;flex-direction:column;gap:0}.cz-related h2{font-size:27px}}
+.cz-route-related-jump{display:inline-flex;align-items:center;min-height:44px;color:#e0bd80;font-size:13px}#podobne{scroll-margin-top:24px}

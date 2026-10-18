@@ -3,6 +3,7 @@ import { CollectionShell } from './CollectionShell'
 import { SaveButton } from './SavedItems'
 import { TripRoute } from './TripRoute'
 import { RoutePhotoPreview } from './RoutePhotoPreview'
+import { SimilarRoutes } from './RelatedRoutes'
 import { RouteComparison } from './RouteComparison'
 import { useInitialLocation } from '../PageLocation'
 import { tripRoutes } from '../data/tripRoutes'
@@ -87,7 +88,7 @@ export function RouteCatalog() {
         {!rows.length ? <div className="cz-route-atlas-placeholder cz-route-filter-empty"><h3>Brak tras dla tych filtrów</h3><p>Zmień zakres dystansu lub podejść, albo pokaż wszystkie dostępne zapisy.</p><button type="button" onClick={clearFilters}>Pokaż wszystkie trasy</button></div> : ready ? <Suspense fallback={<div className="cz-route-atlas-placeholder" role="status">Wczytywanie mapy…</div>}><AtlasMap rows={rows} tracks={tracks} selected={selected} highlighted={hovered} profilePoint={profilePoint} onSelect={id => { setHovered(null); update({ selected: id }) }} /></Suspense> : <div className="cz-route-atlas-placeholder" role="status">{loadError ? <><p>Nie udało się wczytać tras. Lista i odnośniki do wypraw są dostępne poniżej.</p><button type="button" onClick={() => setRetry(value => value + 1)}>Spróbuj ponownie</button></> : 'Wczytywanie mapy i tras…'}</div>}
         {profilePoint && <div className={`cz-route-map-point cz-route-compare-slot is-${profilePoint.slot}`}><span>{profilePoint.slot === 0 ? 'A' : 'B'} · {number(profilePoint.distance / 1000, 2)} km · ≈ {number(profilePoint.elevation)} m n.p.m.</span><a href="#porownanie">Wróć do porównania ↓</a></div>}
         {!!rows.length && <div className="cz-route-atlas-map-caption"><span><i />{selected ? 'Wybrana trasa wyróżniona na złoto' : 'Kliknij punkt na mapie lub nazwę na liście'}</span>{selectedRow && <a href={routeHref(selectedRow, tripRoutes[selected])}>{selectedRow.trip ? 'Profil i wyprawa ↗' : 'Profil trasy ↓'}</a>}</div>}
-        {selected && <RoutePhotoPreview key={selected} routeId={selected} />}
+        {selected && <a className="cz-route-related-jump" href="#podobne">Podobne przejścia ↓</a>}{selected && <RoutePhotoPreview key={selected} routeId={selected} />}
       </section>}
       <section className="cz-route-atlas-list" aria-label="Lista tras">
         <div className="cz-route-atlas-list-heading"><h2>Trasy</h2><span role="status">{rows.length} z {catalog.length} · {routeSorts.find(entry => entry.id === sort).label.toLocaleLowerCase('pl')}</span></div>
@@ -104,7 +105,7 @@ export function RouteCatalog() {
         <p className="cz-route-selection-note">To część moich górskich przejść. Kolejne trasy będą uzupełniane.</p>
       </section>
     </div>
-    {selected && <div id="profil"><TripRoute key={selected} routeId={selected} headingLevel={2} atlas /></div>}
+    {selected && <div id="profil"><SimilarRoutes routeId={selected} /><div id="profil-trasy"><TripRoute key={selected} routeId={selected} headingLevel={2} atlas /></div></div>}
     {loadError && view === 'list' && <div className="cz-route-compare-empty" role="status"><p>Nie udało się wczytać profili do porównania.</p><button className="cz-route-same-days" type="button" onClick={() => setRetry(value => value + 1)}>Spróbuj ponownie</button></div>}
     <RouteComparison selected={compare} tracks={tracks} atlasState={state} onShowPoint={showProfilePoint} onChange={(value, days = ['all', 'all']) => update({ compare: value, compareDays: days })} onDaysChange={compareDays => update({ compareDays })} />
     <p className="cz-route-catalog-note">Dystans i przybliżona suma podejść pochodzą z opublikowanych zapisów GPS. Suma podejść pomija drobne wahania wysokości poniżej 10 m i nie łączy przerw w nagraniu; może różnić się od statystyk Stravy. Wysokości szczytów są niezależne od GPS.</p>
