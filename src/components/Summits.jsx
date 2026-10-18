@@ -1,6 +1,7 @@
 import { plannedSummits } from '../data/plannedSummits'
 import { normalizeFilmSearch } from '../data/filmCatalog'
 import { PlannedSummits } from './PlannedSummits'
+import { SummitRoutes } from './RelatedRoutes'
 import React, { useEffect, useRef, useState } from 'react'
 import { Mountain, Snowflake, Sun, Search, X, ArrowUpRight, Play, Camera, MapPin } from 'lucide-react'
 import { CollectionShell } from './CollectionShell'
@@ -64,6 +65,7 @@ export function SummitsPage() {
       <div className="cz-summit-heading"><div><span className="cz-summit-range">{summit.rangeName}</span><h2><a href={`/mapa?atlas=${summit.id}`}>{summit.name}</a></h2>{summit.heightNote && <small className="cz-summit-height-note">{summit.heightNote}</small>}</div><div className="cz-summit-altitude"><span>{height(summit.altitude)}</span> m<a href={`/mapa?atlas=${summit.id}`} aria-label={`${summit.name} na mapie`}><MapPin size={13} aria-hidden="true" /> Na mapie</a></div></div>
       {summit.id === 'baranie-rogi' && <a className="cz-baranie-map-link" href="/wyprawy/baranie-rogi-lodowy-szczyt-2026#dwa-sezony">Baranie Rogi · lato i zima ↗</a>}
       <ul className="cz-summit-ascents">{summit.ascents.map(ascent => <Ascent key={ascent.evidence} ascent={ascent} name={summit.name} />)}</ul>
+      <SummitRoutes summit={summit} filters={filters} expanded={matches.length <= 3} />
     </article>)}</div> : !plannedMatches.length && <div className="cz-summit-empty"><Mountain size={32} strokeWidth={1} aria-hidden="true" /><h2>Brak pasujących szczytów</h2><p>Zmień nazwę, pasmo, rok lub rodzaj wejścia.</p><button type="button" onClick={() => update(defaultSummitFilters)}>Pokaż wszystkie szczyty</button></div>}
     <details className="cz-summit-notes"><summary>O zestawieniu i wysokościach</summary><p>Zestawienie obejmuje wejścia opisane w wyprawach i filmach. Ten sam szczyt może mieć kilka wejść. Daty odnoszą się do wypraw, a letni lub zimowy charakter wejścia do materiałów z wyjazdu. Brak sezonu lub roku oznacza, że nie został jeszcze opisany.</p><p>Wysokości podano w pełnych metrach. Rysy: wierzchołek graniczny oznaczony na mapie.</p><ul>{summits.map(summit => <li key={summit.id}><a href={summit.altitudeSource} target="_blank" rel="noreferrer">{summit.name} · {height(summit.altitude)} m ↗</a></li>)}</ul><p>Dane wysokości m.in. © autorzy OpenStreetMap, <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">ODbL</a>; SAC, TANAP i oficjalne materiały regionalne.</p></details>
   </CollectionShell>
