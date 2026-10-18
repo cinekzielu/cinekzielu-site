@@ -13,10 +13,10 @@ const pointDistance = entries => entries.length < 2 ? 0 : Math.hypot(entries[0].
 const markerIcons = { planned:Star, mountain:Mountain, village:House, hut:Tent, city:MapPin, route:Route, lakes:Waves, glacier:Snowflake, forest:Trees, castle:Castle, film:Camera, waterfall:Waves, race:Flag }
 const initialView = (id, points, size, locations, locationById, overview, focusZoom) => locationById[id] ? { ...mercator(locationById[id]), zoom: focusZoom } : fitTerrain(overview || (points.length ? points : locations), size)
 
-export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0, locations = tatryLocations, locationById = tatryLocationById, regionId = 'tatry', resetLabel = 'Całe Tatry', surfaceLabel = 'Mapa terenu Tatr. Przesuwaj palcem lub strzałkami. Plus i minus przybliżają, Home pokazuje całe Tatry.', initialTone = 'natural', overviewPoints = null, focusZoom = 14, countryId = null, embedded = false, renderOverlay = null, trackFocus = null }) {
+export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0, locations = tatryLocations, locationById = tatryLocationById, regionId = 'tatry', resetLabel = 'Całe Tatry', surfaceLabel = 'Mapa terenu Tatr. Przesuwaj palcem lub strzałkami. Plus i minus przybliżają, Home pokazuje całe Tatry.', initialTone = 'natural', overviewPoints = null, focusZoom = 14, countryId = null, embedded = false, renderOverlay = null, trackFocus = null, initialViewport = null, onViewportChange = null }) {
   const [bookmark] = useState(() => embedded ? null : readTerrainView(window.location.search))
   const [size, setSize] = useState({ width: 800, height: 500 })
-  const [view, setView] = useState(() => bookmark?.view || initialView(selectedId, points, { width: 800, height: 500 }, locations, locationById, overviewPoints, focusZoom))
+  const [view, setView] = useState(() => initialViewport || bookmark?.view || initialView(selectedId, points, { width: 800, height: 500 }, locations, locationById, overviewPoints, focusZoom))
   const [tone, setTone] = useState(() => (!embedded && readTerrainTone(window.location.search)) || initialTone)
   const [shareState, setShareState] = useState(null)
   const [shareUrl, setShareUrl] = useState('')
@@ -30,13 +30,17 @@ export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0
   const [nearbyChoices, setNearbyChoices] = useState(null)
   const surface = useRef(null), frame = useRef(null)
   const viewRef = useRef(view), sizeRef = useRef(size), toneRef = useRef(tone)
-  const gesture = useRef(null), pointers = useRef(new Map()), interacted = useRef(Boolean(bookmark))
+  const gesture = useRef(null), pointers = useRef(new Map()), interacted = useRef(Boolean(bookmark || initialViewport))
   const selectionFromMap = useRef(null)
   const previousSelection = useRef(`${selectedId}/${focusRequest}`)
   const lastLoadedTiles = useRef([])
   const pointsRef = useRef(points), selectedRef = useRef(selectedId)
   const pendingFrame = useRef(null), pendingView = useRef(null)
   pointsRef.current = points; selectedRef.current = selectedId; sizeRef.current = size
+
+  const viewportCallback = useRef(onViewportChange)
+  viewportCallback.current = onViewportChange
+  useEffect(() => { viewportCallback.current?.({ view, size }) }, [view, size])
 
   const saveView = () => {
     if (embedded) return
