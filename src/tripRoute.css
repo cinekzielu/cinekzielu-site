@@ -36,3 +36,13 @@
 
 .cz-trip-route .cz-route-summit-height{color:#c8bca5;font-size:13px;line-height:1.7;margin:0 0 20px}.cz-route-summit-height strong{color:#e8c78f;font-weight:500}
 .cz-route-actions button:disabled{opacity:.45;cursor:default}
+.cz-route-stages{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;list-style:none;padding:0;margin:0 0 18px}
+.cz-route-stages button{display:flex;flex-direction:column;gap:8px;width:100%;height:100%;min-height:64px;padding:12px;text-align:left;border:1px solid #c9a36d55;border-radius:4px;background:#211d17;color:#ead5af;font-size:13px}
+.cz-route-stages small{color:#bdb3a1;font-size:12px}
+@media(max-width:600px){.cz-route-stages{grid-template-columns:1fr}}
+.cz-route-day-buttons{display:flex;flex-wrap:wrap;gap:8px}
+.cz-route-day-buttons button{min-height:44px;border:1px solid #c9a36d66;border-radius:4px;background:#211d17;color:#d4c4a9;padding:10px 14px;font-size:13px}
+.cz-route-day-buttons button[aria-pressed=true]{background:#d9b577;color:#1c1812;border-color:#d9b577}
+.cz-route-day-summary{font-size:13px;line-height:1.7;color:#bdb3a1;margin:14px 0 22px}
+.cz-route-day-summary strong{font-weight:500;color:#ead5af}
+@media(max-width:600px){.cz-route-day-buttons{display:grid;grid-template-columns:1fr}.cz-route-day-buttons button{text-align:left}}

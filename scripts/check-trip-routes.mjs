@@ -6,7 +6,7 @@ import { fitTerrain, terrainScreen, mercator, terrainSvgViewport } from '../src/
 
 const expected = { triglav: [1662, 2864], grossglockner: [1759, 3798], dufourspitze: [5253, 4634], grauspitz: [1418, 2599], zugspitze: [1442, 2962], 'ganek-wysoka-rysy': [3865, 2560] }
 const result = []
-assert.equal(Object.keys(tripRoutes).length, 45)
+assert.equal(Object.keys(tripRoutes).length, 41)
 for (const [id, route] of Object.entries(tripRoutes)) {
   const raw = fs.readFileSync(new URL(id === 'dufourspitze' ? '../src/data/dufourTrack.json' : `../src/data/tracks/${id}.json`, import.meta.url), 'utf8')
   const track = JSON.parse(raw), geometry = buildTrackGeometry(track)

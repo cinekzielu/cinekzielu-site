@@ -1,4 +1,8 @@
 import catalog from './routeCatalog.json' with { type: 'json' }
+import { canonicalRouteId } from './routeAliases.js'
+import importedRoutes from './importedRoutes.json' with { type: 'json' }
+
+const dayIds = new Map(importedRoutes.filter(route => route.dayIds).map(route => [route.id, route.dayIds]))
 
 export const routeIds = new Set(catalog.map(row => row.id))
 export const highestPeak = route => route.peaks.reduce((a, b) => !a || b.altitude > a.altitude ? b : a, null)
@@ -30,16 +34,23 @@ export function readRouteAtlas(search) {
   const region = routeRegions.includes(params.get('pasmo')) ? params.get('pasmo') : 'all'
   const distance = distanceFilters.some(entry => entry.id === params.get('dystans')) ? params.get('dystans') : 'all'
   const ascent = ascentFilters.some(entry => entry.id === params.get('podejscia')) ? params.get('podejscia') : 'all'
-  const selected = catalog.some(row => row.id === params.get('trasa') && matchesRouteFilters(row, { region, distance, ascent })) ? params.get('trasa') : null
-  return { region, distance, ascent, selected, compare: [...new Set((params.get('porownaj') || '').split(',').filter(id => routeIds.has(id)))].slice(0, 2) }
+  const requested = canonicalRouteId(params.get('trasa'))
+  const selected = catalog.some(row => row.id === requested && matchesRouteFilters(row, { region, distance, ascent })) ? requested : null
+  const compare = [...new Set((params.get('porownaj') || '').split(',').map(canonicalRouteId).filter(id => routeIds.has(id)))].slice(0, 2)
+  const compareDays = [0, 1].map(slot => {
+    const day = params.get(slot === 0 ? 'dzienA' : 'dzienB')
+    return dayIds.get(compare[slot])?.includes(day) ? day : 'all'
+  })
+  return { region, distance, ascent, selected, compare, compareDays }
 }
-export function routeAtlasHref({ region, distance = 'all', ascent = 'all', selected, compare }) {
+export function routeAtlasHref({ region, distance = 'all', ascent = 'all', selected, compare, compareDays = ['all', 'all'] }) {
   const params = new URLSearchParams()
   if (region !== 'all') params.set('pasmo', region)
   if (distance !== 'all') params.set('dystans', distance)
   if (ascent !== 'all') params.set('podejscia', ascent)
   if (selected) params.set('trasa', selected)
   if (compare.length) params.set('porownaj', compare.join(','))
+  compareDays.forEach((day, slot) => { if (compare[slot] && dayIds.get(compare[slot])?.includes(day)) params.set(slot === 0 ? 'dzienA' : 'dzienB', day) })
   return `/trasy${params.size ? `?${params}` : ''}`
 }
 
