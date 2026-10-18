@@ -2,7 +2,7 @@ import catalog from './routeCatalog.json' with { type: 'json' }
 import { canonicalRouteId } from './routeAliases.js'
 import importedRoutes from './importedRoutes.json' with { type: 'json' }
 
-const dayIds = new Map(importedRoutes.filter(route => route.dayIds).map(route => [route.id, route.dayIds]))
+export const dayIds = new Map(importedRoutes.filter(route => route.dayIds).map(route => [route.id, route.dayIds]))
 
 export const routeIds = new Set(catalog.map(row => row.id))
 export const highestPeak = route => route.peaks.reduce((a, b) => !a || b.altitude > a.altitude ? b : a, null)
@@ -21,6 +21,18 @@ export const ascentFilters = [
   { id: '1500-2500', label: 'Ponad 1500 do 2500 m', min: 1500, max: 2500 },
   { id: 'ponad-2500', label: 'Ponad 2500 m', min: 2500, max: Infinity },
 ]
+export const routeSorts = [
+  { id: 'newest', label: 'Od najnowszych' },
+  { id: 'distance', label: 'Najdłuższe' },
+  { id: 'shortest', label: 'Najkrótsze' },
+  { id: 'ascent', label: 'Najwięcej podejść' },
+]
+export function sortRoutes(rows, sort = 'newest') {
+  return [...rows].sort((a, b) => {
+    const metric = sort === 'distance' ? b.distance - a.distance : sort === 'shortest' ? a.distance - b.distance : sort === 'ascent' ? b.ascentEstimate - a.ascentEstimate : 0
+    return metric || b.sortDate.localeCompare(a.sortDate) || a.id.localeCompare(b.id)
+  })
+}
 const inRange = (value, id, ranges) => {
   const range = ranges.find(entry => entry.id === id) || ranges[0]
   return value > range.min && value <= range.max
@@ -36,18 +48,28 @@ export function readRouteAtlas(search) {
   const ascent = ascentFilters.some(entry => entry.id === params.get('podejscia')) ? params.get('podejscia') : 'all'
   const requested = canonicalRouteId(params.get('trasa'))
   const selected = catalog.some(row => row.id === requested && matchesRouteFilters(row, { region, distance, ascent })) ? requested : null
-  const compare = [...new Set((params.get('porownaj') || '').split(',').map(canonicalRouteId).filter(id => routeIds.has(id)))].slice(0, 2)
-  const compareDays = [0, 1].map(slot => {
-    const day = params.get(slot === 0 ? 'dzienA' : 'dzienB')
-    return dayIds.get(compare[slot])?.includes(day) ? day : 'all'
-  })
-  return { region, distance, ascent, selected, compare, compareDays }
+  const view = params.get('widok') === 'lista' ? 'list' : 'map'
+  const sort = routeSorts.some(entry => entry.id === params.get('sortuj')) ? params.get('sortuj') : 'newest'
+  const compare = [], compareDays = ['all', 'all']
+  const requests = (params.get('porownaj') || '').split(',').map(canonicalRouteId)
+  for (const [index, id] of requests.entries()) {
+    if (!routeIds.has(id)) continue
+    const requestedDay = params.get(index === 0 ? 'dzienA' : 'dzienB')
+    const day = dayIds.get(id)?.includes(requestedDay) ? requestedDay : 'all'
+    if (compare.includes(id) && (!dayIds.has(id) || compareDays[0] === day)) continue
+    compareDays[compare.length] = day
+    compare.push(id)
+    if (compare.length === 2) break
+  }
+  return { region, distance, ascent, selected, compare, compareDays, view, sort }
 }
-export function routeAtlasHref({ region, distance = 'all', ascent = 'all', selected, compare, compareDays = ['all', 'all'] }) {
+export function routeAtlasHref({ region, distance = 'all', ascent = 'all', selected, compare, compareDays = ['all', 'all'], view = 'map', sort = 'newest' }) {
   const params = new URLSearchParams()
   if (region !== 'all') params.set('pasmo', region)
   if (distance !== 'all') params.set('dystans', distance)
   if (ascent !== 'all') params.set('podejscia', ascent)
+  if (view === 'list') params.set('widok', 'lista')
+  if (sort !== 'newest' && routeSorts.some(entry => entry.id === sort)) params.set('sortuj', sort)
   if (selected) params.set('trasa', selected)
   if (compare.length) params.set('porownaj', compare.join(','))
   compareDays.forEach((day, slot) => { if (compare[slot] && dayIds.get(compare[slot])?.includes(day)) params.set(slot === 0 ? 'dzienA' : 'dzienB', day) })

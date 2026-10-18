@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import catalog from '../data/routeCatalog.json'
 import { tripRoutes } from '../data/tripRoutes'
-import { comparisonPaths, comparisonScale, comparisonSample, comparisonShareHref, readComparisonDistance, highestPeak, routeHref, estimateAscent } from '../data/routeAtlas'
+import { comparisonPaths, comparisonScale, comparisonSample, comparisonShareHref, readComparisonDistance, highestPeak, routeHref, estimateAscent, dayIds } from '../data/routeAtlas'
 import { routeDayView } from '../data/routeDays'
 
 const number = (value, digits = 0) => value.toLocaleString('pl-PL', { maximumFractionDigits: digits })
@@ -43,7 +43,7 @@ export function RouteComparison({ selected, tracks, onChange, onDaysChange, onSh
     window.addEventListener('popstate', restore)
     return () => window.removeEventListener('popstate', restore)
   }, [maxDistance])
-  useEffect(() => { setShare(null) }, [distance, atlasState.region, atlasState.distance, atlasState.ascent, atlasState.selected])
+  useEffect(() => { setShare(null) }, [distance, atlasState.region, atlasState.distance, atlasState.ascent, atlasState.selected, atlasState.view, atlasState.sort])
   useEffect(() => { if (share) { shareInput.current?.focus(); shareInput.current?.select() } }, [share])
   useEffect(() => {
     const observer = new ResizeObserver(([entry]) => setWidth(Math.max(260, entry.contentRect.width)))
@@ -65,26 +65,29 @@ export function RouteComparison({ selected, tracks, onChange, onDaysChange, onSh
   return <section ref={section} className="cz-route-comparison" id="porownanie" aria-labelledby="route-comparison-title">
     <div className="cz-route-comparison-heading"><div><p className="cz-route-eyebrow">Dwie trasy · jedna skala</p><h2 id="route-comparison-title">Porównanie tras</h2></div><div className="cz-route-comparison-actions">{ready && <button type="button" onClick={copyComparison}>Udostępnij porównanie ↗</button>}{selected.length > 0 && <button type="button" onClick={() => onChange([])}>Wyczyść wybór</button>}</div></div>
     {share && <div className="cz-route-share"><p role="status">{share.copied ? 'Link skopiowany. Możesz też skopiować go z pola poniżej.' : 'Skopiuj link z pola poniżej.'}</p><label>Link do porównania<input ref={shareInput} readOnly value={share.url} onFocus={event => event.target.select()} /></label><button type="button" onClick={() => setShare(null)}>Zamknij</button></div>}
-    <p className="cz-route-comparison-intro">Wybierz dwie trasy z listy lub poniżej. Profile pokazują rzeczywisty dystans i wysokość na wspólnych osiach.</p>
+    <p className="cz-route-comparison-intro">Wybierz dwie trasy albo różne dni tej samej wyprawy. Profile pokazują rzeczywisty dystans i wysokość na wspólnych osiach.</p>
     <div className="cz-route-compare-selects">{[0, 1].map(slot => <label key={slot} className={`cz-route-compare-slot is-${slot}`}><span>{slot === 0 ? 'A' : 'B'} · Trasa</span><select aria-label={`Trasa ${slot === 0 ? 'A' : 'B'} do porównania`} value={selected[slot] || ''} disabled={slot === 1 && !selected[0]} onChange={event => {
-      const next = [...selected]; next[slot] = event.target.value; onChange(next.filter(Boolean))
-    }}><option value="">{slot === 1 && !selected[0] ? 'Najpierw wybierz trasę A' : 'Wybierz trasę'}</option>{catalog.map(row => <option key={row.id} value={row.id} disabled={selected[1 - slot] === row.id}>{tripRoutes[row.id].title} · {tripRoutes[row.id].dates}</option>)}</select></label>)}</div>
-    {selected.some(id => tracks[id]?.days) && <div className="cz-route-compare-selects">{selected.map((id, slot) => tracks[id]?.days && <label key={id} className={`cz-route-compare-slot is-${slot}`}><span>{slot === 0 ? 'A' : 'B'} · Całość lub dzień</span><select aria-label={`Zakres trasy ${slot === 0 ? 'A' : 'B'}`} value={compareDays[slot]} onChange={event => { const days = [...compareDays]; days[slot] = event.target.value; onDaysChange(days) }}>
-      <option value="all">Cała wyprawa</option>{tracks[id].days.map(day => <option key={day.id} value={day.id}>Dzień {day.id} · {day.title} · {day.dates}</option>)}
+      const next = [...selected]; next[slot] = event.target.value
+      const ids = next.filter(Boolean), days = ids.length === 2 && ids[0] === ids[1] ? dayIds.get(ids[0]).slice(0, 2) : ['all', 'all']
+      onChange(ids, days)
+    }}><option value="">{slot === 1 && !selected[0] ? 'Najpierw wybierz trasę A' : 'Wybierz trasę'}</option>{catalog.map(row => <option key={row.id} value={row.id} disabled={selected[1 - slot] === row.id && !dayIds.has(row.id)}>{tripRoutes[row.id].title} · {tripRoutes[row.id].dates}</option>)}</select></label>)}</div>
+    {selected[0] && dayIds.has(selected[0]) && selected[0] !== selected[1] && <button className="cz-route-same-days" type="button" onClick={() => onChange([selected[0], selected[0]], dayIds.get(selected[0]).slice(0, 2))}>Porównaj dni tej wyprawy</button>}
+    {selected.some(id => tracks[id]?.days) && <div className="cz-route-compare-selects">{selected.map((id, slot) => tracks[id]?.days && <label key={slot} className={`cz-route-compare-slot is-${slot}`}><span>{slot === 0 ? 'A' : 'B'} · Całość lub dzień</span><select aria-label={`Zakres trasy ${slot === 0 ? 'A' : 'B'}`} value={compareDays[slot]} onChange={event => { const days = [...compareDays]; days[slot] = event.target.value; onDaysChange(days) }}>
+      <option value="all" disabled={selected[0] === selected[1] && compareDays[1-slot] === "all"}>Cała wyprawa</option>{tracks[id].days.map(day => <option key={day.id} value={day.id} disabled={selected[0] === selected[1] && compareDays[1-slot] === day.id}>Dzień {day.id} · {day.title} · {day.dates}</option>)}
     </select></label>)}</div>}
     <div ref={container} className="cz-route-compare-chart">
       {ready ? <>
         <div className="cz-route-compare-axis"><span>Wysokość GPS · m n.p.m.</span><span>Dystans · km</span></div>
         <svg className="cz-route-interactive-profile" viewBox={`0 0 ${width} 260`} role="img" aria-label={`Profile tras ${views.map(view => view.route.title).join(' i ')} na wspólnej skali wysokości i dystansu`} onPointerDown={event => { if (event.button !== 0) return; event.currentTarget.setPointerCapture(event.pointerId); pointAtPointer(event) }} onPointerMove={pointAtPointer}>
           {[0, .25, .5, .75, 1].map(fraction => { const y = 220 - fraction * 190; return <g key={fraction}><line x1="52" x2={width - 18} y1={y} y2={y} /><text x="43" y={y + 4} textAnchor="end">{number(scale.low + fraction * (scale.high - scale.low))}</text></g> })}
-          {selected.map((id, slot) => <g key={id} className={`cz-route-compare-profile is-${slot}`}>{comparisonPaths(views[slot].track, scale, width).map((d, i) => <path key={i} d={d} vectorEffect="non-scaling-stroke" />)}</g>)}
+          {selected.map((id, slot) => <g key={slot} className={`cz-route-compare-profile is-${slot}`}>{comparisonPaths(views[slot].track, scale, width).map((d, i) => <path key={i} d={d} vectorEffect="non-scaling-stroke" />)}</g>)}
           <line className="cz-route-profile-cursor" x1={52 + distance / scale.distance * (width - 70)} x2={52 + distance / scale.distance * (width - 70)} y1="20" y2="220" />
           {samples.map((sample, slot) => sample.kind === 'point' && <circle key={slot} className={`cz-route-profile-dot is-${slot}`} cx={52 + distance / scale.distance * (width - 70)} cy={220 - (sample.elevation - scale.low) / Math.max(1, scale.high - scale.low) * 190} r="5" />)}
           {[0, .5, 1].map(fraction => <text key={fraction} x={52 + fraction * (width - 70)} y="250" textAnchor={fraction === 0 ? 'start' : fraction === 1 ? 'end' : 'middle'}>{number(scale.distance * fraction / 1000, 1)} km</text>)}
         </svg>
         <div className="cz-route-profile-control"><label htmlFor="route-comparison-distance">Punkt na trasach <strong>{number(distance / 1000, 2)} km</strong></label><input id="route-comparison-distance" type="range" min="0" max={maxDistance} step="10" value={distance} aria-valuetext={`${number(distance / 1000, 2)} kilometra od początku tras`} onChange={event => setDistance(Number(event.target.value))} /><p>Przesuń po wykresie lub użyj suwaka. Strzałki: 10 m.</p></div>
-        <div className="cz-route-point-readouts">{samples.map((sample, slot) => <div className={`cz-route-compare-slot is-${slot}`} key={selected[slot]}><span>{slot === 0 ? 'A' : 'B'} · {views[slot].route.title}</span><strong>{sample.kind === 'point' ? `≈ ${number(sample.elevation)} m n.p.m.` : sample.kind === 'gap' ? 'Przerwa w zapisie GPS' : 'Poza zapisem tej trasy'}</strong><button type="button" disabled={sample.kind !== 'point'} onClick={() => onShowPoint({ ...sample, id: selected[slot], slot })}>Pokaż na mapie ↑</button></div>)}</div>
-        <div className="cz-route-compare-details">{selected.map((id, slot) => { const row = catalog.find(row => row.id === id), { route, track } = views[slot], peak = highestPeak(route); return <article key={id} className={`cz-route-compare-slot is-${slot}`}>
+        <div className="cz-route-point-readouts">{samples.map((sample, slot) => <div className={`cz-route-compare-slot is-${slot}`} key={slot}><span>{slot === 0 ? 'A' : 'B'} · {views[slot].route.title}</span><strong>{sample.kind === 'point' ? `≈ ${number(sample.elevation)} m n.p.m.` : sample.kind === 'gap' ? 'Przerwa w zapisie GPS' : 'Poza zapisem tej trasy'}</strong><button type="button" disabled={sample.kind !== 'point'} onClick={() => onShowPoint({ ...sample, id: selected[slot], slot })}>Pokaż na mapie ↑</button></div>)}</div>
+        <div className="cz-route-compare-details">{selected.map((id, slot) => { const row = catalog.find(row => row.id === id), { route, track } = views[slot], peak = highestPeak(route); return <article key={slot} className={`cz-route-compare-slot is-${slot}`}>
           <span className="cz-route-compare-letter">{slot === 0 ? 'A' : 'B'}</span><h3>{route.title}</h3><p>{route.dates}</p>
           <dl><div><dt>Dystans GPS</dt><dd>{number(track.distance / 1000, 1)} km</dd></div><div><dt>Suma podejść · GPS</dt><dd>≈ {number(estimateAscent(track.points))} m</dd></div>{peak && <div><dt>{route.peaks.length > 1 ? `Najwyżej · ${peak.name}` : 'Wysokość szczytu'}</dt><dd>{number(peak.altitude)} m</dd></div>}</dl>
           <a href={routeHref(row, route)}>{row.trip ? 'Trasa i wyprawa ↗' : 'Profil trasy ↗'}</a>
