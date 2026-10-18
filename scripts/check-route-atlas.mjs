@@ -12,9 +12,9 @@ assert.equal(estimateAscent([200,180,160,140].map(e => sample(e))), 0, 'Descent 
 assert.equal(estimateAscent([100,150,100,150].map(e => sample(e))), 100)
 
 const invalid = readRouteAtlas('?pasmo=unknown&trasa=made-up&porownaj=zugspitze,zugspitze,triglav,grauspitz')
-assert.deepEqual(invalid, { region:'all', distance:'all', ascent:'all', selected:null, compare:['zugspitze','triglav'], compareDays:['all','all'] })
+assert.deepEqual(invalid, { region:'all', distance:'all', ascent:'all', selected:null, compare:['zugspitze','triglav'], compareDays:['all','all'], view:'map', sort:'newest' })
 assert.equal(readRouteAtlas('?pasmo=Tatry&trasa=dufourspitze').selected, null)
-const state = { region:'Tatry', distance:'all', ascent:'all', selected:'ganek-wysoka-rysy', compare:['dufourspitze','ganek-wysoka-rysy'], compareDays:['all','all'] }
+const state = { region:'Tatry', distance:'all', ascent:'all', selected:'ganek-wysoka-rysy', compare:['dufourspitze','ganek-wysoka-rysy'], compareDays:['all','all'], view:'map', sort:'newest' }
 assert.deepEqual(readRouteAtlas(routeAtlasHref(state).split('?')[1]), state, 'Selections survive URL roundtrip, including cross-region comparison')
 
 const tracks = await Promise.all(catalog.map(async row => JSON.parse(await readFile(new URL(`../src/data/${row.id === 'dufourspitze' ? 'dufourTrack.json' : `tracks/${row.id}.json`}`, import.meta.url), 'utf8'))))
