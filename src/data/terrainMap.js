@@ -1,5 +1,5 @@
 // Web Mercator coordinates are shared by the raster tiles and every marker.
-export const TERRAIN_TILE_URL = 'https://tile.top-o-map.com/{z}/{x}/{y}.png'
+export const TERRAIN_TILE_URL = 'https://tile.openmaps.fr/opentopomap/{z}/{x}/{y}.png'
 export const MIN_TERRAIN_ZOOM = 2
 export const MAX_TERRAIN_ZOOM = 16
 export const clampTerrainZoom = zoom => Math.max(MIN_TERRAIN_ZOOM, Math.min(MAX_TERRAIN_ZOOM, zoom))

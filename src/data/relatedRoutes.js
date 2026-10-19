@@ -19,7 +19,7 @@ export const compareLink = (a, b) => `/trasy?porownaj=${encodeURIComponent(`${a}
 // Explicit summit/day associations verified against the existing track.days metadata.
 export const summitDayScopes = {
   'baranie-rogi-lato-2026': { 'baranie-rogi': '1', 'lodowa-kopa': '2', 'lodowy-szczyt': '2' },
-  'swinica-2025': { swinica: '2' },
+  'swinica-2025': { swinica: '2', 'kasprowy-wierch': '1' },
   'toubkal-2025': { toubkal: '2' },
 }
 export function summitCompareLink(peakId, a, b) {

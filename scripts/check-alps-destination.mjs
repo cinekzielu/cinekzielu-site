@@ -9,7 +9,7 @@ assert.deepEqual(all.trips.map(t => t.id).sort(), ['alpy-2026', 'szwajcaria-2025
 assert.equal(all.photoCount, 84)
 assert.equal(all.films.length, 8)
 assert.equal(all.tracks.length, 11)
-assert.equal(all.peaks.length, 8)
+assert.equal(all.peaks.length, 9)
 for (const [year, data] of [['2025', old], ['2026', recent]]) {
   const ids = new Set(data.trips.map(t => t.id))
   assert(data.trips.every(t => String(t.year) === year))

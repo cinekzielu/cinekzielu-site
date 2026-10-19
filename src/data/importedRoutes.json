@@ -5,7 +5,26 @@
     "anchor": "trasa-grzes-rakon-2024",
     "dates": "5 stycznia 2024",
     "intro": "Przebieg przejścia zapisany w GPX.",
-    "peaks": [],
+    "peaks": [
+      {
+        "id": "grzes",
+        "name": "Grześ",
+        "altitude": 1653,
+        "lat": 49.2366407,
+        "lng": 19.7666402,
+        "source": "https://www.openstreetmap.org/node/803761542",
+        "altitudeSource": "https://tpn.gov.pl/pliki-do-pobrania/otworz/8ec9f3c0-6fa3-44bc-a2ee-3b8f60ed1df8.pdf"
+      },
+      {
+        "id": "rakon",
+        "name": "Rakoń",
+        "altitude": 1876,
+        "lat": 49.215958,
+        "lng": 19.7584624,
+        "source": "https://www.openstreetmap.org/node/946080669",
+        "altitudeSource": "https://tpn.gov.pl/pliki-do-pobrania/otworz/8ec9f3c0-6fa3-44bc-a2ee-3b8f60ed1df8.pdf"
+      }
+    ],
     "marker": {
       "lat": 49.282701,
       "lng": 19.842185
@@ -31,7 +50,17 @@
     "anchor": "trasa-slawkowski-2024",
     "dates": "3 marca 2024",
     "intro": "Przebieg przejścia zapisany w GPX. Nagłe skoki GPS pozostają rozdzielone i nie zwiększają dystansu.",
-    "peaks": [],
+    "peaks": [
+      {
+        "id": "slawkowski-szczyt",
+        "name": "Sławkowski Szczyt",
+        "altitude": 2452,
+        "lat": 49.1660785,
+        "lng": 20.1845921,
+        "source": "https://www.openstreetmap.org/node/380721955",
+        "altitudeSource": "https://www.tatry.sk/tatranska-selma-1/"
+      }
+    ],
     "marker": {
       "lat": 49.141444,
       "lng": 20.221261
@@ -66,7 +95,17 @@
     "anchor": "trasa-czerwona-lawka-2024",
     "dates": "25 sierpnia 2024",
     "intro": "Przebieg przejścia zapisany w GPX. Nagłe skoki GPS pozostają rozdzielone i nie zwiększają dystansu.",
-    "peaks": [],
+    "peaks": [
+      {
+        "id": "maly-lodowy-szczyt",
+        "name": "Mały Lodowy Szczyt (Široká veža)",
+        "altitude": 2461,
+        "lat": 49.1899604,
+        "lng": 20.1827776,
+        "source": "https://www.openstreetmap.org/node/385076971",
+        "altitudeSource": "https://tatry.nfo.sk/stitdb.php?mobil=0875"
+      }
+    ],
     "marker": {
       "lat": 49.15118,
       "lng": 20.258432
@@ -101,7 +140,17 @@
     "anchor": "trasa-bradavica-2024",
     "dates": "1 listopada 2024",
     "intro": "Przebieg przejścia zapisany w GPX.",
-    "peaks": [],
+    "peaks": [
+      {
+        "id": "starolesny-szczyt",
+        "name": "Staroleśny Szczyt (Bradavica)",
+        "altitude": 2476,
+        "lat": 49.1713376,
+        "lng": 20.1556776,
+        "source": "https://www.openstreetmap.org/node/385125633",
+        "altitudeSource": "https://www.tatry.sk/en/vystup-na-bradavicu/"
+      }
+    ],
     "marker": {
       "lat": 49.125926,
       "lng": 20.184
@@ -215,7 +264,17 @@
     "anchor": "trasa-baraniec-2025",
     "dates": "23 lutego 2025",
     "intro": "Przebieg przejścia zapisany w GPX.",
-    "peaks": [],
+    "peaks": [
+      {
+        "id": "baraniec",
+        "name": "Baraniec",
+        "altitude": 2185,
+        "lat": 49.1735213,
+        "lng": 19.7408265,
+        "source": "https://www.openstreetmap.org/node/495953908",
+        "altitudeSource": "https://www.visitliptov.sk/en/route/skialp-baranec-from-ziarska-valley/"
+      }
+    ],
     "marker": {
       "lat": 49.144816,
       "lng": 19.700862
@@ -354,6 +413,15 @@
         "lat": 49.2194211,
         "lng": 20.0093063,
         "source": "https://www.openstreetmap.org/node/3343362920"
+      },
+      {
+        "id": "kasprowy-wierch",
+        "name": "Kasprowy Wierch",
+        "altitude": 1987,
+        "lat": 49.2318014,
+        "lng": 19.9815609,
+        "source": "https://www.openstreetmap.org/node/3552158247",
+        "altitudeSource": "https://kasprowywierch.pkl.pl/wysokogorskie-obserwatorium-meteorologiczne/"
       }
     ],
     "marker": {
@@ -396,6 +464,15 @@
         "lat": 46.968204498291016,
         "lng": 8.637279510498047,
         "source": "https://www.myswitzerland.com/de-ch/erlebnisse/fronalpstock-panorama-aussicht/"
+      },
+      {
+        "id": "klingenstock",
+        "name": "Klingenstock",
+        "altitude": 1934,
+        "lat": 46.9574304,
+        "lng": 8.6745766,
+        "source": "https://www.openstreetmap.org/node/614398396",
+        "altitudeSource": "https://www.sac-cas.ch/en/huts-and-tours/sac-route-portal/chlingenstock-384/mountain-hiking/"
       }
     ],
     "marker": {
