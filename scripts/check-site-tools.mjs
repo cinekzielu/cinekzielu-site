@@ -21,7 +21,8 @@ for (const item of siteSearchIndex) {
   } else {
     const url = new URL(item.href, 'https://www.cinekzielu.pl')
     assert(paths.has(url.pathname), `Search result must have an existing page: ${item.href}`)
-    if (item.kind === 'place') assert(atlasNodeById[url.searchParams.get('atlas')])
+    if (item.kind === 'place' && url.pathname === '/mapa') assert(atlasNodeById[url.searchParams.get('atlas')])
+    if (item.id === 'destination:alpy') assert.equal(url.pathname, '/kierunki/alpy')
   }
 }
 // Exact place names beat substring matches (Toubkal must not open the refuge chapter).
