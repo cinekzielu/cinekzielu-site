@@ -6,8 +6,8 @@ import { atlasTerrainProfile, readAtlasContext } from '../src/data/atlasTerrain.
 import { searchSite } from '../src/data/siteSearch.js'
 import { sharePages } from '../src/data/sharePages.js'
 
-assert.equal(summits.length,31)
-assert.equal(summits.flatMap(peak => peak.ascents).length,35)
+assert.equal(summits.length,39)
+assert.equal(summits.flatMap(peak => peak.ascents).length,46)
 for (const peak of plannedSummits) {
   assert(!summits.some(done => done.id === peak.id),'A goal is not a completed ascent')
   assert.equal(atlasNodeById[peak.id].status,'planned')
@@ -26,4 +26,4 @@ for (const peak of plannedSummits) {
 }
 assert.equal(plannedSummits[0].elevation,4478)
 assert.equal(plannedSummits[0].coordinateRecord,149915)
-console.log('PASS: goals isolated from 31 summits/35 ascents and media; country/region pins, year filters, search and share status.')
+console.log('PASS: goals isolated from 39 summits/46 ascents and media; country/region pins, year filters, search and share status.')

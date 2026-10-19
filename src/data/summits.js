@@ -3,6 +3,7 @@ import { findFilm, normalizeFilmSearch } from './filmCatalog.js'
 import { galleryHref, galleryLinkLabel } from './galleryNavigation.js'
 import { alpsStory } from './alpsStory.js'
 import { tatryLocationById } from './tatryAtlas.js'
+import auditedSummits from './auditedSummits.json' with { type: 'json' }
 
 // An explicit ascent register, not every mountain visible on the atlas.
 // Dates describe the visit, never the film's publication. See docs/SUMMITS.md.
@@ -25,15 +26,32 @@ const peak = (id, name, altitude, ascents, extra = {}) => ({
 })
 const tanap = 'https://www.tanap.sk/wp-content/uploads/TATRY_2022-6.pdf'
 
+// Named GPX activities checked locally against the geographic summit.
+// A month alone does not establish summer/winter climbing conditions.
+const recordedVisit = (routeId, orderDate, date, extra = {}) => ({
+  routeId, routeHref: `/trasy?trasa=${routeId}#profil`, year: orderDate.slice(0, 4),
+  orderDate, date, season: null, filmIds: [], evidence: `gpx:${routeId}`, ...extra,
+})
+
 export const summits = [
+  ...auditedSummits.map(item => {
+    const tripId = item.id === 'kasprowy-wierch' ? 'swinica-2025' : item.id === 'klingenstock' ? 'szwajcaria-2025' : null
+    const trip = tripId ? visit(tripId, item.season, item.id === 'klingenstock' ? ['KuZoxTnOmLs'] : []) : {}
+    return peak(item.id, item.name, item.altitude, [recordedVisit(item.routeId, item.orderDate, item.date, {
+      ...trip, orderDate: item.orderDate, year: item.orderDate.slice(0, 4), date: item.date, season: item.season, evidence: `gpx:${item.routeId}`,
+    })], {
+      range: item.range, rangeName: item.rangeName, altitudeSource: item.altitudeSource,
+      mapHref: item.id === 'slawkowski-szczyt' ? '/mapa?atlas=slawkowski-szczyt' : `/trasy?trasa=${item.routeId}#mapa-tras`,
+    })
+  }),
   ...alpsStory.map(chapter => peak(chapter.id, chapter.title, chapter.altitude, [visit('alpy-2026', 'lato', ['l3KltGrKz2U'], {
     orderDate: '2026-08', sequence: Number(chapter.number), tripHref: `/wyprawy/alpy-2026#alpy-${chapter.id}`,
   })], { range: 'Alpy', rangeName: 'Alpy', altitudeSource: `https://www.openstreetmap.org/node/${chapter.osmNode}` })),
   peak('toubkal', 'Toubkal', 4167, [visit('maroko-2025', null, ['BiWk6apjJOg'], { orderDate: '2025', date: '2025' })], { range: 'Atlas Wysoki', rangeName: 'Atlas Wysoki', altitudeSource: 'https://www.openstreetmap.org/node/87828608' }),
-  peak('gerlach', 'Gerlach', 2654, [visit('gerlach-zima-2025', 'zima')], { altitudeSource: 'https://www.tatry.sk/wp-content/uploads/2026/02/mapa-zima-2025-26.pdf' }),
+  peak('gerlach', 'Gerlach', 2654, [visit('gerlach-zima-2025', 'zima'), recordedVisit('gerlach-2024', '2024-09-12', '12 września 2024')], { altitudeSource: 'https://www.tatry.sk/wp-content/uploads/2026/02/mapa-zima-2025-26.pdf' }),
   peak('lomnica', 'Łomnica', 2634, [visit('durny-lomnica-2025', 'lato', ['zb8zqv8gpZk'])], { altitudeSource: tanap }),
   peak('durny-szczyt', 'Durny Szczyt', 2621, [visit('durny-lomnica-2025', 'lato', ['WGqn-Kley2w'])]),
-  peak('lodowy-szczyt', 'Lodowy Szczyt', 2627, [visit('baranie-rogi-lodowy-szczyt-2026', 'lato', ['eB5BItG2tfk'], { sequence: 2 })], { altitudeSource: tanap }),
+  peak('lodowy-szczyt', 'Lodowy Szczyt', 2627, [visit('baranie-rogi-lodowy-szczyt-2026', 'lato', ['eB5BItG2tfk'], { sequence: 2 }), recordedVisit('lodowy-2025', '2025-02-22', '22 lutego 2025')], { altitudeSource: tanap }),
   peak('lodowa-kopa', 'Lodowa Kopa', 2602, [visit('baranie-rogi-lodowy-szczyt-2026', 'lato', ['eB5BItG2tfk'], { sequence: 1 })]),
   peak('wysoka', 'Wysoka', 2560, [visit('wysoka-ganek-rysy-2026', 'lato'), undatedWinter('jTsfNdsWHxg')], { altitudeSource: 'https://www.tatry.sk/wp-content/uploads/2026/02/mapa-zima-2025-26.pdf' }),
   peak('kiezmarski-szczyt', 'Kieżmarski Szczyt', 2556, [visit('kiezmarski-szczyt-zima-2025', 'zima', ['IxTLYy6bOKo'], { sequence: 2 })]),
@@ -53,7 +71,7 @@ export const summits = [
   peak('zabi-kon', 'Żabi Koń', 2291, [visit('zabi-kon-2026', 'lato', ['0YhbiEncSmo'])]),
   peak('szpiglasowy-wierch', 'Szpiglasowy Wierch', 2172, [visit('liptowskie-mury-2026', 'lato', ['ITjvjmavnNs']), visit('szpiglasowy-wierch-2025', 'lato')]),
   peak('walentkowy-wierch', 'Walentkowy Wierch', 2156, [visit('liptowskie-mury-2026', 'lato', ['ITjvjmavnNs'])]),
-  peak('koscielec', 'Kościelec', 2155, [visit('koscielec-2026', 'zima', ['rs4zN-7f60Q', 'QRSSYlhRGMM'])]),
+  peak('koscielec', 'Kościelec', 2155, [visit('koscielec-2026', 'zima', ['rs4zN-7f60Q', 'QRSSYlhRGMM']), recordedVisit('koscielec-orla-2024', '2024-08-04', '4 sierpnia 2024')]),
   peak('fronalpstock', 'Fronalpstock', 1922, [visit('szwajcaria-2025', 'lato', ['KuZoxTnOmLs'], { orderDate: '2025', date: '2025' })], { range: 'Alpy', rangeName: 'Alpy', altitudeSource: 'https://www.myswitzerland.com/de-ch/erlebnisse/fronalpstock-panorama-aussicht/' }),
   peak('augstmatthorn', 'Augstmatthorn', 2136, [visit('szwajcaria-2025', 'lato', ['1b1K6CUmHMI'], { orderDate: '2025', date: '2025' })], { range: 'Alpy', rangeName: 'Alpy', altitudeSource: 'https://www.sac-cas.ch/en/huts-and-tours/sac-route-portal/augstmatthorn-106/mountain-hiking/' }),
   peak('bettmerhorn', 'Bettmerhorn', 2857, [visit('szwajcaria-2025', 'lato', ['ksi5aauYYBo'], { orderDate: '2025', date: '2025' })], { range: 'Alpy', rangeName: 'Alpy', altitudeSource: 'https://www.sac-cas.ch/de/huetten-und-touren/sac-tourenportal/bettmerhorn-166/berg-und-alpinwandern/' }),

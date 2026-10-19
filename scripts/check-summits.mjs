@@ -7,10 +7,10 @@ import { resolveFilmLink } from '../src/data/videoPlayer.js'
 const paths = new Set(sitePages.map(page => page.path))
 const select = patch => filterSummits({ ...defaults, ...patch })
 assert(paths.has('/szczyty'))
-assert.equal(summits.length, 31)
+assert.equal(summits.length, 39)
 assert.equal(new Set(summits.map(peak => peak.id)).size, summits.length)
 for (const peak of summits) {
-  assert.equal(atlasNodeById[peak.id]?.kind, 'Szczyt', peak.id)
+  if (!peak.mapHref?.startsWith('/trasy?')) assert.equal(atlasNodeById[peak.id]?.kind, 'Szczyt', peak.id)
   assert(Number.isInteger(peak.altitude) && peak.altitude > 1000 && peak.altitude < 5000, peak.id)
   assert(peak.altitudeSource?.startsWith('https://'), peak.id)
   assert(peak.ascents.length)
