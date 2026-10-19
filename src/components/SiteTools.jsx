@@ -30,7 +30,7 @@ function SearchResults({ query, filter, setFilter, play }) {
   const results = searchSite(query)
   const groups = searchKinds.slice(1).map(kind => ({...kind, items:results.filter(result => result.kind === kind.id)}))
   const total = filter === 'all' ? results.length : groups.find(group => group.id === filter)?.items.length || 0
-  if (!query.trim()) return <div className="cz-search-start"><p>Miejsca, fotografie i filmy z jednej podróży.</p><p className="cz-search-example">Wpisz nazwę miejsca, na przykład Świnica albo Maroko.</p></div>
+  if (!query.trim()) return <div className="cz-search-start"><p>Miejsca, fotografie i filmy z jednej podróży.</p><p className="cz-search-example">Wpisz nazwę miejsca. Możesz dodać rok i sezon, na przykład Baranie zima 2025.</p></div>
   return <>
     <div className="cz-search-filters" role="group" aria-label="Rodzaj wyników">{searchKinds.map(kind => <button key={kind.id} type="button" aria-pressed={filter === kind.id} onClick={() => setFilter(kind.id)}>{kind.label}<span>{kind.id === 'all' ? results.length : groups.find(group => group.id === kind.id).items.length}</span></button>)}</div>
     <p className="cz-search-count" role="status" aria-live="polite">{total ? `Wyniki: ${total}` : 'Brak wyników. Spróbuj innej nazwy lub zmień rodzaj wyników.'}</p>
@@ -46,7 +46,13 @@ function SearchResults({ query, filter, setFilter, play }) {
             <span className={`cz-search-thumb is-${item.kind}`}><Icon size={18} aria-hidden="true" />{item.image && <img src={item.image} alt="" loading="lazy" onError={event => { event.currentTarget.style.display='none' }} />}</span>
             <span className="cz-search-result-text"><strong>{item.title}</strong><small>{item.chapter ? `Oglądaj od ${item.chapter.time} · ${item.subtitle}` : item.subtitle}</small></span>
             {item.kind === 'film' ? <Play size={14} aria-hidden="true" /> : <ArrowUpRight size={14} aria-hidden="true" />}
-          </a></li>
+          </a>
+            {item.badges?.length > 0 && <div className="cz-search-badges" aria-label="Informacje o materiale">{item.badges.map(badge => <span key={badge}>{badge}</span>)}</div>}
+            {item.actions?.length > 0 && <nav className="cz-search-actions" aria-label={`Materiały: ${item.title}`}>{item.actions.map(action => <a key={action.href} href={action.href} aria-label={`${action.label}: ${item.title}`} aria-haspopup={resolveFilmLink(action.href) ? 'dialog' : undefined} onClick={event => {
+              if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return
+              if (play(action.href,event.currentTarget)) event.preventDefault()
+            }}>{action.label} ↗</a>)}</nav>}
+          </li>
         })}</ul>
         {group.items.length > (expanded[group.id] || (filter === 'all' ? 3 : 10)) && <button type="button" className="cz-search-more" onClick={() => setExpanded(current => ({...current, [group.id]:group.items.length}))}>Pokaż pozostałe ({group.items.length-(expanded[group.id] || (filter === 'all' ? 3 : 10))}) ↓</button>}
       </section>)}

@@ -11,6 +11,7 @@ const groups = {
   wyprawy: [
     { href: '/wyprawy', label: 'Wszystkie wyprawy', description: 'Fotografie, filmy i opisy' },
     { href: '/wyprawy?widok=os', label: 'Oś podróży', description: 'Wyjazdy w kolejności czasu' },
+    { href: '/kierunki/tatry', label: 'Tatry', description: 'Letnie i zimowe wejścia' },
     { href: '/kierunki/alpy', label: 'Alpy', description: 'Wyprawy, fotografie i trasy' },
     { href: '/sezony', label: 'Sezony', description: 'Podsumowania kolejnych lat' },
   ],
