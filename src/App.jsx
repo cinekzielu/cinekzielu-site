@@ -18,6 +18,7 @@ import { FilmIndex } from './components/Films'
 import { SiteToolsProvider, FilmLink } from './components/SiteTools'
 import { PhotographyPage, PhotographyPreview } from './components/Photography'
 import { AboutPage } from './components/About'
+import { TatryDestination } from './components/TatryDestination'
 import { AlpsDestination } from './components/AlpsDestination'
 import { RouteCatalog } from './components/RouteCatalog'
 import { SeasonsIndex, SeasonPage } from './components/Seasons'
@@ -508,7 +509,8 @@ export function SitePage({ location }) {
   let page = pathname === '/' ? <App /> : <NotFound />
   if (pathname === '/mapa') page = <ClientContent fallback={<MapPageOverview />}><MapPage /></ClientContent>
   if (pathname === '/filmy') page = <FilmIndex />
-  if (pathname === '/kierunki/alpy') page = <AlpsDestination />
+  if (pathname === '/kierunki/tatry') page = <TatryDestination />
+  else if (pathname === '/kierunki/alpy') page = <AlpsDestination />
   if (pathname === '/trasy') page = <RouteCatalog />
   if (pathname === '/sezony') page = <SeasonsIndex />
   if (/^\/sezony\/(2025|2026)$/.test(pathname)) page = <SeasonPage year={pathname.split('/')[2]} />

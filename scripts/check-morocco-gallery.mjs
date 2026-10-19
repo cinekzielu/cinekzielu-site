@@ -38,7 +38,7 @@ for (const path of ['/wyprawy/maroko-2025']) {
   assert(metadata.description.includes('kadr'))
   assert.equal(metadata.image.src, '/share/maroko-2025.jpg')
 }
-assert.equal(sitePages.length, 47)
+assert.equal(sitePages.length, 48)
 const hashes = new Set()
 for (const photo of gallery.photos) {
   assert.equal(photo.width / photo.height, 16 / 9)

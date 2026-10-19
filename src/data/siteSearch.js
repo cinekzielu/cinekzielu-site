@@ -1,3 +1,4 @@
+import { searchContext } from './materialContext.js'
 import { plannedSummits } from './plannedSummits.js'
 import { atlasContentNodes, atlasAncestry, atlasHref, getAtlasMaterials, hasAtlasMaterials } from './atlasContent.js'
 import { expeditionPages, expeditionHref } from './expeditionPages.js'
@@ -19,9 +20,13 @@ const filmTripWords = film => {
   const gallery = galleryData.find(item => item.id === film.expeditionId)
   return gallery ? `${gallery.year} ${placeWords(galleryAtlasIds(gallery))}` : ''
 }
-const entry = data => ({ ...data, normalizedTitle:normalizeSearch(data.title), searchText:normalizeSearch(`${data.title} ${data.subtitle} ${data.keywords || ''}`) })
+const entry = data => {
+  const { badges, actions, contextWords } = searchContext(data)
+  return { ...data, badges, actions, normalizedTitle:normalizeSearch(data.title), searchText:normalizeSearch(`${data.title} ${data.subtitle} ${data.keywords || ''} ${contextWords}`) }
+}
 
 export const siteSearchIndex = [
+  entry({ id:'destination:tatry', kind:'place', title:'Tatry — letnie i zimowe wyprawy', href:'/kierunki/tatry', subtitle:'Fotografie, filmy, szczyty i trasy GPX · wybór roku i sezonu', keywords:'Polska Słowacja lato zima' }),
   entry({ id:'destination:alpy', kind:'place', title:'Alpy — wyprawy i materiały', href:'/kierunki/alpy', subtitle:'Fotografie, filmy, szczyty i trasy GPX', keywords:'Szwajcaria Across the Alps 2025 2026' }),
   ...seasonYears.map(year => entry({ id:`season:${year}`, kind:'season', title:`Sezon ${year}`, href:`/sezony/${year}`, subtitle:'Wyprawy, szczyty, fotografie i filmy', keywords:`podsumowanie roku ${year} GPX` })),
   ...plannedSummits.map(peak => entry({ id:`planned:${peak.id}`, kind:'place', title:peak.name, href:atlasHref(peak.id), subtitle:`W planach · ${peak.altitude} · ${peak.countryLabel}`, keywords:`${peak.range} plan cel bucket list Monte Cervino Mont Cervin` })),

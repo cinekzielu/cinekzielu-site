@@ -16,3 +16,12 @@
 @media(max-width:900px){.cz-gallery-nav .cz-collection-nav{order:4;margin-left:0}.cz-gallery-nav .cz-search-trigger{order:1;margin-left:auto}.cz-search-trigger span{display:none}.homepage .cz-search-trigger{margin-left:auto;position:relative;z-index:12}.homepage .nav{gap:10px;z-index:12}}
 @media(max-width:600px){.cz-site-dialog{width:calc(100vw - 20px);max-height:calc(100dvh - 20px);padding:18px}.cz-site-dialog-heading{margin-bottom:15px}.cz-site-dialog-heading h2{font-size:23px}.cz-global-search-input{gap:10px;padding:9px 0}.cz-global-search-input input{font-size:16px}.cz-search-results{grid-template-columns:1fr;gap:22px}.cz-search-filters{gap:5px}.cz-search-filters button{font-size:11px;padding:7px 9px;gap:7px}.cz-search-start{padding-bottom:20px}.cz-search-suggestions{gap:7px}.cz-search-suggestions button{font-size:11px;padding:7px 10px}.cz-search-help{font-size:9px}.cz-site-dialog.is-film{width:calc(100vw - 16px);max-height:calc(100dvh - 16px);padding:12px}.cz-site-dialog.is-film h2{font-size:20px}.cz-video-details{gap:0;padding-top:8px}.cz-video-actions{width:100%;justify-content:space-between;gap:5px 12px}.cz-video-details p{padding:7px 0}.cz-video-frame{max-height:none}.cz-search-trigger{padding:8px}.cz-gallery-nav .cz-search-trigger{margin-left:auto}}
 @media(prefers-reduced-motion:reduce){.cz-site-dialog *{transition:none!important}}
+
+/* Search metadata and sibling shortcuts stay outside the primary result link. */
+.cz-search-badges{display:flex;flex-wrap:wrap;gap:5px 10px;padding:0 12px 8px;color:#c2ad89;font-size:12px;line-height:1.5}
+.cz-search-badges span{max-width:100%;overflow-wrap:anywhere}
+.cz-search-actions{display:flex;flex-wrap:wrap;gap:4px 8px;padding:0 12px 12px}
+.cz-search-actions a{display:inline-flex;align-items:center;min-height:44px;max-width:100%;padding:7px 10px;border:1px solid #655439;border-radius:5px;color:#e4c994;font-size:12px;line-height:1.4;overflow-wrap:anywhere;text-decoration:none}
+.cz-search-actions a:hover{background:#32291d;color:#fff}
+.cz-search-actions a:focus-visible{outline:2px solid #dda95c;outline-offset:3px}
+.cz-search-results li{min-width:0}
