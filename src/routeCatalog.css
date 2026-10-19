@@ -64,3 +64,22 @@
 .cz-atlas-photos>a{display:inline-flex;align-items:center;min-height:44px;color:#e3be7d;font-size:12px}
 @media(max-width:1100px){.is-list .cz-route-catalog-row{grid-template-columns:minmax(0,1fr) minmax(230px,.8fr);gap:8px 22px}.is-list .cz-route-row-actions{grid-column:2;grid-row:1/3}.is-list .cz-route-row-metrics{grid-column:1}}
 @media(max-width:600px){.cz-route-view-tools label{width:100%;justify-content:space-between}.cz-route-view-tools select,.cz-atlas-photos select{font-size:16px}.is-list .cz-route-catalog-row{display:block;padding:18px 4px}.is-list .cz-route-row-metrics{margin:10px 0 4px}.is-list .cz-route-pick h3{font-size:22px}.cz-atlas-photo-strip{gap:6px}}
+
+/* Compact mobile filters keep the map and active selections within reach. */
+.cz-route-mobile-filter-bar{display:none}
+.cz-route-filter-chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.cz-route-filter-chips button{display:inline-flex;align-items:center;gap:14px;min-height:44px;padding:8px 12px;border:1px solid #655336;border-radius:4px;background:#d2ae6810;color:#e6c48c;font:inherit;font-size:12px;cursor:pointer;text-align:left}
+.cz-route-filter-chips .cz-route-clear-chips{border-color:transparent;background:none;color:#bbae99}
+.cz-route-filter-chips span{font-size:18px}
+#lista-tras{scroll-margin-top:20px}
+@media(max-width:600px){
+ .cz-routes .cz-gallery-intro{display:block}.cz-routes .cz-gallery-intro h1{white-space:nowrap;margin-bottom:12px}.cz-routes .cz-gallery-count{display:block;white-space:normal;line-height:1.7;text-align:left}
+ .cz-route-mobile-filter-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 14px;font-size:12px;color:#bbae99}
+ .cz-route-mobile-filter-bar>button{display:flex;gap:24px;align-items:center;justify-content:space-between;min-height:44px;padding:10px 16px;background:#d2ae6810;border:1px solid #655336;border-radius:4px;color:#e6c48c;font:inherit;font-size:15px;cursor:pointer}
+ .cz-route-mobile-filter-bar>a{color:#e6c48c;display:inline-flex;align-items:center;min-height:44px;margin-left:auto}
+ .cz-route-mobile-filter-bar>span{width:100%}
+ .cz-route-filter-panel:not(.is-open){display:none}
+ .cz-route-filter-chips{gap:6px;margin-bottom:16px}.cz-route-filter-chips button{max-width:100%;font-size:12px}
+ .cz-route-area-active{display:none}
+ .cz-routes .cz-route-summary{margin-top:12px}.cz-routes .cz-route-summary p{font-size:10px}
+}

@@ -22,6 +22,7 @@ const filmTripWords = film => {
 const entry = data => ({ ...data, normalizedTitle:normalizeSearch(data.title), searchText:normalizeSearch(`${data.title} ${data.subtitle} ${data.keywords || ''}`) })
 
 export const siteSearchIndex = [
+  entry({ id:'destination:alpy', kind:'place', title:'Alpy — wyprawy i materiały', href:'/kierunki/alpy', subtitle:'Fotografie, filmy, szczyty i trasy GPX', keywords:'Szwajcaria Across the Alps 2025 2026' }),
   ...seasonYears.map(year => entry({ id:`season:${year}`, kind:'season', title:`Sezon ${year}`, href:`/sezony/${year}`, subtitle:'Wyprawy, szczyty, fotografie i filmy', keywords:`podsumowanie roku ${year} GPX` })),
   ...plannedSummits.map(peak => entry({ id:`planned:${peak.id}`, kind:'place', title:peak.name, href:atlasHref(peak.id), subtitle:`W planach · ${peak.altitude} · ${peak.countryLabel}`, keywords:`${peak.range} plan cel bucket list Monte Cervino Mont Cervin` })),
   ...routeCatalog.map(row => entry({ id:`route:${row.id}`, kind:'route', title:`${tripRoutes[row.id].title} — trasa`, href:routeHref(row, tripRoutes[row.id]), subtitle:`${row.region} · ${tripRoutes[row.id].dates}`, keywords:`GPX profil wysokości mapa trasy ${row.country}` })),

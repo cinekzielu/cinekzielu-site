@@ -24,6 +24,7 @@ export function RouteCatalog() {
   const [tracks, setTracks] = useState({})
   const [loadError, setLoadError] = useState(false)
   const [retry, setRetry] = useState(0)
+  const [filtersOpen, setFiltersOpen] = useState(false)
   const [viewport, setViewport] = useState(null)
   const [areaViewport, setAreaViewport] = useState(null)
   const [hovered, setHovered] = useState(null)
@@ -62,6 +63,14 @@ export function RouteCatalog() {
   const rows = useMemo(() => sortRoutes(catalog.filter(row => matchesRouteFilters(row, { region, distance, ascent, year, material }) && trackInArea(tracks[row.id], area)), sort), [region, distance, ascent, year, material, area, tracks, sort])
   const summary = useMemo(() => summarizeRoutes(rows), [rows])
   const filtered = region !== 'all' || distance !== 'all' || ascent !== 'all' || year !== 'all' || material !== 'all' || Boolean(area)
+  const chips = [
+    region !== 'all' && { key:'region', label:region, patch:{region:'all'} },
+    year !== 'all' && { key:'year', label:year, patch:{year:'all'} },
+    material !== 'all' && { key:'material', label:materialFilters.find(item => item.id === material).label, patch:{material:'all'} },
+    distance !== 'all' && { key:'distance', label:distanceFilters.find(item => item.id === distance).label, patch:{distance:'all'} },
+    ascent !== 'all' && { key:'ascent', label:ascentFilters.find(item => item.id === ascent).label, patch:{ascent:'all'} },
+    area && { key:'area', label:'Obszar mapy', patch:{area:null} },
+  ].filter(Boolean)
   const hiddenComparison = compare.some(id => !rows.some(row => row.id === id))
   const clearFilters = () => { setHovered(null); update({ region: 'all', distance: 'all', ascent: 'all', year: 'all', material: 'all', area: null }) }
   const ready = catalog.every(row => tracks[row.id])
@@ -90,6 +99,9 @@ export function RouteCatalog() {
     <p className="cz-route-catalog-intro">Moje przejścia na mapie. Wybierz trasę, zobacz jej przebieg albo porównaj dwa profile wysokości.</p>
     <div className="cz-route-catalog-tools"><div role="group" aria-label="Pasmo tras">{[['all', 'Wszystkie'], ...routeRegions.map(name => [name, name])].map(([value, label]) => <button key={value} type="button" aria-pressed={region === value} onClick={() => selectRegion(value)}>{label}</button>)}</div><a href="#porownanie">Porównaj trasy <span>{compare.length}/2</span> ↓</a></div>
     <div className="cz-route-view-tools"><div role="group" aria-label="Widok tras">{[['map', 'Mapa'], ['list', 'Lista']].map(([value, label]) => <button type="button" key={value} aria-pressed={view === value} onClick={() => update({ view: value })}>{label}</button>)}</div><a href="#karta-trasy">Karta trasy ↓</a><label>Sortowanie<select value={sort} onChange={event => update({ sort: event.target.value })}>{routeSorts.map(entry => <option key={entry.id} value={entry.id}>{entry.label}</option>)}</select></label></div>
+    <div className="cz-route-mobile-filter-bar"><button type="button" aria-controls="route-filter-panel" aria-expanded={filtersOpen} onClick={() => setFiltersOpen(value => !value)}>{filtersOpen ? 'Zwiń filtry' : 'Filtry'}{chips.length > 0 && ` · ${chips.length}`} <span aria-hidden="true">{filtersOpen ? '−' : '+'}</span></button><a href={view === 'map' ? '#mapa-tras' : '#lista-tras'}>Do wyników ↓</a><span role="status">{areaReady ? `${rows.length} z ${catalog.length} tras` : 'Wczytywanie…'}</span></div>
+    {chips.length > 0 && <div className="cz-route-filter-chips" role="group" aria-label="Aktywne filtry">{chips.map(chip => <button key={chip.key} type="button" aria-label={`Usuń filtr: ${chip.label}`} onClick={() => { setHovered(null); update(chip.patch) }}>{chip.label} <span aria-hidden="true">×</span></button>)}<button type="button" className="cz-route-clear-chips" onClick={clearFilters}>Wyczyść wszystkie</button></div>}
+    <div id="route-filter-panel" className={`cz-route-filter-panel${filtersOpen ? ' is-open' : ''}`}>
     <div className="cz-route-filters" role="group" aria-label="Filtry tras">
       <label>Rok zapisu<select value={year} onChange={event => update({ year: event.target.value })}><option value="all">Wszystkie lata</option>{routeYears.map(value => <option key={value} value={value}>{value}</option>)}</select></label>
       <label>Materiały z wyprawy<select value={material} onChange={event => update({ material: event.target.value })}>{materialFilters.map(entry => <option key={entry.id} value={entry.id}>{entry.label}</option>)}</select></label>
@@ -98,11 +110,12 @@ export function RouteCatalog() {
       <div><span role="status">Trasy: {rows.length} z {catalog.length}</span>{filtered && <button type="button" onClick={clearFilters}>Wyczyść filtry</button>}</div>
     </div>
     <p className="cz-route-filter-explainer">Rok dotyczy zapisu GPS. Materiały są z powiązanej wyprawy; zdjęcia nie obejmują kadrów z nagrań.</p>
+    </div>
     {area && <div className="cz-route-area-active"><span>Obszar mapy jest włączony · wynik obejmuje całe przejścia przecinające wybrany obszar.</span><button type="button" onClick={() => update({ area: null })}>Usuń obszar</button></div>}
     {!areaReady ? <p role="status">Wczytywanie przebiegu tras do sprawdzenia obszaru…</p> : <section className="cz-route-summary" aria-label="Podsumowanie wybranych tras"><dl><div><dt>Zapisanych tras</dt><dd>{summary.count}</dd></div><div><dt>Łączny dystans · km</dt><dd>{number(summary.distance / 1000, 1)}</dd></div><div><dt>Suma podejść · m</dt><dd>≈ {number(summary.ascent)}</dd></div></dl><p>{filtered ? 'Podsumowanie tras zgodnych z filtrami.' : 'Podsumowanie dodanych zapisów GPS.'} Cała wyprawa liczona raz, bez ponownego doliczania jej dni.</p></section>}
     {hiddenComparison && <p className="cz-route-filter-note">Wybrane porównanie pozostaje dostępne poniżej, także dla tras spoza filtrów. <a href="#porownanie">Przejdź do porównania ↓</a></p>}
     <div className={`cz-route-atlas-layout ${view === 'list' ? 'is-list' : ''}`}>
-      {view === 'map' && <section ref={mapSection} tabIndex={-1} className="cz-route-atlas-map" aria-label="Mapa tras">
+      {view === 'map' && <section id="mapa-tras" ref={mapSection} tabIndex={-1} className="cz-route-atlas-map" aria-label="Mapa tras">
         <div className="cz-route-atlas-map-heading"><div><span className="cz-route-eyebrow">{selectedRow ? selectedRow.region : region === 'all' ? routeRegions.join(' · ') : region}</span><h2>{selected ? tripRoutes[selected].title : filtered ? 'Trasy z listy' : 'Wszystkie trasy'}</h2></div>{selected && <button type="button" onClick={() => { setHovered(null); update({ selected: null }) }}>Pokaż całą listę</button>}</div>
         <div className="cz-route-area-tools"><button type="button" onClick={searchArea} disabled={!ready || !currentArea}>Szukaj w tym obszarze</button><span>{area ? areaKey(currentArea) === areaKey(area) ? 'Wyniki z tego obszaru.' : 'Przesuń mapę i kliknij, aby zaktualizować wyniki.' : 'Przybliż lub przesuń mapę, a następnie wyszukaj trasy.'}</span></div>
         {ready ? <Suspense fallback={<div className="cz-route-atlas-placeholder" role="status">Wczytywanie mapy…</div>}><AtlasMap rows={rows} tracks={tracks} selected={selected} highlighted={hovered} profilePoint={profilePoint} area={area} areaViewport={areaViewport} mapScope={region} onViewportChange={setViewport} onSelect={id => { setHovered(null); update({ selected: id }) }} /></Suspense> : <div className="cz-route-atlas-placeholder" role="status">{loadError ? <><p>Nie udało się wczytać tras.</p><button type="button" onClick={() => setRetry(value => value + 1)}>Spróbuj ponownie</button></> : 'Wczytywanie mapy i tras…'}</div>}
@@ -111,7 +124,7 @@ export function RouteCatalog() {
         {!!rows.length && <div className="cz-route-atlas-map-caption"><span><i />{selected ? 'Wybrana trasa wyróżniona na złoto' : 'Kliknij punkt na mapie lub nazwę na liście'}</span>{selectedRow && <a href={routeHref(selectedRow, tripRoutes[selected])}>{selectedRow.trip ? 'Profil i wyprawa ↗' : 'Profil trasy ↓'}</a>}</div>}
         {selected && <a className="cz-route-related-jump" href="#podobne">Podobne przejścia ↓</a>}{selected && <RoutePhotoPreview key={selected} routeId={selected} />}
       </section>}
-      <section className="cz-route-atlas-list" aria-label="Lista tras">
+      <section id="lista-tras" className="cz-route-atlas-list" aria-label="Lista tras">
         <div className="cz-route-atlas-list-heading"><h2>Trasy</h2><span role="status">{rows.length} z {catalog.length} · {routeSorts.find(entry => entry.id === sort).label.toLocaleLowerCase('pl')}</span></div>
         {!rows.length && areaReady && <div className="cz-route-compare-empty"><p>Brak tras dla tych filtrów.</p><button type="button" onClick={clearFilters}>Wyczyść filtry</button></div>}
         <div className="cz-route-catalog-list">{rows.map(row => {
