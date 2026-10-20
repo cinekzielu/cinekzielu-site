@@ -8,6 +8,7 @@ import { HomeAtlas } from './components/HomeAtlas'
 import { Mountain, Play } from 'lucide-react'
 import './styles.css'
 import './homepage.css'
+import { HeroLogo } from './components/HeroLogo'
 import './headingTypography.css'
 import './captionTypography.css'
 import { SiteHeader } from './components/SiteHeader'
@@ -204,6 +205,7 @@ function App() {
 
         <div className="cz-home-intro container" id="home-content" tabIndex={-1}>
           <div className="cz-home-copy">
+            <HeroLogo />
             <div className="cz-home-kicker">Marcin Zieliński / Cinek Zielu</div>
             <h1>Moje wyprawy,<br /> zdjęcia i filmy.</h1>
             <p>
