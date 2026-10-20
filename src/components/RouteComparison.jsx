@@ -62,7 +62,7 @@ export function RouteComparison({ selected, tracks, onChange, onDaysChange, onSh
     try { await navigator.clipboard.writeText(url); copied = true } catch { /* Manual link remains available. */ }
     setShare({ url, copied })
   }
-  return <section ref={section} className="cz-route-comparison" id="porownanie" aria-labelledby="route-comparison-title">
+  return <section ref={section} tabIndex={-1} className="cz-route-comparison" id="porownanie" aria-labelledby="route-comparison-title">
     <div className="cz-route-comparison-heading"><div><p className="cz-route-eyebrow">Dwie trasy · jedna skala</p><h2 id="route-comparison-title">Porównanie tras</h2></div><div className="cz-route-comparison-actions">{ready && <button type="button" onClick={copyComparison}>Udostępnij porównanie ↗</button>}{selected.length > 0 && <button type="button" onClick={() => onChange([])}>Wyczyść wybór</button>}</div></div>
     {share && <div className="cz-route-share"><p role="status">{share.copied ? 'Link skopiowany. Możesz też skopiować go z pola poniżej.' : 'Skopiuj link z pola poniżej.'}</p><label>Link do porównania<input ref={shareInput} readOnly value={share.url} onFocus={event => event.target.select()} /></label><button type="button" onClick={() => setShare(null)}>Zamknij</button></div>}
     <p className="cz-route-comparison-intro">Wybierz dwie trasy albo różne dni tej samej wyprawy. Profile pokazują rzeczywisty dystans i wysokość na wspólnych osiach.</p>

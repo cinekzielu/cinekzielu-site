@@ -4,6 +4,7 @@ import { filmCatalog, filmRegions, filmRegionLabel } from '../data/filmCatalog'
 import { filmFormats, filmLengths, defaultFilmFilters, readFilmFilters, filmLibraryHref, filterFilmLibrary } from '../data/filmLibrary'
 import { CollectionShell } from './CollectionShell'
 import { FilmLink } from './SiteTools'
+import { ContinueWatching } from './ContinueWatching'
 import { galleryData } from '../data/galleryData'
 import { galleryHref, galleryLinkLabel } from '../data/galleryNavigation'
 import '../filmStyles.css'
@@ -50,6 +51,7 @@ export function FilmIndex() {
   return <CollectionShell section="filmy" className="cz-films">
     <div className="cz-gallery-intro"><h1>Filmy</h1><span className="cz-gallery-count">{filmCatalog.length} filmów</span></div>
     <p className="cz-film-intro">Z gór i podróży. Długie wyprawy, krótkie formy.</p>
+    <ContinueWatching />
     <div className="cz-film-tools">
       <div className="cz-film-filters" role="group" aria-label="Filtruj filmy według miejsca">{filmRegions.map(region => <button type="button" key={region.id} aria-pressed={filters.region === region.id} onClick={() => updateFilters({ ...filters, region: region.id }, true)}>{region.label}</button>)}</div>
       <div className="cz-film-search"><Search size={16} aria-hidden="true" /><input ref={searchInput} type="search" aria-label="Szukaj filmu" placeholder="Szukaj filmu…" value={filters.query} onChange={event => updateFilters({ ...filters, query: event.target.value })} />{filters.query && <button type="button" aria-label="Wyczyść wyszukiwanie" onClick={() => { updateFilters({ ...filters, query: '' }); searchInput.current?.focus() }}><X size={16} /></button>}</div>
