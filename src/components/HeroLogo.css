@@ -1,0 +1,21 @@
+.cz-home-copy { align-self: start; }
+.cz-hero-logo {
+  display: block;
+  width: min(100%, clamp(320px, 34vw, 440px));
+  height: auto;
+  aspect-ratio: 1481 / 486;
+  margin: 0 0 28px;
+  color: #f4f1eb;
+  overflow: hidden;
+  transform: translateX(-1.62%); /* Align the visible symbol with the heading, excluding SVG padding. */
+}
+.cz-hero-logo .cz-flight { pointer-events: none; opacity: 0; }
+.cz-hero-logo .cz-flight-mass { fill: currentColor; }
+/* Static SVG is the default, including prerendered HTML without JavaScript. */
+html[data-cz-logo-pending] .cz-hero-logo { visibility: hidden; }
+@media (max-width: 760px) {
+  .cz-hero-logo { width: min(100%, 280px); margin: 0 0 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-cz-logo-pending] .cz-hero-logo { visibility: visible; }
+}
