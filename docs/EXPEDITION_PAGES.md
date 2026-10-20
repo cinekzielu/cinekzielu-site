@@ -8,7 +8,7 @@ Każda wyprawa ma osobny adres `/wyprawy/<slug>`, duże zdjęcie, krótki opis, 
 
 ## Potwierdzone informacje
 
-- Alpy: sierpień 2026; sprawdzono EXIF wszystkich 48 wybranych zdjęć. Wykonano je między 18 a 28 sierpnia. Podstrona podaje miesiąc, bez sugerowania pełnych dat początku i końca wyprawy.
+- Alpy: 18–28 sierpnia 2026 — zakres etapów górskich potwierdzony EXIF wszystkich 48 wybranych zdjęć oraz później dostarczonymi GPX pięciu etapów. Od 20 października ten zakres jest wyświetlany zamiast samego miesiąca, a `sortDate: 2026-08-18` umieszcza Alpy między Żabim Koniem a Wysoką, Gankiem i Rysami. Zakres nie określa dni dojazdu i powrotu; planowanego wyjazdu 17 sierpnia nie uznano za potwierdzony początek podróży.
 - Kończysta: 8 lutego 2026, potwierdzone w 24 wybranych zdjęciach. Zimowy charakter potwierdza też zweryfikowany film.
 - Liptowskie Mury: 6 czerwca 2026, potwierdzone w 21 wybranych zdjęciach. Nazwy Liptowskich Murów i Walentkowej Grani pochodzą z tytułu filmu właściciela.
 - Szwajcaria: 2025, zgodnie z zaakceptowaną galerią i rokiem wskazanym przez właściciela. Nie podano niepotwierdzonych dat całej podróży.

@@ -21,7 +21,7 @@ for(const frames of videoFrameCollections){
  const html=await readFile(new URL('../dist'+old+'.html',import.meta.url),'utf8')
  assert(html.includes('content="0;url='+target+'#kadry"'))
 }
-assert.deepEqual(expeditionPages.slice(0,3).map(x=>x.id),['zabi-kon-2026','wysoka-ganek-rysy-2026','alpy-2026'])
+assert.deepEqual(expeditionPages.slice(0,3).map(x=>x.id),['zabi-kon-2026','alpy-2026','wysoka-ganek-rysy-2026'])
 assert.deepEqual(filterCollections(expeditionPages,{place:'wszystkie',year:'2025'}).map(x=>x.id),['kiezmarski-szczyt-zima-2025','baranie-rogi-zima-2025','krywan-2025','szpiglasowy-wierch-2025','szwajcaria-2025','swinica-2025','mieguszowiecki-posrednia-gran-2025','durny-lomnica-2025','maroko-2025','gerlach-zima-2025'])
 const input=[{year:2025,sortDate:'2025-09',id:1},{year:2026,sortDate:'2026-01-10',id:2},{year:2025,sortDate:'2025-09-21',id:3}]
 assert.deepEqual(sortExpeditionsNewest(input).map(x=>x.id),[2,3,1])
