@@ -5,8 +5,8 @@ import catalog from '../src/data/routeCatalog.json' with { type: 'json' }
 import { tripRoutes } from '../src/data/tripRoutes.js'
 import { highestPeak, readRouteAtlas, routeHref, matchesRouteFilters } from '../src/data/routeAtlas.js'
 
-assert.equal(routes.length,35)
-assert.equal(catalog.length,41)
+assert.equal(routes.length,36)
+assert.equal(catalog.length,42)
 assert.equal(routes.filter(row=>row.trip).length,23)
 assert.deepEqual([...new Set(catalog.map(row=>row.region))].sort(),['Alpy','Atlas Wysoki','Gorce','Tatry'])
 for (const region of ['Atlas Wysoki','Gorce']) {
@@ -29,4 +29,4 @@ for (const route of routes) {
   assert(!/\.gpx|Users|Downloads|heart|cadence|token|T\d\d:\d\d/.test(JSON.stringify(route)))
 }
 assert(!routes.some(route=>/jasniak|marcin-sam/.test(route.id)),'Unresolved activity names stay private')
-console.log('PASS: 39 source recordings grouped into 35 imports, 41 total, trip and standalone routes, new regions, unsuccessful attempt, combined Toubkal, verified heights and local dates.')
+console.log('PASS: 40 source recordings grouped into 36 imports, 42 total, trip and standalone routes, new regions, unsuccessful attempt, combined Toubkal, verified heights and local dates.')

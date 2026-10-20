@@ -7,7 +7,7 @@ import { resolveFilmLink } from '../src/data/videoPlayer.js'
 const paths = new Set(sitePages.map(page => page.path))
 const select = patch => filterSummits({ ...defaults, ...patch })
 assert(paths.has('/szczyty'))
-assert.equal(summits.length, 39)
+assert.equal(summits.length, 43)
 assert.equal(new Set(summits.map(peak => peak.id)).size, summits.length)
 for (const peak of summits) {
   if (!peak.mapHref?.startsWith('/trasy?')) assert.equal(atlasNodeById[peak.id]?.kind, 'Szczyt', peak.id)
@@ -25,7 +25,7 @@ for (const peak of summits) {
   }
 }
 // Do not turn a nearby landmark, viewpoint or ridge into a claimed ascent.
-for (const id of ['etna', 'matterhorn', 'saxer-lucke', 'liptowskie-mury', 'giewont']) assert(!summits.some(peak => peak.id === id))
+for (const id of ['etna', 'matterhorn', 'saxer-lucke', 'liptowskie-mury']) assert(!summits.some(peak => peak.id === id))
 const heights = select({}).map(peak => peak.altitude)
 assert.deepEqual(heights, [...heights].sort((a, b) => b - a))
 assert.equal(select({})[0].id, 'dufourspitze')

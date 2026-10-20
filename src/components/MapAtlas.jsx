@@ -141,6 +141,7 @@ export function MapAtlas({ standalone = false }) {
   const [contextId, setContextId] = useState(() => readAtlasContext(window.location.search))
   const [showAllFilms, setShowAllFilms] = useState(false)
   const [showAllTrips, setShowAllTrips] = useState(false)
+  const [showAllRoutes, setShowAllRoutes] = useState(false)
   const [hoveredId, setHoveredId] = useState(null)
   const [query, setQuery] = useState('')
   const [onlyMaterials, setOnlyMaterialsState] = useState(() => new URLSearchParams(window.location.search).get('miejsca') !== 'wszystkie')
@@ -158,7 +159,7 @@ export function MapAtlas({ standalone = false }) {
   const yearScope = terrain?.id || (view === 'tatry' ? 'tatry' : selectedId)
   const years = atlasYears(yearScope)
   const materials = getAtlasMaterials(selectedId, year)
-  useEffect(() => { setShowAllTrips(false) }, [selectedId, year, contextId])
+  useEffect(() => { setShowAllTrips(false); setShowAllRoutes(false) }, [selectedId, year, contextId])
   const terrainPoints = (terrain?.locations || []).filter(point => (!onlyMaterials && year === 'all') || hasAtlasMaterials(point.id, year) || showPlannedSummit(point.id, year))
   const selectedCountry = ancestry.find(node => node.kind === 'Kraj')?.id
   const selectedContinent = ancestry.find(node => node.kind === 'Kontynent')?.id
@@ -231,7 +232,7 @@ export function MapAtlas({ standalone = false }) {
   const listed = candidates.filter(node => (!onlyMaterials && year === 'all') || hasAtlasMaterials(node.id, year) || showPlannedSummit(node.id, year) || node.id === selectedId)
   const typeLabel = (count, one, few, many) => `${count} ${count === 1 ? one : count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 12 || count % 100 > 14) ? few : many}`
   const filmLabel = count => typeLabel(count, 'film', 'filmy', 'filmów')
-  const summary = selected.status === 'planned' ? 'W planach' : `${materials.galleries.length ? typeLabel(materials.galleries.length, 'wyprawa', 'wyprawy', 'wypraw') + ' · ' : ''}${filmLabel(materials.films.length)}`
+  const summary = selected.status === 'planned' ? 'W planach' : `${materials.galleries.length ? typeLabel(materials.galleries.length, 'wyprawa', 'wyprawy', 'wypraw') + ' · ' : ''}${filmLabel(materials.films.length)}${materials.routes.length ? ` · ${materials.routes.length} GPX` : ''}`
   const showPanel = () => { panelRef.current?.scrollIntoView({ behavior: 'instant', block: 'start' }); panelRef.current?.focus({ preventScroll: true }) }
 
   return <div className={`cz-atlas ${standalone ? 'is-standalone' : ''}`}>
@@ -333,14 +334,19 @@ export function MapAtlas({ standalone = false }) {
           <a href={selected.visit.href}>Zobacz rozdział: {selected.name} →</a>
         </section>}
         {selected.status === 'planned' && <div className="cz-atlas-planned-note"><span>{selected.countryLabel}</span><p>Planowane wejście — poza listą zdobytych szczytów.</p><a href="/szczyty#w-planach">Moje szczyty · w planach ↗</a><a href={selected.altitudeSource} target="_blank" rel="noreferrer">Wysokość: SAC ↗</a></div>}
-        {selected.status !== 'planned' && <div className="cz-atlas-stats"><div><strong>{materials.galleries.length}</strong><span>Wyprawy</span></div><div><strong>{materials.films.length}</strong><span>Filmy</span></div><div><strong>{materials.photoCount}</strong><span>{galleryMediaLabel(materials.galleries)}</span></div></div>}
+        {selected.status !== 'planned' && (materials.galleries.length > 0 || materials.films.length > 0) && <div className="cz-atlas-stats"><div><strong>{materials.galleries.length}</strong><span>Wyprawy</span></div><div><strong>{materials.films.length}</strong><span>Filmy</span></div><div><strong>{materials.photoCount}</strong><span>{galleryMediaLabel(materials.galleries)}</span></div></div>}
         {selected.related?.length > 0 && <div className="cz-atlas-related">{selected.related.map(id => <button type="button" key={id} onClick={() => select(id)}>{atlasNodeById[id].name} →</button>)}</div>}
         {materials.galleries.length > 0 && <section className="cz-atlas-trips" aria-label="Wyprawy"><h4>Wyprawy</h4>{materials.galleries.slice(0, showAllTrips ? undefined : 3).map(gallery => <article key={gallery.id}>
           <a href={`/wyprawy/${gallery.id}`} tabIndex={-1} aria-hidden="true"><img src={gallery.coverImage} alt="" width={gallery.coverWidth} height={gallery.coverHeight} loading="lazy" /></a>
           <div><a className="cz-atlas-trip-title" href={`/wyprawy/${gallery.id}`}>{gallery.title} <span>{gallery.year}</span> ↗</a><a className="cz-atlas-gallery-link" href={galleryHref(gallery)}>{selected.visit?.expeditionId === gallery.id ? 'Galeria całej wyprawy' : galleryLinkLabel(gallery)} · {galleryItemCount(gallery)} ↗</a></div>
         </article>)}{materials.galleries.length > 3 && <button type="button" className="cz-atlas-library" aria-expanded={showAllTrips} onClick={() => setShowAllTrips(value => !value)}>{showAllTrips ? 'Zwiń wyprawy' : `Pokaż wszystkie wyprawy (${materials.galleries.length})`}</button>}</section>}
+        {materials.routes.length > 0 && (selected.kind === 'Szczyt' || (!materials.galleries.length && !materials.films.length)) && <section className="cz-atlas-routes" aria-label="Trasy GPX tego szczytu"><h4>Trasy GPX <span>{materials.routes.length}</span></h4>
+          {materials.routes.slice(0, showAllRoutes ? undefined : 3).map(route => <article key={route.id}><a href={`/trasy?trasa=${route.id}#profil`}>{route.title} ↗</a><small>{route.dates} · {(route.distance / 1000).toLocaleString('pl-PL', { maximumFractionDigits: 1 })} km · ↗ ≈ {route.ascentEstimate.toLocaleString('pl-PL')} m</small></article>)}
+          {materials.routes.length > 3 && <button type="button" className="cz-atlas-library" aria-expanded={showAllRoutes} onClick={() => setShowAllRoutes(value => !value)}>{showAllRoutes ? 'Zwiń trasy' : `Pokaż wszystkie trasy (${materials.routes.length})`}</button>}
+          <p>Daty dotyczą zapisów GPS.</p>{selected.kind === 'Szczyt' && <a href={`/szczyty?q=${encodeURIComponent(selected.name)}#szczyt-${selected.id}`}>Zobacz opisane wejścia ↗</a>}
+        </section>}
         {materials.films.length > 0 && <section className="cz-atlas-films" aria-label="Filmy z tego miejsca"><h4>{selected.chapter ? 'Ten moment w filmie' : 'Filmy'} <span>{materials.films.length}</span></h4>{materials.films.slice(0, showAllFilms ? undefined : 3).map(film => <FilmLink key={film.id} href={atlasFilmHref(selected, film)} target="_blank" rel="noreferrer"><Play size={15} aria-hidden="true" /><span>{film.title}<small>{selected.chapter?.videoId === film.youtubeId ? `Oglądaj od ${selected.chapter.time}` : `${film.format} · ${film.duration}`}</small></span><span aria-hidden="true">▷</span></FilmLink>)}{materials.films.length > 3 && <button type="button" className="cz-atlas-library" aria-expanded={showAllFilms} onClick={() => setShowAllFilms(value => !value)}>{showAllFilms ? 'Zwiń filmy' : `Pokaż wszystkie filmy (${materials.films.length})`}</button>}</section>}
-        {selected.status !== 'planned' && !materials.films.length && !materials.galleries.length && <div className="cz-atlas-no-content"><p>{year === 'all' ? 'Nie ma jeszcze opublikowanych materiałów z tego miejsca.' : 'Brak materiałów z wybranego roku.'}</p><button type="button" onClick={() => select(selected.parent || 'world')}>← {atlasNodeById[selected.parent || 'world'].name}</button></div>}
+        {selected.status !== 'planned' && !materials.films.length && !materials.galleries.length && !materials.routes.length && <div className="cz-atlas-no-content"><p>{year === 'all' ? 'Nie ma jeszcze opublikowanych materiałów z tego miejsca.' : 'Brak materiałów z wybranego roku.'}</p><button type="button" onClick={() => select(selected.parent || 'world')}>← {atlasNodeById[selected.parent || 'world'].name}</button></div>}
       </aside>
     </div>
     <span className="cz-atlas-announcement" role="status" aria-live="polite" aria-atomic="true">{selected.name}: {summary}</span>

@@ -30,4 +30,4 @@ for (const row of catalog) {
     assert(px >= 99.99 && px <= 980.01 && py >= 954.99 && py <= 1100.01, row.id)
   }
 }
-console.log('PASS: filtered totals, merged-route deduplication, all 41 card geometries and recording gaps.')
+console.log('PASS: filtered totals, merged-route deduplication, all 42 card geometries and recording gaps.')
