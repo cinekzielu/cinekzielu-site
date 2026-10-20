@@ -1,4 +1,7 @@
 import React from 'react'
+import { DestinationsIndex, CountryDestination } from './components/Destinations'
+import { destinations } from './data/destinations'
+import { restoreBrowsePosition } from './browseMemory'
 import { SavedProvider } from './components/SavedItems'
 import { SavedPage } from './components/SavedPage'
 import { PageLocationProvider } from './PageLocation'
@@ -504,6 +507,7 @@ function SectionHeader({ icon, label, title, text }) {
 
 
 export function SitePage({ location }) {
+  React.useEffect(() => { restoreBrowsePosition() }, [])
   const { pathname } = location
   const pageRoute = pathname.match(/^\/(galerie|wyprawy)(?:\/(.*?))?$/)
   let pageSlug = null
@@ -511,6 +515,9 @@ export function SitePage({ location }) {
   let page = pathname === '/' ? <App /> : <NotFound />
   if (pathname === '/mapa') page = <ClientContent fallback={<MapPageOverview />}><MapPage /></ClientContent>
   if (pathname === '/filmy') page = <FilmIndex />
+  if (pathname === '/kierunki') page = <DestinationsIndex />
+  const country = destinations.find(item => !item.existing && pathname === `/kierunki/${item.id}`)
+  if (country) page = <CountryDestination id={country.id} />
   if (pathname === '/kierunki/tatry') page = <TatryDestination />
   else if (pathname === '/kierunki/alpy') page = <AlpsDestination />
   if (pathname === '/trasy') page = <RouteCatalog />

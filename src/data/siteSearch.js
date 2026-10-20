@@ -1,3 +1,4 @@
+import { destinations } from './destinations.js'
 import { searchContext } from './materialContext.js'
 import { plannedSummits } from './plannedSummits.js'
 import { atlasContentNodes, atlasAncestry, atlasHref, getAtlasMaterials, hasAtlasMaterials } from './atlasContent.js'
@@ -26,6 +27,8 @@ const entry = data => {
 }
 
 export const siteSearchIndex = [
+  entry({ id:'destinations', kind:'place', title:'Kierunki — kraje i pasma', href:'/kierunki', subtitle:'Wyprawy i materiały według miejsc', keywords:'Szwajcaria Maroko Włochy Węgry Tatry Alpy' }),
+  ...destinations.filter(item => !item.existing).map(item => entry({ id:`destination:${item.id}`, kind:'place', title:`${item.name} — wyprawy i materiały`, href:`/kierunki/${item.id}`, subtitle:item.description, keywords:item.area })),
   entry({ id:'destination:tatry', kind:'place', title:'Tatry — letnie i zimowe wyprawy', href:'/kierunki/tatry', subtitle:'Fotografie, filmy, szczyty i trasy GPX · wybór roku i sezonu', keywords:'Polska Słowacja lato zima' }),
   entry({ id:'destination:alpy', kind:'place', title:'Alpy — wyprawy i materiały', href:'/kierunki/alpy', subtitle:'Fotografie, filmy, szczyty i trasy GPX', keywords:'Szwajcaria Across the Alps 2025 2026' }),
   ...seasonYears.map(year => entry({ id:`season:${year}`, kind:'season', title:`Sezon ${year}`, href:`/sezony/${year}`, subtitle:'Wyprawy, szczyty, fotografie i filmy', keywords:`podsumowanie roku ${year} GPX` })),

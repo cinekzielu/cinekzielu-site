@@ -1,4 +1,6 @@
 import React from 'react'
+import { initializeBrowseMemory } from './browseMemory'
+initializeBrowseMemory()
 import { createRoot, hydrateRoot } from 'react-dom/client'
 import { SitePage } from './App'
 import { applyPageMetadata } from './pageMetadata'
