@@ -4,6 +4,7 @@ import { filmRegionLabel } from '../data/filmCatalog'
 import { formatVideoTime, loadYouTubeAPI } from '../data/videoPlayer'
 import { findExpeditionPage } from '../data/expeditionPages'
 import { galleryHref, galleryLinkLabel } from '../data/galleryNavigation'
+import { trackPlayback } from '../data/watchProgress'
 
 export function VideoPlayer({ video, onRestart }) {
   const mount = useRef(null)
@@ -13,6 +14,11 @@ export function VideoPlayer({ video, onRestart }) {
   const expedition = findExpeditionPage(film.expeditionId)
   useEffect(() => {
     let cancelled = false, player
+    const progress = trackPlayback(film.youtubeId)
+    const capture = () => progress.capture(player)
+    const timer = window.setInterval(capture, 5000)
+    window.addEventListener('pagehide', capture)
+    document.addEventListener('visibilitychange', capture)
     const holder = document.createElement('div')
     mount.current.appendChild(holder)
     loadYouTubeAPI().then(YT => {
@@ -21,6 +27,7 @@ export function VideoPlayer({ video, onRestart }) {
         host:'https://www.youtube-nocookie.com', videoId:film.youtubeId, width:'100%', height:'100%',
         playerVars:{ autoplay:1, playsinline:1, rel:0, start, origin:window.location.origin, hl:'pl' },
         events:{
+          onStateChange:event => { if (!cancelled) progress.state(event) },
           onReady:event => {
             if (cancelled) return
             const frame = event.target.getIframe()
@@ -32,7 +39,11 @@ export function VideoPlayer({ video, onRestart }) {
         },
       })
     }).catch(() => { if (!cancelled) setStatus('error') })
-    return () => { cancelled=true; player?.destroy(); holder.remove() }
+    return () => {
+      capture(); cancelled=true; window.clearInterval(timer)
+      window.removeEventListener('pagehide', capture); document.removeEventListener('visibilitychange', capture)
+      player?.destroy(); holder.remove()
+    }
   }, [film.youtubeId, film.title, start])
   return <>
     <div className="cz-video-frame" data-player-status={status} data-player-error={errorCode}>

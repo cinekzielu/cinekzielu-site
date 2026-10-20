@@ -8,6 +8,7 @@ import { RouteCard } from './RouteCard'
 import { areaKey, viewportArea, trackInArea } from '../data/routeArea'
 import { summarizeRoutes } from '../data/routeSummary'
 import { RouteComparison } from './RouteComparison'
+import { ComparisonPicks } from './ComparisonPicks'
 import { useInitialLocation } from '../PageLocation'
 import { tripRoutes } from '../data/tripRoutes'
 import { highestPeak, readRouteAtlas, routeAtlasHref, routeHref, distanceFilters, ascentFilters, matchesRouteFilters, routeRegions, routeSorts, sortRoutes, routeYears, materialFilters } from '../data/routeAtlas'
@@ -50,14 +51,15 @@ export function RouteCatalog() {
       .catch(() => { if (live) setLoadError(true) })
     return () => { live = false }
   }, [retry, view, Boolean(area), compare.join(',')])
-  const update = patch => {
+  const update = (patch, hash = '') => {
     setProfilePoint(null)
     const next = readRouteAtlas(routeAtlasHref({ ...state, ...patch }).split('?')[1] || '')
     setState(next)
     let href = routeAtlasHref(next)
     const savedKm = new URLSearchParams(window.location.search).get('km')
     if (next.compare.length === 2 && next.compare.join(',') === compare.join(',') && next.compareDays.join(',') === state.compareDays.join(',') && /^\d+(\.\d{1,3})?$/.test(savedKm || '')) href += `&km=${savedKm}`
-    if (window.location.pathname + window.location.search !== href) window.history.pushState({}, '', href)
+    href += hash
+    if (window.location.pathname + window.location.search + window.location.hash !== href) window.history.pushState({}, '', href)
     searchRef.current = window.location.search
   }
   const rows = useMemo(() => sortRoutes(catalog.filter(row => matchesRouteFilters(row, { region, distance, ascent, year, material }) && trackInArea(tracks[row.id], area)), sort), [region, distance, ascent, year, material, area, tracks, sort])
@@ -97,6 +99,13 @@ export function RouteCatalog() {
   return <CollectionShell section="wyprawy" detail className="cz-routes">
     <div className="cz-gallery-intro"><h1>Trasy</h1><span className="cz-gallery-count">{catalog.length} tras GPX · {routeRegions.join(' · ')}</span></div>
     <p className="cz-route-catalog-intro">Moje przejścia na mapie. Wybierz trasę, zobacz jej przebieg albo porównaj dwa profile wysokości.</p>
+    <ComparisonPicks state={state} onSelect={pick => {
+      update({ compare: pick.compare, compareDays: pick.compareDays }, '#porownanie')
+      requestAnimationFrame(() => {
+        const section = document.getElementById('porownanie')
+        section?.scrollIntoView({ behavior: 'instant', block: 'start' }); section?.focus({ preventScroll: true })
+      })
+    }} />
     <div className="cz-route-catalog-tools"><div role="group" aria-label="Pasmo tras">{[['all', 'Wszystkie'], ...routeRegions.map(name => [name, name])].map(([value, label]) => <button key={value} type="button" aria-pressed={region === value} onClick={() => selectRegion(value)}>{label}</button>)}</div><a href="#porownanie">Porównaj trasy <span>{compare.length}/2</span> ↓</a></div>
     <div className="cz-route-view-tools"><div role="group" aria-label="Widok tras">{[['map', 'Mapa'], ['list', 'Lista']].map(([value, label]) => <button type="button" key={value} aria-pressed={view === value} onClick={() => update({ view: value })}>{label}</button>)}</div><a href="#karta-trasy">Karta trasy ↓</a><label>Sortowanie<select value={sort} onChange={event => update({ sort: event.target.value })}>{routeSorts.map(entry => <option key={entry.id} value={entry.id}>{entry.label}</option>)}</select></label></div>
     <div className="cz-route-mobile-filter-bar"><button type="button" aria-controls="route-filter-panel" aria-expanded={filtersOpen} onClick={() => setFiltersOpen(value => !value)}>{filtersOpen ? 'Zwiń filtry' : 'Filtry'}{chips.length > 0 && ` · ${chips.length}`} <span aria-hidden="true">{filtersOpen ? '−' : '+'}</span></button><a href={view === 'map' ? '#mapa-tras' : '#lista-tras'}>Do wyników ↓</a><span role="status">{areaReady ? `${rows.length} z ${catalog.length} tras` : 'Wczytywanie…'}</span></div>
