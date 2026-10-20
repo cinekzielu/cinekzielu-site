@@ -9,6 +9,7 @@ import brandLogo from '../assets/brand/cinek-zielu-logo-biale.svg'
 const sections = [ { id: 'fotografia', label: 'Fotografia' }, { id: 'wyprawy', label: 'Wyprawy' }, { id: 'szczyty', label: 'Moje szczyty' }, { id: 'filmy', label: 'Filmy' }, { id: 'mapa', label: 'Mapa' }, { id: 'galerie', label: 'Galerie' }, { id: 'o-mnie', label: 'O mnie' } ]
 const groups = {
   wyprawy: [
+    { href: '/kierunki', label: 'Kierunki', description: 'Kraje, pasma i ich materiały' },
     { href: '/wyprawy', label: 'Wszystkie wyprawy', description: 'Fotografie, filmy i opisy' },
     { href: '/wyprawy?widok=os', label: 'Oś podróży', description: 'Wyjazdy w kolejności czasu' },
     { href: '/kierunki/tatry', label: 'Tatry', description: 'Letnie i zimowe wejścia' },

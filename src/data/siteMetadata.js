@@ -1,3 +1,4 @@
+import { destinations } from './destinations.js'
 import routeCatalog from './routeCatalog.json' with { type: 'json' }
 import { routeHref } from './routeAtlas.js'
 import { tripRoutes } from './tripRoutes.js'
@@ -24,6 +25,8 @@ export const sitePages = [
   page('/szczyty', 'Moje szczyty — Cinek Zielu', 'Letnie i zimowe wejścia w Tatry, Alpy, Gorce i Atlas Wysoki. Wysokości, lata wejść, fotografie, filmy i wyprawy.', shareImages['konczysta-2026']),
   page('/galerie', 'Galerie z wypraw — Cinek Zielu', `${galleryCollectionCount(photoGalleries)} z ${photoGalleries.length} wypraw. Alpy, Tatry, Szwajcaria, Sycylia i Hungaroring w fotografiach Marcina Zielińskiego.`, shareImages['szwajcaria-2025']),
   page('/trasy', 'Trasy GPX — atlas przejść | Cinek Zielu', `Atlas ${routeCatalog.length} tras GPX: Tatry, Alpy, Gorce i Atlas Wysoki. Mapa terenu, lista przejść i porównanie profili wysokości.`, shareImages['alpy-2026']),
+  page('/kierunki', 'Kierunki — kraje i pasma | Cinek Zielu', 'Tatry, Alpy, Szwajcaria, Maroko, Włochy i Węgry. Wyprawy, fotografie, filmy i zapisane trasy według miejsc.', shareImages['szwajcaria-2025']),
+  ...destinations.filter(item => !item.existing).map(item => page(`/kierunki/${item.id}`, `${item.name} — wyprawy i materiały | Cinek Zielu`, `${item.description} Dostępne wyprawy, filmy, fotografie i trasy GPX.`, shareImages[item.coverTrip])),
   page('/kierunki/tatry', 'Tatry — letnie i zimowe wyprawy | Cinek Zielu', 'Wyprawy w Tatry według roku i sezonu. Fotografie, filmy, zdobyte szczyty oraz dostępne trasy GPX po polskiej i słowackiej stronie Tatr.', shareImages['konczysta-2026']),
   page('/kierunki/alpy', 'Alpy — wyprawy, fotografie i trasy | Cinek Zielu', 'Szwajcaria 2025 i Across the Alps 2026. Fotografie, filmy, zdobyte szczyty i dostępne trasy GPX z wypraw w Alpy.', shareImages['alpy-2026']),
   page('/sezony', 'Sezony — wyprawy i fotografie | Cinek Zielu', 'Podsumowania lat 2025 i 2026: wyprawy, zdobyte szczyty, fotografie, filmy i dostępne zapisy GPX.', shareImages['alpy-2026']),
