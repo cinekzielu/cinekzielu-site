@@ -45,9 +45,10 @@ const details = {
     description: 'Wrześniowa wyprawa na Żabiego Konia. Fotografie z podejścia i grani oraz film z wejścia.',
   },
   'alpy-2026': {
-    sortDate: '2026-08',
-    region: 'Alpy', date: 'Sierpień 2026', kind: 'Wyprawa alpejska',
-    description: 'Across the Alps: Triglav, Grossglockner, Dufourspitze, Grauspitz i Zugspitze. Pięć zdobytych szczytów pięciu krajów, fotografie i opowieść z sierpniowej wyprawy.',
+    // Recorded mountain stages, confirmed by GPX and photo metadata; excludes travel days.
+    sortDate: '2026-08-18',
+    region: 'Alpy', date: '18–28 sierpnia 2026', kind: 'Etapy wyprawy alpejskiej',
+    description: 'Across the Alps: Triglav, Grossglockner, Dufourspitze, Grauspitz i Zugspitze. Pięć zdobytych szczytów pięciu krajów. Etapy górskie od 18 do 28 sierpnia 2026, fotografie i opowieść z wyprawy.',
   },
   'baranie-rogi-lodowy-szczyt-2026': {
     sortDate: '2026-07',
