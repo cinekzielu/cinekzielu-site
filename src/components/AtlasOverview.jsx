@@ -18,6 +18,7 @@ export function AtlasOverview({ note = 'Interaktywna mapa wymaga JavaScript. Mat
     <p>{place.description || 'Miejsca, fotografie i filmy z podróży.'}</p>
     {destinations.length > 0 && <nav aria-label="Obszary atlasu">{destinations.map(node => <a key={node.id} href={atlasSharePath(node.id)}>{node.name} ↗</a>)}</nav>}
     {materials.galleries.length > 0 && <div><h3>Wyprawy</h3><ul>{materials.galleries.slice(0, 3).map(gallery => <li key={gallery.id}><a href={`/wyprawy/${gallery.id}`}>{gallery.title} {gallery.year}</a> · <a href={galleryHref(gallery)}>{galleryLinkLabel(gallery)}</a></li>)}</ul><a href="/wyprawy">Wszystkie wyprawy ↗</a></div>}
+    {materials.routes.length > 0 && place.kind === 'Szczyt' && <div><h3>Trasy GPX</h3><ul>{materials.routes.map(route => <li key={route.id}><a href={`/trasy?trasa=${route.id}#profil`}>{route.title} · {route.dates} ↗</a></li>)}</ul></div>}
     <p className="cz-atlas-overview-note">{note}</p>
     {children}
     <a className="cz-atlas-full-link" href={`/mapa?atlas=${id}`}>Otwórz pełny atlas ↗</a>

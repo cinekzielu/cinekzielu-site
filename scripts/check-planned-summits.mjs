@@ -6,13 +6,13 @@ import { atlasTerrainProfile, readAtlasContext } from '../src/data/atlasTerrain.
 import { searchSite } from '../src/data/siteSearch.js'
 import { sharePages } from '../src/data/sharePages.js'
 
-assert.equal(summits.length,39)
-assert.equal(summits.flatMap(peak => peak.ascents).length,46)
+assert.equal(summits.length,43)
+assert.equal(summits.flatMap(peak => peak.ascents).length,50)
 for (const peak of plannedSummits) {
   assert(!summits.some(done => done.id === peak.id),'A goal is not a completed ascent')
   assert.equal(atlasNodeById[peak.id].status,'planned')
   assert(!peak.visit && !peak.ascents && !peak.filmIds && !peak.year)
-  assert.deepEqual(getAtlasMaterials(peak.id),{films:[],galleries:[],photoCount:0})
+  assert.deepEqual(getAtlasMaterials(peak.id),{films:[],galleries:[],routes:[],photoCount:0})
   assert(showPlannedSummit(peak.id)); assert(!showPlannedSummit(peak.id,'2026'))
   assert.equal(readAtlasYear(`?atlas=${peak.id}&rok=2026`),'all')
   for (const scope of [...peak.countryIds,'alpy']) {
@@ -26,4 +26,4 @@ for (const peak of plannedSummits) {
 }
 assert.equal(plannedSummits[0].elevation,4478)
 assert.equal(plannedSummits[0].coordinateRecord,149915)
-console.log('PASS: goals isolated from 39 summits/46 ascents and media; country/region pins, year filters, search and share status.')
+console.log('PASS: goals isolated from 43 summits/50 ascents and media; country/region pins, year filters, search and share status.')

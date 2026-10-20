@@ -41,7 +41,7 @@ export const summits = [
       ...trip, orderDate: item.orderDate, year: item.orderDate.slice(0, 4), date: item.date, season: item.season, evidence: `gpx:${item.routeId}`,
     })], {
       range: item.range, rangeName: item.rangeName, altitudeSource: item.altitudeSource,
-      mapHref: item.id === 'slawkowski-szczyt' ? '/mapa?atlas=slawkowski-szczyt' : `/trasy?trasa=${item.routeId}#mapa-tras`,
+      mapHref: `/mapa?atlas=${item.id}`,
     })
   }),
   ...alpsStory.map(chapter => peak(chapter.id, chapter.title, chapter.altitude, [visit('alpy-2026', 'lato', ['l3KltGrKz2U'], {

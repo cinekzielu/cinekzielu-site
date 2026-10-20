@@ -72,3 +72,9 @@
 .cz-atlas-films>button.cz-atlas-library,.cz-atlas-trips>button.cz-atlas-library{min-height:44px;background:transparent;border:0;font:inherit;font-size:11px;cursor:pointer;text-align:left}
 @media(max-width:1100px){.cz-atlas-year{margin-left:auto}}
 @media(max-width:520px){.cz-atlas-year{width:100%;justify-content:space-between;margin:6px 0 10px}.cz-atlas-year select{font-size:14px}.cz-atlas-terrain-hint{font-size:9px;flex-wrap:wrap}}
+
+.cz-atlas-routes { margin-top: 24px; padding-top: 20px; border-top: 1px solid #b49a6233; }
+.cz-atlas-routes h4 { margin: 0 0 12px; }
+.cz-atlas-routes article { display: grid; gap: 5px; padding: 12px 0; }
+.cz-atlas-routes a { color: #ddbf81; overflow-wrap: anywhere; }
+.cz-atlas-routes small, .cz-atlas-routes p { color: #b8b1a4; font-size: .8rem; line-height: 1.6; }

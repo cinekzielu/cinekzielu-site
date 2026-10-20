@@ -800,5 +800,51 @@
       "lng": 20.074001
     },
     "trip": "zabi-kon-2026"
+  },
+  {
+    "id": "malolaczniak-giewont-2024",
+    "title": "Ciemniak, Małołączniak, Kopa Kondracka i Giewont",
+    "anchor": "trasa-malolaczniak-giewont-2024",
+    "dates": "26 października 2024",
+    "intro": "Przejście z 26 października 2024, zapisane na Stravie jako „Marcin sam w górach”.",
+    "peaks": [
+      {
+        "id": "ciemniak",
+        "name": "Ciemniak",
+        "altitude": 2096,
+        "lat": 49.2310073,
+        "lng": 19.9034053,
+        "source": "https://www.openstreetmap.org/node/496805357"
+      },
+      {
+        "id": "malolaczniak",
+        "name": "Małołączniak",
+        "altitude": 2096,
+        "lat": 49.2358298,
+        "lng": 19.9192231,
+        "source": "https://www.openstreetmap.org/node/496805360"
+      },
+      {
+        "id": "kopa-kondracka",
+        "name": "Kopa Kondracka",
+        "altitude": 2005,
+        "lat": 49.2365407,
+        "lng": 19.9322676,
+        "source": "https://www.openstreetmap.org/node/3560695684"
+      },
+      {
+        "id": "giewont",
+        "name": "Giewont",
+        "altitude": 1894,
+        "lat": 49.2509538,
+        "lng": 19.9341016,
+        "source": "https://www.openstreetmap.org/node/1295278143"
+      }
+    ],
+    "marker": {
+      "lat": 49.276465,
+      "lng": 19.878003
+    },
+    "trip": null
   }
 ]

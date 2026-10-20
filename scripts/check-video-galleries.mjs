@@ -21,7 +21,7 @@ for(const id of ['gerlach','tatry','slovakia','europe','world']) assert(getAtlas
 assert(!getAtlasMaterials('poland').galleries.some(item=>item.id===gallery.id),'Gerlach is not in Poland')
 assert(!getAtlasMaterials('morocco').galleries.some(item=>item.id===gallery.id))
 assert.equal(getAtlasMaterials('gerlach','2026').photoCount,0)
-assert.deepEqual(atlasYears('gerlach'),['2025'])
+assert.deepEqual(atlasYears('gerlach'),['2025','2024'])
 assert(filterCollections(galleryData,{place:'tatry',year:'2025'}).some(item=>item.id===gallery.id))
 assert(searchSite('GoPro').some(item=>item.id==='expedition:'+gallery.id))
 assert.equal(legacyRedirects['/wyprawy/gerlach-winter'],'/wyprawy/gerlach-zima-2025')

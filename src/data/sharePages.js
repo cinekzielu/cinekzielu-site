@@ -4,9 +4,11 @@ import { photoViewId } from './photoView.js'
 import { atlasNodeById, getAtlasMaterials } from './atlasContent.js'
 import { shareImages } from './shareImages.js'
 
-// This is the published PR160 atlas, not every locally staged map addition.
+// Explicit share destinations; includes the reviewed summit atlas additions.
 // Adding new places to this list is a separate editorial/publication decision.
 export const sharedAtlasIds = [
+  'malolaczniak', 'ciemniak', 'kopa-kondracka',
+  'starolesny-szczyt', 'baraniec', 'grzes', 'rakon', 'maly-lodowy-szczyt', 'kasprowy-wierch', 'klingenstock',
   'matterhorn', 'world', 'europe', 'africa', 'north-america', 'south-america', 'asia', 'oceania',
   'poland', 'slovakia', 'switzerland', 'austria', 'germany', 'slovenia', 'italy',
   'hungary', 'france', 'norway', 'spain', 'romania', 'greece', 'liechtenstein',

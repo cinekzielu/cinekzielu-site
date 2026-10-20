@@ -7,7 +7,7 @@ import { summitRoutes, summitDayScopes } from '../src/data/relatedRoutes.js'
 import { searchSite } from '../src/data/siteSearch.js'
 import { TERRAIN_TILE_URL } from '../src/data/terrainMap.js'
 
-assert.equal(additions.length, 8)
+assert.equal(additions.length, 12)
 for (const item of additions) {
   const summit = summits.find(p => p.id === item.id)
   assert(summit && summit.altitude === item.altitude)
@@ -28,4 +28,4 @@ assert(searchSite('Mały Lodowy').some(r => r.id === 'route:czerwona-lawka-2024'
 assert(!summits.flatMap(p => p.ascents).some(a => a.routeId === 'lodowy-proba-2024'))
 for (const id of ['szatan', 'wysoka']) assert(summits.find(p => p.id === id).ascents.some(a => a.year === null), 'Do not date old films from a separate GPX')
 assert.equal(TERRAIN_TILE_URL, 'https://tile.openmaps.fr/opentopomap/{z}/{x}/{y}.png')
-console.log('PASS: eight evidence-based summits, geographic track checks, valid route links and search, correct day, unknowns and excluded attempt.')
+console.log('PASS: twelve evidence-based summits, geographic track checks, valid route links and search, correct day, unknowns and excluded attempt.')

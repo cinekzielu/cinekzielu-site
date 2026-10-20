@@ -2,6 +2,7 @@
 // https://www.openstreetmap.org/copyright — source node retained for every point.
 // Rysy uses the Polish border summit; Wysoka the southeast summit.
 // Ridge traversals are intentionally kept in the content list without invented pins.
+import { supplementalSummitPlaces } from './supplementalSummitPlaces.js'
 export const tatryLocations = [
   ['baranie-rogi', 49.2016399, 20.1971608, 385126469],
   ['durny-szczyt', 49.1975923, 20.2079960, 385101740],
@@ -29,6 +30,6 @@ export const tatryLocations = [
   ['szpiglasowy-wierch', 49.1972908, 20.0401058, 452477062],
   ['huncowski-szczyt', 49.1979918, 20.2251697, 380695706],
   ['walentkowy-wierch', 49.2134347, 20.0068154, 385107932],
-].map(([id, lat, lng, osmNode]) => ({ id, lat, lng, source: `https://www.openstreetmap.org/node/${osmNode}`, sourceName: 'OpenStreetMap' }))
+].map(([id, lat, lng, osmNode]) => ({ id, lat, lng, source: `https://www.openstreetmap.org/node/${osmNode}`, sourceName: 'OpenStreetMap' })).concat(supplementalSummitPlaces.filter(p => p.parent === 'tatry'))
 
 export const tatryLocationById = Object.fromEntries(tatryLocations.map(point => [point.id, point]))

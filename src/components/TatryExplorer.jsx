@@ -8,8 +8,8 @@ import '../tatryExplorer.css'
 
 const nodes = atlasContentNodes.filter(node => node.parent === 'tatry').sort((a, b) => a.name.localeCompare(b.name, 'pl'))
 const materialLabel = (id, year) => {
-  const { films, galleries } = getAtlasMaterials(id, year)
-  return [galleries.length && `${galleryCollectionCount(galleries)}`, films.length && `${films.length} ${films.length === 1 ? 'film' : 'filmy'}`].filter(Boolean).join(' · ') || 'Brak materiałów'
+  const { films, galleries, routes } = getAtlasMaterials(id, year)
+  return [routes.length && `${routes.length} GPX`, galleries.length && `${galleryCollectionCount(galleries)}`, films.length && `${films.length} ${films.length === 1 ? 'film' : 'filmy'}`].filter(Boolean).join(' · ') || 'Brak materiałów'
 }
 
 export function TatryExplorer({ selectedId, onSelect, onlyMaterials, setOnlyMaterials, onShowMaterials, year = 'all' }) {

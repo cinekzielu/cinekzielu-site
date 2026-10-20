@@ -1,3 +1,4 @@
+import { supplementalSummitPlaces, turbaczLocation } from './supplementalSummitPlaces.js'
 import { plannedSummits } from './plannedSummits.js'
 import { countryBounds } from './terrainCountryBounds.js'
 import { atlasAncestry, atlasNodeById } from './atlasContent.js'
@@ -8,7 +9,7 @@ import { countryPlaceIds } from './placeGeography.js'
 import { sicilyPlaces, hungaryPlaces } from './summer2026Places.js'
 import { alpsCountryIds, alpsPlaces } from './alpsPlaces.js'
 
-const swiss = switzerlandPlaces.map(place => ({...place,lng:place.lon}))
+const swiss = [...switzerlandPlaces.map(place => ({...place,lng:place.lon})), ...supplementalSummitPlaces.filter(p => p.parent === 'switzerland')]
 const morocco = moroccoPlaces.map(place => ({...place,lng:place.lon}))
 const countries = {
   italy:sicilyPlaces.map(place => ({...place,lng:place.lon})),
@@ -16,7 +17,8 @@ const countries = {
   ...Object.fromEntries(alpsCountryIds.map(id => [id, alpsPlaces.filter(place => place.parent === id)])),
   switzerland: [...swiss, ...alpsPlaces.filter(place => place.parent === 'switzerland')],
   morocco,
-  poland: tatryLocations.filter(point => countryPlaceIds.poland.includes(point.id)),
+  poland: [...tatryLocations.filter(point => countryPlaceIds.poland.includes(point.id)), turbaczLocation],
+  gorce: [turbaczLocation],
   slovakia: tatryLocations.filter(point => countryPlaceIds.slovakia.includes(point.id)),
 }
 const regionBounds = {
