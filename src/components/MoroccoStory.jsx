@@ -6,10 +6,12 @@ import { PhotoGrid } from './PhotoGrid'
 import { ResponsivePhoto } from './ResponsivePhoto'
 import { FilmLink } from './SiteTools'
 import '../moroccoStory.css'
+import { StoryStageNav } from './StoryStageNav'
 
 const TerrainMap = lazy(() => import('./TatryTerrainMap').then(module => ({ default: module.TatryTerrainMap })))
 const locations = moroccoPlaces.map(place => ({ ...place, lng: place.lon }))
 const locationById = Object.fromEntries(locations.map(place => [place.id, place]))
+const stageLinks = moroccoStory.map(stop => ({ id: stop.id, title: stop.title, href: moroccoStoryHash(stop) }))
 const stopFromHash = () => moroccoStory.find(stop => moroccoStoryHash(stop) === window.location.hash)
 
 export function MoroccoStoryHero() {
@@ -84,6 +86,7 @@ export function MoroccoStory() {
     <nav className="cz-story-chapters" aria-label="Rozdziały podróży">{moroccoStory.map(stop => <a key={stop.id} href={moroccoStoryHash(stop)} aria-current={active.id === stop.id ? 'step' : undefined}><span>{stop.number}</span>{stop.title}</a>)}</nav>
     <div className="cz-story-layout">
       <aside className="cz-story-map">
+        <StoryStageNav stages={stageLinks} activeId={active.id} label="Etapy Maroka" onNavigate={() => setMapOpen(false)} />
         <button className="cz-story-map-toggle" type="button" aria-expanded={mapOpen} aria-controls="cz-story-map-content" onClick={() => setMapOpen(value => !value)}>{mapOpen ? 'Zwiń mapę' : 'Pokaż mapę'}<span>{active.number} / 10 · {active.title} {mapOpen ? '−' : '+'}</span></button>
         <div id="cz-story-map-content" hidden={!mapOpen}>
           <div className="cz-story-map-heading"><span>{active.number} / 10</span><strong>{active.title}</strong></div>
@@ -91,10 +94,10 @@ export function MoroccoStory() {
           <div className="cz-story-map-footer"><span>Punkty miejsc, nie ślad GPS.</span><a href={`/mapa?atlas=${activeId}&obszar=morocco`}>Otwórz w atlasie ↗</a></div>
         </div>
       </aside>
-      <div className="cz-story-stops">{moroccoStory.map(stop => <section key={stop.id} id={moroccoStoryHash(stop).slice(1)} data-story-stop={stop.id} className={`cz-story-stop${active.id === stop.id ? ' is-active' : ''}`} aria-labelledby={`story-title-${stop.id}`}>
+      <div className="cz-story-stops">{moroccoStory.map(stop => <section key={stop.id} id={moroccoStoryHash(stop).slice(1)} data-story-stop={stop.id} tabIndex={-1} className={`cz-story-stop${active.id === stop.id ? ' is-active' : ''}`} aria-labelledby={`story-title-${stop.id}`}>
         <div className="cz-story-stop-heading"><span className="cz-story-number">{stop.number}</span><div><p className="cz-story-kicker">Maroko · część {stop.filmPart}</p><h3 id={`story-title-${stop.id}`}>{stop.title}</h3></div></div>
         <p className="cz-story-description">{stop.description}</p>
-        <PhotoGrid gallery={{ ...moroccoGallery, title: stop.title, photos: stop.photos }} />
+        <PhotoGrid eagerFirst={false} gallery={{ ...moroccoGallery, title: stop.title, photos: stop.photos }} />
         <div className="cz-story-stop-footer"><span>Kadry z nagrań DJI</span><FilmLink href={stop.filmHref}>▷ Obejrzyj od {stop.chapter.time}</FilmLink></div>
       </section>)}</div>
     </div>

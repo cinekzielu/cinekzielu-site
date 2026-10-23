@@ -8,6 +8,7 @@ import { TripRoute } from './TripRoute'
 import { alpsPhotoStory } from '../data/storyPhotoGroups'
 import { StoryPhotoGroup } from './StoryPhotoGroup'
 import '../alpsStory.css'
+import { StoryStageNav } from './StoryStageNav'
 
 const TerrainMap = lazy(() => import('./TatryTerrainMap').then(module => ({ default: module.TatryTerrainMap })))
 const number = (value, digits = 0) => value.toLocaleString('pl-PL', { minimumFractionDigits: digits, maximumFractionDigits: digits })
@@ -17,6 +18,7 @@ const chapterFromHash = () => {
 }
 const StoryPhotos = ({ title, photos, groupId }) => alpsPhotoStory[groupId] ? <StoryPhotoGroup group={alpsPhotoStory[groupId]} tripId="alpy-2026" /> : <PhotoGrid eagerFirst={false} gallery={{ ...alpsStoryGallery, title, photos }} />
 const pauseGroups = { triglav:'po-triglavie', grossglockner:'przerwa-austria', dufourspitze:'przerwa-szwajcaria', grauspitz:'przed-zugspitze' }
+const stageLinks = alpsStory.map(chapter => ({ id: chapter.id, title: chapter.title, href: alpsStoryHash(chapter) }))
 const dayGroups = ['dufour-podejscie','dufour-szczyt','dufour-powrot']
 
 export function AlpsStoryHero() {
@@ -86,8 +88,9 @@ export function AlpsStory() {
       </div>
     </div>
     <div className="cz-alps-layout">
+      <StoryStageNav stages={stageLinks} activeId={active} label="Etapy Across the Alps" />
       <nav className="cz-alps-rail" aria-label="Rozdziały Alp">{alpsStory.map(chapter => <a key={chapter.id} href={alpsStoryHash(chapter)} aria-current={active === chapter.id ? 'step' : undefined}><span>{chapter.number}</span><span>{chapter.title}<small>{chapter.country} · {chapter.altitude} m</small></span></a>)}<a className="cz-alps-atlas" href="#alpy-mapa">Mapa pięciu szczytów ↑</a></nav>
-      <div className="cz-alps-chapters"><aside className="cz-alps-preparation" aria-label="Przed pierwszym wejściem"><h3>Przed pierwszym wejściem</h3><StoryPhotoGroup group={alpsPhotoStory['przed-triglavem']} tripId="alpy-2026" /></aside>{alpsStory.map(chapter => <React.Fragment key={chapter.id}><section id={`alpy-${chapter.id}`} data-alps-chapter={chapter.id} aria-labelledby={`alps-title-${chapter.id}`}>
+      <div className="cz-alps-chapters"><aside className="cz-alps-preparation" aria-label="Przed pierwszym wejściem"><h3>Przed pierwszym wejściem</h3><StoryPhotoGroup group={alpsPhotoStory['przed-triglavem']} tripId="alpy-2026" /></aside>{alpsStory.map(chapter => <React.Fragment key={chapter.id}><section id={`alpy-${chapter.id}`} data-alps-chapter={chapter.id} tabIndex={-1} aria-labelledby={`alps-title-${chapter.id}`}>
         <header><span className="cz-alps-number">{chapter.number} / 05</span><div><p className="cz-alps-kicker">{chapter.country} · {chapter.altitude} m n.p.m.</p><h3 id={`alps-title-${chapter.id}`}>{chapter.title}</h3></div></header>
         <p className="cz-alps-description">{chapter.description}</p>
         <dl className="cz-alps-stage-stats"><div><dt>Dystans</dt><dd>{number(chapter.distance, 2)} km</dd></div><div><dt>Podejścia</dt><dd>+{number(chapter.ascent)} m</dd></div><div><dt>Czas ruchu</dt><dd>{chapter.movingTime}</dd></div></dl>

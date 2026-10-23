@@ -1,0 +1,29 @@
+.cz-route-viewer-open{min-height:44px;padding:10px 14px;margin:0 0 18px;border:1px solid #c9a36d66;border-radius:4px;background:#29251c;color:#ead5af;font:inherit;font-size:13px;cursor:pointer}
+.cz-route-viewer{position:fixed;inset:0;box-sizing:border-box;width:100%;max-width:none;height:100vh;height:100dvh;max-height:none;margin:0;padding:0;border:0;background:#15130f;color:#eee4d4;overscroll-behavior:contain}
+.cz-route-viewer[open]{display:flex;flex-direction:column}
+.cz-route-viewer::backdrop{background:#10100f}
+.cz-route-viewer-header{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px max(20px,env(safe-area-inset-right)) 16px max(20px,env(safe-area-inset-left));border-bottom:1px solid #c9a36d40;flex-shrink:0}
+.cz-route-viewer-header>div{min-width:0}.cz-route-viewer-header span{font-size:11px;color:#bba988}.cz-route-viewer-header h2{font-size:24px!important;line-height:1.2;margin:6px 0 0!important;overflow-wrap:anywhere}
+.cz-route-viewer :is(.cz-route-viewer-close,.cz-route-actions button,.cz-route-day-buttons button,.cz-route-viewer-photo-controls button){font:inherit;cursor:pointer;min-height:44px;border:1px solid #c9a36d66;border-radius:4px;background:#29251c;color:#ead5af;padding:8px 14px;font-size:13px}
+.cz-route-viewer button:disabled{opacity:.45;cursor:default}.cz-route-viewer-close{flex-shrink:0}
+.cz-route-viewer-body{overflow:auto;min-height:0;padding:20px max(20px,env(safe-area-inset-right)) max(20px,env(safe-area-inset-bottom)) max(20px,env(safe-area-inset-left));overscroll-behavior:contain}
+.cz-route-viewer-layout{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(260px,1fr);gap:24px;max-width:1800px;margin:0 auto;align-items:start}
+.cz-route-viewer-main{min-width:0}.cz-route-viewer .cz-terrain-surface{height:clamp(230px,43dvh,550px)}
+.cz-route-viewer .cz-route-profile{height:150px}.cz-route-viewer .cz-route-profile text{font-size:13px}.cz-route-viewer .cz-route-profile-heading{margin-top:18px}
+.cz-route-viewer .cz-route-note{font-size:11px;line-height:1.7;color:#b5aa96}.cz-route-viewer .cz-route-day-summary{margin:10px 0 16px}
+.cz-route-viewer .cz-route-day-buttons{display:flex;flex-wrap:wrap}.cz-route-viewer .cz-route-day-buttons button{padding:8px 10px}
+.cz-route-viewer .cz-terrain-expand{display:none}
+.cz-route-viewer-photos{min-width:0;padding:18px;border:1px solid #c9a36d40;border-radius:6px;background:#1b1812}
+.cz-route-viewer .cz-route-viewer-photos h3{font-size:18px;margin:0 0 14px;font-weight:500}.cz-route-viewer-photos label{display:block;font-size:12px;color:#c9b89a}
+.cz-route-viewer-photos select{display:block;width:100%;min-width:0;max-width:100%;min-height:44px;margin:8px 0 16px;padding:8px;color:#eddbbb;background:#272219;border:1px solid #c9a36d66;border-radius:3px;font:inherit}
+.cz-route-viewer-photo-stage{font-size:12px;line-height:1.6;color:#c9b89a}
+.cz-route-viewer-photos figure{margin:0}.cz-route-viewer-photos figure img{display:block;object-fit:contain;width:100%;height:min(42dvh,430px);background:#100f0c}
+.cz-route-viewer-photos figcaption{font-size:12px;line-height:1.7;color:#c4b69f;padding-top:12px;overflow-wrap:anywhere}
+.cz-route-viewer-photo-controls{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:16px;font-size:12px;color:#dbc49d}.cz-route-viewer-photo-controls button{min-width:48px}
+.cz-route-viewer-photo-note{color:#b4a68f;font-size:11px;line-height:1.7;margin:16px 0 0}
+.cz-route-viewer :focus-visible,.cz-route-viewer-open:focus-visible{outline:2px solid #e4bf80;outline-offset:3px}
+@media(max-width:800px){.cz-route-viewer-header{padding:12px 16px}.cz-route-viewer-header h2{font-size:19px!important}.cz-route-viewer-header span{font-size:10px}.cz-route-viewer-body{padding:14px 16px max(16px,env(safe-area-inset-bottom))}.cz-route-viewer-layout{grid-template-columns:minmax(0,1fr);gap:20px}.cz-route-viewer .cz-terrain-surface{height:260px}.cz-route-viewer .cz-route-profile{height:140px}.cz-route-viewer .cz-route-actions{display:flex;flex-direction:row}.cz-route-viewer .cz-route-actions button{flex:1 1 auto}.cz-route-viewer-photos{padding:14px}.cz-route-viewer .cz-route-stages{grid-template-columns:1fr}.cz-route-viewer-photos figure img{height:260px}.cz-route-viewer-open{width:100%;text-align:left}}
+
+.cz-route-details:not(.is-compact)>summary{display:none}
+.cz-route-details.is-compact>summary{min-height:44px;display:list-item;align-content:center;color:#d9c39c;font-size:12px;cursor:pointer;margin:4px 0 10px}
+@media(max-width:800px){.cz-route-viewer .cz-route-profile-heading{margin-top:12px}.cz-route-viewer .cz-terrain-surface{height:220px}.cz-route-viewer .cz-route-profile{height:110px}.cz-route-viewer .cz-route-viewer-photos h3{font-size:16px;margin-bottom:8px}.cz-route-viewer-photo-stage{margin:6px 0 10px}}

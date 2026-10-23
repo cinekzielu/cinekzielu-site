@@ -1,0 +1,198 @@
+[
+  {
+    "script": "scripts/check-alps-atlas.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-alps-destination.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-alps-story.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-atlas-view-state.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-atlas.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-browse-memory.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-combined-route.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-country-outlines.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-directions-browse.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-dufour-route.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-durny-romania.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-film-library.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-malolaczniak-giewont.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-morocco-gallery.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-morocco-story.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-msw-wysoka.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-photo-film-separation.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-photo-view.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-planned-summits.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-prerender.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-related-expeditions.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-related-routes.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-release.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-route-area-filters.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-route-atlas.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-route-browsing.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-route-catalog.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-route-days.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-route-filters.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-route-summary-card.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-route-viewer-photos.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-routes-seasons-photos.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-saved-items.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-sharing.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-site-tools.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-story-photos.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-strava-batch.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-summer-trips.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-summit-atlas.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-summit-audit.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-summits.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-switzerland.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-tatry-search.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-tatry.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-trip-routes.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-unified-atlas.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-video-galleries.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-watch-comparison-picks.mjs",
+    "exit": 0
+  },
+  {
+    "script": "scripts/check-winter-galleries.mjs",
+    "exit": 0
+  }
+]

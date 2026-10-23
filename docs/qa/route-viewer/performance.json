@@ -1,0 +1,27 @@
+{
+  "conditions": {
+    "browser": "Cloud Chromium",
+    "page": "/wyprawy/maroko-2025",
+    "iframe_width": 390,
+    "iframe_height": 844,
+    "position": "initial, before scrolling",
+    "scope": ".cz-story-stop img",
+    "cpu_throttling": false,
+    "network_throttling": false,
+    "cache_controlled": false
+  },
+  "before": {
+    "dom_images": 14,
+    "eager_images": 10,
+    "high_priority_images": 10,
+    "complete_images": 11
+  },
+  "after": {
+    "dom_images": 14,
+    "eager_images": 0,
+    "high_priority_images": 0,
+    "complete_images": 3
+  },
+  "previously_eager_480px_asset_bytes": 259880,
+  "note": "Asset bytes are not measured transfer savings. No wall-clock/LCP/Lighthouse claim."
+}
