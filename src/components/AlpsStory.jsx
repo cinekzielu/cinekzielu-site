@@ -5,6 +5,8 @@ import { PhotoGrid } from './PhotoGrid'
 import { FilmLink } from './SiteTools'
 import { DufourRoute } from './DufourRoute'
 import { TripRoute } from './TripRoute'
+import { alpsPhotoStory } from '../data/storyPhotoGroups'
+import { StoryPhotoGroup } from './StoryPhotoGroup'
 import '../alpsStory.css'
 
 const TerrainMap = lazy(() => import('./TatryTerrainMap').then(module => ({ default: module.TatryTerrainMap })))
@@ -13,7 +15,9 @@ const chapterFromHash = () => {
   const id = window.location.hash.replace('#alpy-', '')
   return alpsStory.find(chapter => chapter.id === (alpsLegacyChapters[id] || id))
 }
-const StoryPhotos = ({ title, photos, featured = true }) => <PhotoGrid featured={featured} eagerFirst={false} gallery={{ ...alpsStoryGallery, title, photos }} />
+const StoryPhotos = ({ title, photos, groupId }) => alpsPhotoStory[groupId] ? <StoryPhotoGroup group={alpsPhotoStory[groupId]} tripId="alpy-2026" /> : <PhotoGrid eagerFirst={false} gallery={{ ...alpsStoryGallery, title, photos }} />
+const pauseGroups = { triglav:'po-triglavie', grossglockner:'przerwa-austria', dufourspitze:'przerwa-szwajcaria', grauspitz:'przed-zugspitze' }
+const dayGroups = ['dufour-podejscie','dufour-szczyt','dufour-powrot']
 
 export function AlpsStoryHero() {
   return <header className="cz-alps-hero">
@@ -83,19 +87,19 @@ export function AlpsStory() {
     </div>
     <div className="cz-alps-layout">
       <nav className="cz-alps-rail" aria-label="Rozdziały Alp">{alpsStory.map(chapter => <a key={chapter.id} href={alpsStoryHash(chapter)} aria-current={active === chapter.id ? 'step' : undefined}><span>{chapter.number}</span><span>{chapter.title}<small>{chapter.country} · {chapter.altitude} m</small></span></a>)}<a className="cz-alps-atlas" href="#alpy-mapa">Mapa pięciu szczytów ↑</a></nav>
-      <div className="cz-alps-chapters">{alpsStory.map(chapter => <React.Fragment key={chapter.id}><section id={`alpy-${chapter.id}`} data-alps-chapter={chapter.id} aria-labelledby={`alps-title-${chapter.id}`}>
+      <div className="cz-alps-chapters"><aside className="cz-alps-preparation" aria-label="Przed pierwszym wejściem"><h3>Przed pierwszym wejściem</h3><StoryPhotoGroup group={alpsPhotoStory['przed-triglavem']} tripId="alpy-2026" /></aside>{alpsStory.map(chapter => <React.Fragment key={chapter.id}><section id={`alpy-${chapter.id}`} data-alps-chapter={chapter.id} aria-labelledby={`alps-title-${chapter.id}`}>
         <header><span className="cz-alps-number">{chapter.number} / 05</span><div><p className="cz-alps-kicker">{chapter.country} · {chapter.altitude} m n.p.m.</p><h3 id={`alps-title-${chapter.id}`}>{chapter.title}</h3></div></header>
         <p className="cz-alps-description">{chapter.description}</p>
         <dl className="cz-alps-stage-stats"><div><dt>Dystans</dt><dd>{number(chapter.distance, 2)} km</dd></div><div><dt>Podejścia</dt><dd>+{number(chapter.ascent)} m</dd></div><div><dt>Czas ruchu</dt><dd>{chapter.movingTime}</dd></div></dl>
         {chapter.statsNote && <p className="cz-alps-stats-note">{chapter.statsNote}</p>}
-        {chapter.id === 'dufourspitze' && <DufourRoute />}
-        {chapter.id !== 'dufourspitze' && <TripRoute routeId={chapter.id} />}
-        {chapter.photos.length > 0 && <StoryPhotos title={chapter.title} photos={chapter.photos} />}
-        {chapter.days?.map((day, index) => <div className="cz-alps-day" key={day.title}><p className="cz-alps-kicker">Dzień {index + 1} / 3</p><h4>{day.title}</h4><p className="cz-alps-description">{day.description}</p><StoryPhotos title={`Dufourspitze · ${day.title}`} photos={day.photos} /></div>)}
-      </section>{chapter.pause && <aside className="cz-alps-pause" aria-label={`Przerwa po ${chapter.title}`}><p className="cz-alps-kicker">Między szczytami · {chapter.number} → {String(Number(chapter.number) + 1).padStart(2, '0')}</p><h3>{chapter.pause.title}</h3><p className="cz-alps-description">{chapter.pause.description}</p>{chapter.pause.photos.length > 0 && <StoryPhotos title={chapter.pause.title} photos={chapter.pause.photos} featured={false} />}</aside>}</React.Fragment>)}</div>
+        {chapter.id === 'dufourspitze' && <DufourRoute showPhotos={false} />}
+        {chapter.id !== 'dufourspitze' && <TripRoute routeId={chapter.id} showPhotos={false} />}
+        {chapter.photos.length > 0 && <StoryPhotos title={chapter.title} photos={chapter.photos} groupId={chapter.id} />}
+        {chapter.days?.map((day, index) => <div className="cz-alps-day" key={day.title}><p className="cz-alps-kicker">Dzień {index + 1} / 3</p><h4>{day.title}</h4><p className="cz-alps-description">{day.description}</p><StoryPhotos title={`Dufourspitze · ${day.title}`} photos={day.photos} groupId={dayGroups[index]} /></div>)}
+      </section>{chapter.pause && <aside className="cz-alps-pause" aria-label={`Przerwa po ${chapter.title}`}><p className="cz-alps-kicker">Między szczytami · {chapter.number} → {String(Number(chapter.number) + 1).padStart(2, '0')}</p><h3>{chapter.pause.title}</h3><p className="cz-alps-description">{chapter.pause.description}</p><StoryPhotos title={chapter.pause.title} photos={chapter.pause.photos} groupId={pauseGroups[chapter.id]} /></aside>}</React.Fragment>)}</div>
     </div>
     <section className="cz-alps-crew" aria-labelledby="alps-crew-title"><p className="cz-alps-kicker">Ekipa</p><h2 id="alps-crew-title">Marcin, Max, Karol i Agata.</h2><p>Cztery osoby, jeden samochód i sporo zmian planu. Zdjęcia i filmowa dokumentacja: Cinek Zielu.</p><p className="cz-alps-crew-aside">Według naszych mało naukowych obliczeń: około 10 kg makaronu, 500 razy „SIUUU” i 3 kryzysy egzystencjalne.</p></section>
     <section className="cz-alps-series" aria-labelledby="alps-series-title"><p className="cz-alps-kicker">Seria filmowa</p><h2 id="alps-series-title">Pięć szczytów. Pięć odcinków.</h2><p>Odcinki Across the Alps powstają. Dufourspitze połączy trzy dni w jeden film.</p><ol>{alpsStory.map(chapter => <li key={chapter.id}><span>{chapter.number}</span><strong>{chapter.title}</strong><small>{chapter.episodeStatus}</small></li>)}</ol><a href="#filmy">Obejrzyj zwiastun ↓</a></section>
-    <div className="cz-alps-ending"><p className="cz-alps-kicker">Cała kolekcja</p><h2>48 fotografii z Alp.</h2><a href="/galerie/alpy-2026">Otwórz galerię ↗</a></div>
+    <div className="cz-alps-ending"><p className="cz-alps-kicker">Cała kolekcja</p><h2>48 fotografii w galerii.</h2><a href="/galerie/alpy-2026">Otwórz galerię ↗</a></div>
   </section>
 }

@@ -8,7 +8,7 @@ const views = Object.fromEntries(Object.entries(tripRoutes).map(([id, route]) =>
   const [{ default: View }, { default: track }] = await Promise.all([import('./TripRouteView'), route.load()])
   return { default: props => <View {...props} track={track} route={route} /> }
 })]))
-export function TripRoute({ routeId, headingLevel = 4, atlas = false }) {
+export function TripRoute({ routeId, headingLevel = 4, atlas = false, showPhotos = true }) {
   const route = tripRoutes[routeId]
   const root = useRef(null)
   const anchorPending = useRef(false)
@@ -45,7 +45,7 @@ export function TripRoute({ routeId, headingLevel = 4, atlas = false }) {
     {highest && <p className="cz-route-summit-height">{route.dayIds ? 'Najwyższy szczyt całej wyprawy' : route.peaks.length > 1 ? 'Najwyższy szczyt' : 'Wysokość szczytu'}: <strong>{highest.name} · {highest.altitude} m n.p.m.</strong></p>}
     <div id={`${route.id}-route-content`} hidden={!open}>
       {nearby && open ? <Suspense fallback={<p className="cz-route-loading" role="status">Wczytywanie trasy…</p>}><View headingLevel={headingLevel + 1} onReady={ready} /></Suspense> : <p className="cz-route-loading">Mapa i profil wczytają się po przewinięciu do tej sekcji.</p>}
-      {nearby && open && <RoutePhotoStages key={routeId} routeId={routeId} />}
+      {showPhotos && nearby && open && <RoutePhotoStages key={routeId} routeId={routeId} />}
     </div>
     <a className="cz-route-strava" href="/trasy">Wszystkie trasy ↗</a>
     {route.stravaUrl && <a className="cz-route-strava" href={route.stravaUrl} target="_blank" rel="noreferrer">Zobacz aktywność na Stravie ↗</a>}

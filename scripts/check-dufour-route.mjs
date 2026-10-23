@@ -34,5 +34,5 @@ for (const size of [{ width: 760, height: 440 }, { width: 244, height: 360 }]) {
   }
 }
 const story = fs.readFileSync(new URL('../src/components/AlpsStory.jsx', import.meta.url), 'utf8')
-assert.ok(story.includes("chapter.id === 'dufourspitze' && <DufourRoute />"))
+assert.ok(story.includes("chapter.id === 'dufourspitze' && <DufourRoute showPhotos={false} />"))
 console.log('Dufour GPX: valid compact data, preserved gaps/distances, shared terrain projection at desktop/mobile and chapter integration passed.')
