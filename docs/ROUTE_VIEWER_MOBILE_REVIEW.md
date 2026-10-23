@@ -2,6 +2,8 @@
 
 Status: gotowe do przeglądu; implementacja i testy w gałęzi `codex/route-viewer-mobile-stages`. **Bez zgody na publikację. Nie scalać automatycznie.**
 
+Najnowsze uzupełnienie: [pobieranie tras i odporność widoków](ROUTE_LOADING_PERFORMANCE_REVIEW.md). Zawiera kontrolowany pomiar transferu przed/po, odroczone pobieranie atlasu zgodnie z filtrami, odzyskanie po awarii danych/modułów, poprawkę szybkiego skrótu do zdjęć przy wolnym ładowaniu oraz wynik 50 kontroli. Poniższe wcześniejsze pomiary i 49 kontroli zachowano jako historię pierwszego etapu.
+
 Baza: aktualny `main` `6ff7295f9210003787e36adf1e5092bcab191a26` (PR184), sprawdzony 23 października 2026. Poprzednie PR183–179 przejrzane pod kątem powrotu, chronologii, tras, porównań i logo. `docs/PROJECT_RULES.md` przeczytany; w repozytorium brak plików `AGENTS.md` (również zapytanie GitHub zwraca 404 dla pliku głównego). Nie czytano źródeł prywatnych ani plików laptopa.
 
 Wynik: [draft PR #185](https://github.com/cinekzielu/cinekzielu-site/pull/185). [Preview Vercel](https://cinekzielu-site-git-codex-route-vie-466568-cinekzielus-projects.vercel.app) powstało automatycznie i ma status Ready/success. Próba otwarcia prowadzi do logowania Vercel; dodatkowego testu pod tym adresem nie wykonano. Ochrona dostępu pozostała bez zmian. Kod przetestowano wcześniej z produkcyjnego builda w wykonawcy chmurowym. Gałąź ma czysty stan scalania z bazą, ale pozostaje draftem bez zgody na publikację.
@@ -16,7 +18,7 @@ Wynik: [draft PR #185](https://github.com/cinekzielu/cinekzielu-site/pull/185). 
 
 ## Zachowane ograniczenia
 
-Vercel, produkcja, logo, fonty, styl, układ strony głównej, galerie premium, atlasowe fotografie i katalogi tras pozostają bez zmian. W Alpach nadal jeden zestaw zdjęć pod etapem, bez powtórzenia pod profilem. Brak nowych zależności, wypraw, szczytów, GPX, fotografii lub odtwarzania nieopublikowanych dodatków z laptopa. Rumunia pozostaje poza zakresem.
+Vercel, produkcja, logo, fonty, styl, układ strony głównej, galerie premium, atlasowe fotografie i zawartość katalogów tras pozostają bez zmian. W Alpach nadal jeden zestaw zdjęć pod etapem, bez powtórzenia pod profilem. Brak nowych zależności, wypraw, szczytów, GPX, fotografii lub odtwarzania nieopublikowanych dodatków z laptopa. Rumunia pozostaje poza zakresem.
 
 ## Pomiar przed/po
 
@@ -111,6 +113,8 @@ Zrzuty powyżej pochodzą z rzeczywistego builda; szare otoczenie i górny pasek
 - Zwykły workflow repozytorium może utworzyć preview Vercel po wysłaniu gałęzi. Nie zmieniono konfiguracji wdrożeń ani ochrony dostępu; `main` i produkcja nie są celem publikacji.
 
 ## Pliki do późniejszego połączenia z pracą z laptopa
+
+Lista poniżej dotyczy pierwszego etapu. Dodatkowe zmiany `RouteCatalog.jsx`, `TripRoute.jsx`, `tripRoutes.js`, `tripRoute.css` oraz nowe pliki pobierania/osłony błędów i dowody są wymienione w [raporcie uzupełnienia](ROUTE_LOADING_PERFORMANCE_REVIEW.md#lista-plików-do-połączenia). [Pełna lista plików całego PR](qa/route-loading/changed-files.txt).
 
 Zmodyfikowane istniejące pliki — główne miejsca możliwych konfliktów:
 

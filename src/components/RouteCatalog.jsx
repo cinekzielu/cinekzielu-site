@@ -5,12 +5,14 @@ import { TripRoute } from './TripRoute'
 import { RoutePhotoPreview } from './RoutePhotoPreview'
 import { SimilarRoutes } from './RelatedRoutes'
 import { RouteCard } from './RouteCard'
+import { RouteLoadBoundary } from './RouteLoadBoundary'
 import { areaKey, viewportArea, trackInArea } from '../data/routeArea'
 import { summarizeRoutes } from '../data/routeSummary'
 import { RouteComparison } from './RouteComparison'
 import { ComparisonPicks } from './ComparisonPicks'
 import { useInitialLocation } from '../PageLocation'
 import { tripRoutes } from '../data/tripRoutes'
+import { requiredRouteTracks } from '../data/routeTrackLoader'
 import { highestPeak, readRouteAtlas, routeAtlasHref, routeHref, distanceFilters, ascentFilters, matchesRouteFilters, routeRegions, routeSorts, sortRoutes, routeYears, materialFilters } from '../data/routeAtlas'
 import catalog from '../data/routeCatalog.json'
 import '../routeCatalog.css'
@@ -30,8 +32,11 @@ export function RouteCatalog() {
   const [areaViewport, setAreaViewport] = useState(null)
   const [hovered, setHovered] = useState(null)
   const [profilePoint, setProfilePoint] = useState(null)
+  const [mapNearby, setMapNearby] = useState(false)
   const { region, distance, ascent, year, material, area, selected: requestedSelected, compare, view, sort } = state
-  const areaReady = !area || catalog.every(row => tracks[row.id])
+  const candidates = useMemo(() => catalog.filter(row => matchesRouteFilters(row, { region, distance, ascent, year, material })), [region, distance, ascent, year, material])
+  const requiredIds = requiredRouteTracks(candidates.map(row => row.id), state, mapNearby)
+  const areaReady = !area || candidates.every(row => tracks[row.id])
   const selected = requestedSelected && (!areaReady || trackInArea(tracks[requestedSelected], area)) ? requestedSelected : null
   useEffect(() => {
     const sync = () => {
@@ -43,14 +48,27 @@ export function RouteCatalog() {
     return () => window.removeEventListener('popstate', sync)
   }, [])
   useEffect(() => {
+    if (view !== 'map' || mapNearby || !mapSection.current) return
+    const observer = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) { setMapNearby(true); observer.disconnect() }
+    }, { rootMargin: '150px' })
+    observer.observe(mapSection.current)
+    return () => observer.disconnect()
+  }, [view, mapNearby])
+  useEffect(() => {
     let live = true
     setLoadError(false)
-    const ids = view === 'map' || area ? catalog.map(row => row.id) : [...new Set(compare)]
-    Promise.all(ids.filter(id => !tracks[id]).map(async id => [id, (await tripRoutes[id].load()).default]))
-      .then(entries => { if (live) setTracks(current => ({ ...current, ...Object.fromEntries(entries) })) })
-      .catch(() => { if (live) setLoadError(true) })
+    const missing = requiredIds.filter(id => !tracks[id])
+    if (!missing.length) return
+    Promise.allSettled(missing.map(async id => [id, (await tripRoutes[id].load()).default]))
+      .then(results => {
+        if (!live) return
+        const entries = results.filter(result => result.status === 'fulfilled').map(result => result.value)
+        setTracks(current => ({ ...current, ...Object.fromEntries(entries) }))
+        setLoadError(results.some(result => result.status === 'rejected'))
+      })
     return () => { live = false }
-  }, [retry, view, Boolean(area), compare.join(',')])
+  }, [retry, requiredIds.join(',')])
   const update = (patch, hash = '') => {
     setProfilePoint(null)
     const next = readRouteAtlas(routeAtlasHref({ ...state, ...patch }).split('?')[1] || '')
@@ -62,7 +80,7 @@ export function RouteCatalog() {
     if (window.location.pathname + window.location.search + window.location.hash !== href) window.history.pushState({}, '', href)
     searchRef.current = window.location.search
   }
-  const rows = useMemo(() => sortRoutes(catalog.filter(row => matchesRouteFilters(row, { region, distance, ascent, year, material }) && trackInArea(tracks[row.id], area)), sort), [region, distance, ascent, year, material, area, tracks, sort])
+  const rows = useMemo(() => sortRoutes(candidates.filter(row => trackInArea(tracks[row.id], area)), sort), [candidates, area, tracks, sort])
   const summary = useMemo(() => summarizeRoutes(rows), [rows])
   const filtered = region !== 'all' || distance !== 'all' || ascent !== 'all' || year !== 'all' || material !== 'all' || Boolean(area)
   const chips = [
@@ -75,7 +93,7 @@ export function RouteCatalog() {
   ].filter(Boolean)
   const hiddenComparison = compare.some(id => !rows.some(row => row.id === id))
   const clearFilters = () => { setHovered(null); update({ region: 'all', distance: 'all', ascent: 'all', year: 'all', material: 'all', area: null }) }
-  const ready = catalog.every(row => tracks[row.id])
+  const ready = mapNearby && candidates.every(row => tracks[row.id])
   const currentArea = viewport && viewportArea(viewport.view, viewport.size)
   const searchArea = () => {
     if (!currentArea) return
@@ -127,7 +145,7 @@ export function RouteCatalog() {
       {view === 'map' && <section id="mapa-tras" ref={mapSection} tabIndex={-1} className="cz-route-atlas-map" aria-label="Mapa tras">
         <div className="cz-route-atlas-map-heading"><div><span className="cz-route-eyebrow">{selectedRow ? selectedRow.region : region === 'all' ? routeRegions.join(' · ') : region}</span><h2>{selected ? tripRoutes[selected].title : filtered ? 'Trasy z listy' : 'Wszystkie trasy'}</h2></div>{selected && <button type="button" onClick={() => { setHovered(null); update({ selected: null }) }}>Pokaż całą listę</button>}</div>
         <div className="cz-route-area-tools"><button type="button" onClick={searchArea} disabled={!ready || !currentArea}>Szukaj w tym obszarze</button><span>{area ? areaKey(currentArea) === areaKey(area) ? 'Wyniki z tego obszaru.' : 'Przesuń mapę i kliknij, aby zaktualizować wyniki.' : 'Przybliż lub przesuń mapę, a następnie wyszukaj trasy.'}</span></div>
-        {ready ? <Suspense fallback={<div className="cz-route-atlas-placeholder" role="status">Wczytywanie mapy…</div>}><AtlasMap rows={rows} tracks={tracks} selected={selected} highlighted={hovered} profilePoint={profilePoint} area={area} areaViewport={areaViewport} mapScope={region} onViewportChange={setViewport} onSelect={id => { setHovered(null); update({ selected: id }) }} /></Suspense> : <div className="cz-route-atlas-placeholder" role="status">{loadError ? <><p>Nie udało się wczytać tras.</p><button type="button" onClick={() => setRetry(value => value + 1)}>Spróbuj ponownie</button></> : 'Wczytywanie mapy i tras…'}</div>}
+        {ready ? <RouteLoadBoundary className="cz-route-atlas-placeholder" message="Nie udało się wczytać mapy. Lista tras i filtry są nadal dostępne."><Suspense fallback={<div className="cz-route-atlas-placeholder" role="status">Wczytywanie mapy…</div>}><AtlasMap rows={rows} tracks={tracks} selected={selected} highlighted={hovered} profilePoint={profilePoint} area={area} areaViewport={areaViewport} mapScope={region} onViewportChange={setViewport} onSelect={id => { setHovered(null); update({ selected: id }) }} /></Suspense></RouteLoadBoundary> : <div className="cz-route-atlas-placeholder" role="status">{loadError ? <><p>Nie udało się wczytać tras.</p><button type="button" onClick={() => { mapSection.current?.focus({ preventScroll: true }); setRetry(value => value + 1) }}>Spróbuj ponownie</button></> : mapNearby ? 'Wczytywanie mapy i tras…' : 'Mapa i trasy wczytają się po przewinięciu do tej sekcji.'}</div>}
         {ready && !rows.length && <p className="cz-route-filter-note">Brak tras dla tego obszaru i filtrów. Przesuń mapę i wyszukaj ponownie lub wyczyść filtry.</p>}
         {profilePoint && <div className={`cz-route-map-point cz-route-compare-slot is-${profilePoint.slot}`}><span>{profilePoint.slot === 0 ? 'A' : 'B'} · {number(profilePoint.distance / 1000, 2)} km · ≈ {number(profilePoint.elevation)} m n.p.m.</span><a href="#porownanie">Wróć do porównania ↓</a></div>}
         {!!rows.length && <div className="cz-route-atlas-map-caption"><span><i />{selected ? 'Wybrana trasa wyróżniona na złoto' : 'Kliknij punkt na mapie lub nazwę na liście'}</span>{selectedRow && <a href={routeHref(selectedRow, tripRoutes[selected])}>{selectedRow.trip ? 'Profil i wyprawa ↗' : 'Profil trasy ↓'}</a>}</div>}
@@ -150,7 +168,7 @@ export function RouteCatalog() {
     </div>
     <RouteCard selected={selected} />
     {selected && <div id="profil"><SimilarRoutes routeId={selected} /><div id="profil-trasy"><TripRoute key={selected} routeId={selected} headingLevel={2} atlas /></div></div>}
-    {loadError && view === 'list' && <div className="cz-route-compare-empty" role="status"><p>Nie udało się wczytać przebiegu tras.</p><button className="cz-route-same-days" type="button" onClick={() => setRetry(value => value + 1)}>Spróbuj ponownie</button></div>}
+    {loadError && (view === 'list' || ready) && <div className="cz-route-compare-empty" role="status"><p>Nie udało się wczytać przebiegu tras.</p><button className="cz-route-same-days" type="button" onClick={() => { document.getElementById('porownanie')?.focus({ preventScroll: true }); setRetry(value => value + 1) }}>Spróbuj ponownie</button></div>}
     <RouteComparison selected={compare} tracks={tracks} atlasState={state} onShowPoint={showProfilePoint} onChange={(value, days = ['all', 'all']) => update({ compare: value, compareDays: days })} onDaysChange={compareDays => update({ compareDays })} />
     <p className="cz-route-catalog-note">Dystans i przybliżona suma podejść pochodzą z opublikowanych zapisów GPS. Suma podejść pomija drobne wahania wysokości poniżej 10 m i nie łączy przerw w nagraniu; może różnić się od statystyk Stravy. Wysokości szczytów są niezależne od GPS.</p>
     <nav className="cz-route-catalog-footer" aria-label="Powiązane zestawienia"><a href="/wyprawy">Wszystkie wyprawy ↗</a><a href="/szczyty">Moje szczyty ↗</a></nav>

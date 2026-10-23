@@ -14,6 +14,7 @@ export function RoutePresentation({ title, children }) {
   const [expanded, setExpanded] = useState(false)
   const [host, setHost] = useState(null)
   const inline = useRef(null), modal = useRef(null), dialog = useRef(null), trigger = useRef(null)
+  const pendingSection = useRef(null)
   const headingId = useId()
   useLayoutEffect(() => {
     const element = document.createElement('div')
@@ -30,10 +31,20 @@ export function RoutePresentation({ title, children }) {
     element.addEventListener('keydown', keepFocus)
     element.showModal()
     element.querySelector('.cz-route-viewer-close').focus({ preventScroll: true })
+    // The photo panel is lazy. Repeat a requested jump once its placeholder is
+    // replaced, so a slow connection does not discard focus or the scroll target.
+    const observer = new MutationObserver(() => {
+      const section = pendingSection.current
+      const target = section && host.querySelector(section.target)
+      if (target && !target.hasAttribute('data-loading')) goTo(section)
+    })
+    observer.observe(host, { childList: true, subtree: true })
     const leave = () => setExpanded(false)
     window.addEventListener('popstate', leave)
     window.addEventListener('hashchange', leave)
     return () => {
+      observer.disconnect()
+      pendingSection.current = null
       window.removeEventListener('popstate', leave)
       window.removeEventListener('hashchange', leave)
       element.removeEventListener('keydown', keepFocus)
@@ -47,6 +58,7 @@ export function RoutePresentation({ title, children }) {
   }, [host, expanded])
   const keepFocus = event => {
     if (event.key !== 'Tab') return
+    pendingSection.current = null
     const focusable = [...dialog.current.querySelectorAll('button:not(:disabled), a[href], input:not(:disabled), select:not(:disabled), summary, [tabindex="0"]')]
       .filter(element => {
         if (element.tabIndex < 0 || !element.getClientRects().length) return false
@@ -64,6 +76,7 @@ export function RoutePresentation({ title, children }) {
   const goTo = section => {
     const target = host?.querySelector(section.target), scroller = modal.current
     if (!target || !scroller) return
+    pendingSection.current = target.hasAttribute('data-loading') ? section : null
     // Only scroll this dialog: preserve the expedition's hash, history and position.
     scroller.scrollTo({ top: scroller.scrollTop + target.getBoundingClientRect().top - scroller.getBoundingClientRect().top - 14, behavior: 'instant' })
     const focusTarget = host.querySelectorAll(section.focus)

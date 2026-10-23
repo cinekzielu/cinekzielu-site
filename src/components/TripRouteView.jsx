@@ -1,4 +1,5 @@
 import React, { lazy, Suspense, useEffect, useId, useMemo, useRef, useState } from 'react'
+import { RouteLoadBoundary } from './RouteLoadBoundary'
 import { TatryTerrainMap } from './TatryTerrainMap'
 import { terrainScreen, terrainSvgViewport } from '../data/terrainMap'
 import { buildTrackGeometry, closestTrackIndex } from '../data/routeGeometry'
@@ -41,7 +42,7 @@ export default function TripRouteView({ track, route, headingLevel = 5, onReady 
       <p className="cz-route-day-summary" role="status"><strong>{day ? day.title : 'Cała wyprawa'}</strong> · {km(view.track.distance)} · podejścia ≈ {number(estimateAscent(view.track.points))} m{day && ' · dystans od początku tego dnia'}</p>
     </div>}
     <RouteDayDetail key={dayId} track={view.track} route={view.route} headingLevel={headingLevel} onReady={onReady} day={day} expanded={expanded} />
-    </div>{expanded && <Suspense fallback={<aside className="cz-route-viewer-photos" tabIndex={-1} role="status">Wczytywanie zdjęć…</aside>}><RouteViewerPhotos key={dayId} routeId={route.id} dayId={dayId} /></Suspense>}
+    </div>{expanded && <RouteLoadBoundary className="cz-route-viewer-photos" message="Nie udało się wczytać panelu zdjęć. Zamknij podgląd lub odśwież stronę, aby spróbować ponownie."><Suspense fallback={<aside className="cz-route-viewer-photos" data-loading tabIndex={-1} role="status">Wczytywanie zdjęć…</aside>}><RouteViewerPhotos key={dayId} routeId={route.id} dayId={dayId} /></Suspense></RouteLoadBoundary>}
   </div>}</RoutePresentation>
 }
 
