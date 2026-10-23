@@ -4,6 +4,8 @@ Status: gotowe do przeglądu; implementacja i testy w gałęzi `codex/route-view
 
 Baza: aktualny `main` `6ff7295f9210003787e36adf1e5092bcab191a26` (PR184), sprawdzony 23 października 2026. Poprzednie PR183–179 przejrzane pod kątem powrotu, chronologii, tras, porównań i logo. `docs/PROJECT_RULES.md` przeczytany; w repozytorium brak plików `AGENTS.md` (również zapytanie GitHub zwraca 404 dla pliku głównego). Nie czytano źródeł prywatnych ani plików laptopa.
 
+Wynik: [draft PR #185](https://github.com/cinekzielu/cinekzielu-site/pull/185). [Preview Vercel](https://cinekzielu-site-git-codex-route-vie-466568-cinekzielus-projects.vercel.app) powstało automatycznie i ma status Ready/success. Próba otwarcia prowadzi do logowania Vercel; dodatkowego testu pod tym adresem nie wykonano. Ochrona dostępu pozostała bez zmian. Kod przetestowano wcześniej z produkcyjnego builda w wykonawcy chmurowym. Gałąź ma czysty stan scalania z bazą, ale pozostaje draftem bez zgody na publikację.
+
 ## Zakres
 
 - Działający w przeglądarce pełnoekranowy dialog trasy: istniejąca mapa, profil i istniejące przypisane materiały. Ten sam egzemplarz mapy/profilu jest przenoszony, więc otwarcie i zamknięcie zachowują punkt profilu, dzień i ustawienie mapy. Brak animacji przejścia.
