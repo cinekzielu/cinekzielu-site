@@ -52,7 +52,10 @@ export function MoroccoStory() {
       scheduled = null
       if (document.querySelector('dialog[open]')) return
       const sections = [...root.current.querySelectorAll('[data-story-stop]')]
-      const line = window.innerHeight * .38
+      // A hash target sits below the sticky mobile navigation. On short screens
+      // that can be lower than the proportional reading line (e.g. landscape).
+      const anchorOffset = sections[0] ? parseFloat(getComputedStyle(sections[0]).scrollMarginTop) || 0 : 0
+      const line = Math.max(window.innerHeight * .38, anchorOffset + 8)
       const current = sections.filter(section => section.getBoundingClientRect().top <= line).at(-1) || sections[0]
       if (current) {
         const stop = moroccoStory.find(item => item.id === current.dataset.storyStop)
@@ -66,8 +69,9 @@ export function MoroccoStory() {
     }
     hash()
     window.addEventListener('scroll', scroll, { passive: true })
+    window.addEventListener('resize', scroll)
     window.addEventListener('hashchange', hash)
-    return () => { document.documentElement.classList.remove('cz-story-page'); loader.disconnect(); media.removeEventListener('change', resize); window.removeEventListener('scroll', scroll); window.removeEventListener('hashchange', hash); if (scheduled !== null) cancelAnimationFrame(scheduled) }
+    return () => { document.documentElement.classList.remove('cz-story-page'); loader.disconnect(); media.removeEventListener('change', resize); window.removeEventListener('scroll', scroll); window.removeEventListener('resize', scroll); window.removeEventListener('hashchange', hash); if (scheduled !== null) cancelAnimationFrame(scheduled) }
   }, [])
 
   const pickPlace = id => {

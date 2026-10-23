@@ -10,6 +10,7 @@ Wynik: [draft PR #185](https://github.com/cinekzielu/cinekzielu-site/pull/185). 
 
 - Działający w przeglądarce pełnoekranowy dialog trasy: istniejąca mapa, profil i istniejące przypisane materiały. Ten sam egzemplarz mapy/profilu jest przenoszony, więc otwarcie i zamknięcie zachowują punkt profilu, dzień i ustawienie mapy. Brak animacji przejścia.
 - Zdjęcia pobierane dopiero po otwarciu podglądu; jeden obraz naraz. Dla Alp: grupy ujednolicone w PR184; dla Baranich Rogów: istniejące dwie grupy dni. Pozostałe powiązania korzystają z istniejącego przypisania wyprawy i są tak opisane. Kadry filmowe są oznaczone jako kadry. Brak geolokalizacji zdjęć względem GPX.
+- W widoku trasy na telefonie: stałe przyciski Mapa / Profil / Zdjęcia, zwięzły wybór dnia i zwijane odcinki. Komunikat ładowania zdjęcia oraz ponowienie po błędzie sieci.
 - Mobilny wybór bieżącego etapu, poprzedni/następny etap dla Alp i Maroka. Istniejące hashe i linki pozostają, przewijanie nie zapisuje nowych wpisów historii. Desktop zachowuje dotychczasową nawigację.
 - Ograniczenie przedwczesnego ładowania zdjęć rozdziałów Maroka. Hero pozostaje priorytetowe.
 
@@ -65,6 +66,40 @@ Nowa kontrola weryfikuje wszystkie 42 istniejące trasy, pochodzenie materiałó
 
 Zrzuty Maroka przedstawiają różne pozycje przewinięcia, więc nie są wizualnym pomiarem szybkości. Kontrolowany był rozmiar iframe i początkowa pozycja przy pomiarze obrazów; cache nie był wyczyszczony ani kontrolowany. Wynik 11 → 3 to obserwacja liczby ukończonych obrazów, nie niezależny benchmark transferu lub czasu.
 
+## Uzupełnienie po dodatkowym przeglądzie mobilnym — 23 października 2026
+
+Po poleceniu dalszej pracy (11:13 UTC) rozszerzono kontrolę tego samego pakietu. Nie rozpoczęto osobnej funkcji ani odtwarzania dodatków z laptopa.
+
+Stwierdzone problemy i poprawki:
+
+- Na 320 × 568 zdjęcia zaczynały się daleko poniżej mapy i profilu. Stały pasek **Mapa / Profil / Zdjęcia** przewija tylko zawartość dialogu i ustawia fokus na właściwej kontrolce. Dzień wybiera się z jednego pola; lista odcinków jest domyślnie zwinięta w dialogu. Na krótkim ekranie obraz ma mniejszą wysokość, dzięki czemu obie strzałki zdjęć mieszczą się w widoku po użyciu skrótu.
+- Reguła przycisków dialogu przesłaniała złote wyróżnienie wybranego dnia. Przywrócono czytelny stan wyboru.
+- Bez zdjęć ostatnią kontrolką bywał przycisk w zamkniętym `details`: Chromium nadal zwracał dla niego prostokąt układu. Pętla Tab / Shift+Tab pomija teraz zawartość zamkniętych szczegółów i elementy z ujemnym `tabindex`. Sprawdzono oba kierunki dla szczegółów zwiniętych i rozwiniętych.
+- Kontrolowane HTTP 503 dla istniejącej fotografii ujawniło pusty panel bez komunikatu. Nowy panel pokazuje ładowanie, błąd oraz **Spróbuj ponownie**. Po przywróceniu pliku ponowienie pobrało obraz (`naturalWidth > 0`), zachowało numer 6 / 6 i przeniosło fokus na tę samą figurę. Nie zmieniono wspólnych galerii.
+- W Maroku przy bezpośrednim `#opowiesc-sahara` na 844 × 390 wskaźnik zostawał na etapie 2, mimo widocznej Sahary. Linia rozpoznawania etapu uwzględnia teraz odsunięcie nagłówka pod stałym paskiem. Po poprawce: etap 3 / 10, także po zmianie orientacji.
+
+Dodatkowy pomiar **układu**, nie szybkości: Chromium, ten sam Baranie Rogi / cała wyprawa / pierwsze zdjęcie, iframe 320 × 568. „Przed” oznacza pierwszy wariant PR185 (`028e3da`), a „po” końcową poprawkę tej gałęzi.
+
+| Pomiar | Przed | Po |
+| --- | ---: | ---: |
+| Wysokość przewijanej zawartości dialogu | 1495 px | 1170 px |
+| Początek obrazu przy przewinięciu dialogu = 0 | 1136,78 px | 984,73 px |
+| Skrót do zdjęć | brak | obraz od 301,73 px; przyciski od 518,19 do 562,19 px |
+
+Zachowanie historii sprawdzono osobno w ustabilizowanym widoku: otwarcie, Mapa / Profil / Zdjęcia i zamknięcie nie zmieniły URL ani liczby wpisów historii (22 → 22); ponowne otwarcie/zamknięcie zachowało pozycję strony (1131 → 1131 px). Przełączenie dnia 2 dawało 2 zdjęcia oraz ten sam wybrany dzień po wyjściu. Sprawdzono brak zdjęć, długi tytuł, grupy Dufourspitze, Home/End/strzałki fotografii i skrajne etapy Alp (1/5, 5/5) oraz Maroka (1/10, 10/10).
+
+Ponowny build i wszystkie 49 kontroli: PASS. Desktop 1280 × 800, 390 × 844, 320 × 568 i 844 × 390: brak stwierdzonego poziomego przepełnienia w sprawdzanych widokach. W odczytanych logach brak błędów/ostrzeżeń aplikacji; logi rozszerzenia przeglądarki oddzielono od aplikacji. Test 503 był celowym scenariuszem QA. Ograniczenia emulacji i pomiarów opisane poniżej nadal obowiązują.
+
+Końcowe zrzuty:
+
+- [Mapa i kompaktowy wybór dnia — 320 px](qa/route-viewer/viewer-final-320-map.jpg)
+- [Zdjęcie i widoczne strzałki — 320 × 568](qa/route-viewer/viewer-final-320-photos.jpg)
+- [Zdjęcia — 390 px](qa/route-viewer/viewer-final-390-photos.jpg)
+- [Mapa, profil i dzień szczytowy Dufourspitze — 1280 px](qa/route-viewer/viewer-final-desktop-1280.jpg)
+- [Sahara, poprawny etap 3 / 10 — 844 × 390](qa/route-viewer/morocco-final-844.jpg)
+
+Zrzuty powyżej pochodzą z rzeczywistego builda; szare otoczenie i górny pasek rozmiarów należą do tymczasowego narzędzia QA. Nie są częścią strony. Wcześniejsze zrzuty pozostawiono jako zapis pierwszego wariantu pakietu.
+
 ## Ograniczenia i decyzje
 
 - Rozmiary 390/320 px sprawdzono w iframe Chromium. Nie jest to pełna emulacja urządzenia, DPR lub dotyku; nie sprawdzono fizycznego telefonu, Safari/iOS, Firefoksa ani gestu pinch.
@@ -79,9 +114,9 @@ Zrzuty Maroka przedstawiają różne pozycje przewinięcia, więc nie są wizual
 
 Zmodyfikowane istniejące pliki — główne miejsca możliwych konfliktów:
 
-- `src/components/TripRouteView.jsx` — osadzenie pełnoekranowego widoku, wysokość SVG profilu i zwijane informacje.
+- `src/components/TripRouteView.jsx` — osadzenie pełnoekranowego widoku, wysokość SVG profilu, wybór dnia i zwijane informacje/odcinki.
 - `src/components/AlpsStory.jsx` — nawigacja mobilna i dostępność celu hasha.
-- `src/components/MoroccoStory.jsx` — nawigacja mobilna, cel hasha i lazy loading zdjęć rozdziałów.
+- `src/components/MoroccoStory.jsx` — nawigacja mobilna, cel hasha, aktywny etap na krótkim ekranie i lazy loading zdjęć rozdziałów.
 
 Nowe pliki aplikacji i kontroli:
 
@@ -106,5 +141,10 @@ Dokumentacja i dowody:
 - `docs/qa/route-viewer/viewer-desktop-1280.jpg`
 - `docs/qa/route-viewer/viewer-320-map.jpg`
 - `docs/qa/route-viewer/viewer-320-photos.jpg`
+- `docs/qa/route-viewer/viewer-final-320-map.jpg`
+- `docs/qa/route-viewer/viewer-final-320-photos.jpg`
+- `docs/qa/route-viewer/viewer-final-390-photos.jpg`
+- `docs/qa/route-viewer/viewer-final-desktop-1280.jpg`
+- `docs/qa/route-viewer/morocco-final-844.jpg`
 
 Nie zmieniono `PhotoViewer`, `PhotoGrid`, mechanizmów Zapisanych, porównywania, miniaturek, paska wyboru ani backupu. Integracja z nieopublikowaną wersją z laptopa nie była możliwa do przetestowania i nie była odtwarzana. Dokument i obrazy są wyłącznie materiałem do przeglądu gałęzi.

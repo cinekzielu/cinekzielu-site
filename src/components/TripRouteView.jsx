@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
+import React, { lazy, Suspense, useEffect, useId, useMemo, useRef, useState } from 'react'
 import { TatryTerrainMap } from './TatryTerrainMap'
 import { terrainScreen, terrainSvgViewport } from '../data/terrainMap'
 import { buildTrackGeometry, closestTrackIndex } from '../data/routeGeometry'
@@ -28,10 +28,12 @@ function TrackOverlay({ view, size, point, geometry }) {
 
 export default function TripRouteView({ track, route, headingLevel = 5, onReady }) {
   const [dayId, setDayId] = useState('all')
+  const daySelectId = useId()
   const view = useMemo(() => routeDayView(track, route, dayId), [track, route, dayId])
   const day = track.days?.find(day => day.id === dayId)
   return <RoutePresentation title={route.title}>{expanded => <div className={expanded ? 'cz-route-viewer-layout' : undefined}><div className={expanded ? 'cz-route-viewer-main' : undefined}>
     {track.days && <div className="cz-route-day-picker">
+      {expanded && <label className="cz-route-viewer-day-select" htmlFor={daySelectId}>Pokaż trasę<select id={daySelectId} value={dayId} onChange={event => setDayId(event.target.value)}><option value="all">Cała wyprawa</option>{track.days.map(day => <option key={day.id} value={day.id}>Dzień {day.id} · {day.dates}</option>)}</select></label>}
       <div className="cz-route-day-buttons" role="group" aria-label="Cała wyprawa lub poszczególne dni">
         <button type="button" aria-pressed={dayId === 'all'} onClick={() => setDayId('all')}>Cała wyprawa</button>
         {track.days.map(day => <button key={day.id} type="button" aria-pressed={dayId === day.id} onClick={() => setDayId(day.id)}>Dzień {day.id} · {day.dates}</button>)}
@@ -39,7 +41,7 @@ export default function TripRouteView({ track, route, headingLevel = 5, onReady 
       <p className="cz-route-day-summary" role="status"><strong>{day ? day.title : 'Cała wyprawa'}</strong> · {km(view.track.distance)} · podejścia ≈ {number(estimateAscent(view.track.points))} m{day && ' · dystans od początku tego dnia'}</p>
     </div>}
     <RouteDayDetail key={dayId} track={view.track} route={view.route} headingLevel={headingLevel} onReady={onReady} day={day} expanded={expanded} />
-    </div>{expanded && <Suspense fallback={<p role="status">Wczytywanie zdjęć…</p>}><RouteViewerPhotos key={dayId} routeId={route.id} dayId={dayId} /></Suspense>}
+    </div>{expanded && <Suspense fallback={<aside className="cz-route-viewer-photos" tabIndex={-1} role="status">Wczytywanie zdjęć…</aside>}><RouteViewerPhotos key={dayId} routeId={route.id} dayId={dayId} /></Suspense>}
   </div>}</RoutePresentation>
 }
 
@@ -83,11 +85,11 @@ function RouteDayDetail({ track, route, headingLevel, onReady, day, expanded }) 
     setDistance(distance)
   }
   return <div className="cz-route-view">
-    {track.stages?.length > 1 && <ol className="cz-route-stages" aria-label="Odcinki połączonej trasy">
+    {track.stages?.length > 1 && <details className={`cz-route-stage-details${expanded ? ' is-compact' : ''}`} open={!expanded}><summary>Odcinki połączonej trasy · {track.stages.length}</summary><ol className="cz-route-stages" aria-label="Odcinki połączonej trasy">
       {track.stages.map((stage, index) => <li key={stage.startIndex}><button type="button" onClick={() => { choose(stage.startIndex); setFocus({ ...points[stage.startIndex] }) }}>
         <span>{index + 1}. {stage.title}</span><small>{stage.dates} · {km(stage.distance)}</small>
       </button></li>)}
-    </ol>}
+    </ol></details>}
     <TatryTerrainMap embedded regionId={`${route.id}-route`} points={peaks} locations={peaks} locationById={peakById} overviewPoints={points} selectedId={null}
       onSelect={id => { const index = peakIndices[id]; choose(index); setFocus({ ...points[index] }) }} resetLabel={day ? 'Trasa tego dnia' : 'Cała trasa'} initialTone="natural"
       surfaceLabel={`Trasa ${route.title} na mapie terenu. Strzałki przesuwają mapę, plus i minus przybliżają, Home pokazuje całą trasę.`}
