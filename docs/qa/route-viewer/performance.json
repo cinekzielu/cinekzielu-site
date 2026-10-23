@@ -1,0 +1,52 @@
+{
+  "conditions": {
+    "browser": "Cloud Chromium",
+    "page": "/wyprawy/maroko-2025",
+    "iframe_width": 390,
+    "iframe_height": 844,
+    "position": "initial, before scrolling",
+    "scope": ".cz-story-stop img",
+    "cpu_throttling": false,
+    "network_throttling": false,
+    "cache_controlled": false
+  },
+  "before": {
+    "dom_images": 14,
+    "eager_images": 10,
+    "high_priority_images": 10,
+    "complete_images": 11
+  },
+  "after": {
+    "dom_images": 14,
+    "eager_images": 0,
+    "high_priority_images": 0,
+    "complete_images": 3
+  },
+  "previously_eager_480px_asset_bytes": 259880,
+  "note": "Asset bytes are not measured transfer savings. No wall-clock/LCP/Lighthouse claim.",
+  "layout_follow_up": {
+    "scope": "Layout dimensions, not performance timing",
+    "baseline_commit": "028e3da1394be3f442b4ebd22f65cef6036a5779",
+    "conditions": {
+      "browser": "Cloud Chromium",
+      "iframe_width": 320,
+      "iframe_height": 568,
+      "route": "baranie-rogi-lato-2026",
+      "day": "all",
+      "photo": 1
+    },
+    "before": {
+      "dialog_scroll_height_px": 1495,
+      "image_top_at_scroll_zero_px": 1136.78125
+    },
+    "after": {
+      "dialog_scroll_height_px": 1170,
+      "image_top_at_scroll_zero_px": 984.734375,
+      "photo_shortcut_scroll_top_px": 683,
+      "photo_shortcut_image_top_px": 301.734375,
+      "photo_controls_top_px": 518.1875,
+      "photo_controls_bottom_px": 562.1875
+    },
+    "note": "Same first image and viewport. The new smaller image height applies only to short mobile viewports. These numbers do not measure transfer, LCP or CPU."
+  }
+}
