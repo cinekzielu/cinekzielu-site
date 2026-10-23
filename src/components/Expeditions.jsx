@@ -12,6 +12,7 @@ import { MoroccoStory, MoroccoStoryHero } from './MoroccoStory'
 import { TravelTimeline } from './TravelTimeline'
 import { AlpsStory, AlpsStoryHero } from './AlpsStory'
 import { BaranieSeasons } from './BaranieSeasons'
+import { BaraniePhotoStory } from './StoryPhotoGroup'
 import { TripRoute } from './TripRoute'
 import importedRoutes from '../data/importedRoutes.json'
 import '../expeditionStyles.css'
@@ -86,7 +87,7 @@ export function ExpeditionPage({ slug }) {
   const [allFrames, setAllFrames] = useState(false)
   useEffect(() => {
     const sectionId = window.location.hash.slice(1)
-    if (!['filmy', 'kadry', 'zdjecia', 'powiazane', 'opowiesc', 'trasa', 'dwa-sezony'].includes(sectionId)) return
+    if (!['filmy', 'kadry', 'zdjecia', 'powiazane', 'opowiesc', 'trasa', 'dwa-sezony', 'historia-zdjecia'].includes(sectionId)) return
     let frame
     const scrollToFilms = () => { frame = window.requestAnimationFrame(() => document.getElementById(sectionId)?.scrollIntoView({ behavior: 'instant', block: 'start' })) }
     scrollToFilms()
@@ -122,6 +123,7 @@ export function ExpeditionPage({ slug }) {
             {expedition.id === 'wysoka-ganek-rysy-2026' && <a href="#trasa">Trasa i profil ↓</a>}
             {!!additionalRoutes.length && <a href={`#${additionalRoutes[0].anchor}`}>Trasy GPX · {additionalRoutes.length} ↓</a>}
             {gallery.films.length > 0 && <a href="#filmy">{gallery.films[0].label === 'Zwiastun' ? 'Zwiastun' : gallery.films.length === 1 ? 'Film z wyprawy' : 'Filmy z wyprawy'} ↓</a>}
+            {expedition.id === 'baranie-rogi-lodowy-szczyt-2026' && <a href="#historia-zdjecia">Zdjęcia dzień po dniu ↓</a>}
             {['baranie-rogi-lodowy-szczyt-2026', 'baranie-rogi-zima-2025'].includes(expedition.id) && <a href="#dwa-sezony">Lato i zima ↓</a>}
             {galleryMapLinks(gallery).map(place => <a key={place.id} href={place.href}>Na mapie: {place.label} ↗</a>)}
           </nav>
@@ -131,6 +133,7 @@ export function ExpeditionPage({ slug }) {
       {hasAlpsStory && <AlpsStory />}
       {!!additionalRoutes.length && <nav className="cz-expedition-actions" aria-label="Trasy z wyprawy">{additionalRoutes.map(route => <a key={route.id} href={`#${route.anchor}`}>{route.title} ↓</a>)}</nav>}
       {additionalRoutes.map(route => <TripRoute key={route.id} routeId={route.id} headingLevel={2} />)}
+      {expedition.id === 'baranie-rogi-lodowy-szczyt-2026' && <BaraniePhotoStory />}
       {expedition.id === 'wysoka-ganek-rysy-2026' && <TripRoute routeId="ganek-wysoka-rysy" headingLevel={2} />}
       {expedition.id === 'rumunia-2024' && <section className="cz-trip-preparation" aria-labelledby="trip-preparation-title">
         <img src="/assets/photos/romania-pakowanie.webp" width="1182" height="1200" loading="lazy" alt="Rower, sakwy i wyposażenie przygotowane do wyprawy po Rumunii" />
