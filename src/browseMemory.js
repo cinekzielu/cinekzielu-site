@@ -16,6 +16,7 @@ export function browseLabel(url) {
   if (path.startsWith('/wyprawy/')) return 'wyprawy'
   if (path === '/kierunki') return 'kierunków'
   if (path.startsWith('/kierunki/')) return 'kierunku'
+  if (path.startsWith('/szczyty/')) return 'szczytu'
   return ({ '/trasy':'tras', '/szczyty':'szczytów', '/galerie':'galerii', '/fotografia':'fotografii', '/filmy':'filmów', '/mapa':'mapy', '/':'strony głównej' })[path] || 'przeglądania'
 }
 const read = key => { try { return JSON.parse(sessionStorage.getItem(key)) } catch { return null } }

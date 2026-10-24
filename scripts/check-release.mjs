@@ -7,13 +7,14 @@ import { expeditionPages } from '../src/data/expeditionPages.js'
 import { filmCatalog } from '../src/data/filmCatalog.js'
 import { portfolioPhotos } from '../src/data/portfolioData.js'
 import { author } from '../src/data/authorData.js'
+import { summitPages } from '../src/data/summitPages.js'
 
 const root = new URL('../', import.meta.url)
 const read = file => readFile(new URL(file, root), 'utf8')
 const decode = value => value.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>')
 const attribute = (html, key) => decode(html.match(new RegExp(`<meta (?:name|property)="${key}" content="([^"]*)"`))?.[1] || '')
 const canonicalPaths = new Set(sitePages.map(page => page.path))
-assert.equal(canonicalPaths.size, 19 + photoGalleries.length + expeditionPages.length)
+assert.equal(canonicalPaths.size, 19 + photoGalleries.length + expeditionPages.length + summitPages.length)
 assert.equal(new Set(sitePages.map(page => page.title)).size, sitePages.length)
 assert(portfolioPhotos.length >= 15 && portfolioPhotos.length <= 20)
 assert.equal(new Set(portfolioPhotos.map(photo => photo.full)).size, portfolioPhotos.length)

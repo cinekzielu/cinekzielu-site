@@ -10,6 +10,7 @@ import { author } from './authorData.js'
 import { portfolioPhotos } from './portfolioData.js'
 import { filmCatalog } from './filmCatalog.js'
 import { summits } from './summits.js'
+import { summitPages, summitPageHref } from './summitPages.js'
 import { sharePages, photoShareImage, photoSharePath } from './sharePages.js'
 
 export const SITE_ORIGIN = 'https://www.cinekzielu.pl'
@@ -23,6 +24,7 @@ export const sitePages = [
   page('/mapa', 'Mapa wypraw — Cinek Zielu', 'Odkrywaj wyprawy, filmy i galerie na mapie. Tatry, Szwajcaria, Alpy, Maroko i Jura.'),
   page('/filmy', 'Filmy z gór i podróży — Cinek Zielu', 'Filmy z Tatr, Szwajcarii, Alp, Jury, Maroka i Hungaroringu. Wybierz miejsce, znajdź film i zobacz materiały z wyprawy.', shareImages['maroko-2025']),
   page('/szczyty', 'Moje szczyty — Cinek Zielu', 'Letnie i zimowe wejścia w Tatry, Alpy, Gorce i Atlas Wysoki. Wysokości, lata wejść, fotografie, filmy i wyprawy.', shareImages['konczysta-2026']),
+  ...summitPages.map(item => page(item.path, item.title, item.description, item.id === 'gerlach' ? shareImages['gerlach-zima-2025'] : photoShareImage(item.cover))),
   page('/galerie', 'Galerie z wypraw — Cinek Zielu', `${galleryCollectionCount(photoGalleries)} z ${photoGalleries.length} wypraw. Alpy, Tatry, Szwajcaria, Sycylia i Hungaroring w fotografiach Marcina Zielińskiego.`, shareImages['szwajcaria-2025']),
   page('/trasy', 'Trasy GPX — atlas przejść | Cinek Zielu', `Atlas ${routeCatalog.length} tras GPX: Tatry, Alpy, Gorce i Atlas Wysoki. Mapa terenu, lista przejść i porównanie profili wysokości.`, shareImages['alpy-2026']),
   page('/kierunki', 'Kierunki — kraje i pasma | Cinek Zielu', 'Tatry, Alpy, Szwajcaria, Maroko, Włochy i Węgry. Wyprawy, fotografie, filmy i zapisane trasy według miejsc.', shareImages['szwajcaria-2025']),
@@ -121,14 +123,14 @@ export function pageStructuredData(metadata) {
   } else if (metadata.path === '/szczyty') {
     base['@type'] = 'CollectionPage'
     base.mainEntity = itemList([...summits].sort((a, b) => b.altitude - a.altitude).map(summit => ({
-      name: `${summit.name} · ${summit.altitude} m`, url: `${SITE_ORIGIN}/szczyty#szczyt-${summit.id}`,
+      name: `${summit.name} · ${summit.altitude} m`, url: SITE_ORIGIN + (summitPageHref(summit.id) || `/szczyty#szczyt-${summit.id}`),
     })))
   }
   const parts = metadata.path.split('/').filter(Boolean)
   if (parts.length === 2) {
     base.breadcrumb = { '@type': 'BreadcrumbList', itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Cinek Zielu', item: SITE_ORIGIN + '/' },
-      { '@type': 'ListItem', position: 2, name: parts[0] === 'galerie' ? 'Galerie' : parts[0] === 'sezony' ? 'Sezony' : 'Wyprawy', item: SITE_ORIGIN + '/' + parts[0] },
+      { '@type': 'ListItem', position: 2, name: ({ galerie: 'Galerie', sezony: 'Sezony', szczyty: 'Szczyty', kierunki: 'Kierunki' })[parts[0]] || 'Wyprawy', item: SITE_ORIGIN + '/' + parts[0] },
       { '@type': 'ListItem', position: 3, name: metadata.title.split(' — ')[0], item: metadata.canonical },
     ] }
   }

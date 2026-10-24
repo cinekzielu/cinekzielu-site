@@ -9,10 +9,12 @@ import { portfolioPhotos, photographyCollections } from '../src/data/portfolioDa
 import { photoViewId } from '../src/data/photoView.js'
 import { author } from '../src/data/authorData.js'
 import { summits } from '../src/data/summits.js'
+import { summitPages } from '../src/data/summitPages.js'
+import { shareImages } from '../src/data/shareImages.js'
 
 const root = new URL('../public/', import.meta.url)
 const photos = photoGalleries.flatMap(gallery => gallery.photos.map(photo => ({ gallery, photo })))
-assert.equal(sitePages.length, 53, 'Share views must not add trips or canonical landing pages')
+assert.equal(sitePages.length, 53 + summitPages.length, 'Only explicit summit pages extend the canonical inventory; share views do not')
 assert.equal(sharePages.length, photos.length + photographyCollections.length + sharedAtlasIds.length)
 assert.equal(new Set(sharePages.map(page => page.path)).size, sharePages.length)
 assert.equal(sharePageMetadata.length, sharePages.length)
@@ -26,6 +28,16 @@ function webpDimensions(bytes) {
   if (chunk === 'VP8 ') return [bytes.readUInt16LE(26) & 0x3fff, bytes.readUInt16LE(28) & 0x3fff]
   if (chunk === 'VP8L') { const bits = bytes.readUInt32LE(21); return [(bits & 0x3fff) + 1, ((bits >>> 14) & 0x3fff) + 1] }
   throw new Error(`Unexpected WebP chunk ${chunk}`)
+}
+for (const summit of summitPages) {
+  const metadata = getPageMetadata(summit.path)
+  assert.equal(pageStructuredData(metadata).breadcrumb.itemListElement[1].name, 'Szczyty')
+  if (summit.id === 'gerlach') {
+    assert.deepEqual(metadata.image, shareImages['gerlach-zima-2025'], 'Video frames use their verified sharing export, not the 2000px photograph assumption')
+  } else {
+    const actual = webpDimensions(await readFile(new URL(metadata.image.src.slice(1), root)))
+    assert.deepEqual([metadata.image.width, metadata.image.height], actual, summit.path)
+  }
 }
 for (const entry of sharePages) {
   assert(!canonicalPaths.has(entry.path))
