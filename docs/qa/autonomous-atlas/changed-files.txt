@@ -8,10 +8,14 @@ docs/qa/autonomous-atlas/context-before.log
 docs/qa/autonomous-atlas/context-build.log
 docs/qa/autonomous-atlas/context-combined-build.log
 docs/qa/autonomous-atlas/context-validation.json
+docs/qa/autonomous-atlas/final-combined-build.log
+docs/qa/autonomous-atlas/final-quality-build.log
+docs/qa/autonomous-atlas/final-validation.json
 docs/qa/autonomous-atlas/invalid-id-before.log
 docs/qa/autonomous-atlas/quality-build.log
 docs/qa/autonomous-atlas/quality-check-results.json
 docs/qa/autonomous-atlas/summit-link-audit.json
+scripts/check-atlas-view-state.mjs
 scripts/check-atlas.mjs
 scripts/check-unified-atlas.mjs
 src/data/atlasContent.js

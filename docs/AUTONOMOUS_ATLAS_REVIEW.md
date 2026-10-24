@@ -1,5 +1,38 @@
 # Autonomiczny audyt atlasu — 24.10.2026
 
+## Końcowy stan pakietu — 24.10.2026
+
+Pakiet pozostaje w [draft PR187](https://github.com/cinekzielu/cinekzielu-site/pull/187). Zawiera dwie odtworzone i poprawione usterki odczytu URL atlasu (odziedziczone ID oraz rozbieżna walidacja obszaru/roku), rozszerzenia trzech istniejących kontroli i dokumentację. Nie zmienia wyglądu ani treści strony. Nie scalać ani nie publikować bez osobnej decyzji użytkownika i uzupełnienia UI QA.
+
+### Ostatni audyt i nowa kontrola
+
+Ponownie sklonowano GitHub do wykonawcy chmurowego. Sprawdzone heady: main `6ff7295f9210003787e36adf1e5092bcab191a26`, PR185 `483313fb567c4781cf2716a91a53cddb58e62968`, PR186 `8a43483a35ce3a82db97024f774434fd475a67a8`, PR187 przed tą iteracją `4754ca071db801e5225c9899f011ab69debc1bd2`. Otwarte PR: 155, 185, 186, 187. Przeczytano aktualne zasady i raport; brak AGENTS.md.
+
+Rozszerzono `scripts/check-atlas-view-state.mjs` o 3 scenariusze × 25 kolejnych odczytów/zapisów linku. Kontrola łączy parser kadru z parserami wyboru miejsca, roku i obszaru. Weryfikuje stabilny adres bez dryfu, zachowanie podkładu i filtrów, także dla odrzuconego obszaru. Uszkodzony kadr jest odrzucany bez usuwania poprawnego miejsca, obszaru, roku i filtra miejsc. Nie stwierdzono nowej usterki aplikacji; w tej iteracji zmieniono wyłącznie kontrolę i raport.
+
+To 75 cykli funkcji serializacji URL, **nie** 75 operacji Wstecz/Dalej, odświeżeń w przeglądarce ani testów na telefonie. Przegląd kodu potwierdził ograniczenie x/y kadru do 0–1 przed zapisem w `TatryTerrainMap`; nie dodano niepotrzebnej poprawki dla hipotetycznej długości geograficznej poza zakresem.
+
+| Końcowa kontrola | Wynik |
+| --- | --- |
+| PR187 na main: build | PASS — 53 strony + 382 warianty |
+| PR187 na main: istniejące kontrole | 48/48 PASS |
+| PR187 + PR185 + PR186: merge tylko w izolowanym checkoutcie | Bez konfliktów |
+| Połączony build | PASS — 56 stron + 382 warianty |
+| Połączone istniejące kontrole | 51/51 PASS |
+| Stabilność adresu z kadrem i filtrami | 75/75 cykli PASS |
+| Uszkodzony kadr i poprawne filtry | PASS |
+| `git diff --check` | PASS |
+
+[Build PR187](qa/autonomous-atlas/final-quality-build.log) · [Build połączony](qa/autonomous-atlas/final-combined-build.log) · [Kody zakończenia i wyniki](qa/autonomous-atlas/final-validation.json). Lokalny merge testowy `0c965908fd243786afaf7e077d9e4e504c268d6a` nie został wysłany.
+
+### Przekazanie do przeglądu
+
+Pełny [manifest](qa/autonomous-atlas/changed-files.txt) obejmuje wszystkie zmiany od main. Kod aplikacji: tylko `src/data/atlasContent.js`. Kontrole: `scripts/check-atlas.mjs`, `scripts/check-unified-atlas.mjs`, `scripts/check-atlas-view-state.mjs`. Reszta to raport i dowody. Nie kopiowano zmian PR185/186 do PR187. Nie dotykano sources, zdjęć/GPX, galerii premium, Zapisanych, dodatków laptopa, hostingu ani produkcji.
+
+**Pakiet nie ma pełnego zatwierdzenia UI.** Nadal brakuje przeglądarkowego atlas → szczyt → trasa → pełny ekran → powrót przy 320/390/1280 px, fokusu/klawiatury, historii, overflow, konsoli i odświeżenia kadru. Wcześniejsza odmowa URL/security policy jest zapisana poniżej. Nie próbowano jej obejść; nie ma nowych screenshotów ani pomiarów wydajności. Kontrole geometrii w Node nie są testami przeglądarki.
+
+Konkretny następny krok po przywróceniu dozwolonego podglądu: odtworzyć aktualne SHA, połączyć trzy drafty wyłącznie w QA i wykonać wskazaną ścieżkę na trzech szerokościach, następnie przypadki błędnego ID/obszaru/roku i kopię linku z kadrem. Dopiero wynik tych testów pozwala ocenić gotowość do scalenia. Pomoc „Jak korzystać z atlasu” nie powstała — poprzedzająca ją luka QA pozostała otwarta. Nie zaplanowano dodatkowych prac ani dalszej automatycznej publikacji.
+
 ## Wynik iteracji 3 — zgodny odczyt obszaru i roku
 
 24.10.2026. Odtworzono checkout z GitHub. Początkowy head PR187: `fa86a4e9ee25f85ab905077f8aae7e7196c344a5`; main `6ff7295f9210003787e36adf1e5092bcab191a26`, PR185 `483313fb567c4781cf2716a91a53cddb58e62968`, PR186 `8a43483a35ce3a82db97024f774434fd475a67a8` bez zmian. PR187 nadal open/draft. Przeczytano aktualne PROJECT_RULES i raport; brak AGENTS.md. Wyłącznie wykonawca chmurowy, bez prób obejścia wcześniejszej blokady przeglądarki.
