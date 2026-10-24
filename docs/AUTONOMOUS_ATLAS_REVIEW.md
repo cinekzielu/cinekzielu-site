@@ -1,6 +1,10 @@
 # Autonomiczny audyt atlasu — 24.10.2026
 
-## Końcowy stan pakietu — 24.10.2026
+## Dalszy dodatek po zakończeniu audytu
+
+Po nowej prośbie użytkownika dodano domyślnie zwiniętą pomoc atlasu i trzy istniejące widoki z filtrami. [Bieżący zakres, testy i ograniczenia](ATLAS_HELP_REVIEW.md). Build i 49 kontroli samego pakietu oraz build i 52 kontrole po połączeniu z PR185/186: PASS. Wcześniejsza luka browser QA nadal otwarta. Poniżej pozostaje historia poprzednich etapów.
+
+## Stan audytu przed dodaniem pomocy — 24.10.2026
 
 Pakiet pozostaje w [draft PR187](https://github.com/cinekzielu/cinekzielu-site/pull/187). Zawiera dwie odtworzone i poprawione usterki odczytu URL atlasu (odziedziczone ID oraz rozbieżna walidacja obszaru/roku), rozszerzenia trzech istniejących kontroli i dokumentację. Nie zmienia wyglądu ani treści strony. Nie scalać ani nie publikować bez osobnej decyzji użytkownika i uzupełnienia UI QA.
 
