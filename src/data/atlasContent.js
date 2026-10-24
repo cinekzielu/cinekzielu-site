@@ -80,7 +80,7 @@ export const atlasNodeById = Object.fromEntries(atlasContentNodes.map(node => [n
 export const atlasQuickIds = ['tatry', 'switzerland', 'alpy', 'morocco', 'jura']
 export const readAtlasSelection = (search = window.location.search) => {
   const id = new URLSearchParams(search).get('atlas')
-  return atlasNodeById[id] ? id : 'world'
+  return Object.hasOwn(atlasNodeById, id) ? id : 'world'
 }
 export function atlasAncestry(id) {
   const result = []

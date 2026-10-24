@@ -1,4 +1,12 @@
 docs/AUTONOMOUS_ATLAS_REVIEW.md
+docs/qa/autonomous-atlas/changed-files.txt
 docs/qa/autonomous-atlas/combined-build.log
 docs/qa/autonomous-atlas/combined-check-results.json
-docs/qa/autonomous-atlas/changed-files.txt
+docs/qa/autonomous-atlas/combined-fixed-build.log
+docs/qa/autonomous-atlas/combined-fixed-check-results.json
+docs/qa/autonomous-atlas/invalid-id-before.log
+docs/qa/autonomous-atlas/quality-build.log
+docs/qa/autonomous-atlas/quality-check-results.json
+docs/qa/autonomous-atlas/summit-link-audit.json
+scripts/check-atlas.mjs
+src/data/atlasContent.js

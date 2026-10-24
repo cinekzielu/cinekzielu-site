@@ -1,6 +1,29 @@
 # Autonomiczny audyt atlasu — 24.10.2026
 
-## Status
+## Wynik iteracji 2 — poprawka nieprawidłowych linków
+
+24.10.2026. Ponownie sklonowano repozytorium z GitHub do wykonawcy chmurowego. Main, PR185 i PR186 mają nadal SHA zapisane poniżej; początkowy head PR187: `cc4dc6a184f21ae3de89b620b1170527ec1671c2`. Otwarte PR: 155, 185, 186, 187. Przeczytano aktualne zasady i raport; brak AGENTS.md. Nie rozpoczęto kolejnych prób obejścia wcześniej zgłoszonej blokady przeglądarki.
+
+### Potwierdzony błąd i zmiana
+
+Adres `/mapa?atlas=constructor&rok=2025` był traktowany jako istniejące miejsce, ponieważ sprawdzenie `atlasNodeById[id]` znajdowało odziedziczoną właściwość Object.prototype. Wywołanie rzeczywistego łańcucha `readAtlasSelection` → `readAtlasYear` → `getAtlasMaterials` kończyło się wyjątkiem `(countryPlaceIds[id] || []) is not iterable`. Tak samo zachowywały się `__proto__`, `toString` i `hasOwnProperty`. Odtworzenie wykonano w Node na kodzie aplikacji; nie twierdzimy, że widziano awarię w przeglądarce.
+
+Walidacja korzysta teraz z `Object.hasOwn(atlasNodeById, id)`. Nieznane identyfikatory wracają do `world`, rok do `all`, tak jak zwykły błędny identyfikator. Istniejące miejsca, adresy, historia i interfejs nie zostały zmienione. Jedna linia kodu aplikacji, bez zależności.
+
+Rozszerzono istniejący `scripts/check-atlas.mjs` o wszystkie nazwy własnych właściwości Object.prototype, z trzema wariantami parametrów: sam atlas, rok 2025 oraz błędny rok/obszar. Każdy przypadek sprawdza wybór świata, wszystkie lata i poprawne materiały. Test faktycznie FAIL przed zmianą i PASS po zmianie: [dowód przed](qa/autonomous-atlas/invalid-id-before.log). Dotychczasowa pętla nadal weryfikuje wszystkie 95 prawidłowych miejsc.
+
+### Weryfikacja iteracji 2
+
+- Baza main + PR187 z poprawką: `npm run build` PASS (53 strony + 382 warianty), **48/48 kontroli PASS**. [Build](qa/autonomous-atlas/quality-build.log), [kontrole](qa/autonomous-atlas/quality-check-results.json).
+- Izolowany lokalny merge z PR185 i PR186: bez konfliktów; `npm run build` PASS (56 stron + 382 warianty), **51/51 kontroli PASS**. [Build](qa/autonomous-atlas/combined-fixed-build.log), [kontrole](qa/autonomous-atlas/combined-fixed-check-results.json). Lokalny merge `6c5a88efd0e8db841603490c87ca64bf9b074850` nie został wysłany.
+- Dodatkowy audyt 18 połączeń trzech stron szczytów dla lat all/2024/2025/2026/unknown: kotwice materiałów istnieją w odpowiednim pliku HTML builda; linki GPX przez `routeLink` poprawnie wracają przez `readRouteAtlas` do identycznego ID. [Wyniki](qa/autonomous-atlas/summit-link-audit.json). Nie znaleziono dodatkowego błędu.
+- Istniejące kontrole metadanych, prerenderu, dat, zasobów, aliasów i filtrów również przeszły. `git diff --check` PASS.
+
+**Nadal niewykonane:** UI 320/390/1280, klawiatura, fokus, overflow, konsola aplikacji, historia Wstecz/Dalej i odświeżanie kadru w przeglądarce. Raporty Node nie zastępują tych testów. Nie ma nowych screenshotów ani pomiaru wydajności. Pełny test połączonego interfejsu pozostaje następnym krokiem po przywróceniu dozwolonego dostępu do podglądu. Nie dodano pomocy atlasu ani nowych funkcji.
+
+Pełny manifest pakietu: [changed-files.txt](qa/autonomous-atlas/changed-files.txt). Do połączenia z laptopem doszły wyłącznie `src/data/atlasContent.js` i `scripts/check-atlas.mjs`; pozostałe pliki to dowody audytu. Kod PR185/186 nie jest kopiowany do tego PR. Produkcja, Vercel i main bez zmian.
+
+## Historia: status iteracji 1
 
 Częściowy wynik: ponownie odtworzono i zbudowano połączone PR185 + PR186 w izolowanej gałęzi chmurowej. **Browser QA nadal NIE wykonane.** Nie potwierdzono nowej usterki aplikacji; nie wprowadzono spekulacyjnej poprawki ani pomocy atlasu. Ten draft zawiera wyłącznie raport i rzeczywiste logi, bez duplikowania kodu PR185/186.
 
@@ -46,11 +69,11 @@ Najwyższy priorytet pozostaje bez zmian: po odzyskaniu dozwolonego podglądu ch
 
 Nie wykonano pomiaru szybkości, Safari/Firefox, fizycznego telefonu ani testów czytnika ekranu. Nie deklarujemy poprawy wydajności. Nie zmieniono produkcji, main, Vercel, zdjęć, GPX, galerii premium, Zapisanych ani dodatków laptopa. Nie ma nowego publicznego podglądu połączonej aplikacji.
 
-## Manifest tego pakietu
+## Historyczny manifest iteracji 1
 
 - `docs/AUTONOMOUS_ATLAS_REVIEW.md`
 - `docs/qa/autonomous-atlas/combined-build.log`
 - `docs/qa/autonomous-atlas/combined-check-results.json`
 - `docs/qa/autonomous-atlas/changed-files.txt`
 
-Manifest dotyczy tylko raportu. Pełne listy kodu PR185/186 pozostają w ich własnych dokumentacjach. **Draft do przeglądu; bez zgody na merge i publikację.**
+Powyższy historyczny manifest dotyczy tylko raportu iteracji 1; aktualna pełna lista jest w changed-files.txt. Pełne listy kodu PR185/186 pozostają w ich własnych dokumentacjach. **Draft do przeglądu; bez zgody na merge i publikację.**
