@@ -1,0 +1,164 @@
+[
+  {
+    "id": "gerlach",
+    "size": "320x568",
+    "viewport": {
+      "width": 320,
+      "client": 305,
+      "height": 568,
+      "scrollWidth": 305
+    },
+    "errors": [],
+    "warnings": [],
+    "dom": {
+      "brokenHashes": [],
+      "h1": 1,
+      "overflow": 0,
+      "scrollBehavior": "auto"
+    }
+  },
+  {
+    "id": "baranie-rogi",
+    "size": "320x568",
+    "viewport": {
+      "width": 320,
+      "client": 305,
+      "height": 568,
+      "scrollWidth": 305
+    },
+    "errors": [],
+    "warnings": [],
+    "dom": {
+      "brokenHashes": [],
+      "h1": 1,
+      "overflow": 0,
+      "scrollBehavior": "auto"
+    }
+  },
+  {
+    "id": "dufourspitze",
+    "size": "320x568",
+    "viewport": {
+      "width": 320,
+      "client": 305,
+      "height": 568,
+      "scrollWidth": 305
+    },
+    "errors": [],
+    "warnings": [],
+    "dom": {
+      "brokenHashes": [],
+      "h1": 1,
+      "overflow": 0,
+      "scrollBehavior": "auto"
+    }
+  },
+  {
+    "id": "gerlach",
+    "size": "390x844",
+    "viewport": {
+      "width": 390,
+      "client": 375,
+      "height": 844,
+      "scrollWidth": 375
+    },
+    "errors": [],
+    "warnings": [],
+    "dom": {
+      "brokenHashes": [],
+      "h1": 1,
+      "overflow": 0,
+      "scrollBehavior": "auto"
+    }
+  },
+  {
+    "id": "baranie-rogi",
+    "size": "390x844",
+    "viewport": {
+      "width": 390,
+      "client": 375,
+      "height": 844,
+      "scrollWidth": 375
+    },
+    "errors": [],
+    "warnings": [],
+    "dom": {
+      "brokenHashes": [],
+      "h1": 1,
+      "overflow": 0,
+      "scrollBehavior": "auto"
+    }
+  },
+  {
+    "id": "dufourspitze",
+    "size": "390x844",
+    "viewport": {
+      "width": 390,
+      "client": 375,
+      "height": 844,
+      "scrollWidth": 375
+    },
+    "errors": [],
+    "warnings": [],
+    "dom": {
+      "brokenHashes": [],
+      "h1": 1,
+      "overflow": 0,
+      "scrollBehavior": "auto"
+    }
+  },
+  {
+    "id": "gerlach",
+    "size": "1280x800",
+    "viewport": {
+      "width": 1280,
+      "client": 1265,
+      "height": 800,
+      "scrollWidth": 1265
+    },
+    "errors": [],
+    "warnings": [],
+    "dom": {
+      "brokenHashes": [],
+      "h1": 1,
+      "overflow": 0,
+      "scrollBehavior": "auto"
+    }
+  },
+  {
+    "id": "baranie-rogi",
+    "size": "1280x800",
+    "viewport": {
+      "width": 1280,
+      "client": 1265,
+      "height": 800,
+      "scrollWidth": 1265
+    },
+    "errors": [],
+    "warnings": [],
+    "dom": {
+      "brokenHashes": [],
+      "h1": 1,
+      "overflow": 0,
+      "scrollBehavior": "auto"
+    }
+  },
+  {
+    "id": "dufourspitze",
+    "size": "1280x800",
+    "viewport": {
+      "width": 1280,
+      "client": 1265,
+      "height": 800,
+      "scrollWidth": 1265
+    },
+    "errors": [],
+    "warnings": [],
+    "dom": {
+      "brokenHashes": [],
+      "h1": 1,
+      "overflow": 0,
+      "scrollBehavior": "auto"
+    }
+  }
+]

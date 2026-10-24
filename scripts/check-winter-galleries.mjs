@@ -7,6 +7,7 @@ import { getAtlasMaterials } from '../src/data/atlasContent.js'
 import { filmCatalog } from '../src/data/filmCatalog.js'
 import { searchSite } from '../src/data/siteSearch.js'
 import { sitePages } from '../src/data/siteMetadata.js'
+import { summitPages } from '../src/data/summitPages.js'
 const cases=[
 ['baranie-rogi-zima-2025','baranie-rogi','0AtU5c83Y0M','30 listopada 2025'],
 ['kiezmarski-szczyt-zima-2025','kiezmarski-szczyt','IxTLYy6bOKo','1 grudnia 2025']]
@@ -41,5 +42,5 @@ assert.equal(hashes.size,40)
 assert(getAtlasMaterials('huncowski-szczyt','2025').galleries.some(x=>x.id===cases[1][0]))
 assert.deepEqual(getAtlasMaterials('baranie-rogi','2026').galleries.map(x=>x.id),['baranie-rogi-lodowy-szczyt-2026'])
 assert.equal(galleryData.filter(x=>!['video-frames','trip-photos'].includes(x.mediaKind)).reduce((n,g)=>n+g.photos.length,0),284)
-assert.equal(sitePages.length,53)
+assert.equal(sitePages.length,53 + summitPages.length)
 console.log('PASS: two winter DJI galleries, 40 unique frames, dates, film/region/year associations, existing summer trip preserved, responsive assets and metadata.')

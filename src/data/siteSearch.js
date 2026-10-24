@@ -12,6 +12,7 @@ import routeCatalog from './routeCatalog.json' with { type: 'json' }
 import { routeHref } from './routeAtlas.js'
 import { tripRoutes } from './tripRoutes.js'
 import { seasonYears } from './seasons.js'
+import { findSummitPage, summitPageHref } from './summitPages.js'
 
 export const searchKinds = [{ id:'all', label:'Wszystko' }, { id:'place', label:'Miejsca' }, { id:'route', label:'Trasy' }, { id:'expedition', label:'Wyprawy' }, { id:'gallery', label:'Galerie' }, { id:'film', label:'Filmy' }, { id:'season', label:'Sezony' }]
 export const normalizeSearch = value => normalizeFilmSearch(value || '').replace(/[^a-z0-9]+/g,' ').trim()
@@ -36,7 +37,9 @@ export const siteSearchIndex = [
   ...routeCatalog.map(row => entry({ id:`route:${row.id}`, kind:'route', title:`${tripRoutes[row.id].title} — trasa`, href:routeHref(row, tripRoutes[row.id]), subtitle:`${row.region} · ${tripRoutes[row.id].dates}`, keywords:`GPX profil wysokości mapa trasy ${tripRoutes[row.id].intro} ${row.country} ${tripRoutes[row.id].peaks.map(peak => peak.name || '').join(' ')}` })),
   ...atlasContentNodes.filter(place => place.id !== 'world' && hasAtlasMaterials(place.id)).map(place => {
     const materials = getAtlasMaterials(place.id)
-    return entry({ id:`place:${place.id}`, kind:'place', title:place.name, href:atlasHref(place.id), subtitle:[place.kind, materials.galleries.length && `${materials.galleries.length} wyp.`, materials.films.length && `${materials.films.length} film.`].filter(Boolean).join(' · '), keywords:`${placeWords([place.id])} ${place.description || ''}` })
+    const summitPage = findSummitPage(place.id)
+    const result = entry({ id:`place:${place.id}`, kind:'place', title:place.name, href:summitPageHref(place.id) || atlasHref(place.id), subtitle:summitPage ? `${place.kind} · opisane wejścia, materiały i trasy` : [place.kind, materials.galleries.length && `${materials.galleries.length} wyp.`, materials.films.length && `${materials.films.length} film.`].filter(Boolean).join(' · '), keywords:`${placeWords([place.id])} ${place.description || ''}` })
+    return summitPage ? { ...result, actions: [...result.actions, { href: atlasHref(place.id), label: 'Na mapie' }] } : result
   }),
   ...expeditionPages.map(trip => entry({ id:`expedition:${trip.id}`, kind:'expedition', title:`${trip.title} ${trip.year}`, href:expeditionHref(trip), subtitle:`${trip.region} · ${trip.kind}`, image:trip.gallery.coverImage, keywords:`${trip.description} ${placeWords(galleryAtlasIds(trip.gallery))}` })),
   ...photoGalleries.map(gallery => entry({ id:`gallery:${gallery.id}`, kind:'gallery', title:`${gallery.title} ${gallery.year}`, href:galleryHref(gallery), subtitle:galleryItemCount(gallery), image:gallery.coverImage, keywords:`${placeWords(galleryAtlasIds(gallery))} ${gallery.sourceLabel || ''}` })),
