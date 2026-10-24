@@ -1,0 +1,92 @@
+[
+  {
+    "summit": "gerlach",
+    "year": "all",
+    "target": "/wyprawy/gerlach-zima-2025#kadry"
+  },
+  {
+    "summit": "gerlach",
+    "year": "all",
+    "target": "/trasy?trasa=gerlach-zima-2025#profil"
+  },
+  {
+    "summit": "gerlach",
+    "year": "all",
+    "target": "/trasy?trasa=gerlach-2024#profil"
+  },
+  {
+    "summit": "gerlach",
+    "year": "2024",
+    "target": "/trasy?trasa=gerlach-2024#profil"
+  },
+  {
+    "summit": "gerlach",
+    "year": "2025",
+    "target": "/wyprawy/gerlach-zima-2025#kadry"
+  },
+  {
+    "summit": "gerlach",
+    "year": "2025",
+    "target": "/trasy?trasa=gerlach-zima-2025#profil"
+  },
+  {
+    "summit": "baranie-rogi",
+    "year": "all",
+    "target": "/galerie/baranie-rogi-lodowy-szczyt-2026"
+  },
+  {
+    "summit": "baranie-rogi",
+    "year": "all",
+    "target": "/wyprawy/baranie-rogi-zima-2025#kadry"
+  },
+  {
+    "summit": "baranie-rogi",
+    "year": "all",
+    "target": "/trasy?trasa=baranie-rogi-lato-2026#profil"
+  },
+  {
+    "summit": "baranie-rogi",
+    "year": "all",
+    "target": "/trasy?trasa=baranie-rogi-zima-2025#profil"
+  },
+  {
+    "summit": "baranie-rogi",
+    "year": "2025",
+    "target": "/wyprawy/baranie-rogi-zima-2025#kadry"
+  },
+  {
+    "summit": "baranie-rogi",
+    "year": "2025",
+    "target": "/trasy?trasa=baranie-rogi-zima-2025#profil"
+  },
+  {
+    "summit": "baranie-rogi",
+    "year": "2026",
+    "target": "/galerie/baranie-rogi-lodowy-szczyt-2026"
+  },
+  {
+    "summit": "baranie-rogi",
+    "year": "2026",
+    "target": "/trasy?trasa=baranie-rogi-lato-2026#profil"
+  },
+  {
+    "summit": "dufourspitze",
+    "year": "all",
+    "target": "/wyprawy/alpy-2026#alpy-dufourspitze"
+  },
+  {
+    "summit": "dufourspitze",
+    "year": "all",
+    "target": "/trasy?trasa=dufourspitze#profil"
+  },
+  {
+    "summit": "dufourspitze",
+    "year": "2026",
+    "target": "/wyprawy/alpy-2026#alpy-dufourspitze"
+  },
+  {
+    "summit": "dufourspitze",
+    "year": "2026",
+    "target": "/trasy?trasa=dufourspitze#profil"
+  }
+]

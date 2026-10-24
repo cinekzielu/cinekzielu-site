@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 import { createHash } from 'node:crypto'
-import { atlasContentNodes, atlasNodeById, atlasAncestry, atlasListNodes, getAtlasMaterials, readAtlasSelection, searchAtlasNodes } from '../src/data/atlasContent.js'
+import { atlasContentNodes, atlasNodeById, atlasAncestry, atlasListNodes, getAtlasMaterials, readAtlasSelection, readAtlasYear, searchAtlasNodes } from '../src/data/atlasContent.js'
 import { filmCatalog } from '../src/data/filmCatalog.js'
 import { moroccoPlaces, moroccoMapPlaces, moroccoPosition, moroccoTerrainLocations, atlasFilmHref } from '../src/data/moroccoPlaces.js'
 import { mercator, unproject } from '../src/data/terrainMap.js'
@@ -17,6 +17,17 @@ for (const node of atlasContentNodes) {
 }
 assert.equal(readAtlasSelection('?atlas=unknown'), 'world')
 assert.equal(readAtlasSelection('?atlas=%3Cscript%3E'), 'world')
+// Untrusted direct links must not resolve inherited Object properties as places.
+for (const id of Object.getOwnPropertyNames(Object.prototype)) {
+  for (const suffix of ['', '&rok=2025', '&rok=invalid&obszar=constructor']) {
+    const search = `?atlas=${encodeURIComponent(id)}${suffix}`
+    const selected = readAtlasSelection(search)
+    assert.equal(selected, 'world', search)
+    assert.equal(readAtlasYear(search), 'all', search)
+    assert.deepEqual(getAtlasMaterials(selected), getAtlasMaterials('world'), search)
+  }
+}
+
 assert.equal(searchAtlasNodes('konczysta')[0].id, 'konczysta')
 assert.equal(searchAtlasNodes('murren')[0].id, 'murren-gimmelwald')
 for (const [id, expected] of Object.entries({ world: [29, 21, 490], europe: [27, 20, 450], poland: [8, 7, 127], tatry: [16, 14, 256], krywan: [0, 1, 8], 'zabi-kon': [1, 1, 13], switzerland: [8, 2, 84], alpy: [8, 2, 84], morocco: [2, 1, 40], konczysta: [1, 1, 24], koscielec: [2, 1, 17], swinica: [2, 2, 29], 'baranie-rogi': [2, 2, 34], 'lodowy-szczyt': [1, 1, 14], 'durny-szczyt': [1, 1, 24], lomnica: [1, 1, 24], romania: [0, 1, 30], gerlach: [0, 1, 22], 'lodowa-kopa': [1, 1, 14], 'szpiglasowy-wierch': [1, 2, 36], 'huncowski-szczyt': [1, 1, 20], 'kiezmarski-szczyt': [1, 1, 20], 'walentkowy-wierch': [1, 1, 21], 'walentkowa-gran': [1, 1, 21], gorce: [0, 1, 16], turbacz: [0, 1, 16] })) {

@@ -29,6 +29,19 @@ assert.equal(readAtlasContext('?atlas=saxer-lucke&obszar=alpy'),'alpy')
 assert.equal(readAtlasContext('?atlas=koscielec&obszar=poland'),'poland')
 assert.equal(readAtlasContext('?atlas=rabat&obszar=switzerland'),null)
 assert.equal(readAtlasContext('?atlas=saxer-lucke&obszar=unknown'),null)
+// A rejected map context must not change the year parsed from the same URL.
+for (const [id, year, unrelated] of [['gerlach', '2024', 'morocco'], ['etna', '2025', 'tatry'], ['dufourspitze', '2026', 'morocco']]) {
+  const base = `?atlas=${id}&rok=${year}`
+  const search = `${base}&obszar=${unrelated}`
+  assert.equal(readAtlasContext(search), null)
+  assert.equal(readAtlasYear(search), readAtlasYear(base), search)
+}
+for (const [id, scope, year] of [['dufourspitze','alpy','2026'], ['saxer-lucke','alpy','2025'], ['koscielec','poland','2026']]) {
+  const search = `?atlas=${id}&obszar=${scope}&rok=${year}`
+  assert.equal(readAtlasContext(search), scope)
+  assert.equal(readAtlasYear(search), year)
+}
+
 assert.equal(atlasHref('saxer-lucke','2025','alpy'),'/mapa?atlas=saxer-lucke&rok=2025&obszar=alpy')
 for (const region of ['szwajcaria','alpy']) {
   assert.equal(filterFilms(region,'').length,8)
