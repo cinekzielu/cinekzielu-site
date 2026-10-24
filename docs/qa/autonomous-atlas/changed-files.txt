@@ -1,0 +1,4 @@
+docs/AUTONOMOUS_ATLAS_REVIEW.md
+docs/qa/autonomous-atlas/combined-build.log
+docs/qa/autonomous-atlas/combined-check-results.json
+docs/qa/autonomous-atlas/changed-files.txt
