@@ -1,3 +1,4 @@
+import { readAtlasContext } from './atlasTerrain.js'
 import { supplementalSummitPlaces } from './supplementalSummitPlaces.js'
 import { summits } from './summits.js'
 import { summitRoutes } from './relatedRoutes.js'
@@ -129,7 +130,8 @@ export const atlasYears = id => {
 export const readAtlasYear = (search = window.location.search) => {
   const params = new URLSearchParams(search), year = params.get('rok'), id = readAtlasSelection(search)
   if (atlasNodeById[id].status === 'planned' || id === 'world' || atlasNodeById[id].kind === 'Kontynent') return 'all'
-  const context = atlasNodeById[params.get('obszar')]
+  // Use the same validated context as the map; unrelated areas cannot select a year.
+  const context = atlasNodeById[readAtlasContext(search)]
   const scope = context && ['Kraj','Region'].includes(context.kind) ? context.id : [...atlasAncestry(id)].reverse().find(node => ['Kraj','Region'].includes(node.kind))?.id || id
   return atlasYears(scope).includes(year) ? year : 'all'
 }
