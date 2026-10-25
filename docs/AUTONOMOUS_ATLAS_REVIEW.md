@@ -1,5 +1,10 @@
 # Autonomiczny audyt atlasu — 24.10.2026
 
+## Audyt 25.10.2026 — powiązania GPX
+
+[Audyt i kontrola regresji](ATLAS_ROUTE_LINKS_REVIEW.md): 408 powiązań w 204 zestawieniach miejsca/roku, 37 tras, 18 celów wypraw. Bez nowego błędu aplikacji. Build i 51/51 kontroli PR187 oraz 54/54 po połączeniu: PASS; browser QA nadal otwarte.
+
+
 ## Poprawka 25.10.2026 — opis materiałów GPX
 
 Lista miejsc uwzględnia teraz GPX zamiast błędnego „Brak materiałów” przy szczytach bez zdjęć/filmów. [Dowód i aktualne wyniki](ATLAS_MATERIAL_LABEL_REVIEW.md): build i 51/51 kontroli PR187 oraz 54/54 po połączeniu z PR185/186. Browser QA nadal otwarte.
