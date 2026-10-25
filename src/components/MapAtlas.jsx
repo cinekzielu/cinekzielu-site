@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { galleryHref, galleryItemCount, galleryMediaLabel, galleryLinkLabel } from '../data/galleryNavigation'
 import { Search, Play, Mountain } from 'lucide-react'
 import { atlasContentNodes, atlasNodeById, atlasQuickIds, readAtlasSelection, atlasAncestry, atlasListNodes, getAtlasMaterials, hasAtlasMaterials, searchAtlasNodes, atlasYears, readAtlasYear } from '../data/atlasContent'
+import { atlasMaterialLabel } from '../data/atlasMaterialLabel'
 import { AtlasEmptyResults } from './AtlasEmptyResults'
 import { TatryExplorer } from './TatryExplorer'
 import { AfricaMap } from './AfricaMap'
@@ -314,7 +315,7 @@ export function MapAtlas({ standalone = false }) {
           <div className="cz-atlas-search"><Search size={16} aria-hidden="true" /><input ref={searchInputRef} type="search" aria-label="Szukaj miejsca na mapie" placeholder="Szukaj miejsca…" value={query} onChange={event => setQuery(event.target.value)} /></div>
           <div className="cz-atlas-place-list" role="group" aria-label="Miejsca na mapie">{listed.map(node => {
             const data = getAtlasMaterials(node.id, year)
-            return <button type="button" key={node.id} className={node.status === 'planned' ? 'is-planned' : undefined} aria-pressed={node.id === selectedId} onClick={() => select(node.id)}><span>{node.status === 'planned' && '☆ '}{node.name}</span><small>{node.status === 'planned' ? 'W planach' : data.films.length || data.galleries.length ? [data.galleries.length && typeLabel(data.galleries.length, 'wyprawa', 'wyprawy', 'wypraw'), data.films.length && filmLabel(data.films.length)].filter(Boolean).join(' · ') : 'Brak materiałów'}</small></button>
+            return <button type="button" key={node.id} className={node.status === 'planned' ? 'is-planned' : undefined} aria-pressed={node.id === selectedId} onClick={() => select(node.id)}><span>{node.status === 'planned' && '☆ '}{node.name}</span><small>{node.status === 'planned' ? 'W planach' : atlasMaterialLabel(data)}</small></button>
           })}</div>
           {!listed.length && <AtlasEmptyResults query={query} year={year} onlyMaterials={onlyMaterials}
             onClearQuery={() => { setQuery(''); searchInputRef.current?.focus({ preventScroll: true }) }}

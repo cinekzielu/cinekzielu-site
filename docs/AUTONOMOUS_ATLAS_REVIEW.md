@@ -1,5 +1,10 @@
 # Autonomiczny audyt atlasu — 24.10.2026
 
+## Poprawka 25.10.2026 — opis materiałów GPX
+
+Lista miejsc uwzględnia teraz GPX zamiast błędnego „Brak materiałów” przy szczytach bez zdjęć/filmów. [Dowód i aktualne wyniki](ATLAS_MATERIAL_LABEL_REVIEW.md): build i 51/51 kontroli PR187 oraz 54/54 po połączeniu z PR185/186. Browser QA nadal otwarte.
+
+
 ## Dodatek 25.10.2026 — puste wyniki
 
 Kontekstowe przyciski odzyskiwania wyników atlasu: [zakres i aktualne testy](ATLAS_EMPTY_RESULTS_REVIEW.md). Build oraz 50/50 kontroli PR187 i 53/53 po połączeniu z PR185/186: PASS. Browser QA pozostaje otwarte. Poniżej historia wcześniejszych prac.

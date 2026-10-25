@@ -1,5 +1,6 @@
 docs/ATLAS_EMPTY_RESULTS_REVIEW.md
 docs/ATLAS_HELP_REVIEW.md
+docs/ATLAS_MATERIAL_LABEL_REVIEW.md
 docs/AUTONOMOUS_ATLAS_REVIEW.md
 docs/qa/atlas-empty-results/build.log
 docs/qa/atlas-empty-results/checks.json
@@ -8,6 +9,11 @@ docs/qa/atlas-empty-results/combined-checks.json
 docs/qa/atlas-help/build.log
 docs/qa/atlas-help/combined-build.log
 docs/qa/atlas-help/validation.json
+docs/qa/atlas-material-label/before.log
+docs/qa/atlas-material-label/build.log
+docs/qa/atlas-material-label/checks.json
+docs/qa/atlas-material-label/combined-build.log
+docs/qa/atlas-material-label/combined-checks.json
 docs/qa/autonomous-atlas/changed-files.txt
 docs/qa/autonomous-atlas/combined-build.log
 docs/qa/autonomous-atlas/combined-check-results.json
@@ -26,6 +32,7 @@ docs/qa/autonomous-atlas/quality-check-results.json
 docs/qa/autonomous-atlas/summit-link-audit.json
 scripts/check-atlas-empty-results.mjs
 scripts/check-atlas-help.mjs
+scripts/check-atlas-material-label.mjs
 scripts/check-atlas-view-state.mjs
 scripts/check-atlas.mjs
 scripts/check-unified-atlas.mjs
@@ -38,3 +45,4 @@ src/components/MapAtlas.jsx
 src/components/MapPage.jsx
 src/data/atlasContent.js
 src/data/atlasHelp.js
+src/data/atlasMaterialLabel.js
