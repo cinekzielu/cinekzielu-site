@@ -2,6 +2,7 @@ import { readAtlasContext } from './atlasTerrain.js'
 import { supplementalSummitPlaces } from './supplementalSummitPlaces.js'
 import { summits } from './summits.js'
 import { summitRoutes } from './relatedRoutes.js'
+import routeCatalog from './routeCatalog.json' with { type: 'json' }
 import { tripRoutes } from './tripRoutes.js'
 import { plannedSummits } from './plannedSummits.js'
 import { travelAtlasData } from './travelData.js'
@@ -67,6 +68,10 @@ export const atlasContentNodes = [
   ...moroccoPlaces.map(place => ({...place, view:'terrain'})),
 ]
 
+// Existing non-summit Swiss destinations and their already published recordings.
+const placeRouteIds = { 'saxer-lucke': ['saxer-lucke-2025'], 'murren-gimmelwald': ['murren-2025'], zermatt: ['zermatt-2025'] }
+for (const node of atlasContentNodes) if (Object.hasOwn(placeRouteIds, node.id)) node.routeIds = placeRouteIds[node.id]
+
 // The ascent register supplies confirmed film associations and official heights.
 for (const summit of summits) {
   const node = atlasContentNodes.find(node => node.id === summit.id)
@@ -112,7 +117,9 @@ export function getAtlasMaterials(id, year = 'all') {
   if (range) for (const peak of summits) if (peak.range === range) placeIds.add(peak.id)
   const registered = summits.filter(peak => node.all || placeIds.has(peak.id))
   const ascents = registered.flatMap(peak => peak.ascents).filter(a => year === 'all' || (a.year || 'undated') === year)
-  const routes = [...new Map(registered.flatMap(peak => summitRouteIndex.get(peak.id).filter(row => year === 'all' || row.sortDate.slice(0,4) === year)).map(row => [row.id, { ...row, title: tripRoutes[row.id].title, dates: tripRoutes[row.id].dates }])).values()].sort((a,b) => b.sortDate.localeCompare(a.sortDate))
+  const directIds = new Set((node.all ? atlasContentNodes : [...placeIds].map(place => atlasNodeById[place]).filter(Boolean)).flatMap(place => place.routeIds || []))
+  const routeRows = [...registered.flatMap(peak => summitRouteIndex.get(peak.id)), ...routeCatalog.filter(row => directIds.has(row.id))]
+  const routes = [...new Map(routeRows.filter(row => year === 'all' || row.sortDate.slice(0,4) === year).map(row => [row.id, { ...row, title: tripRoutes[row.id].title, dates: tripRoutes[row.id].dates }])).values()].sort((a,b) => b.sortDate.localeCompare(a.sortDate))
   const placeFilms = new Set([...placeIds].flatMap(place => atlasNodeById[place]?.filmIds || []))
   const tripIds = new Set(galleryData.filter(gallery => galleryAtlasIds(gallery).some(place => placeIds.has(place))).map(gallery => gallery.id))
   for (const ascent of ascents) if (ascent.tripId) tripIds.add(ascent.tripId)

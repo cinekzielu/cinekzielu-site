@@ -1,4 +1,5 @@
 docs/ATLAS_EMPTY_RESULTS_REVIEW.md
+docs/ATLAS_FINAL_REVIEW.md
 docs/ATLAS_HELP_REVIEW.md
 docs/ATLAS_MATERIAL_LABEL_REVIEW.md
 docs/ATLAS_ROUTE_LINKS_REVIEW.md
@@ -7,6 +8,10 @@ docs/qa/atlas-empty-results/build.log
 docs/qa/atlas-empty-results/checks.json
 docs/qa/atlas-empty-results/combined-build.log
 docs/qa/atlas-empty-results/combined-checks.json
+docs/qa/atlas-final/build.log
+docs/qa/atlas-final/checks.json
+docs/qa/atlas-final/combined-build.log
+docs/qa/atlas-final/combined-checks.json
 docs/qa/atlas-help/build.log
 docs/qa/atlas-help/combined-build.log
 docs/qa/atlas-help/validation.json

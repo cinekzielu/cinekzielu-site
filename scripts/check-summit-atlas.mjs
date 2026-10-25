@@ -87,3 +87,12 @@ for (const node of atlasContentNodes) for (const year of ['all', ...atlasYears(n
   }
 }
 console.log(`PASS: ${scopes} atlas place/year scopes, ${links} GPX associations, ${uniqueRoutes.size} unique routes and ${expeditionTargets.size} built expedition targets. Parser/HTML checks, not browser navigation.`)
+
+for (const [place, route] of [['saxer-lucke','saxer-lucke-2025'],['murren-gimmelwald','murren-2025'],['zermatt','zermatt-2025']]) {
+  assert.deepEqual(getAtlasMaterials(place, '2025').routes.map(row => row.id), [route])
+  assert.equal(getAtlasMaterials(place, '2026').routes.length, 0)
+  for (const scope of ['switzerland','alpy','europe','world']) assert(getAtlasMaterials(scope, '2025').routes.some(row => row.id === route), `${scope}/${route}`)
+  assert.equal(summitRoutes(place).length, 0, 'Place link must not invent a summit ascent')
+}
+assert(!getAtlasMaterials('lodowy-szczyt').routes.some(row => row.id === 'lodowy-proba-2024'))
+console.log('PASS: three explicit Swiss place routes, year and ancestor scopes, no invented summit ascents.')
