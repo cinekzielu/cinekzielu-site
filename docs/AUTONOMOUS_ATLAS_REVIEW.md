@@ -1,5 +1,10 @@
 # Autonomiczny audyt atlasu — 24.10.2026
 
+## Dodatek 25.10.2026 — puste wyniki
+
+Kontekstowe przyciski odzyskiwania wyników atlasu: [zakres i aktualne testy](ATLAS_EMPTY_RESULTS_REVIEW.md). Build oraz 50/50 kontroli PR187 i 53/53 po połączeniu z PR185/186: PASS. Browser QA pozostaje otwarte. Poniżej historia wcześniejszych prac.
+
+
 ## Dalszy dodatek po zakończeniu audytu
 
 Po nowej prośbie użytkownika dodano domyślnie zwiniętą pomoc atlasu i trzy istniejące widoki z filtrami. [Bieżący zakres, testy i ograniczenia](ATLAS_HELP_REVIEW.md). Build i 49 kontroli samego pakietu oraz build i 52 kontrole po połączeniu z PR185/186: PASS. Wcześniejsza luka browser QA nadal otwarta. Poniżej pozostaje historia poprzednich etapów.

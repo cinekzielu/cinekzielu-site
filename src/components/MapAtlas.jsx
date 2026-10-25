@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { galleryHref, galleryItemCount, galleryMediaLabel, galleryLinkLabel } from '../data/galleryNavigation'
 import { Search, Play, Mountain } from 'lucide-react'
 import { atlasContentNodes, atlasNodeById, atlasQuickIds, readAtlasSelection, atlasAncestry, atlasListNodes, getAtlasMaterials, hasAtlasMaterials, searchAtlasNodes, atlasYears, readAtlasYear } from '../data/atlasContent'
+import { AtlasEmptyResults } from './AtlasEmptyResults'
 import { TatryExplorer } from './TatryExplorer'
 import { AfricaMap } from './AfricaMap'
 import { FilmLink } from './SiteTools'
@@ -138,6 +139,7 @@ const continentMeta = [
 export function MapAtlas({ standalone = false }) {
   const [selectedId, setSelectedId] = useState(readAtlasSelection)
   const [year, setYear] = useState(readAtlasYear)
+  const searchInputRef = useRef(null)
   const [contextId, setContextId] = useState(() => readAtlasContext(window.location.search))
   const [showAllFilms, setShowAllFilms] = useState(false)
   const [showAllTrips, setShowAllTrips] = useState(false)
@@ -309,12 +311,15 @@ export function MapAtlas({ standalone = false }) {
         {view !== 'tatry' && <><button type="button" className="cz-atlas-mobile-materials" onClick={showPanel}><span>{selected.name}<small>{summary}</small></span><span>{selected.status === 'planned' ? 'Cel ↓' : 'Materiały ↓'}</span></button>
         <div className="cz-atlas-picker">
           <div className="cz-atlas-picker-heading"><h3>Wybierz miejsce</h3><label><input type="checkbox" checked={onlyMaterials} onChange={event => setOnlyMaterials(event.target.checked)} /> {listed.some(node => node.status === 'planned') ? 'Materiały i plany' : 'Z materiałami'}</label></div>
-          <div className="cz-atlas-search"><Search size={16} aria-hidden="true" /><input type="search" aria-label="Szukaj miejsca na mapie" placeholder="Szukaj miejsca…" value={query} onChange={event => setQuery(event.target.value)} /></div>
+          <div className="cz-atlas-search"><Search size={16} aria-hidden="true" /><input ref={searchInputRef} type="search" aria-label="Szukaj miejsca na mapie" placeholder="Szukaj miejsca…" value={query} onChange={event => setQuery(event.target.value)} /></div>
           <div className="cz-atlas-place-list" role="group" aria-label="Miejsca na mapie">{listed.map(node => {
             const data = getAtlasMaterials(node.id, year)
             return <button type="button" key={node.id} className={node.status === 'planned' ? 'is-planned' : undefined} aria-pressed={node.id === selectedId} onClick={() => select(node.id)}><span>{node.status === 'planned' && '☆ '}{node.name}</span><small>{node.status === 'planned' ? 'W planach' : data.films.length || data.galleries.length ? [data.galleries.length && typeLabel(data.galleries.length, 'wyprawa', 'wyprawy', 'wypraw'), data.films.length && filmLabel(data.films.length)].filter(Boolean).join(' · ') : 'Brak materiałów'}</small></button>
           })}</div>
-          {!listed.length && <p className="cz-atlas-empty-search" role="status">{year === 'all' ? 'Brak wyników. Zmień nazwę lub wyłącz filtr „Z materiałami”.' : 'Brak oznaczonych miejsc dla tego roku. Wybierz inny rok lub wszystkie lata.'}</p>}
+          {!listed.length && <AtlasEmptyResults query={query} year={year} onlyMaterials={onlyMaterials}
+            onClearQuery={() => { setQuery(''); searchInputRef.current?.focus({ preventScroll: true }) }}
+            onAllYears={() => { select(selectedId, 'all'); searchInputRef.current?.focus({ preventScroll: true }) }}
+            onAllPlaces={() => { setOnlyMaterials(false); searchInputRef.current?.focus({ preventScroll: true }) }} />}
         </div></>}
       </div>
       <aside className="cz-atlas-detail" ref={panelRef} tabIndex={-1} aria-label={`Materiały: ${selected.name}`}>
