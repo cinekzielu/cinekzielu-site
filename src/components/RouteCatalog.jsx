@@ -1,4 +1,5 @@
 import React, { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
+import { RouteLinkNotice } from './RouteLinkNotice'
 import { CollectionShell } from './CollectionShell'
 import { SaveButton } from './SavedItems'
 import { TripRoute } from './TripRoute'
@@ -99,6 +100,7 @@ export function RouteCatalog() {
   return <CollectionShell section="wyprawy" detail className="cz-routes">
     <div className="cz-gallery-intro"><h1>Trasy</h1><span className="cz-gallery-count">{catalog.length} tras GPX · {routeRegions.join(' · ')}</span></div>
     <p className="cz-route-catalog-intro">Moje przejścia na mapie. Wybierz trasę, zobacz jej przebieg albo porównaj dwa profile wysokości.</p>
+    <RouteLinkNotice search={searchRef.current} outsideArea={areaReady && Boolean(requestedSelected) && !selected} />
     <ComparisonPicks state={state} onSelect={pick => {
       update({ compare: pick.compare, compareDays: pick.compareDays }, '#porownanie')
       requestAnimationFrame(() => {
