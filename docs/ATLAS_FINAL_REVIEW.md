@@ -1,5 +1,7 @@
 # Pakiet atlasu do wspólnego przeglądu — 25.10.2026
 
+**Nowszy zakres z26.10:** [wyszukiwanie po regionie/kraju i obsługa łączników](ATLAS_GEOGRAPHIC_SEARCH_REVIEW.md).
+
 **Kontynuacja z26.10:** [odzyskiwanie pustych wyników w osobnym atlasie Tatr, aktualne testy i ograniczenia](TATRY_EMPTY_RESULTS_REVIEW.md). Poniżej zachowano historyczny raport serii z25.10.
 
 Wynik zapisany w draft PR187, gałąź `codex/atlas-autonomous-quality`. Przygotowanie zakończone; nie scalać ani nie publikować bez osobnej decyzji użytkownika i uzupełnienia UI QA.

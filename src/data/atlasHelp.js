@@ -8,7 +8,7 @@ export const atlasHelpViews = [
 export const atlasHelpTopics = [
   {
     title: 'Wybierz miejsce i rok',
-    text: 'Zacznij od kraju lub pasma, potem wybierz miejsce na mapie albo wyszukaj je po nazwie. Pole „Rok wyprawy” zawęża materiały. „Wszystkie lata” przywraca pełny wybór.',
+    text: 'Zacznij od kraju lub pasma, potem wybierz miejsce na mapie albo wyszukaj je po nazwie. Możesz połączyć region z nazwą, np. „Alpy Triglav”. Pole „Rok wyprawy” zawęża materiały. „Wszystkie lata” przywraca pełny wybór.',
   },
   {
     title: 'Otwórz materiały lub trasę',
