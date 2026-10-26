@@ -4,6 +4,7 @@ docs/ATLAS_HELP_REVIEW.md
 docs/ATLAS_MATERIAL_LABEL_REVIEW.md
 docs/ATLAS_ROUTE_LINKS_REVIEW.md
 docs/AUTONOMOUS_ATLAS_REVIEW.md
+docs/TATRY_EMPTY_RESULTS_REVIEW.md
 docs/qa/atlas-empty-results/build.log
 docs/qa/atlas-empty-results/checks.json
 docs/qa/atlas-empty-results/combined-build.log
@@ -40,6 +41,10 @@ docs/qa/autonomous-atlas/invalid-id-before.log
 docs/qa/autonomous-atlas/quality-build.log
 docs/qa/autonomous-atlas/quality-check-results.json
 docs/qa/autonomous-atlas/summit-link-audit.json
+docs/qa/tatry-empty-results/build.log
+docs/qa/tatry-empty-results/checks.json
+docs/qa/tatry-empty-results/combined-build.log
+docs/qa/tatry-empty-results/combined-checks.json
 scripts/check-atlas-empty-results.mjs
 scripts/check-atlas-help.mjs
 scripts/check-atlas-material-label.mjs
@@ -54,6 +59,7 @@ src/components/AtlasHelp.jsx
 src/components/AtlasOverview.jsx
 src/components/MapAtlas.jsx
 src/components/MapPage.jsx
+src/components/TatryExplorer.jsx
 src/data/atlasContent.js
 src/data/atlasHelp.js
 src/data/atlasMaterialLabel.js
