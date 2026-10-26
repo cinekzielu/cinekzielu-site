@@ -4,11 +4,14 @@ import { photoViewId } from './photoView.js'
 import { tripRoutes } from './tripRoutes.js'
 import routeCatalog from './routeCatalog.json' with { type: 'json' }
 import { canonicalRouteId } from './routeAliases.js'
+import { filmCatalog, filmRegionLabel } from './filmCatalog.js'
 
 // Store stable content IDs only. Titles, links and images always come from the
 // current catalog, never from browser storage.
 export const SAVED_STORAGE_KEY = 'cz.saved.v1'
 export const savedCatalog = [
+  ...filmCatalog.map(film => ({ key:`film:${film.youtubeId}`, id:film.youtubeId, type:'film', title:film.title,
+    detail:`${filmRegionLabel(film.region)} · ${film.format} · ${film.duration}`, href:film.youtubeUrl })),
   ...expeditionPages.map(trip => ({
     key: `trip:${trip.id}`, id: trip.id, type: 'trip', title: trip.title,
     detail: `${trip.region} · ${trip.year}`, href: `/wyprawy/${trip.id}`,

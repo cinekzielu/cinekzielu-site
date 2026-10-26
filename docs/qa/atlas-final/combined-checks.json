@@ -1,0 +1,326 @@
+[
+  {
+    "script": "scripts/check-alps-atlas.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: five sourced summits/countries, activity facts and chapter links, year isolation, no duplicate materials, filters and search.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-alps-destination.mjs",
+    "exitCode": 0,
+    "stdout": "Alps: year isolation, verified source links, counts, search and prerender passed.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-alps-story.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: five confirmed summits in order, four pauses, three-day Dufour block, exact activity totals, 24 existing photos, five map sources, legacy anchors and unpublished episode status.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-atlas-empty-results.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: 12 empty-result states, contextual recovery callbacks, native buttons and separate status message. No browser QA.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-atlas-help.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: native atlas help in initial HTML, valid filtered examples with existing materials, catalogue target and one H1.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-atlas-material-label.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: six real GPX-only summits, 204 place/year summaries, true empty states and Polish labels.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-atlas-view-state.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: bounded map view URLs, subpixel coordinate round trips, country/area/year/filter preservation, invalid links ignored and unrelated parameters excluded.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-atlas.mjs",
+    "exitCode": 0,
+    "stdout": "Atlas OK: 95 places, 12 Morocco chapter links, continent land/sea hit areas, source fingerprints and verified material counts.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-browse-memory.mjs",
+    "exitCode": 0,
+    "stdout": "Browse memory OK: unique history entries, state preservation, nested return chain, modifier/external links, storage-disabled fallback.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-combined-route.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: complete three-stage track, exact distances, separate segments, official peak height, no duplicate catalog entries, legacy links and saved-item migration.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-country-outlines.mjs",
+    "exitCode": 0,
+    "stdout": "Country outlines OK: 15 countries, geographic containment, closed rings, viewport alignment after pan/zoom, separate regions.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-directions-browse.mjs",
+    "exitCode": 0,
+    "stdout": "Directions OK: six destinations, country-specific GPX, existing films and photography separation; same-origin return URLs and labels.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-dufour-route.mjs",
+    "exitCode": 0,
+    "stdout": "Dufour GPX: valid compact data, preserved gaps/distances, shared terrain projection at desktop/mobile and chapter integration passed.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-durny-romania.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: Durny/Łomnica links, Romania archive separation, country/year filters, assets and oldest-first-year boundary.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-film-library.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: format and duration combinations, hour-long films, disjoint boundaries, Polish search, country compatibility, URL round trips and invalid filter defaults.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-malolaczniak-giewont.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: identified GPX, four summit links, country/year contexts, original-name search, sanitized track and official heights.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-morocco-gallery.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: Morocco 40 unique DJI frames, responsive exports, two film links, country/year filters, search, sharing metadata and 284 photos kept separate.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-morocco-story.mjs",
+    "exitCode": 0,
+    "stdout": "Morocco story: 10 chapters, 12 existing places, 14 existing frames, timestamps and all image variants verified.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-msw-wysoka.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: two trips, five existing summit links, separate years, two verified July films, no summer/winter video mix or documentary photos in photography galleries.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-photo-film-separation.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: photo-only galleries/search/sitemap, four frame deep links and legacy redirects, newest-first homepage/list/filter order without input mutation.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-photo-view.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: stable unique photo links across galleries/portfolio/collections, reorder resilience, unrelated URL context, unknown ids and responsive aspect-preserving fit.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-planned-summits.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: goals isolated from 43 summits/50 ascents and media; country/region pins, year filters, search and share status.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-prerender.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: 56 substantive pages + 382 contextual share responses, 43 crawlable peaks, 754 local assets, 147 internal targets, correct initial metadata/bootstrap, sitemap and 404; 14.59 MiB total HTML.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-related-expeditions.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: same-area recommendations, winter grouping, summer peers, Swiss/Alps pair, isolated regions, no self/duplicates, deterministic order and no catalogue mutation.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-related-routes.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: 42 deterministic suggestions, explicit summit/season links, day-aware comparison, filters, unknowns and unchanged source registers.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-release.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: 56 unique page heads, sharing images, sitemap, 404, 17 legacy aliases, gallery/film links and hero size.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-route-area-filters.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: viewport bounds, segment intersection, GPS gaps, material provenance, recording year, URL and comparison preservation; Zermatt matches: dufourspitze, zermatt-2025\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-route-atlas.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: ascent noise and gaps, URL validation/history state, all real tracks, shared distance/elevation scales and server-rendered list.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-route-browsing.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: list sorting, stable URL/history/share state, distinct days of one journey, aliases, unchanged catalogs and verified Alps photo groups.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-route-catalog.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: all real routes, dates, GPS distances, summit heights, recording gaps, search, anchors, structured data and correctly separated seasonal material.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-route-days.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: three complete journeys, six day views, rebased distances, preserved samples/gaps, correct peaks, aliases and shareable day comparisons.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-route-filters.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: actual filtered routes, combined empty results, exact boundaries, invalid values, filtered selection and shared cross-filter comparisons.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-route-loading.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: request scope, spatial filtering and comparison, shared pending/resolved downloads, HTTP/JSON/data recovery, timeout, all 42 source recordings.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-route-summary-card.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: filtered totals, merged-route deduplication, all 42 card geometries and recording gaps.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-route-viewer-photos.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: 42 existing routes, original photo associations, unified Alps groups, Baranie day filtering and missing-material fallback.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-routes-seasons-photos.mjs",
+    "exitCode": 0,
+    "stdout": "2026: 10 trips, 18 distinct peaks, 18 ascents, 217 photographs, 12 GPX\n2025: 10 trips, 19 distinct peaks, 19 ascents, 67 photographs, 21 GPX\nPASS: stage assignments, distinct year statistics, SEO/search.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-saved-items.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: 347 unique bookmarks, browser data validation, stable photo identity, video separation, comparison selection, private noindex page.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-sharing.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: 284 exact photo previews, 3 collections, 95 published atlas links; route preservation, export dimensions, excluded materials and structured data.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-site-tools.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: 197 search entries, every route and verified chapter, Polish queries and safe film links.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-story-photos.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: 46 new documentary photos, 12 Alps groups and two Tatry days, valid assets/dates, no duplicates or private source data; original galleries preserved.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-strava-batch.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: 40 source recordings grouped into 36 imports, 42 total, trip and standalone routes, new regions, unsuccessful attempt, combined Toubkal, verified heights and local dates.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-summer-trips.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: two Sony trips, 64 distinct photos/192 WebP variants, correct dates, country filters, four routes and sharing images, 4 sourced atlas pins and one verified film; no invented Catania film or Etna summit claim.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-summit-atlas.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: all 43 summit pins, existing materials, GPS-only visibility/year filters, border/country/Alps context and no invented ascents.\nPASS: 204 atlas place/year scopes, 438 GPX associations, 40 unique routes and 18 built expedition targets. Parser/HTML checks, not browser navigation.\nPASS: three explicit Swiss place routes, year and ancestor scopes, no invented summit ascents.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-summit-audit.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: twelve evidence-based summits, geographic track checks, valid route links and search, correct day, unknowns and excluded attempt.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-summit-pages.mjs",
+    "exitCode": 0,
+    "stdout": "Summit pages OK: 3 existing peaks, original ascent dates, scoped years/materials, safe fallback links and no new media.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-summits.mjs",
+    "exitCode": 0,
+    "stdout": "Summits OK: 43 peaks, 50 ascent records; filters, chronology, evidence and material links.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-switzerland.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: six preserved Swiss destinations, sourced coordinates/projection, existing materials and non-overlapping 44px targets at six widths.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-tatry-search.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: Tatry year/season isolation, photographs vs frames, undated visits, GPX-only years, search context and direct material links.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-tatry.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: 35 sourced pins; Mercator/tile alignment; viewport coverage; cursor zoom; drag/pinch anchors; zoom limits; all peaks reachable at 4 sizes.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-trip-routes.mjs",
+    "exitCode": 0,
+    "stdout": "{\n  \"passed\": true,\n  \"routes\": [\n    {\n      \"id\": \"triglav\",\n      \"points\": 1662,\n      \"segments\": 1,\n      \"matches\": [\n        {\n          \"peak\": \"triglav\",\n          \"nearestMetres\": 3\n        }\n      ]\n    },\n    {\n      \"id\": \"grossglockner\",\n      \"points\": 1759,\n      \"segments\": 1,\n      \"matches\": [\n        {\n          \"peak\": \"grossglockner\",\n          \"nearestMetres\": 2\n        }\n      ]\n    },\n    {\n      \"id\": \"dufourspitze\",\n      \"points\": 5253,\n      \"segments\": 5,\n      \"matches\": [\n        {\n          \"peak\": \"dufourspitze\",\n          \"nearestMetres\": 1\n        }\n      ]\n    },\n    {\n      \"id\": \"grauspitz\",\n      \"points\": 1418,\n      \"segments\": 1,\n      \"matches\": [\n        {\n          \"peak\": \"grauspitz\",\n          \"nearestMetres\": 2\n        }\n      ]\n    },\n    {\n      \"id\": \"zugspitze\",\n      \"points\": 1442,\n      \"segments\": 1,\n      \"matches\": [\n        {\n          \"peak\": \"zugspitze\",\n          \"nearestMetres\": 1\n        }\n      ]\n    },\n    {\n      \"id\": \"ganek-wysoka-rysy\",\n      \"points\": 3865,\n      \"segments\": 1,\n      \"matches\": [\n        {\n          \"peak\": \"ganek\",\n          \"nearestMetres\": 5\n        },\n        {\n          \"peak\": \"wysoka\",\n          \"nearestMetres\": 26\n        },\n        {\n          \"peak\": \"rysy\",\n          \"nearestMetres\": 5\n        }\n      ]\n    },\n    {\n      \"id\": \"grzes-rakon-2024\",\n      \"points\": 3055,\n      \"segments\": 1,\n      \"matches\": [\n        {\n          \"peak\": \"grzes\",\n          \"nearestMetres\": 4\n        },\n        {\n          \"peak\": \"rakon\",\n          \"nearestMetres\": 5\n        }\n      ]\n    },\n    {\n      \"id\": \"piec-stawow-2024\",\n      \"points\": 2337,\n      \"segments\": 1,\n      \"matches\": []\n    },\n    {\n      \"id\": \"slawkowski-2024\",\n      \"points\": 1623,\n      \"segments\": 2,\n      \"matches\": [\n        {\n          \"peak\": \"slawkowski-szczyt\",\n          \"nearestMetres\": 4\n        }\n      ]\n    },\n    {\n      \"id\": \"koscielec-orla-2024\",\n      \"points\": 2862,\n      \"segments\": 2,\n      \"matches\": [\n        {\n          \"peak\": \"koscielec\",\n          \"nearestMetres\": 1\n        }\n      ]\n    },\n    {\n      \"id\": \"czerwona-lawka-2024\",\n      \"points\": 3045,\n      \"segments\": 4,\n      \"matches\": [\n        {\n          \"peak\": \"maly-lodowy-szczyt\",\n          \"nearestMetres\": 4\n        }\n      ]\n    },\n    {\n      \"id\": \"gerlach-2024\",\n      \"points\": 1850,\n      \"segments\": 1,\n      \"matches\": [\n        {\n          \"peak\": \"gerlach\",\n          \"nearestMetres\": 0\n        }\n      ]\n    },\n    {\n      \"id\": \"bradavica-2024\",\n      \"points\": 2052,\n      \"segments\": 1,\n      \"matches\": [\n        {\n          \"peak\": \"starolesny-szczyt\",\n          \"nearestMetres\": 1\n        }\n      ]\n    },\n    {\n      \"id\": \"lodowy-proba-2024\",\n      \"points\": 2778,\n      \"segments\": 1,\n      \"matches\": []\n    },\n    {\n      \"id\": \"gerlach-zima-2025\",\n      \"points\": 2036,\n      \"segments\": 1,\n      \"matches\": [\n        {\n          \"peak\": \"gerlach\",\n          \"nearestMetres\": 1\n        }\n      ]\n    },\n    {\n      \"id\": \"wysoka-2025\",\n      \"points\": 2008,\n      \"segments\": 1,\n      \"matches\": [\n        {\n          \"peak\": \"wysoka\",\n          \"nearestMetres\": 23\n        }\n      ]\n    },\n    {\n      \"id\": \"szatan-2025\",\n      \"points\": 1963,\n      \"segments\": 1,\n      \"matches\": [\n        {\n          \"peak\": \"szatan\",\n          \"nearestMetres\": 0\n        }\n      ]\n    },\n    {\n      \"id\": \"lodowy-2025\",\n      \"points\": 2756,\n      \"segments\": 1,\n      \"matches\": [\n        {\n          \"peak\": \"lodowy-szczyt\",\n          \"nearestMetres\": 0\n        }\n      ]\n    },\n    {\n      \"id\": \"baraniec-2025\",\n      \"points\": 1934,\n      \"segments\": 1,\n      \"matches\": [\n        {\n          \"peak\": \"baraniec\",\n          \"nearestMetres\": 6\n        }\n      ]\n    },\n    {\n      \"id\": \"toubkal-2025\",\n      \"points\": 3476,\n      \"segments\": 4,\n      \"matches\": [\n        {\n          \"peak\": \"toubkal\",\n          \"nearestMetres\": 1\n        }\n      ]\n    },\n    {\n      \"id\": \"durny-2025\",\n      \"points\": 2356,\n      \"segments\": 2,\n      \"matches\": [\n        {\n          \"peak\": \"durny-szczyt\",\n          \"nearestMetres\": 0\n        }\n      ]\n    },\n    {\n      \"id\": \"lomnica-2025\",\n      \"points\": 2062,\n      \"segments\": 1,\n      \"matches\": [\n        {\n          \"peak\": \"lomnica\",\n          \"nearestMetres\": 1\n        }\n      ]\n    },\n    {\n      \"id\": \"mieguszowiecki-2025\",\n      \"points\": 2556,\n      \"segments\": 3,\n      \"matches\": [\n        {\n          \"peak\": \"mieguszowiecki-szczyt-wielki\",\n          \"nearestMetres\": 0\n        }\n      ]\n    },\n    {\n      \"id\": \"posrednia-gran-2025\",\n      \"points\": 2388,\n      \"segments\": 1,\n      \"matches\": [\n        {\n          \"peak\": \"posrednia-gran\",\n          \"nearestMetres\": 0\n        }\n      ]\n    },\n    {\n      \"id\": \"swinica-2025\",\n      \"points\": 4036,\n      \"segments\": 2,\n      \"matches\": [\n        {\n          \"peak\": \"swinica\",\n          \"nearestMetres\": 0\n        },\n        {\n          \"peak\": \"kasprowy-wierch\",\n          \"nearestMetres\": 25\n        }\n      ]\n    },\n    {\n      \"id\": \"saxer-lucke-2025\",\n      \"points\": 1750,\n      \"segments\": 1,\n      \"matches\": []\n    },\n    {\n      \"id\": \"fronalpstock-2025\",\n      \"points\": 1608,\n      \"segments\": 1,\n      \"matches\": [\n        {\n          \"peak\": \"fronalpstock\",\n          \"nearestMetres\": 4\n        },\n        {\n          \"peak\": \"klingenstock\",\n          \"nearestMetres\": 6\n        }\n      ]\n    },\n    {\n      \"id\": \"augstmatthorn-2025\",\n      \"points\": 1829,\n      \"segments\": 1,\n      \"matches\": [\n        {\n          \"peak\": \"augstmatthorn\",\n          \"nearestMetres\": 0\n        }\n      ]\n    },\n    {\n      \"id\": \"murren-2025\",\n      \"points\": 831,\n      \"segments\": 1,\n      \"matches\": []\n    },\n    {\n      \"id\": \"zermatt-2025\",\n      \"points\": 2476,\n      \"segments\": 1,\n      \"matches\": []\n    },\n    {\n      \"id\": \"bettmerhorn-2025\",\n      \"points\": 979,\n      \"segments\": 1,\n      \"matches\": [\n        {\n          \"peak\": \"bettmerhorn\",\n          \"nearestMetres\": 2\n        }\n      ]\n    },\n    {\n      \"id\": \"szpiglasowy-2025\",\n      \"points\": 2799,\n      \"segments\": 1,\n      \"matches\": [\n        {\n          \"peak\": \"szpiglasowy-wierch\",\n          \"nearestMetres\": 1\n        }\n      ]\n    },\n    {\n      \"id\": \"krywan-2025\",\n      \"points\": 1805,\n      \"segments\": 1,\n      \"matches\": [\n        {\n          \"peak\": \"krywan\",\n          \"nearestMetres\": 6\n        }\n      ]\n    },\n    {\n      \"id\": \"baranie-rogi-zima-2025\",\n      \"points\": 2794,\n      \"segments\": 6,\n      \"matches\": [\n        {\n          \"peak\": \"baranie-rogi\",\n          \"nearestMetres\": 0\n        }\n      ]\n    },\n    {\n      \"id\": \"kiezmarski-zima-2025\",\n      \"points\": 1849,\n      \"segments\": 2,\n      \"matches\": [\n        {\n          \"peak\": \"kiezmarski-szczyt\",\n          \"nearestMetres\": 0\n        },\n        {\n          \"peak\": \"huncowski-szczyt\",\n          \"nearestMetres\": 5\n        }\n      ]\n    },\n    {\n      \"id\": \"turbacz-2026\",\n      \"points\": 2049,\n      \"segments\": 5,\n      \"matches\": []\n    },\n    {\n      \"id\": \"konczysta-2026\",\n      \"points\": 1604,\n      \"segments\": 1,\n      \"matches\": [\n        {\n          \"peak\": \"konczysta\",\n          \"nearestMetres\": 0\n        }\n      ]\n    },\n    {\n      \"id\": \"koscielec-2026\",\n      \"points\": 2373,\n      \"segments\": 1,\n      \"matches\": [\n        {\n          \"peak\": \"koscielec\",\n          \"nearestMetres\": 2\n        }\n      ]\n    },\n    {\n      \"id\": \"liptowskie-mury-2026\",\n      \"points\": 3506,\n      \"segments\": 2,\n      \"matches\": [\n        {\n          \"peak\": \"szpiglasowy-wierch\",\n          \"nearestMetres\": 0\n        },\n        {\n          \"peak\": \"swinica\",\n          \"nearestMetres\": 0\n        }\n      ]\n    },\n    {\n      \"id\": \"baranie-rogi-lato-2026\",\n      \"points\": 3525,\n      \"segments\": 4,\n      \"matches\": [\n        {\n          \"peak\": \"baranie-rogi\",\n          \"nearestMetres\": 0\n        },\n        {\n          \"peak\": \"lodowa-kopa\",\n          \"nearestMetres\": 0\n        },\n        {\n          \"peak\": \"lodowy-szczyt\",\n          \"nearestMetres\": 1\n        }\n      ]\n    },\n    {\n      \"id\": \"zabi-kon-2026\",\n      \"points\": 1979,\n      \"segments\": 1,\n      \"matches\": [\n        {\n          \"peak\": \"zabi-kon\",\n          \"nearestMetres\": 2\n        }\n      ]\n    },\n    {\n      \"id\": \"malolaczniak-giewont-2024\",\n      \"points\": 2329,\n      \"segments\": 1,\n      \"matches\": [\n        {\n          \"peak\": \"ciemniak\",\n          \"nearestMetres\": 4\n        },\n        {\n          \"peak\": \"malolaczniak\",\n          \"nearestMetres\": 3\n        },\n        {\n          \"peak\": \"kopa-kondracka\",\n          \"nearestMetres\": 5\n        },\n        {\n          \"peak\": \"giewont\",\n          \"nearestMetres\": 1\n        }\n      ]\n    }\n  ]\n}\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-unified-atlas.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: country/area profiles, all-year and per-year materials, no invented 2026 pins, cross-area deep links, shared collection filters and full country coverage at 3 widths.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-video-galleries.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: Gerlach 22 distinct GoPro frames, country/year membership, no invented film, legacy route, source-specific metadata and responsive files.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-watch-comparison-picks.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: progress lifecycle, chapters, reload, ending/replay, malformed data, 12-item bound, deletion, denied/quota storage, all comparison routes/days and filter preservation.\n",
+    "stderr": ""
+  },
+  {
+    "script": "scripts/check-winter-galleries.mjs",
+    "exitCode": 0,
+    "stdout": "PASS: two winter DJI galleries, 40 unique frames, dates, film/region/year associations, existing summer trip preserved, responsive assets and metadata.\n",
+    "stderr": ""
+  }
+]

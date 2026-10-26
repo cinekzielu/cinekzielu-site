@@ -1,6 +1,8 @@
+import { readAtlasContext, atlasTerrainProfile } from './atlasTerrain.js'
 import { supplementalSummitPlaces } from './supplementalSummitPlaces.js'
 import { summits } from './summits.js'
 import { summitRoutes } from './relatedRoutes.js'
+import routeCatalog from './routeCatalog.json' with { type: 'json' }
 import { tripRoutes } from './tripRoutes.js'
 import { plannedSummits } from './plannedSummits.js'
 import { travelAtlasData } from './travelData.js'
@@ -66,6 +68,10 @@ export const atlasContentNodes = [
   ...moroccoPlaces.map(place => ({...place, view:'terrain'})),
 ]
 
+// Existing non-summit Swiss destinations and their already published recordings.
+const placeRouteIds = { 'saxer-lucke': ['saxer-lucke-2025'], 'murren-gimmelwald': ['murren-2025'], zermatt: ['zermatt-2025'] }
+for (const node of atlasContentNodes) if (Object.hasOwn(placeRouteIds, node.id)) node.routeIds = placeRouteIds[node.id]
+
 // The ascent register supplies confirmed film associations and official heights.
 for (const summit of summits) {
   const node = atlasContentNodes.find(node => node.id === summit.id)
@@ -80,7 +86,7 @@ export const atlasNodeById = Object.fromEntries(atlasContentNodes.map(node => [n
 export const atlasQuickIds = ['tatry', 'switzerland', 'alpy', 'morocco', 'jura']
 export const readAtlasSelection = (search = window.location.search) => {
   const id = new URLSearchParams(search).get('atlas')
-  return atlasNodeById[id] ? id : 'world'
+  return Object.hasOwn(atlasNodeById, id) ? id : 'world'
 }
 export function atlasAncestry(id) {
   const result = []
@@ -111,7 +117,9 @@ export function getAtlasMaterials(id, year = 'all') {
   if (range) for (const peak of summits) if (peak.range === range) placeIds.add(peak.id)
   const registered = summits.filter(peak => node.all || placeIds.has(peak.id))
   const ascents = registered.flatMap(peak => peak.ascents).filter(a => year === 'all' || (a.year || 'undated') === year)
-  const routes = [...new Map(registered.flatMap(peak => summitRouteIndex.get(peak.id).filter(row => year === 'all' || row.sortDate.slice(0,4) === year)).map(row => [row.id, { ...row, title: tripRoutes[row.id].title, dates: tripRoutes[row.id].dates }])).values()].sort((a,b) => b.sortDate.localeCompare(a.sortDate))
+  const directIds = new Set((node.all ? atlasContentNodes : [...placeIds].map(place => atlasNodeById[place]).filter(Boolean)).flatMap(place => place.routeIds || []))
+  const routeRows = [...registered.flatMap(peak => summitRouteIndex.get(peak.id)), ...routeCatalog.filter(row => directIds.has(row.id))]
+  const routes = [...new Map(routeRows.filter(row => year === 'all' || row.sortDate.slice(0,4) === year).map(row => [row.id, { ...row, title: tripRoutes[row.id].title, dates: tripRoutes[row.id].dates }])).values()].sort((a,b) => b.sortDate.localeCompare(a.sortDate))
   const placeFilms = new Set([...placeIds].flatMap(place => atlasNodeById[place]?.filmIds || []))
   const tripIds = new Set(galleryData.filter(gallery => galleryAtlasIds(gallery).some(place => placeIds.has(place))).map(gallery => gallery.id))
   for (const ascent of ascents) if (ascent.tripId) tripIds.add(ascent.tripId)
@@ -129,7 +137,8 @@ export const atlasYears = id => {
 export const readAtlasYear = (search = window.location.search) => {
   const params = new URLSearchParams(search), year = params.get('rok'), id = readAtlasSelection(search)
   if (atlasNodeById[id].status === 'planned' || id === 'world' || atlasNodeById[id].kind === 'Kontynent') return 'all'
-  const context = atlasNodeById[params.get('obszar')]
+  // Use the same validated context as the map; unrelated areas cannot select a year.
+  const context = atlasNodeById[readAtlasContext(search)]
   const scope = context && ['Kraj','Region'].includes(context.kind) ? context.id : [...atlasAncestry(id)].reverse().find(node => ['Kraj','Region'].includes(node.kind))?.id || id
   return atlasYears(scope).includes(year) ? year : 'all'
 }
@@ -137,9 +146,26 @@ export const hasAtlasMaterials = (id, year = 'all') => {
   const { films, galleries, routes } = getAtlasMaterials(id, year)
   return Boolean(films.length || galleries.length || routes.length)
 }
+// A place can belong to a cross-border map as well as its breadcrumb country.
+// Build lazily: terrain profiles refer back to the fully initialized atlas data.
+const normalizeAtlasSearch = value => normalizeFilmSearch(value).replace(/[^\p{L}\p{N}]+/gu, ' ').trim()
+let atlasSearchIndex
+function atlasSearchText() {
+  if (atlasSearchIndex) return atlasSearchIndex
+  const contexts = atlasContentNodes.filter(node => ['Kraj', 'Region'].includes(node.kind)).map(node => {
+    const profile = atlasTerrainProfile(node.id)
+    return { name: node.name, ids: new Set([...(countryPlaceIds[node.id] || []), ...(profile?.id === node.id ? profile.locations.map(point => point.id) : [])]) }
+  })
+  atlasSearchIndex = new Map(atlasContentNodes.map(node => [node.id, normalizeAtlasSearch([
+    ...atlasAncestry(node.id).map(item => item.name),
+    ...contexts.filter(context => context.ids.has(node.id)).map(context => context.name),
+  ].join(' '))]))
+  return atlasSearchIndex
+}
 export const searchAtlasNodes = (query, candidates = atlasContentNodes) => {
-  const terms = normalizeFilmSearch(query).trim().split(/\s+/).filter(Boolean)
-  return candidates.filter(node => terms.every(term => normalizeFilmSearch(atlasAncestry(node.id).map(item => item.name).join(' ')).includes(term)))
+  const terms = normalizeAtlasSearch(query).split(/\s+/).filter(Boolean)
+  const index = atlasSearchText()
+  return candidates.filter(node => terms.every(term => (index.get(node.id) || '').includes(term)))
 }
 export const atlasHref = (id = 'world', year = 'all', context = null) => {
   const params = new URLSearchParams()

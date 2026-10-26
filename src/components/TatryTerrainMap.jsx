@@ -18,9 +18,18 @@ export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0
   const [size, setSize] = useState({ width: 800, height: 500 })
   const [view, setView] = useState(() => initialViewport || bookmark?.view || initialView(selectedId, points, { width: 800, height: 500 }, locations, locationById, overviewPoints, focusZoom))
   const [tone, setTone] = useState(() => (!embedded && readTerrainTone(window.location.search)) || initialTone)
-  const [shareState, setShareState] = useState(null)
-  const [shareUrl, setShareUrl] = useState('')
-  const shareInput = useRef(null), shareTimer = useRef(null)
+  const [shareResult, setShareResult] = useState(null)
+  const shareInput = useRef(null), shareRequest = useRef(0)
+  const currentShareUrl = embedded ? '' : window.location.origin + atlasShareHref(atlasViewHref(window.location.search, { view, tone }))
+  const shareUrlRef = useRef(currentShareUrl)
+  shareUrlRef.current = currentShareUrl
+  const shareState = shareResult?.url === currentShareUrl ? shareResult.state : null
+  const shareUrl = shareResult?.url || ''
+  // A result belongs to the copied view, not just the mounted map. Invalidate
+  // pending copies too, including when a filter changes before clipboard settles.
+  useEffect(() => { shareRequest.current++; setShareResult(null) }, [currentShareUrl])
+  useEffect(() => () => { shareRequest.current++ }, [])
+  const closeShare = () => { shareRequest.current++; setShareResult(null) }
   const [hovered, setHovered] = useState(null)
   const [tileStatus, setTileStatus] = useState({})
   const [retry, setRetry] = useState(0)
@@ -71,7 +80,6 @@ export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0
       window.removeEventListener('pagehide',saveView)
       document.removeEventListener('click',leaving,true)
       document.removeEventListener('auxclick',leaving,true)
-      clearTimeout(shareTimer.current)
     }
   }, [])
   useEffect(() => { if (shareState === 'manual' || shareState === 'copied') { shareInput.current?.focus(); shareInput.current?.select() } }, [shareState])
@@ -81,11 +89,16 @@ export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0
   const copyView = async () => {
     interacted.current = true; saveView()
     const url = window.location.origin + atlasShareHref(atlasViewHref(window.location.search,{view:viewRef.current,tone:toneRef.current}))
-    setShareUrl(url); clearTimeout(shareTimer.current)
+    const request = ++shareRequest.current
+    setShareResult(null)
+    const finish = state => {
+      const latestUrl = window.location.origin + atlasShareHref(atlasViewHref(window.location.search, { view: viewRef.current, tone: toneRef.current }))
+      if (request === shareRequest.current && url === latestUrl && url === shareUrlRef.current) setShareResult({ url, state })
+    }
     try {
       await navigator.clipboard.writeText(url)
-      setShareState('copied')
-    } catch { setShareState('manual') }
+      finish('copied')
+    } catch { finish('manual') }
   }
 
   const commit = next => {
@@ -263,7 +276,7 @@ export function TatryTerrainMap({ points, selectedId, onSelect, focusRequest = 0
     <div className="cz-terrain-scale" aria-hidden="true"><span>{scaleDistance >= 1000 ? `${scaleDistance / 1000} km` : `${scaleDistance} m`}</span><i style={{ width: scaleDistance / metersPerPixel }} /></div>
     {!embedded && <button type="button" className="cz-terrain-share" onClick={copyView} aria-label="Skopiuj link do widoku mapy">{shareState === 'copied' ? <Check size={14} aria-hidden="true" /> : <Link size={14} aria-hidden="true" />}<span>{shareState === 'copied' ? 'Skopiowano' : 'Kopiuj widok'}</span></button>}
     {shareState === 'copied' && <span className="cz-terrain-share-status" role="status">Link do widoku mapy skopiowany.</span>}
-    {(shareState === 'manual' || shareState === 'copied') && <div className="cz-terrain-share-manual"><button type="button" aria-label="Zamknij link do mapy" onClick={() => setShareState(null)}><X size={15} /></button><label>Link do tego widoku<input ref={shareInput} aria-label="Link do widoku mapy" readOnly value={shareUrl} onFocus={event => event.target.select()} /></label><small>{shareState === 'copied' ? 'Możesz też skopiować link z tego pola.' : 'Zaznacz link i skopiuj go.'}</small></div>}
+    {(shareState === 'manual' || shareState === 'copied') && <div className="cz-terrain-share-manual"><button type="button" aria-label="Zamknij link do mapy" onClick={closeShare}><X size={15} /></button><label>Link do tego widoku<input ref={shareInput} aria-label="Link do widoku mapy" readOnly value={shareUrl} onFocus={event => event.target.select()} /></label><small>{shareState === 'copied' ? 'Możesz też skopiować link z tego pola.' : 'Zaznacz link i skopiuj go.'}</small></div>}
     <div className="cz-terrain-attribution">© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a> · <a href="https://github.com/sletuffe/OpenTopoMap" target="_blank" rel="noreferrer">OpenTopoMap-R</a> · <a href="https://openmaps.fr/donate" target="_blank" rel="noreferrer">Wesprzyj mapy</a>{countryId && <> · <a href="https://www.naturalearthdata.com/" target="_blank" rel="noreferrer">Obrys: Natural Earth</a></>}</div>
   </div>
 }

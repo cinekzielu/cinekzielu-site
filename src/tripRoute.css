@@ -30,6 +30,7 @@
 .cz-trip-route .cz-route-note{font-size:12px;line-height:1.7;color:#a99f8c;margin:20px 0 16px}
 .cz-trip-route .cz-route-strava{display:inline-flex;align-items:center;min-height:44px;font-size:13px;color:#e4bd7d;text-underline-offset:4px}
 .cz-route-loading{font-size:14px;color:#b9ae9b;padding:24px 0}
+.cz-route-loading button,.cz-route-load-error button{min-height:44px;margin:4px 10px 4px 0;padding:8px 14px;border:1px solid #c9a36d66;border-radius:4px;background:#29251c;color:#ead5af;font:inherit;cursor:pointer}.cz-route-loading button:focus-visible,.cz-route-load-error button:focus-visible{outline:2px solid #e4bf80;outline-offset:3px}
 .cz-trip-route :focus-visible{outline:2px solid #e4bf80;outline-offset:3px}
 @media(max-width:600px){.cz-trip-route{padding:14px;margin:26px 0}.cz-trip-route .cz-route-heading{align-items:flex-start}.cz-trip-route .cz-route-heading :is(h2,h4){font-size:20px}.cz-trip-route .cz-terrain-surface{height:360px}.cz-route-profile{height:190px}.cz-route-profile text{font-size:32px}.cz-route-profile-heading{align-items:flex-start}.cz-route-profile-heading span{max-width:100px;text-align:right}.cz-route-scrubber>div:first-child{flex-direction:column;gap:5px}.cz-trip-route .cz-route-heading>button{flex-shrink:0}.cz-route-actions{flex-direction:column}}
 .cz-trip-route .cz-route-profile text{font-size:13px}

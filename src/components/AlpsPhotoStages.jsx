@@ -3,6 +3,7 @@ import stages from '../data/alpsPhotoStages.json'
 import { alpsStoryGallery } from '../data/alpsStory'
 import { useInitialLocation } from '../PageLocation'
 import { PhotoGrid } from './PhotoGrid'
+import { PhotoSlideshowButton } from './PhotoSlideshow'
 import '../alpsPhotoStages.css'
 
 const stagePhotos = groups => groups.flatMap(stage => stage.photos.map(number => alpsStoryGallery.photos[number - 1]))
@@ -38,7 +39,8 @@ export function AlpsGalleryStages({ gallery }) {
       <p>Podział według dat wykonania zdjęć. Przerwy między wejściami są osobnymi etapami.</p>
       {stage?.routeId && <a href={`/wyprawy/alpy-2026#${stage.routeId === 'dufourspitze' ? 'dufour' : stage.routeId}-trasa`}>Trasa i opowieść: {stage.title} ↗</a>}
     </div>
-    <PhotoGrid key={selected} gallery={{ ...gallery, photos }} shareable />
+    <PhotoSlideshowButton key={`show-${selected}`} photos={photos} stage={stage?.title} chapters={stages.map(item=>({id:item.id,title:item.title,photos:stagePhotos([item]).map(photo=>photo.full)}))} />
+    <PhotoGrid key={selected} gallery={{ ...gallery, photos }} shareable selectable />
   </>
 }
 

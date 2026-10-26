@@ -4,6 +4,7 @@ import { atlasNodeById, getAtlasMaterials } from '../data/atlasContent'
 import { sharedAtlasIds, atlasSharePath } from '../data/sharePages'
 import { galleryHref, galleryLinkLabel } from '../data/galleryNavigation'
 import { CollectionShell } from './CollectionShell'
+import { AtlasHelp } from './AtlasHelp'
 import '../atlasOverview.css'
 
 export function AtlasOverview({ note = 'Interaktywna mapa wymaga JavaScript. Materiały możesz otworzyć przez powyższe linki.', children }) {
@@ -26,5 +27,5 @@ export function AtlasOverview({ note = 'Interaktywna mapa wymaga JavaScript. Mat
 }
 
 export function MapPageOverview() {
-  return <CollectionShell section="mapa" className="cz-map-page"><div className="cz-gallery-intro"><h1>Mapa wypraw</h1><span className="cz-gallery-count">Miejsca i materiały</span></div><p className="cz-map-page-intro">Wybierz miejsce na mapie lub znajdź je na liście.</p><AtlasOverview /></CollectionShell>
+  return <CollectionShell section="mapa" className="cz-map-page"><div className="cz-gallery-intro"><h1>Mapa wypraw</h1><span className="cz-gallery-count">Miejsca i materiały</span></div><p className="cz-map-page-intro">Wybierz miejsce na mapie lub znajdź je na liście.</p><AtlasHelp /><AtlasOverview /></CollectionShell>
 }

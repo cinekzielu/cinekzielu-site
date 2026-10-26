@@ -4,6 +4,7 @@ import { atlasContentNodes, atlasNodeById, getAtlasMaterials, hasAtlasMaterials,
 import { galleryCollectionCount } from '../data/galleryNavigation'
 import { tatryLocations, tatryLocationById } from '../data/tatryAtlas'
 import { TatryTerrainMap } from './TatryTerrainMap'
+import { AtlasEmptyResults } from './AtlasEmptyResults'
 import '../tatryExplorer.css'
 
 const nodes = atlasContentNodes.filter(node => node.parent === 'tatry').sort((a, b) => a.name.localeCompare(b.name, 'pl'))
@@ -16,6 +17,7 @@ export function TatryExplorer({ selectedId, onSelect, onlyMaterials, setOnlyMate
   const [query, setQuery] = useState('')
   const [focusRequest, setFocusRequest] = useState(0)
   const mapRef = useRef(null)
+  const searchInputRef = useRef(null)
   const currentNodes = useMemo(() => searchAtlasNodes(query, nodes).filter(node => (!onlyMaterials && year === 'all') || hasAtlasMaterials(node.id, year) || node.id === selectedId), [query, onlyMaterials, selectedId, year])
   const points = tatryLocations.filter(point => currentNodes.some(node => node.id === point.id))
   useEffect(() => { setQuery('') }, [selectedId])
@@ -35,7 +37,7 @@ export function TatryExplorer({ selectedId, onSelect, onlyMaterials, setOnlyMate
       <button type="button" className="cz-tatry-materials" onClick={onShowMaterials}>Materiały <ArrowUpRight size={15} aria-hidden="true" /></button>
     </div>
     <div className="cz-tatry-search-row">
-      <div className="cz-atlas-search"><Search size={16} aria-hidden="true" /><input type="search" value={query} onChange={event => setQuery(event.target.value)} aria-label="Szukaj szczytu lub grani w Tatrach" placeholder="Szukaj szczytu lub grani…" /></div>
+      <div className="cz-atlas-search"><Search size={16} aria-hidden="true" /><input ref={searchInputRef} type="search" value={query} onChange={event => setQuery(event.target.value)} aria-label="Szukaj szczytu lub grani w Tatrach" placeholder="Szukaj szczytu lub grani…" /></div>
       <label className="cz-tatry-filter"><input type="checkbox" checked={onlyMaterials} onChange={event => setOnlyMaterials(event.target.checked)} />Z materiałami</label>
     </div>
     <div className="cz-tatry-places" role="group" aria-label="Miejsca w Tatrach">
@@ -44,7 +46,10 @@ export function TatryExplorer({ selectedId, onSelect, onlyMaterials, setOnlyMate
         <span><strong>{node.name}</strong><small>{materialLabel(node.id, year)}</small></span><ArrowUpRight size={14} aria-hidden="true" />
       </button>)}
     </div>
-    {!currentNodes.length && <p className="cz-atlas-empty-search" role="status">Brak wyników. Zmień nazwę lub wyłącz filtr „Z materiałami”.</p>}
+    {!currentNodes.length && <AtlasEmptyResults query={query} year={year} onlyMaterials={onlyMaterials}
+      onClearQuery={() => { setQuery(''); searchInputRef.current?.focus({ preventScroll: true }) }}
+      onAllYears={() => { onSelect(selectedId, 'all'); searchInputRef.current?.focus({ preventScroll: true }) }}
+      onAllPlaces={() => { setOnlyMaterials(false); searchInputRef.current?.focus({ preventScroll: true }) }} />}
     {atlasNodeById[selectedId].kind === 'Przejście grani' && <p className="cz-tatry-source">{atlasNodeById[selectedId].name}: przejście grani — materiały znajdziesz w panelu wyprawy.</p>}
   </section>
 }

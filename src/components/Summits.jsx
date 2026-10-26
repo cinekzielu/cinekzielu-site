@@ -1,3 +1,4 @@
+import { summitPageHref } from '../data/summitPages'
 import { plannedSummits } from '../data/plannedSummits'
 import { normalizeFilmSearch } from '../data/filmCatalog'
 import { PlannedSummits } from './PlannedSummits'
@@ -49,7 +50,7 @@ export function SummitsPage() {
   const highest = [...summits].sort((a, b) => b.altitude - a.altitude)[0]
   return <CollectionShell section="szczyty" className="cz-summits">
     <div className="cz-gallery-intro"><h1>Moje szczyty</h1><span className="cz-gallery-count">{summitCountLabel(summits.length)}</span></div>
-    <div className="cz-summit-intro"><p>Letnie i zimowe wejścia. Zdjęcia, filmy i wyprawy w jednym miejscu. <a href="/trasy">Trasy GPX ↗</a></p><a href={`/szczyty?q=${encodeURIComponent(highest.name)}`} className="cz-summit-highest"><Mountain size={24} strokeWidth={1.2} aria-hidden="true" /><span><small>Najwyżej</small>{highest.name} <strong>{height(highest.altitude)} m</strong></span><ArrowUpRight size={16} aria-hidden="true" /></a></div>
+    <div className="cz-summit-intro"><p>Letnie i zimowe wejścia. Zdjęcia, filmy i wyprawy w jednym miejscu. <a href="/trasy">Trasy GPX ↗</a></p><a href={summitPageHref(highest.id) || `/szczyty?q=${encodeURIComponent(highest.name)}`} className="cz-summit-highest"><Mountain size={24} strokeWidth={1.2} aria-hidden="true" /><span><small>Najwyżej</small>{highest.name} <strong>{height(highest.altitude)} m</strong></span><ArrowUpRight size={16} aria-hidden="true" /></a></div>
     {plannedMatches.length > 0 && <PlannedSummits peaks={plannedMatches} />}
     <div className="cz-summit-tools">
       <div className="cz-summit-seasons" role="group" aria-label="Rodzaj wejścia">{summitSeasons.map(season => <button key={season.id} type="button" aria-pressed={filters.season === season.id} onClick={() => update({ season: season.id })}>{season.id === 'zima' && <Snowflake size={14} aria-hidden="true" />}{season.id === 'lato' && <Sun size={14} aria-hidden="true" />}{season.label}</button>)}</div>
@@ -63,7 +64,7 @@ export function SummitsPage() {
     <div className="cz-summit-results"><span role="status" aria-live="polite" aria-atomic="true">{filtered && plannedMatches.length ? `Zdobyte: ${matches.length} · W planach: ${plannedMatches.length}` : filtered ? `${summitCountLabel(matches.length)} z ${summits.length}` : `${summitCountLabel(matches.length)} · ${filters.sort === 'height' ? 'od najwyższych' : 'według dat wypraw'}`}</span>{filtered && <button type="button" onClick={() => update({ ...defaultSummitFilters, sort: filters.sort })}>Wyczyść filtry</button>}</div>
     {filters.sort === 'latest' && <p className="cz-summit-date-note">Znany tylko miesiąc lub rok: wpis na końcu tego okresu. Wejścia bez daty na końcu listy.</p>}
     {matches.length ? <div className="cz-summit-list">{matches.map(summit => <article id={`szczyt-${summit.id}`} className="cz-summit-row" key={summit.id}>
-      <div className="cz-summit-heading"><div><span className="cz-summit-range">{summit.rangeName}</span><h2><a href={summit.mapHref || `/mapa?atlas=${summit.id}`}>{summit.name}</a></h2>{summit.heightNote && <small className="cz-summit-height-note">{summit.heightNote}</small>}</div><div className="cz-summit-altitude"><span>{height(summit.altitude)}</span> m<a href={summit.mapHref || `/mapa?atlas=${summit.id}`} aria-label={`${summit.name} na mapie`}><MapPin size={13} aria-hidden="true" /> Na mapie</a></div></div>
+      <div className="cz-summit-heading"><div><span className="cz-summit-range">{summit.rangeName}</span><h2><a href={summitPageHref(summit.id, filters.year) || summit.mapHref || `/mapa?atlas=${summit.id}`}>{summit.name}</a></h2>{summit.heightNote && <small className="cz-summit-height-note">{summit.heightNote}</small>}</div><div className="cz-summit-altitude"><span>{height(summit.altitude)}</span> m<a href={summit.mapHref || `/mapa?atlas=${summit.id}`} aria-label={`${summit.name} na mapie`}><MapPin size={13} aria-hidden="true" /> Na mapie</a></div></div>
       {summit.id === 'baranie-rogi' && <a className="cz-baranie-map-link" href="/wyprawy/baranie-rogi-lodowy-szczyt-2026#dwa-sezony">Baranie Rogi · lato i zima ↗</a>}
       <ul className="cz-summit-ascents">{summit.ascents.map(ascent => <Ascent key={ascent.evidence} ascent={ascent} name={summit.name} />)}</ul>
       <SummitRoutes summit={summit} filters={filters} expanded={matches.length <= 3} />

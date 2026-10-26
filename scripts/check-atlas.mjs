@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict'
+import { atlasTerrainProfile } from '../src/data/atlasTerrain.js'
+import { countryPlaceIds } from '../src/data/placeGeography.js'
 import { readFile } from 'node:fs/promises'
 import { createHash } from 'node:crypto'
-import { atlasContentNodes, atlasNodeById, atlasAncestry, atlasListNodes, getAtlasMaterials, readAtlasSelection, searchAtlasNodes } from '../src/data/atlasContent.js'
+import { atlasContentNodes, atlasNodeById, atlasAncestry, atlasListNodes, getAtlasMaterials, readAtlasSelection, readAtlasYear, searchAtlasNodes } from '../src/data/atlasContent.js'
 import { filmCatalog } from '../src/data/filmCatalog.js'
 import { moroccoPlaces, moroccoMapPlaces, moroccoPosition, moroccoTerrainLocations, atlasFilmHref } from '../src/data/moroccoPlaces.js'
 import { mercator, unproject } from '../src/data/terrainMap.js'
@@ -17,6 +19,17 @@ for (const node of atlasContentNodes) {
 }
 assert.equal(readAtlasSelection('?atlas=unknown'), 'world')
 assert.equal(readAtlasSelection('?atlas=%3Cscript%3E'), 'world')
+// Untrusted direct links must not resolve inherited Object properties as places.
+for (const id of Object.getOwnPropertyNames(Object.prototype)) {
+  for (const suffix of ['', '&rok=2025', '&rok=invalid&obszar=constructor']) {
+    const search = `?atlas=${encodeURIComponent(id)}${suffix}`
+    const selected = readAtlasSelection(search)
+    assert.equal(selected, 'world', search)
+    assert.equal(readAtlasYear(search), 'all', search)
+    assert.deepEqual(getAtlasMaterials(selected), getAtlasMaterials('world'), search)
+  }
+}
+
 assert.equal(searchAtlasNodes('konczysta')[0].id, 'konczysta')
 assert.equal(searchAtlasNodes('murren')[0].id, 'murren-gimmelwald')
 for (const [id, expected] of Object.entries({ world: [29, 21, 490], europe: [27, 20, 450], poland: [8, 7, 127], tatry: [16, 14, 256], krywan: [0, 1, 8], 'zabi-kon': [1, 1, 13], switzerland: [8, 2, 84], alpy: [8, 2, 84], morocco: [2, 1, 40], konczysta: [1, 1, 24], koscielec: [2, 1, 17], swinica: [2, 2, 29], 'baranie-rogi': [2, 2, 34], 'lodowy-szczyt': [1, 1, 14], 'durny-szczyt': [1, 1, 24], lomnica: [1, 1, 24], romania: [0, 1, 30], gerlach: [0, 1, 22], 'lodowa-kopa': [1, 1, 14], 'szpiglasowy-wierch': [1, 2, 36], 'huncowski-szczyt': [1, 1, 20], 'kiezmarski-szczyt': [1, 1, 20], 'walentkowy-wierch': [1, 1, 21], 'walentkowa-gran': [1, 1, 21], gorce: [0, 1, 16], turbacz: [0, 1, 16] })) {
@@ -88,3 +101,35 @@ for (const [id, anchors] of Object.entries({africa:[[800,450],[900,650],[1003,69
 }
 for (const ocean of [[670,500],[1100,700],[400,600],[1090,550],[1470,580],[1600,300],[1200,750]]) assert.deepEqual(hits(ocean),[],`Ocean must not activate a continent: ${ocean}`)
 console.log(`Atlas OK: ${atlasContentNodes.length} places, 12 Morocco chapter links, continent land/sea hit areas, source fingerprints and verified material counts.`)
+
+// Search follows existing cross-border maps, not just a single parent chain.
+for (const [query, id] of [['Alpy Triglav', 'triglav'], ['Alpy Dufourspitze', 'dufourspitze'], ['Alpy Zermatt', 'zermatt'], ['Polska Rysy', 'rysy']]) {
+  assert(searchAtlasNodes(query).some(node => node.id === id), query)
+  assert(searchAtlasNodes(query.split(' ').reverse().join(' ')).some(node => node.id === id), `reordered ${query}`)
+}
+assert(!searchAtlasNodes('Alpy Gerlach').some(node => node.id === 'gerlach'))
+assert(!searchAtlasNodes('Polska Dufourspitze').some(node => node.id === 'dufourspitze'))
+assert.deepEqual(searchAtlasNodes('Alpy Triglav', atlasContentNodes.filter(node => node.parent === 'tatry')), [])
+assert.deepEqual(searchAtlasNodes('   '), atlasContentNodes)
+console.log('PASS: cross-border atlas searches, term order, negative geographic matches and candidate scope.')
+
+let geographicSearches = 0
+for (const place of atlasContentNodes) {
+  assert(searchAtlasNodes(place.name).some(node => node.id === place.id), place.name)
+  for (const ancestor of atlasAncestry(place.id)) assert(searchAtlasNodes(`${ancestor.name} ${place.name}`).some(node => node.id === place.id))
+}
+for (const scope of atlasContentNodes.filter(node => ['Kraj', 'Region'].includes(node.kind))) {
+  const profile = atlasTerrainProfile(scope.id)
+  const ids = new Set([...(countryPlaceIds[scope.id] || []), ...(profile?.id === scope.id ? profile.locations.map(p => p.id) : [])])
+  for (const id of ids) {
+    const place = atlasNodeById[id]
+    assert(place, id)
+    assert(searchAtlasNodes(`${scope.name} ${place.name}`).some(node => node.id === id), `${scope.name} ${place.name}`)
+    geographicSearches++
+  }
+}
+console.log(`PASS: all ${atlasContentNodes.length} place names and ancestry queries; ${geographicSearches} existing country/region memberships searchable.`)
+
+for (const [query, id] of [['Saxer-Lücke', 'saxer-lucke'], ['Mürren-Gimmelwald', 'murren-gimmelwald'], ['ALPY: Triglav', 'triglav']]) {
+  assert(searchAtlasNodes(query).some(node => node.id === id), query)
+}

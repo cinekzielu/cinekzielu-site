@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { tripRoutes } from '../data/tripRoutes'
 import catalog from '../data/routeCatalog.json'
-import { highestPeak } from '../data/routeAtlas'
+import { routeCardDescription } from '../data/routeCardDescription'
+import { highestPeak, dayIds } from '../data/routeAtlas'
 import { drawRouteCard } from '../data/routeCardDrawing'
 import '../routeCard.css'
 
@@ -62,9 +63,9 @@ export function RouteCard({ selected }) {
         <button type="button" onClick={download} disabled={!ready}>Pobierz PNG</button>
         {!ready && <button type="button" onClick={() => setRetry(value => value + 1)}>Ponów przygotowanie</button>}
         <p role="status">{status}</p>
-        <p className="cz-route-card-alt">{tripRoutes[id].title} · {tripRoutes[id].dates}. Podgląd poniżej przedstawia ten sam obraz, który zostanie pobrany.</p>
+        <p id="route-card-description" className="cz-route-card-alt">{routeCardDescription(tripRoutes[id], catalog.find(row => row.id === id), highestPeak(tripRoutes[id]), dayIds.get(id)?.length)} Podgląd poniżej przedstawia ten sam obraz, który zostanie pobrany.</p>
       </div>
-      <canvas ref={canvas} width="1080" height="1350" style={{ visibility: ready ? 'visible' : 'hidden' }} role="img" aria-label={`Karta trasy ${tripRoutes[id].title}: schemat GPS, profil wysokości, dystans, podejścia i najwyższy szczyt.`} />
+      <canvas ref={canvas} width="1080" height="1350" style={{ visibility: ready ? 'visible' : 'hidden' }} role="img" aria-describedby="route-card-description" aria-label={`Karta trasy ${tripRoutes[id].title}: schemat GPS, profil wysokości, dystans, podejścia i najwyższy szczyt.`} />
     </div>}
   </section>
 }

@@ -1,0 +1,27 @@
+{
+  "head": "038393172bf48e6bc958860bdeb99ccd26c8878e",
+  "manifestMatchesGitDiff": true,
+  "files": 96,
+  "sourceFiles": [
+    "src/atlasEmptyResults.css",
+    "src/atlasHelp.css",
+    "src/components/AtlasEmptyResults.jsx",
+    "src/components/AtlasHelp.jsx",
+    "src/components/AtlasOverview.jsx",
+    "src/components/MapAtlas.jsx",
+    "src/components/MapPage.jsx",
+    "src/components/RouteCard.jsx",
+    "src/components/RouteCatalog.jsx",
+    "src/components/RouteComparison.jsx",
+    "src/components/RouteComparisonShare.jsx",
+    "src/components/RouteLinkNotice.jsx",
+    "src/components/TatryExplorer.jsx",
+    "src/data/atlasContent.js",
+    "src/data/atlasHelp.js",
+    "src/data/atlasMaterialLabel.js",
+    "src/data/routeCardDescription.js",
+    "src/data/routeLinkRecovery.js",
+    "src/data/routePointDescription.js"
+  ],
+  "restrictedPathsChanged": []
+}

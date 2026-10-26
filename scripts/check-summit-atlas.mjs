@@ -1,6 +1,10 @@
 import assert from 'node:assert/strict'
+import { readFile } from 'node:fs/promises'
+import { readRouteAtlas, routeHref } from '../src/data/routeAtlas.js'
+import { routeLink } from '../src/data/relatedRoutes.js'
+import { tripRoutes } from '../src/data/tripRoutes.js'
 import { summits } from '../src/data/summits.js'
-import { atlasNodeById, getAtlasMaterials, hasAtlasMaterials, atlasYears, readAtlasYear } from '../src/data/atlasContent.js'
+import { atlasContentNodes, atlasNodeById, getAtlasMaterials, hasAtlasMaterials, atlasYears, readAtlasYear } from '../src/data/atlasContent.js'
 import { atlasTerrainProfile, readAtlasContext } from '../src/data/atlasTerrain.js'
 import { tatryLocationById } from '../src/data/tatryAtlas.js'
 import { summitRoutes } from '../src/data/relatedRoutes.js'
@@ -45,3 +49,50 @@ assert(getAtlasMaterials('morocco-atlas').routes.some(r => r.id === 'toubkal-202
 assert(!getAtlasMaterials('matterhorn').routes.length)
 assert(!getAtlasMaterials('wysoka','2025').films.length, 'GPX does not date the winter film')
 console.log('PASS: all 43 summit pins, existing materials, GPS-only visibility/year filters, border/country/Alps context and no invented ascents.')
+
+// Follow atlas associations through the real route parser and expedition targets.
+// A valid catalogue alone does not prove atlas/year associations select that route.
+let scopes = 0, links = 0
+const uniqueRoutes = new Set(), expeditionTargets = new Map()
+for (const node of atlasContentNodes) for (const year of ['all', ...atlasYears(node.id)]) {
+  const { routes } = getAtlasMaterials(node.id, year)
+  assert.equal(new Set(routes.map(row => row.id)).size, routes.length, `${node.id}/${year}: duplicate route`)
+  scopes++
+  for (const row of routes) {
+    const context = `${node.id}/${year}/${row.id}`
+    const url = new URL(routeLink(row.id), 'https://example.test')
+    assert.equal(url.pathname, '/trasy', context)
+    assert.equal(url.hash, '#profil', context)
+    assert.equal(readRouteAtlas(url.search).selected, row.id, context)
+    if (year !== 'all') {
+      assert.equal(row.sortDate.slice(0, 4), year, context)
+      url.searchParams.set('rok', year)
+      const filtered = readRouteAtlas(url.search)
+      assert.equal(filtered.year, year, context)
+      assert.equal(filtered.selected, row.id, context)
+    }
+    const route = tripRoutes[row.id]
+    assert(route && row.title === route.title && row.dates === route.dates, context)
+    const destination = new URL(routeHref(row, route), 'https://example.test')
+    if (row.trip) {
+      if (!expeditionTargets.has(destination.pathname)) expeditionTargets.set(destination.pathname,
+        await readFile(new URL(`../dist${destination.pathname}.html`, import.meta.url), 'utf8'))
+      assert(destination.hash, context)
+      assert(expeditionTargets.get(destination.pathname).includes(`id="${decodeURIComponent(destination.hash.slice(1))}"`), context)
+    } else {
+      assert.equal(destination.hash, '#profil', context)
+      assert.equal(readRouteAtlas(destination.search).selected, row.id, context)
+    }
+    uniqueRoutes.add(row.id); links++
+  }
+}
+console.log(`PASS: ${scopes} atlas place/year scopes, ${links} GPX associations, ${uniqueRoutes.size} unique routes and ${expeditionTargets.size} built expedition targets. Parser/HTML checks, not browser navigation.`)
+
+for (const [place, route] of [['saxer-lucke','saxer-lucke-2025'],['murren-gimmelwald','murren-2025'],['zermatt','zermatt-2025']]) {
+  assert.deepEqual(getAtlasMaterials(place, '2025').routes.map(row => row.id), [route])
+  assert.equal(getAtlasMaterials(place, '2026').routes.length, 0)
+  for (const scope of ['switzerland','alpy','europe','world']) assert(getAtlasMaterials(scope, '2025').routes.some(row => row.id === route), `${scope}/${route}`)
+  assert.equal(summitRoutes(place).length, 0, 'Place link must not invent a summit ascent')
+}
+assert(!getAtlasMaterials('lodowy-szczyt').routes.some(row => row.id === 'lodowy-proba-2024'))
+console.log('PASS: three explicit Swiss place routes, year and ancestor scopes, no invented summit ascents.')

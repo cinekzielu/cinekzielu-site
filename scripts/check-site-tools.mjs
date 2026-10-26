@@ -13,6 +13,12 @@ assert.deepEqual(searchSite(''), [])
 assert.deepEqual(searchSite('   '), [])
 assert.deepEqual(searchSite('qwertyzzzz'), [])
 assert.equal(new Set(siteSearchIndex.map(item => item.id)).size, siteSearchIndex.length)
+for (const [id, name] of [['gerlach', 'Gerlach'], ['baranie-rogi', 'Baranie Rogi'], ['dufourspitze', 'Dufourspitze']]) {
+  const results = searchSite(name).filter(item => item.id === `place:${id}`)
+  assert.equal(results.length, 1, `Keep one place result for ${name}`)
+  assert.equal(results[0].href, `/szczyty/${id}`, `Canonical summit page for ${name}`)
+  assert(results[0].actions.some(action => action.label === 'Na mapie' && action.href === `/mapa?atlas=${id}`), `Preserve direct map access for ${name}`)
+}
 
 const paths = new Set(sitePages.map(page => page.path))
 for (const item of siteSearchIndex) {

@@ -1,0 +1,2408 @@
+{
+  "atlas": {
+    "version": "after",
+    "buildScript": "/assets/index-B7N8HYIW.js",
+    "delay": 0,
+    "failure": "",
+    "url": "/trasy",
+    "size": "390×844",
+    "pageY": 0,
+    "historyLength": 24,
+    "width": 375,
+    "scrollWidth": 375,
+    "documentEncoded": 11232,
+    "dcl": 161.59999999962747,
+    "lcp": null,
+    "entries": [
+      {
+        "path": "/assets/CinekZieluAbstract-Regular-CxO88Xap.woff2",
+        "type": "link",
+        "encoded": 8224,
+        "decoded": 8224,
+        "transfer": 8524,
+        "start": 34.79999999888241,
+        "duration": 14.300000000745058
+      },
+      {
+        "path": "/assets/index-B7N8HYIW.js",
+        "type": "script",
+        "encoded": 126317,
+        "decoded": 438463,
+        "transfer": 126617,
+        "start": 36.09999999962747,
+        "duration": 41.09999999962747
+      },
+      {
+        "path": "/assets/routeCatalog-oiMW9zsN.js",
+        "type": "other",
+        "encoded": 41544,
+        "decoded": 226075,
+        "transfer": 41844,
+        "start": 36.09999999962747,
+        "duration": 49.40000000037253
+      },
+      {
+        "path": "/assets/routeArea-DEsyzqOq.js",
+        "type": "other",
+        "encoded": 683,
+        "decoded": 1217,
+        "transfer": 983,
+        "start": 36.19999999925494,
+        "duration": 50.59999999962747
+      },
+      {
+        "path": "/assets/sharePages-B42LY-Re.js",
+        "type": "other",
+        "encoded": 30856,
+        "decoded": 100843,
+        "transfer": 31156,
+        "start": 36.19999999925494,
+        "duration": 50.90000000037253
+      },
+      {
+        "path": "/assets/index-e3CJaFDI.css",
+        "type": "link",
+        "encoded": 35677,
+        "decoded": 194416,
+        "transfer": 35977,
+        "start": 36.29999999888241,
+        "duration": 22
+      },
+      {
+        "path": "/assets/routeAtlas-Cibes4nR.js",
+        "type": "other",
+        "encoded": 3543,
+        "decoded": 8768,
+        "transfer": 3843,
+        "start": 36.29999999888241,
+        "duration": 38.80000000074506
+      }
+    ],
+    "images": [
+      {
+        "path": "image/svg+xml,%3c",
+        "top": 22,
+        "complete": true,
+        "loading": "auto"
+      }
+    ],
+    "mapCount": 0,
+    "profiles": 0
+  },
+  "atlasMap": {
+    "version": "after",
+    "buildScript": "/assets/index-B7N8HYIW.js",
+    "delay": 0,
+    "failure": "",
+    "url": "/trasy#mapa-tras",
+    "size": "390×844",
+    "pageY": 1060,
+    "historyLength": 25,
+    "width": 375,
+    "scrollWidth": 375,
+    "documentEncoded": 11232,
+    "dcl": 161.59999999962747,
+    "lcp": null,
+    "entries": [
+      {
+        "path": "/assets/CinekZieluAbstract-Regular-CxO88Xap.woff2",
+        "type": "link",
+        "encoded": 8224,
+        "decoded": 8224,
+        "transfer": 8524,
+        "start": 34.79999999888241,
+        "duration": 14.300000000745058
+      },
+      {
+        "path": "/assets/index-B7N8HYIW.js",
+        "type": "script",
+        "encoded": 126317,
+        "decoded": 438463,
+        "transfer": 126617,
+        "start": 36.09999999962747,
+        "duration": 41.09999999962747
+      },
+      {
+        "path": "/assets/routeCatalog-oiMW9zsN.js",
+        "type": "other",
+        "encoded": 41544,
+        "decoded": 226075,
+        "transfer": 41844,
+        "start": 36.09999999962747,
+        "duration": 49.40000000037253
+      },
+      {
+        "path": "/assets/routeArea-DEsyzqOq.js",
+        "type": "other",
+        "encoded": 683,
+        "decoded": 1217,
+        "transfer": 983,
+        "start": 36.19999999925494,
+        "duration": 50.59999999962747
+      },
+      {
+        "path": "/assets/sharePages-B42LY-Re.js",
+        "type": "other",
+        "encoded": 30856,
+        "decoded": 100843,
+        "transfer": 31156,
+        "start": 36.19999999925494,
+        "duration": 50.90000000037253
+      },
+      {
+        "path": "/assets/index-e3CJaFDI.css",
+        "type": "link",
+        "encoded": 35677,
+        "decoded": 194416,
+        "transfer": 35977,
+        "start": 36.29999999888241,
+        "duration": 22
+      },
+      {
+        "path": "/assets/routeAtlas-Cibes4nR.js",
+        "type": "other",
+        "encoded": 3543,
+        "decoded": 8768,
+        "transfer": 3843,
+        "start": 36.29999999888241,
+        "duration": 38.80000000074506
+      },
+      {
+        "path": "/assets/zabi-kon-2026-CNhpLPOU.json",
+        "type": "fetch",
+        "encoded": 24163,
+        "decoded": 75814,
+        "transfer": 24463,
+        "start": 41236.40000000037,
+        "duration": 35.69999999925494
+      },
+      {
+        "path": "/assets/zugspitze-3wlob_fp.json",
+        "type": "fetch",
+        "encoded": 17877,
+        "decoded": 54907,
+        "transfer": 18177,
+        "start": 41236.699999999255,
+        "duration": 42.20000000111759
+      },
+      {
+        "path": "/assets/grauspitz-ZJYKtyhe.json",
+        "type": "fetch",
+        "encoded": 17752,
+        "decoded": 52769,
+        "transfer": 18052,
+        "start": 41236.90000000037,
+        "duration": 45.09999999962747
+      },
+      {
+        "path": "/assets/dufourTrack-DZnNH8Cg.json",
+        "type": "fetch",
+        "encoded": 64196,
+        "decoded": 197473,
+        "transfer": 64496,
+        "start": 41236.90000000037,
+        "duration": 59.19999999925494
+      },
+      {
+        "path": "/assets/grossglockner-BW7FNhvh.json",
+        "type": "fetch",
+        "encoded": 22083,
+        "decoded": 67362,
+        "transfer": 22383,
+        "start": 41237,
+        "duration": 60.59999999962747
+      },
+      {
+        "path": "/assets/triglav-LR_qMUXM.json",
+        "type": "fetch",
+        "encoded": 20720,
+        "decoded": 63605,
+        "transfer": 21020,
+        "start": 41237.09999999963,
+        "duration": 63
+      },
+      {
+        "path": "/assets/ganek-wysoka-rysy-DkF1aKhz.json",
+        "type": "fetch",
+        "encoded": 46424,
+        "decoded": 148453,
+        "transfer": 46724,
+        "start": 41237.09999999963,
+        "duration": 69
+      },
+      {
+        "path": "/assets/baranie-rogi-lato-2026-Dxs8s7OI.json",
+        "type": "fetch",
+        "encoded": 44148,
+        "decoded": 136068,
+        "transfer": 44448,
+        "start": 41237.199999999255,
+        "duration": 76.5
+      },
+      {
+        "path": "/assets/liptowskie-mury-2026-D0cAqUTG.json",
+        "type": "fetch",
+        "encoded": 43435,
+        "decoded": 134760,
+        "transfer": 43735,
+        "start": 41237.29999999888,
+        "duration": 93.90000000037253
+      },
+      {
+        "path": "/assets/koscielec-2026-DM_ZXlIn.json",
+        "type": "fetch",
+        "encoded": 28927,
+        "decoded": 90509,
+        "transfer": 29227,
+        "start": 41237.5,
+        "duration": 81.09999999962747
+      },
+      {
+        "path": "/assets/konczysta-2026-FalVyBBZ.json",
+        "type": "fetch",
+        "encoded": 20190,
+        "decoded": 61239,
+        "transfer": 20490,
+        "start": 41237.5,
+        "duration": 82.79999999888241
+      },
+      {
+        "path": "/assets/turbacz-2026-DMrwtQHm.json",
+        "type": "fetch",
+        "encoded": 25327,
+        "decoded": 77549,
+        "transfer": 25627,
+        "start": 41237.5,
+        "duration": 85.90000000037253
+      },
+      {
+        "path": "/assets/kiezmarski-zima-2025-BW2y4hN6.json",
+        "type": "fetch",
+        "encoded": 23421,
+        "decoded": 70458,
+        "transfer": 23721,
+        "start": 41237.59999999963,
+        "duration": 96.80000000074506
+      },
+      {
+        "path": "/assets/baranie-rogi-zima-2025-BXa7o9rR.json",
+        "type": "fetch",
+        "encoded": 34820,
+        "decoded": 107206,
+        "transfer": 35120,
+        "start": 41237.699999999255,
+        "duration": 113.20000000111759
+      },
+      {
+        "path": "/assets/krywan-2025-DFTaxfIM.json",
+        "type": "fetch",
+        "encoded": 22675,
+        "decoded": 68892,
+        "transfer": 22975,
+        "start": 41237.79999999888,
+        "duration": 100.30000000074506
+      },
+      {
+        "path": "/assets/szpiglasowy-2025-BnGS5mzu.json",
+        "type": "fetch",
+        "encoded": 35011,
+        "decoded": 107279,
+        "transfer": 35311,
+        "start": 41238,
+        "duration": 107.09999999962747
+      },
+      {
+        "path": "/assets/bettmerhorn-2025-DmRo9oJD.json",
+        "type": "fetch",
+        "encoded": 12250,
+        "decoded": 36003,
+        "transfer": 12550,
+        "start": 41238,
+        "duration": 107.59999999962747
+      },
+      {
+        "path": "/assets/zermatt-2025-CqjXzvCw.json",
+        "type": "fetch",
+        "encoded": 29753,
+        "decoded": 92574,
+        "transfer": 30053,
+        "start": 41238.09999999963,
+        "duration": 117.59999999962747
+      },
+      {
+        "path": "/assets/murren-2025-B8KQc7rw.json",
+        "type": "fetch",
+        "encoded": 10041,
+        "decoded": 30344,
+        "transfer": 10341,
+        "start": 41240.199999999255,
+        "duration": 116.80000000074506
+      },
+      {
+        "path": "/assets/augstmatthorn-2025-BleoNoW1.json",
+        "type": "fetch",
+        "encoded": 22989,
+        "decoded": 68070,
+        "transfer": 23289,
+        "start": 41240.40000000037,
+        "duration": 120
+      },
+      {
+        "path": "/assets/fronalpstock-2025-C-FE8MsZ.json",
+        "type": "fetch",
+        "encoded": 19862,
+        "decoded": 59739,
+        "transfer": 20162,
+        "start": 41240.90000000037,
+        "duration": 122.19999999925494
+      },
+      {
+        "path": "/assets/saxer-lucke-2025-ChG0MNpL.json",
+        "type": "fetch",
+        "encoded": 21875,
+        "decoded": 65018,
+        "transfer": 22175,
+        "start": 41241.199999999255,
+        "duration": 124.5
+      },
+      {
+        "path": "/assets/swinica-2025-D-DANCVT.json",
+        "type": "fetch",
+        "encoded": 50869,
+        "decoded": 155833,
+        "transfer": 51169,
+        "start": 41241.699999999255,
+        "duration": 134.59999999962747
+      },
+      {
+        "path": "/assets/posrednia-gran-2025-USv0g_0C.json",
+        "type": "fetch",
+        "encoded": 29497,
+        "decoded": 91510,
+        "transfer": 29797,
+        "start": 41242,
+        "duration": 145.69999999925494
+      },
+      {
+        "path": "/assets/mieguszowiecki-2025-DFT2kapb.json",
+        "type": "fetch",
+        "encoded": 31607,
+        "decoded": 98046,
+        "transfer": 31907,
+        "start": 41242.09999999963,
+        "duration": 137.80000000074506
+      },
+      {
+        "path": "/assets/lomnica-2025-BJb0u3uo.json",
+        "type": "fetch",
+        "encoded": 26065,
+        "decoded": 78568,
+        "transfer": 26365,
+        "start": 41242.5,
+        "duration": 140.40000000037253
+      },
+      {
+        "path": "/assets/durny-2025-3I6Ib929.json",
+        "type": "fetch",
+        "encoded": 29664,
+        "decoded": 90234,
+        "transfer": 29964,
+        "start": 41243.5,
+        "duration": 149.59999999962747
+      },
+      {
+        "path": "/assets/toubkal-2025-Dbvw4p3X.json",
+        "type": "fetch",
+        "encoded": 43815,
+        "decoded": 134466,
+        "transfer": 44115,
+        "start": 41243.79999999888,
+        "duration": 156.5
+      },
+      {
+        "path": "/assets/lodowy-2025-BDi_5n4-.json",
+        "type": "fetch",
+        "encoded": 34605,
+        "decoded": 105756,
+        "transfer": 34905,
+        "start": 41244.199999999255,
+        "duration": 174.90000000037253
+      },
+      {
+        "path": "/assets/baraniec-2025-DnIr7O-V.json",
+        "type": "fetch",
+        "encoded": 24576,
+        "decoded": 73657,
+        "transfer": 24876,
+        "start": 41244.199999999255,
+        "duration": 178.7000000011176
+      },
+      {
+        "path": "/assets/szatan-2025-B8HefjEm.json",
+        "type": "fetch",
+        "encoded": 24578,
+        "decoded": 75084,
+        "transfer": 24878,
+        "start": 41244.40000000037,
+        "duration": 163.89999999850988
+      },
+      {
+        "path": "/assets/wysoka-2025-C0EGdGrE.json",
+        "type": "fetch",
+        "encoded": 24870,
+        "decoded": 76854,
+        "transfer": 25170,
+        "start": 41244.59999999963,
+        "duration": 165.80000000074506
+      },
+      {
+        "path": "/assets/gerlach-zima-2025-BYQUeHhF.json",
+        "type": "fetch",
+        "encoded": 25520,
+        "decoded": 78099,
+        "transfer": 25820,
+        "start": 41244.699999999255,
+        "duration": 182.7000000011176
+      },
+      {
+        "path": "/assets/lodowy-proba-2024-DLKFmCxi.json",
+        "type": "fetch",
+        "encoded": 34711,
+        "decoded": 106717,
+        "transfer": 35011,
+        "start": 41244.90000000037,
+        "duration": 196.5
+      },
+      {
+        "path": "/assets/bradavica-2024-A2m4FPeC.json",
+        "type": "fetch",
+        "encoded": 25932,
+        "decoded": 78620,
+        "transfer": 26232,
+        "start": 41245,
+        "duration": 191.7999999988824
+      },
+      {
+        "path": "/assets/malolaczniak-giewont-2024-CgXAhe68.json",
+        "type": "fetch",
+        "encoded": 29160,
+        "decoded": 88633,
+        "transfer": 29460,
+        "start": 41245.09999999963,
+        "duration": 203.09999999962747
+      },
+      {
+        "path": "/assets/gerlach-2024-SR1p3s_H.json",
+        "type": "fetch",
+        "encoded": 23348,
+        "decoded": 70817,
+        "transfer": 23648,
+        "start": 41245.199999999255,
+        "duration": 198.80000000074506
+      },
+      {
+        "path": "/assets/czerwona-lawka-2024-CHKXnhHi.json",
+        "type": "fetch",
+        "encoded": 38195,
+        "decoded": 116771,
+        "transfer": 38495,
+        "start": 41245.40000000037,
+        "duration": 212.59999999962747
+      },
+      {
+        "path": "/assets/koscielec-orla-2024-DpO2V2u_.json",
+        "type": "fetch",
+        "encoded": 35575,
+        "decoded": 110136,
+        "transfer": 35875,
+        "start": 41245.5,
+        "duration": 216.5
+      },
+      {
+        "path": "/assets/slawkowski-2024-BcpaMrM0.json",
+        "type": "fetch",
+        "encoded": 20587,
+        "decoded": 62057,
+        "transfer": 20887,
+        "start": 41245.699999999255,
+        "duration": 219.40000000037253
+      },
+      {
+        "path": "/assets/piec-stawow-2024-CnjNB49B.json",
+        "type": "fetch",
+        "encoded": 28883,
+        "decoded": 89521,
+        "transfer": 29183,
+        "start": 41245.79999999888,
+        "duration": 222.2000000011176
+      },
+      {
+        "path": "/assets/grzes-rakon-2024-CR1t8z0K.json",
+        "type": "fetch",
+        "encoded": 38067,
+        "decoded": 116446,
+        "transfer": 38367,
+        "start": 41245.90000000037,
+        "duration": 229.2999999988824
+      },
+      {
+        "path": "/assets/RouteAtlasMap-BQLGro3r.js",
+        "type": "script",
+        "encoded": 1282,
+        "decoded": 2390,
+        "transfer": 1582,
+        "start": 41481.59999999963,
+        "duration": 7.900000000372529
+      },
+      {
+        "path": "/assets/TatryTerrainMap-DFYkLO5E.js",
+        "type": "script",
+        "encoded": 6663,
+        "decoded": 17891,
+        "transfer": 6963,
+        "start": 41481.79999999888,
+        "duration": 8.200000001117587
+      },
+      {
+        "path": "/assets/TatryTerrainMap-Cz4RoIew.css",
+        "type": "link",
+        "encoded": 1937,
+        "decoded": 7204,
+        "transfer": 2237,
+        "start": 41481.90000000037,
+        "duration": 6.199999999254942
+      },
+      {
+        "path": "/assets/routeGeometry-CsIgAaIY.js",
+        "type": "script",
+        "encoded": 404,
+        "decoded": 584,
+        "transfer": 704,
+        "start": 41482.09999999963,
+        "duration": 8.5
+      }
+    ],
+    "images": [
+      {
+        "path": "image/svg+xml,%3c",
+        "top": -1038,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/4/7/5.png",
+        "top": 155.71875,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/4/8/5.png",
+        "top": 155.71875,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/4/9/5.png",
+        "top": 155.71875,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/4/7/6.png",
+        "top": 357.390625,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/4/8/6.png",
+        "top": 357.390625,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/4/9/6.png",
+        "top": 357.390625,
+        "complete": true,
+        "loading": "auto"
+      }
+    ],
+    "mapCount": 1,
+    "profiles": 0
+  },
+  "atlasAlps": {
+    "version": "after",
+    "buildScript": "/assets/index-B7N8HYIW.js",
+    "delay": 0,
+    "failure": "",
+    "url": "/trasy?pasmo=Alpy",
+    "size": "390×844",
+    "pageY": 0,
+    "historyLength": 26,
+    "width": 375,
+    "scrollWidth": 375,
+    "documentEncoded": 11232,
+    "dcl": 151.30000000074506,
+    "lcp": null,
+    "entries": [
+      {
+        "path": "/assets/CinekZieluAbstract-Regular-CxO88Xap.woff2",
+        "type": "link",
+        "encoded": 8224,
+        "decoded": 8224,
+        "transfer": 8524,
+        "start": 37.100000001490116,
+        "duration": 16.699999999254942
+      },
+      {
+        "path": "/assets/index-B7N8HYIW.js",
+        "type": "script",
+        "encoded": 126317,
+        "decoded": 438463,
+        "transfer": 126617,
+        "start": 37.40000000037253,
+        "duration": 48
+      },
+      {
+        "path": "/assets/routeCatalog-oiMW9zsN.js",
+        "type": "other",
+        "encoded": 41544,
+        "decoded": 226075,
+        "transfer": 41844,
+        "start": 37.5,
+        "duration": 48.100000001490116
+      },
+      {
+        "path": "/assets/index-e3CJaFDI.css",
+        "type": "link",
+        "encoded": 35677,
+        "decoded": 194416,
+        "transfer": 35977,
+        "start": 37.600000001490116,
+        "duration": 22.59999999962747
+      },
+      {
+        "path": "/assets/routeArea-DEsyzqOq.js",
+        "type": "other",
+        "encoded": 683,
+        "decoded": 1217,
+        "transfer": 983,
+        "start": 37.600000001490116,
+        "duration": 46.69999999925494
+      },
+      {
+        "path": "/assets/routeAtlas-Cibes4nR.js",
+        "type": "other",
+        "encoded": 3543,
+        "decoded": 8768,
+        "transfer": 3843,
+        "start": 37.600000001490116,
+        "duration": 46.79999999888241
+      },
+      {
+        "path": "/assets/sharePages-B42LY-Re.js",
+        "type": "other",
+        "encoded": 30856,
+        "decoded": 100843,
+        "transfer": 31156,
+        "start": 37.600000001490116,
+        "duration": 47.59999999962747
+      }
+    ],
+    "images": [
+      {
+        "path": "image/svg+xml,%3c",
+        "top": 22,
+        "complete": true,
+        "loading": "auto"
+      }
+    ],
+    "mapCount": 0,
+    "profiles": 0
+  },
+  "atlasAlpsMap": {
+    "version": "after",
+    "buildScript": "/assets/index-B7N8HYIW.js",
+    "delay": 0,
+    "failure": "",
+    "url": "/trasy?pasmo=Alpy#mapa-tras",
+    "size": "390×844",
+    "pageY": 1120,
+    "historyLength": 27,
+    "width": 375,
+    "scrollWidth": 375,
+    "documentEncoded": 11232,
+    "dcl": 151.30000000074506,
+    "lcp": null,
+    "entries": [
+      {
+        "path": "/assets/CinekZieluAbstract-Regular-CxO88Xap.woff2",
+        "type": "link",
+        "encoded": 8224,
+        "decoded": 8224,
+        "transfer": 8524,
+        "start": 37.100000001490116,
+        "duration": 16.699999999254942
+      },
+      {
+        "path": "/assets/index-B7N8HYIW.js",
+        "type": "script",
+        "encoded": 126317,
+        "decoded": 438463,
+        "transfer": 126617,
+        "start": 37.40000000037253,
+        "duration": 48
+      },
+      {
+        "path": "/assets/routeCatalog-oiMW9zsN.js",
+        "type": "other",
+        "encoded": 41544,
+        "decoded": 226075,
+        "transfer": 41844,
+        "start": 37.5,
+        "duration": 48.100000001490116
+      },
+      {
+        "path": "/assets/index-e3CJaFDI.css",
+        "type": "link",
+        "encoded": 35677,
+        "decoded": 194416,
+        "transfer": 35977,
+        "start": 37.600000001490116,
+        "duration": 22.59999999962747
+      },
+      {
+        "path": "/assets/routeArea-DEsyzqOq.js",
+        "type": "other",
+        "encoded": 683,
+        "decoded": 1217,
+        "transfer": 983,
+        "start": 37.600000001490116,
+        "duration": 46.69999999925494
+      },
+      {
+        "path": "/assets/routeAtlas-Cibes4nR.js",
+        "type": "other",
+        "encoded": 3543,
+        "decoded": 8768,
+        "transfer": 3843,
+        "start": 37.600000001490116,
+        "duration": 46.79999999888241
+      },
+      {
+        "path": "/assets/sharePages-B42LY-Re.js",
+        "type": "other",
+        "encoded": 30856,
+        "decoded": 100843,
+        "transfer": 31156,
+        "start": 37.600000001490116,
+        "duration": 47.59999999962747
+      },
+      {
+        "path": "/assets/zugspitze-3wlob_fp.json",
+        "type": "fetch",
+        "encoded": 17877,
+        "decoded": 54907,
+        "transfer": 18177,
+        "start": 34586.40000000037,
+        "duration": 13.900000000372529
+      },
+      {
+        "path": "/assets/grauspitz-ZJYKtyhe.json",
+        "type": "fetch",
+        "encoded": 17752,
+        "decoded": 52769,
+        "transfer": 18052,
+        "start": 34586.90000000037,
+        "duration": 15
+      },
+      {
+        "path": "/assets/dufourTrack-DZnNH8Cg.json",
+        "type": "fetch",
+        "encoded": 64196,
+        "decoded": 197473,
+        "transfer": 64496,
+        "start": 34587.300000000745,
+        "duration": 28.300000000745058
+      },
+      {
+        "path": "/assets/grossglockner-BW7FNhvh.json",
+        "type": "fetch",
+        "encoded": 22083,
+        "decoded": 67362,
+        "transfer": 22383,
+        "start": 34587.800000000745,
+        "duration": 27.5
+      },
+      {
+        "path": "/assets/triglav-LR_qMUXM.json",
+        "type": "fetch",
+        "encoded": 20720,
+        "decoded": 63605,
+        "transfer": 21020,
+        "start": 34587.90000000037,
+        "duration": 36.30000000074506
+      },
+      {
+        "path": "/assets/bettmerhorn-2025-DmRo9oJD.json",
+        "type": "fetch",
+        "encoded": 12250,
+        "decoded": 36003,
+        "transfer": 12550,
+        "start": 34587.90000000037,
+        "duration": 38.59999999962747
+      },
+      {
+        "path": "/assets/zermatt-2025-CqjXzvCw.json",
+        "type": "fetch",
+        "encoded": 29753,
+        "decoded": 92574,
+        "transfer": 30053,
+        "start": 34588.10000000149,
+        "duration": 31.399999998509884
+      },
+      {
+        "path": "/assets/murren-2025-B8KQc7rw.json",
+        "type": "fetch",
+        "encoded": 10041,
+        "decoded": 30344,
+        "transfer": 10341,
+        "start": 34588.10000000149,
+        "duration": 33.5
+      },
+      {
+        "path": "/assets/augstmatthorn-2025-BleoNoW1.json",
+        "type": "fetch",
+        "encoded": 22989,
+        "decoded": 68070,
+        "transfer": 23289,
+        "start": 34588.20000000112,
+        "duration": 42.09999999962747
+      },
+      {
+        "path": "/assets/fronalpstock-2025-C-FE8MsZ.json",
+        "type": "fetch",
+        "encoded": 19862,
+        "decoded": 59739,
+        "transfer": 20162,
+        "start": 34588.20000000112,
+        "duration": 45.5
+      },
+      {
+        "path": "/assets/saxer-lucke-2025-ChG0MNpL.json",
+        "type": "fetch",
+        "encoded": 21875,
+        "decoded": 65018,
+        "transfer": 22175,
+        "start": 34588.300000000745,
+        "duration": 49.09999999962747
+      },
+      {
+        "path": "/assets/RouteAtlasMap-BQLGro3r.js",
+        "type": "script",
+        "encoded": 1282,
+        "decoded": 2390,
+        "transfer": 1582,
+        "start": 34643,
+        "duration": 10.100000001490116
+      },
+      {
+        "path": "/assets/TatryTerrainMap-DFYkLO5E.js",
+        "type": "script",
+        "encoded": 6663,
+        "decoded": 17891,
+        "transfer": 6963,
+        "start": 34643.20000000112,
+        "duration": 15.599999999627471
+      },
+      {
+        "path": "/assets/TatryTerrainMap-Cz4RoIew.css",
+        "type": "link",
+        "encoded": 1937,
+        "decoded": 7204,
+        "transfer": 2237,
+        "start": 34643.300000000745,
+        "duration": 10.400000000372529
+      },
+      {
+        "path": "/assets/routeGeometry-CsIgAaIY.js",
+        "type": "script",
+        "encoded": 404,
+        "decoded": 584,
+        "transfer": 704,
+        "start": 34643.40000000037,
+        "duration": 15.300000000745058
+      }
+    ],
+    "images": [
+      {
+        "path": "image/svg+xml,%3c",
+        "top": -1098,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/7/66/44.png",
+        "top": 220.140625,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/7/67/44.png",
+        "top": 220.140625,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/7/68/44.png",
+        "top": 220.140625,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/7/69/44.png",
+        "top": 220.140625,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/7/66/45.png",
+        "top": 336.453125,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/7/67/45.png",
+        "top": 336.453125,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/7/68/45.png",
+        "top": 336.453125,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/7/69/45.png",
+        "top": 336.453125,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/7/66/46.png",
+        "top": 452.78125,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/7/67/46.png",
+        "top": 452.78125,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/7/68/46.png",
+        "top": 452.78125,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/7/69/46.png",
+        "top": 452.78125,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/6/33/21.png",
+        "top": -12.5,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/6/34/21.png",
+        "top": -12.5,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/6/33/22.png",
+        "top": 220.140625,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/6/34/22.png",
+        "top": 220.140625,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/6/33/23.png",
+        "top": 452.78125,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/6/34/23.png",
+        "top": 452.78125,
+        "complete": true,
+        "loading": "auto"
+      }
+    ],
+    "mapCount": 1,
+    "profiles": 0
+  },
+  "atlasDesktop": {
+    "version": "after",
+    "buildScript": "/assets/index-B7N8HYIW.js",
+    "delay": 0,
+    "failure": "",
+    "url": "/trasy?pasmo=Alpy#mapa-tras",
+    "size": "1280×800",
+    "pageY": 1065,
+    "historyLength": 29,
+    "width": 1265,
+    "scrollWidth": 1265,
+    "documentEncoded": 11232,
+    "dcl": 144.59999999962747,
+    "lcp": null,
+    "entries": [
+      {
+        "path": "/assets/CinekZieluAbstract-Regular-CxO88Xap.woff2",
+        "type": "link",
+        "encoded": 8224,
+        "decoded": 8224,
+        "transfer": 8524,
+        "start": 31.5,
+        "duration": 15.199999999254942
+      },
+      {
+        "path": "/assets/routeCatalog-oiMW9zsN.js",
+        "type": "other",
+        "encoded": 41544,
+        "decoded": 226075,
+        "transfer": 41844,
+        "start": 32.09999999962747,
+        "duration": 39
+      },
+      {
+        "path": "/assets/index-B7N8HYIW.js",
+        "type": "script",
+        "encoded": 126317,
+        "decoded": 438463,
+        "transfer": 126617,
+        "start": 32.09999999962747,
+        "duration": 36.59999999962747
+      },
+      {
+        "path": "/assets/sharePages-B42LY-Re.js",
+        "type": "other",
+        "encoded": 30856,
+        "decoded": 100843,
+        "transfer": 31156,
+        "start": 32.09999999962747,
+        "duration": 38.79999999888241
+      },
+      {
+        "path": "/assets/routeArea-DEsyzqOq.js",
+        "type": "other",
+        "encoded": 683,
+        "decoded": 1217,
+        "transfer": 983,
+        "start": 32.19999999925494,
+        "duration": 37.80000000074506
+      },
+      {
+        "path": "/assets/routeAtlas-Cibes4nR.js",
+        "type": "other",
+        "encoded": 3543,
+        "decoded": 8768,
+        "transfer": 3843,
+        "start": 32.29999999888241,
+        "duration": 38
+      },
+      {
+        "path": "/assets/index-e3CJaFDI.css",
+        "type": "link",
+        "encoded": 35677,
+        "decoded": 194416,
+        "transfer": 35977,
+        "start": 32.399999998509884,
+        "duration": 19.40000000037253
+      },
+      {
+        "path": "/assets/zugspitze-3wlob_fp.json",
+        "type": "fetch",
+        "encoded": 17877,
+        "decoded": 54907,
+        "transfer": 18177,
+        "start": 1232,
+        "duration": 11.799999998882413
+      },
+      {
+        "path": "/assets/grauspitz-ZJYKtyhe.json",
+        "type": "fetch",
+        "encoded": 17752,
+        "decoded": 52769,
+        "transfer": 18052,
+        "start": 1232.0999999996275,
+        "duration": 18.299999998882413
+      },
+      {
+        "path": "/assets/dufourTrack-DZnNH8Cg.json",
+        "type": "fetch",
+        "encoded": 64196,
+        "decoded": 197473,
+        "transfer": 64496,
+        "start": 1235,
+        "duration": 40.79999999888241
+      },
+      {
+        "path": "/assets/grossglockner-BW7FNhvh.json",
+        "type": "fetch",
+        "encoded": 22083,
+        "decoded": 67362,
+        "transfer": 22383,
+        "start": 1236.7999999988824,
+        "duration": 18.09999999962747
+      },
+      {
+        "path": "/assets/triglav-LR_qMUXM.json",
+        "type": "fetch",
+        "encoded": 20720,
+        "decoded": 63605,
+        "transfer": 21020,
+        "start": 1236.8999999985099,
+        "duration": 21.100000001490116
+      },
+      {
+        "path": "/assets/bettmerhorn-2025-DmRo9oJD.json",
+        "type": "fetch",
+        "encoded": 12250,
+        "decoded": 36003,
+        "transfer": 12550,
+        "start": 1237,
+        "duration": 23
+      },
+      {
+        "path": "/assets/zermatt-2025-CqjXzvCw.json",
+        "type": "fetch",
+        "encoded": 29753,
+        "decoded": 92574,
+        "transfer": 30053,
+        "start": 1237.199999999255,
+        "duration": 28
+      },
+      {
+        "path": "/assets/murren-2025-B8KQc7rw.json",
+        "type": "fetch",
+        "encoded": 10041,
+        "decoded": 30344,
+        "transfer": 10341,
+        "start": 1237.2999999988824,
+        "duration": 40
+      },
+      {
+        "path": "/assets/augstmatthorn-2025-BleoNoW1.json",
+        "type": "fetch",
+        "encoded": 22989,
+        "decoded": 68070,
+        "transfer": 23289,
+        "start": 1237.5,
+        "duration": 43.09999999962747
+      },
+      {
+        "path": "/assets/fronalpstock-2025-C-FE8MsZ.json",
+        "type": "fetch",
+        "encoded": 19862,
+        "decoded": 59739,
+        "transfer": 20162,
+        "start": 1237.5999999996275,
+        "duration": 51.29999999888241
+      },
+      {
+        "path": "/assets/saxer-lucke-2025-ChG0MNpL.json",
+        "type": "fetch",
+        "encoded": 21875,
+        "decoded": 65018,
+        "transfer": 22175,
+        "start": 1237.7999999988824,
+        "duration": 47.09999999962747
+      },
+      {
+        "path": "/assets/RouteAtlasMap-BQLGro3r.js",
+        "type": "script",
+        "encoded": 1282,
+        "decoded": 2390,
+        "transfer": 1582,
+        "start": 1292,
+        "duration": 6.5
+      },
+      {
+        "path": "/assets/TatryTerrainMap-DFYkLO5E.js",
+        "type": "script",
+        "encoded": 6663,
+        "decoded": 17891,
+        "transfer": 6963,
+        "start": 1292.2999999988824,
+        "duration": 7.099999999627471
+      },
+      {
+        "path": "/assets/TatryTerrainMap-Cz4RoIew.css",
+        "type": "link",
+        "encoded": 1937,
+        "decoded": 7204,
+        "transfer": 2237,
+        "start": 1292.5999999996275,
+        "duration": 5.5
+      },
+      {
+        "path": "/assets/routeGeometry-CsIgAaIY.js",
+        "type": "script",
+        "encoded": 404,
+        "decoded": 584,
+        "transfer": 704,
+        "start": 1292.7999999988824,
+        "duration": 5.800000000745058
+      }
+    ],
+    "images": [
+      {
+        "path": "image/svg+xml,%3c",
+        "top": -1036,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/6/33/21.png",
+        "top": 291.171875,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/6/34/21.png",
+        "top": 291.171875,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/6/33/22.png",
+        "top": 459.4375,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/6/34/22.png",
+        "top": 459.4375,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/6/33/23.png",
+        "top": 627.71875,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/6/34/23.png",
+        "top": 627.71875,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/5/16/10.png",
+        "top": 122.90625,
+        "complete": false,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/5/17/10.png",
+        "top": 122.90625,
+        "complete": false,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/5/16/11.png",
+        "top": 459.4375,
+        "complete": false,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/5/17/11.png",
+        "top": 459.4375,
+        "complete": false,
+        "loading": "auto"
+      }
+    ],
+    "mapCount": 1,
+    "profiles": 0
+  },
+  "alps": {
+    "version": "after",
+    "buildScript": "/assets/index-B7N8HYIW.js",
+    "delay": 0,
+    "failure": "",
+    "url": "/wyprawy/alpy-2026",
+    "size": "390×844",
+    "pageY": 0,
+    "historyLength": 30,
+    "width": 375,
+    "scrollWidth": 375,
+    "documentEncoded": 11491,
+    "dcl": 202.5,
+    "lcp": null,
+    "entries": [
+      {
+        "path": "/assets/CinekZieluAbstract-Regular-CxO88Xap.woff2",
+        "type": "link",
+        "encoded": 8224,
+        "decoded": 8224,
+        "transfer": 8524,
+        "start": 57.20000000111759,
+        "duration": 27.299999998882413
+      },
+      {
+        "path": "/assets/index-B7N8HYIW.js",
+        "type": "script",
+        "encoded": 126317,
+        "decoded": 438463,
+        "transfer": 126617,
+        "start": 57.40000000037253,
+        "duration": 63.5
+      },
+      {
+        "path": "/assets/routeCatalog-oiMW9zsN.js",
+        "type": "other",
+        "encoded": 41544,
+        "decoded": 226075,
+        "transfer": 41844,
+        "start": 57.5,
+        "duration": 56.80000000074506
+      },
+      {
+        "path": "/assets/sharePages-B42LY-Re.js",
+        "type": "other",
+        "encoded": 30856,
+        "decoded": 100843,
+        "transfer": 31156,
+        "start": 57.59999999962747,
+        "duration": 66
+      },
+      {
+        "path": "/assets/routeArea-DEsyzqOq.js",
+        "type": "other",
+        "encoded": 683,
+        "decoded": 1217,
+        "transfer": 983,
+        "start": 57.70000000111759,
+        "duration": 56.09999999962747
+      },
+      {
+        "path": "/assets/routeAtlas-Cibes4nR.js",
+        "type": "other",
+        "encoded": 3543,
+        "decoded": 8768,
+        "transfer": 3843,
+        "start": 57.80000000074506,
+        "duration": 64.59999999962747
+      },
+      {
+        "path": "/assets/index-e3CJaFDI.css",
+        "type": "link",
+        "encoded": 35677,
+        "decoded": 194416,
+        "transfer": 35977,
+        "start": 57.90000000037253,
+        "duration": 38.69999999925494
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-28-480.webp",
+        "type": "link",
+        "encoded": 18066,
+        "decoded": 18066,
+        "transfer": 18366,
+        "start": 57.90000000037253,
+        "duration": 65.5
+      },
+      {
+        "path": "/assets/photos/stories/alpy/alpy-historia-01-480.webp",
+        "type": "img",
+        "encoded": 42876,
+        "decoded": 42876,
+        "transfer": 43176,
+        "start": 227.59999999962747,
+        "duration": 12.700000001117587
+      },
+      {
+        "path": "/assets/photos/stories/alpy/alpy-historia-02-480.webp",
+        "type": "img",
+        "encoded": 11856,
+        "decoded": 11856,
+        "transfer": 12156,
+        "start": 227.7000000011176,
+        "duration": 13.099999999627471
+      }
+    ],
+    "images": [
+      {
+        "path": "image/svg+xml,%3c",
+        "top": 22,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-28-480.webp",
+        "top": 171.125,
+        "complete": true,
+        "loading": "eager"
+      },
+      {
+        "path": "/assets/photos/stories/alpy/alpy-historia-01-480.webp",
+        "top": 1795.1875,
+        "complete": true,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/stories/alpy/alpy-historia-02-480.webp",
+        "top": 2034.515625,
+        "complete": true,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-04-small.webp",
+        "top": 3099.078125,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-02-small.webp",
+        "top": 3338.40625,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/stories/alpy/alpy-historia-03-small.webp",
+        "top": 3577.734375,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/stories/alpy/alpy-historia-08-small.webp",
+        "top": 4527.421875,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/stories/alpy/alpy-historia-09-small.webp",
+        "top": 5626.375,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-09-small.webp",
+        "top": 5865.703125,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-10-small.webp",
+        "top": 6394.203125,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-12-small.webp",
+        "top": 7031.328125,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/stories/alpy/alpy-historia-14-small.webp",
+        "top": 7248.65625,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/stories/alpy/alpy-historia-15-small.webp",
+        "top": 7465.984375,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-03-small.webp",
+        "top": 8860.703125,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/stories/alpy/alpy-historia-16-small.webp",
+        "top": 9389.140625,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-14-small.webp",
+        "top": 9628.46875,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/stories/alpy/alpy-historia-19-small.webp",
+        "top": 10158.390625,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-23-small.webp",
+        "top": 10397.71875,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-24-small.webp",
+        "top": 10622.578125,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/stories/alpy/alpy-historia-23-small.webp",
+        "top": 11441.65625,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-34-small.webp",
+        "top": 11680.984375,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/stories/alpy/alpy-historia-24-small.webp",
+        "top": 12209.484375,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/stories/alpy/alpy-historia-26-small.webp",
+        "top": 12823.21875,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/stories/alpy/alpy-historia-27-small.webp",
+        "top": 13040.546875,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-40-small.webp",
+        "top": 13257.875,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-43-small.webp",
+        "top": 14371.4375,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/stories/alpy/alpy-historia-28-small.webp",
+        "top": 14610.765625,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/stories/alpy/alpy-historia-29-small.webp",
+        "top": 14850.09375,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/stories/alpy/alpy-historia-32-small.webp",
+        "top": 15487.21875,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/stories/alpy/alpy-historia-33-small.webp",
+        "top": 15704.546875,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/stories/alpy/alpy-historia-34-small.webp",
+        "top": 17041.171875,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-47-small.webp",
+        "top": 17280.5,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/stories/alpy/alpy-historia-35-small.webp",
+        "top": 17519.984375,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-02-small.webp",
+        "top": 19711.25,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-03-small.webp",
+        "top": 19954.578125,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-04-small.webp",
+        "top": 20487.015625,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/szwajcaria-2025/szwajcaria-01-small.webp",
+        "top": 20839.34375,
+        "complete": false,
+        "loading": "lazy"
+      }
+    ],
+    "mapCount": 0,
+    "profiles": 0
+  },
+  "morocco": {
+    "version": "after",
+    "buildScript": "/assets/index-B7N8HYIW.js",
+    "delay": 0,
+    "failure": "",
+    "url": "/wyprawy/maroko-2025",
+    "size": "390×844",
+    "pageY": 0,
+    "historyLength": 31,
+    "width": 375,
+    "scrollWidth": 375,
+    "documentEncoded": 7654,
+    "dcl": 166.09999999962747,
+    "lcp": null,
+    "entries": [
+      {
+        "path": "/assets/CinekZieluAbstract-Regular-CxO88Xap.woff2",
+        "type": "link",
+        "encoded": 8224,
+        "decoded": 8224,
+        "transfer": 8524,
+        "start": 35.79999999888241,
+        "duration": 17.700000001117587
+      },
+      {
+        "path": "/assets/index-B7N8HYIW.js",
+        "type": "script",
+        "encoded": 126317,
+        "decoded": 438463,
+        "transfer": 126617,
+        "start": 36.29999999888241,
+        "duration": 56.80000000074506
+      },
+      {
+        "path": "/assets/routeCatalog-oiMW9zsN.js",
+        "type": "other",
+        "encoded": 41544,
+        "decoded": 226075,
+        "transfer": 41844,
+        "start": 36.40000000037253,
+        "duration": 55.09999999962747
+      },
+      {
+        "path": "/assets/index-e3CJaFDI.css",
+        "type": "link",
+        "encoded": 35677,
+        "decoded": 194416,
+        "transfer": 35977,
+        "start": 36.5,
+        "duration": 26.5
+      },
+      {
+        "path": "/assets/photos/galleries/maroko-2025/maroko-01-480.webp",
+        "type": "link",
+        "encoded": 4414,
+        "decoded": 4414,
+        "transfer": 4714,
+        "start": 36.5,
+        "duration": 57.19999999925494
+      },
+      {
+        "path": "/assets/routeArea-DEsyzqOq.js",
+        "type": "other",
+        "encoded": 683,
+        "decoded": 1217,
+        "transfer": 983,
+        "start": 36.5,
+        "duration": 56.69999999925494
+      },
+      {
+        "path": "/assets/sharePages-B42LY-Re.js",
+        "type": "other",
+        "encoded": 30856,
+        "decoded": 100843,
+        "transfer": 31156,
+        "start": 36.5,
+        "duration": 57.29999999888241
+      },
+      {
+        "path": "/assets/routeAtlas-Cibes4nR.js",
+        "type": "other",
+        "encoded": 3543,
+        "decoded": 8768,
+        "transfer": 3843,
+        "start": 36.5,
+        "duration": 56.79999999888241
+      },
+      {
+        "path": "/assets/photos/galleries/maroko-2025/maroko-19-480.webp",
+        "type": "img",
+        "encoded": 13104,
+        "decoded": 13104,
+        "transfer": 13404,
+        "start": 105.09999999962747,
+        "duration": 25.699999999254942
+      },
+      {
+        "path": "/assets/photos/galleries/maroko-2025/maroko-04-480.webp",
+        "type": "img",
+        "encoded": 17176,
+        "decoded": 17176,
+        "transfer": 17476,
+        "start": 105.40000000037253,
+        "duration": 17.5
+      },
+      {
+        "path": "/assets/photos/galleries/maroko-2025/maroko-22-480.webp",
+        "type": "img",
+        "encoded": 41192,
+        "decoded": 41192,
+        "transfer": 41492,
+        "start": 105.40000000037253,
+        "duration": 22.09999999962747
+      }
+    ],
+    "images": [
+      {
+        "path": "image/svg+xml,%3c",
+        "top": 22,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/assets/photos/galleries/maroko-2025/maroko-01-480.webp",
+        "top": 171.125,
+        "complete": true,
+        "loading": "eager"
+      },
+      {
+        "path": "/assets/photos/galleries/maroko-2025/maroko-19-480.webp",
+        "top": 1291.625,
+        "complete": true,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/maroko-2025/maroko-04-480.webp",
+        "top": 1496.8125,
+        "complete": true,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/maroko-2025/maroko-22-480.webp",
+        "top": 1936.96875,
+        "complete": true,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/maroko-2025/maroko-07-small.webp",
+        "top": 2377.125,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/maroko-2025/maroko-24-small.webp",
+        "top": 2582.3125,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/maroko-2025/maroko-25-small.webp",
+        "top": 3022.46875,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/maroko-2025/maroko-11-small.webp",
+        "top": 3462.625,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/maroko-2025/maroko-12-small.webp",
+        "top": 3667.8125,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/maroko-2025/maroko-31-small.webp",
+        "top": 4107.96875,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/maroko-2025/maroko-13-small.webp",
+        "top": 4548.125,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/maroko-2025/maroko-37-small.webp",
+        "top": 4988.28125,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/maroko-2025/maroko-38-small.webp",
+        "top": 5428.4375,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/maroko-2025/maroko-40-small.webp",
+        "top": 5868.59375,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/maroko-2025/maroko-16-small.webp",
+        "top": 6073.78125,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/maroko-2025/maroko-01-480.webp",
+        "top": 7527.421875,
+        "complete": true,
+        "loading": "eager"
+      },
+      {
+        "path": "/assets/photos/galleries/maroko-2025/maroko-02-small.webp",
+        "top": 7734.609375,
+        "complete": false,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/maroko-2025/maroko-03-small.webp",
+        "top": 7941.796875,
+        "complete": false,
+        "loading": "lazy"
+      }
+    ],
+    "mapCount": 0,
+    "profiles": 0
+  },
+  "areaProfile": {
+    "version": "after",
+    "buildScript": "/assets/index-B7N8HYIW.js",
+    "delay": 0,
+    "failure": "",
+    "url": "/trasy?pasmo=Alpy&rok=2026&obszar=6.62313%2C43.61865%2C14.96472%2C49.59&trasa=triglav#profil",
+    "size": "390×844",
+    "pageY": 4290,
+    "historyLength": 23,
+    "width": 375,
+    "scrollWidth": 375,
+    "documentEncoded": 11232,
+    "dcl": 212.09999999962747,
+    "lcp": null,
+    "entries": [
+      {
+        "path": "/assets/CinekZieluAbstract-Regular-CxO88Xap.woff2",
+        "type": "link",
+        "encoded": 8224,
+        "decoded": 8224,
+        "transfer": 8524,
+        "start": 33.30000000074506,
+        "duration": 29.5
+      },
+      {
+        "path": "/assets/index-B7N8HYIW.js",
+        "type": "script",
+        "encoded": 126317,
+        "decoded": 438463,
+        "transfer": 126617,
+        "start": 34.09999999962747,
+        "duration": 58.80000000074506
+      },
+      {
+        "path": "/assets/routeCatalog-oiMW9zsN.js",
+        "type": "other",
+        "encoded": 41544,
+        "decoded": 226075,
+        "transfer": 41844,
+        "start": 34.69999999925494,
+        "duration": 62.90000000037253
+      },
+      {
+        "path": "/assets/sharePages-B42LY-Re.js",
+        "type": "other",
+        "encoded": 30856,
+        "decoded": 100843,
+        "transfer": 31156,
+        "start": 34.80000000074506,
+        "duration": 62.69999999925494
+      },
+      {
+        "path": "/assets/routeArea-DEsyzqOq.js",
+        "type": "other",
+        "encoded": 683,
+        "decoded": 1217,
+        "transfer": 983,
+        "start": 34.90000000037253,
+        "duration": 61.59999999962747
+      },
+      {
+        "path": "/assets/routeAtlas-Cibes4nR.js",
+        "type": "other",
+        "encoded": 3543,
+        "decoded": 8768,
+        "transfer": 3843,
+        "start": 34.90000000037253,
+        "duration": 62.40000000037253
+      },
+      {
+        "path": "/assets/index-e3CJaFDI.css",
+        "type": "link",
+        "encoded": 35677,
+        "decoded": 194416,
+        "transfer": 35977,
+        "start": 35,
+        "duration": 37.09999999962747
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-04-480.webp",
+        "type": "img",
+        "encoded": 30458,
+        "decoded": 30458,
+        "transfer": 30758,
+        "start": 263.19999999925494,
+        "duration": 16
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-06-480.webp",
+        "type": "img",
+        "encoded": 13140,
+        "decoded": 13140,
+        "transfer": 13440,
+        "start": 263.19999999925494,
+        "duration": 24.200000001117587
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-08-480.webp",
+        "type": "img",
+        "encoded": 24698,
+        "decoded": 24698,
+        "transfer": 24998,
+        "start": 263.19999999925494,
+        "duration": 24.40000000037253
+      },
+      {
+        "path": "/assets/zugspitze-3wlob_fp.json",
+        "type": "fetch",
+        "encoded": 17877,
+        "decoded": 54907,
+        "transfer": 18177,
+        "start": 266.90000000037253,
+        "duration": 22.5
+      },
+      {
+        "path": "/assets/grauspitz-ZJYKtyhe.json",
+        "type": "fetch",
+        "encoded": 17752,
+        "decoded": 52769,
+        "transfer": 18052,
+        "start": 267.09999999962747,
+        "duration": 22.59999999962747
+      },
+      {
+        "path": "/assets/dufourTrack-DZnNH8Cg.json",
+        "type": "fetch",
+        "encoded": 64196,
+        "decoded": 197473,
+        "transfer": 64496,
+        "start": 267.30000000074506,
+        "duration": 32.79999999888241
+      },
+      {
+        "path": "/assets/grossglockner-BW7FNhvh.json",
+        "type": "fetch",
+        "encoded": 22083,
+        "decoded": 67362,
+        "transfer": 22383,
+        "start": 267.30000000074506,
+        "duration": 36.899999998509884
+      },
+      {
+        "path": "/assets/triglav-LR_qMUXM.json",
+        "type": "fetch",
+        "encoded": 20720,
+        "decoded": 63605,
+        "transfer": 21020,
+        "start": 267.30000000074506,
+        "duration": 47.59999999962747
+      },
+      {
+        "path": "/assets/TripRouteView-9vfyohUF.js",
+        "type": "script",
+        "encoded": 4470,
+        "decoded": 12039,
+        "transfer": 4770,
+        "start": 278.59999999962747,
+        "duration": 37.70000000111759
+      },
+      {
+        "path": "/assets/TatryTerrainMap-Cz4RoIew.css",
+        "type": "link",
+        "encoded": 1937,
+        "decoded": 7204,
+        "transfer": 2237,
+        "start": 278.80000000074506,
+        "duration": 28.09999999962747
+      },
+      {
+        "path": "/assets/TatryTerrainMap-DFYkLO5E.js",
+        "type": "script",
+        "encoded": 6663,
+        "decoded": 17891,
+        "transfer": 6963,
+        "start": 278.80000000074506,
+        "duration": 38.399999998509884
+      },
+      {
+        "path": "/assets/TripRouteView-D2Vt2Frk.css",
+        "type": "link",
+        "encoded": 1624,
+        "decoded": 6304,
+        "transfer": 1924,
+        "start": 279,
+        "duration": 36.30000000074506
+      },
+      {
+        "path": "/assets/routeGeometry-CsIgAaIY.js",
+        "type": "script",
+        "encoded": 404,
+        "decoded": 584,
+        "transfer": 704,
+        "start": 279,
+        "duration": 38.09999999962747
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-02-480.webp",
+        "type": "img",
+        "encoded": 23964,
+        "decoded": 23964,
+        "transfer": 24264,
+        "start": 285.69999999925494,
+        "duration": 31.700000001117587
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-05-480.webp",
+        "type": "img",
+        "encoded": 14932,
+        "decoded": 14932,
+        "transfer": 15232,
+        "start": 285.80000000074506,
+        "duration": 36.5
+      }
+    ],
+    "images": [
+      {
+        "path": "image/svg+xml,%3c",
+        "top": -4268,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-04-480.webp",
+        "top": -2384.78125,
+        "complete": true,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-06-480.webp",
+        "top": -2384.78125,
+        "complete": true,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-08-480.webp",
+        "top": -2384.78125,
+        "complete": true,
+        "loading": "lazy"
+      },
+      {
+        "path": "/opentopomap/13/4410/2900.png",
+        "top": 200.390625,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/13/4411/2900.png",
+        "top": 200.390625,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/13/4410/2901.png",
+        "top": 426.453125,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/13/4411/2901.png",
+        "top": 426.453125,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/13/4410/2902.png",
+        "top": 652.53125,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/opentopomap/13/4411/2902.png",
+        "top": 652.53125,
+        "complete": true,
+        "loading": "auto"
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-04-480.webp",
+        "top": 1422.796875,
+        "complete": true,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-02-480.webp",
+        "top": 1646.125,
+        "complete": true,
+        "loading": "lazy"
+      },
+      {
+        "path": "/assets/photos/galleries/alpy-2026/alpy-2026-05-480.webp",
+        "top": 1869.453125,
+        "complete": true,
+        "loading": "lazy"
+      }
+    ],
+    "mapCount": 1,
+    "profiles": 1
+  },
+  "list": {
+    "version": "after",
+    "buildScript": "/assets/index-B7N8HYIW.js",
+    "delay": 0,
+    "failure": "",
+    "url": "/trasy?widok=lista",
+    "size": "390×844",
+    "pageY": 0,
+    "historyLength": 32,
+    "width": 375,
+    "scrollWidth": 375,
+    "documentEncoded": 11232,
+    "dcl": 152.2999999988824,
+    "lcp": null,
+    "entries": [
+      {
+        "path": "/assets/CinekZieluAbstract-Regular-CxO88Xap.woff2",
+        "type": "link",
+        "encoded": 8224,
+        "decoded": 8224,
+        "transfer": 8524,
+        "start": 29.59999999962747,
+        "duration": 19.40000000037253
+      },
+      {
+        "path": "/assets/routeCatalog-oiMW9zsN.js",
+        "type": "other",
+        "encoded": 41544,
+        "decoded": 226075,
+        "transfer": 41844,
+        "start": 29.799999998882413,
+        "duration": 38.09999999962747
+      },
+      {
+        "path": "/assets/sharePages-B42LY-Re.js",
+        "type": "other",
+        "encoded": 30856,
+        "decoded": 100843,
+        "transfer": 31156,
+        "start": 29.799999998882413,
+        "duration": 48.5
+      },
+      {
+        "path": "/assets/index-B7N8HYIW.js",
+        "type": "script",
+        "encoded": 126317,
+        "decoded": 438463,
+        "transfer": 126617,
+        "start": 29.799999998882413,
+        "duration": 50.30000000074506
+      },
+      {
+        "path": "/assets/routeArea-DEsyzqOq.js",
+        "type": "other",
+        "encoded": 683,
+        "decoded": 1217,
+        "transfer": 983,
+        "start": 30,
+        "duration": 46.79999999888241
+      },
+      {
+        "path": "/assets/routeAtlas-Cibes4nR.js",
+        "type": "other",
+        "encoded": 3543,
+        "decoded": 8768,
+        "transfer": 3843,
+        "start": 30.09999999962747,
+        "duration": 47.09999999962747
+      },
+      {
+        "path": "/assets/index-e3CJaFDI.css",
+        "type": "link",
+        "encoded": 35677,
+        "decoded": 194416,
+        "transfer": 35977,
+        "start": 30.299999998882413,
+        "duration": 22
+      }
+    ],
+    "images": [
+      {
+        "path": "image/svg+xml,%3c",
+        "top": 22,
+        "complete": true,
+        "loading": "auto"
+      }
+    ],
+    "mapCount": 0,
+    "profiles": 0
+  },
+  "comparison": {
+    "version": "after",
+    "buildScript": "/assets/index-B7N8HYIW.js",
+    "delay": 0,
+    "failure": "",
+    "url": "/trasy?widok=lista&porownaj=dufourspitze,ganek-wysoka-rysy#porownanie",
+    "size": "390×844",
+    "pageY": 8650,
+    "historyLength": 33,
+    "width": 375,
+    "scrollWidth": 375,
+    "documentEncoded": 11232,
+    "dcl": 131,
+    "lcp": null,
+    "entries": [
+      {
+        "path": "/assets/CinekZieluAbstract-Regular-CxO88Xap.woff2",
+        "type": "link",
+        "encoded": 8224,
+        "decoded": 8224,
+        "transfer": 8524,
+        "start": 29.199999999254942,
+        "duration": 9.400000000372529
+      },
+      {
+        "path": "/assets/routeCatalog-oiMW9zsN.js",
+        "type": "other",
+        "encoded": 41544,
+        "decoded": 226075,
+        "transfer": 41844,
+        "start": 29.40000000037253,
+        "duration": 21.5
+      },
+      {
+        "path": "/assets/index-B7N8HYIW.js",
+        "type": "script",
+        "encoded": 126317,
+        "decoded": 438463,
+        "transfer": 126617,
+        "start": 29.40000000037253,
+        "duration": 37.29999999888241
+      },
+      {
+        "path": "/assets/index-e3CJaFDI.css",
+        "type": "link",
+        "encoded": 35677,
+        "decoded": 194416,
+        "transfer": 35977,
+        "start": 29.5,
+        "duration": 16.40000000037253
+      },
+      {
+        "path": "/assets/routeArea-DEsyzqOq.js",
+        "type": "other",
+        "encoded": 683,
+        "decoded": 1217,
+        "transfer": 983,
+        "start": 29.5,
+        "duration": 37.59999999962747
+      },
+      {
+        "path": "/assets/routeAtlas-Cibes4nR.js",
+        "type": "other",
+        "encoded": 3543,
+        "decoded": 8768,
+        "transfer": 3843,
+        "start": 29.5,
+        "duration": 37.79999999888241
+      },
+      {
+        "path": "/assets/sharePages-B42LY-Re.js",
+        "type": "other",
+        "encoded": 30856,
+        "decoded": 100843,
+        "transfer": 31156,
+        "start": 29.5,
+        "duration": 37.90000000037253
+      },
+      {
+        "path": "/assets/dufourTrack-DZnNH8Cg.json",
+        "type": "fetch",
+        "encoded": 64196,
+        "decoded": 197473,
+        "transfer": 64496,
+        "start": 163.59999999962747,
+        "duration": 26.09999999962747
+      },
+      {
+        "path": "/assets/ganek-wysoka-rysy-DkF1aKhz.json",
+        "type": "fetch",
+        "encoded": 46424,
+        "decoded": 148453,
+        "transfer": 46724,
+        "start": 164.7999999988824,
+        "duration": 32
+      }
+    ],
+    "images": [
+      {
+        "path": "image/svg+xml,%3c",
+        "top": -8628,
+        "complete": true,
+        "loading": "auto"
+      }
+    ],
+    "mapCount": 0,
+    "profiles": 0
+  }
+}
