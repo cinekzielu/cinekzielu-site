@@ -1,0 +1,70 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> build
+> vite build
+
+vite v8.0.11 building client environment for production...
+[2Ktransforming...✓ 1960 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                          2.05 kB │ gzip:   1.09 kB
+dist/assets/CinekZieluAbstract-Regular-CxO88Xap.woff2    8.22 kB
+dist/assets/CinekZieluCaption-Regular-DsCl_OCe.woff2    12.17 kB
+dist/assets/world-atlas-dark-C3CGfTb0.webp             373.44 kB
+dist/assets/europe-atlas-dark-BjyjInZi.webp            557.18 kB
+dist/assets/TatryTerrainMap-Cz4RoIew.css                 7.20 kB │ gzip:   1.94 kB
+dist/assets/MapAtlas-8UZdPNmV.css                       51.15 kB │ gzip:  11.75 kB
+dist/assets/index-C8ijfCtK.css                         194.16 kB │ gzip:  35.87 kB
+dist/assets/routeGeometry-C8UMdE9p.js                    0.58 kB │ gzip:   0.40 kB
+dist/assets/MapPage-CRuUPP5s.js                          0.59 kB │ gzip:   0.35 kB
+dist/assets/RouteAtlasMap-UTufOsbx.js                    2.34 kB │ gzip:   1.26 kB
+dist/assets/TripRouteView-BQLJAWsz.js                    6.53 kB │ gzip:   2.70 kB
+dist/assets/TatryTerrainMap-DeD-cRMz.js                 17.85 kB │ gzip:   6.66 kB
+dist/assets/murren-2025-qphko3f2.js                     30.14 kB │ gzip:  10.55 kB
+dist/assets/bettmerhorn-2025-DFnVBdh1.js                35.71 kB │ gzip:  12.82 kB
+dist/assets/grauspitz-CcG7T1an.js                       52.07 kB │ gzip:  18.47 kB
+dist/assets/zugspitze-RgO84b1S.js                       54.19 kB │ gzip:  18.55 kB
+dist/assets/fronalpstock-2025-BaSb4dPm.js               59.20 kB │ gzip:  20.67 kB
+dist/assets/konczysta-2026-Cx8kfsfU.js                  60.75 kB │ gzip:  20.92 kB
+dist/assets/slawkowski-2024-B2gzm-RF.js                 61.51 kB │ gzip:  21.37 kB
+dist/assets/triglav-C1OOrwAm.js                         62.75 kB │ gzip:  21.40 kB
+dist/assets/saxer-lucke-2025-CYtSjtdP.js                64.55 kB │ gzip:  22.70 kB
+dist/assets/grossglockner-BmXmPZd_.js                   66.37 kB │ gzip:  22.84 kB
+dist/assets/augstmatthorn-2025-CJMuhHWH.js              67.48 kB │ gzip:  23.86 kB
+dist/assets/krywan-2025-B_8oVu7G.js                     68.28 kB │ gzip:  23.55 kB
+dist/assets/kiezmarski-zima-2025-DC1c2UXR.js            69.84 kB │ gzip:  24.18 kB
+dist/assets/gerlach-2024-CRDcKM36.js                    70.21 kB │ gzip:  24.12 kB
+dist/assets/baraniec-2025-DRQi6KLc.js                   73.01 kB │ gzip:  25.35 kB
+dist/assets/szatan-2025-CusBlUFa.js                     74.38 kB │ gzip:  25.43 kB
+dist/assets/zabi-kon-2026-BfC6ZjJm.js                   74.75 kB │ gzip:  24.97 kB
+dist/assets/wysoka-2025-DWhetVHW.js                     76.17 kB │ gzip:  25.83 kB
+dist/assets/turbacz-2026-BjHtngDS.js                    76.90 kB │ gzip:  26.34 kB
+dist/assets/gerlach-zima-2025-h7_GQUWQ.js               77.40 kB │ gzip:  26.41 kB
+dist/assets/lomnica-2025-BPFIlgba.js                    77.89 kB │ gzip:  26.93 kB
+dist/assets/bradavica-2024-CiMcD2Wi.js                  78.01 kB │ gzip:  26.84 kB
+dist/assets/malolaczniak-giewont-2024-Bb7YqUXP.js       87.74 kB │ gzip:  30.22 kB
+dist/assets/piec-stawow-2024-BjO0ecqw.js                88.70 kB │ gzip:  29.90 kB
+dist/assets/durny-2025-Dx4wP_u8.js                      89.40 kB │ gzip:  30.65 kB
+dist/assets/koscielec-2026-CLU6Rrim.js                  89.70 kB │ gzip:  30.09 kB
+dist/assets/posrednia-gran-2025-CCGT_pM2.js             90.77 kB │ gzip:  30.58 kB
+dist/assets/zermatt-2025-VNzqm-t8.js                    91.74 kB │ gzip:  31.08 kB
+dist/assets/mieguszowiecki-2025-BZ2vqUoD.js             97.18 kB │ gzip:  32.88 kB
+dist/assets/MapAtlas-DgfMxikT.js                        98.10 kB │ gzip:  34.30 kB
+dist/assets/lodowy-2025-C8xOAsuk.js                    104.76 kB │ gzip:  35.89 kB
+dist/assets/lodowy-proba-2024-OqkzK9zn.js              105.63 kB │ gzip:  35.89 kB
+dist/assets/baranie-rogi-zima-2025-CxiErsN9.js         106.18 kB │ gzip:  36.10 kB
+dist/assets/szpiglasowy-2025-CX1oU7sv.js               106.35 kB │ gzip:  36.24 kB
+dist/assets/koscielec-orla-2024-45_f6KLy.js            108.57 kB │ gzip:  36.84 kB
+dist/assets/grzes-rakon-2024-hgWYfDrp.js               115.38 kB │ gzip:  39.35 kB
+dist/assets/czerwona-lawka-2024-B0iO1L5n.js            115.65 kB │ gzip:  39.44 kB
+dist/assets/toubkal-2025-DX92PdcB.js                   133.12 kB │ gzip:  45.23 kB
+dist/assets/liptowskie-mury-2026-Deu0bkvq.js           133.46 kB │ gzip:  44.95 kB
+dist/assets/baranie-rogi-lato-2026-TytQfh0H.js         134.71 kB │ gzip:  45.55 kB
+dist/assets/ganek-wysoka-rysy-BdtjOvj9.js              146.24 kB │ gzip:  47.94 kB
+dist/assets/swinica-2025-BycyCUmH.js                   154.36 kB │ gzip:  52.41 kB
+dist/assets/dufourTrack-Cmi-58mT.js                    194.55 kB │ gzip:  66.14 kB
+dist/assets/sharePages-yG3I4Dhl.js                     331.18 kB │ gzip:  75.42 kB
+dist/assets/index-Dr7MtjTp.js                          447.00 kB │ gzip: 129.96 kB
+
+✓ built in 723ms
+Prerendered: 53 pages + 382 share views; legacy redirects, 404, sitemap and robots.txt.

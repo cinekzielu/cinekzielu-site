@@ -1,5 +1,7 @@
 # Pakiet atlasu do wspólnego przeglądu — 25.10.2026
 
+**Nowszy zakres z26.10:** [opis tekstowy karty i audyt statystyk tras](ROUTE_CARD_DESCRIPTION_REVIEW.md).
+
 **Nowszy zakres z26.10:** [wyjaśnienia i odzyskiwanie błędnego lub ukrytego wyboru trasy](ROUTE_LINK_RECOVERY_REVIEW.md).
 
 **Nowszy zakres z26.10:** [wyszukiwanie po regionie/kraju i obsługa łączników](ATLAS_GEOGRAPHIC_SEARCH_REVIEW.md).
