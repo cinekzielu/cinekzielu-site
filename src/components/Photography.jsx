@@ -39,7 +39,7 @@ export function PhotographyPage() {
     <section id="kolekcja" className="cz-photography-selection" aria-labelledby="photography-selection-title">
       <div className="cz-photography-selection-heading"><h2 id="photography-selection-title">{active?.title || 'Wybrane fotografie'}</h2><span role="status">{photoCount(photos.length)}</span>{active && <a href="/fotografia">Wszystkie fotografie ↗</a>}</div>
       {active && <PhotographyShareControl key={active.id} collection={active} />}
-      <PhotoGrid key={active?.id || 'all'} shareable featured gallery={{ title: active?.title || 'Fotografia', photos }} />
+      <PhotoGrid key={active?.id || 'all'} shareable featured selectable gallery={{ title: active?.title || 'Fotografia', photos }} />
     </section>
     <div className="cz-author-next"><div><span>Cinek Zielu</span><h2>Za aparatem</h2></div><a href="/o-mnie">Marcin Zieliński ↗</a></div>
   </CollectionShell>

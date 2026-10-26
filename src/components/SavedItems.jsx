@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { SAVED_STORAGE_KEY, decodeSaved, encodeSaved, savedByKey, toggleSaved } from '../data/savedItems'
+import {SAVED_CHANGED_EVENT} from '../data/savedBackup'
 import '../savedItems.css'
 
 const SavedContext = createContext(null)
@@ -20,8 +21,9 @@ export function SavedProvider({ children }) {
       update(decodeSaved(event.newValue))
       canPersist.current = true; setPersistent(true)
     }
-    window.addEventListener('storage', sync)
-    return () => window.removeEventListener('storage', sync)
+    const reload = () => {try {update(decodeSaved(window.localStorage.getItem(SAVED_STORAGE_KEY)));canPersist.current=true;setPersistent(true)}catch{canPersist.current=false;setPersistent(false)}}
+    window.addEventListener('storage', sync);window.addEventListener(SAVED_CHANGED_EVENT,reload)
+    return () => {window.removeEventListener('storage', sync);window.removeEventListener(SAVED_CHANGED_EVENT,reload)}
   }, [])
   const toggle = key => {
     if (!savedByKey.has(key)) return canPersist.current

@@ -1,8 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { ResponsivePhoto } from './ResponsivePhoto'
+import { PhotoSelectionDock } from './PhotoSelectionDock'
+import { PhotoComparison } from './PhotoComparison'
 import { PhotoViewer } from './PhotoViewer'
 import { linkedPhotoIndex, photoViewUrl } from '../data/photoView'
 import { SaveButton } from './SavedItems'
+import { PhotoSetSelection } from './PhotoSetSelection'
+import { MAX_SET_ITEMS } from '../data/savedSets'
 import { savedPhotoKey } from '../data/savedItems'
 
 function useColumns(featured) {
@@ -18,10 +22,19 @@ function useColumns(featured) {
   return columns
 }
 
-export function PhotoGrid({ gallery, featured = false, previewLimit = null, eagerFirst = true, shareable = false }) {
+export function PhotoGrid({ gallery, featured = false, previewLimit = null, eagerFirst = true, shareable = false, selectable = false }) {
   const isVideoFrames = gallery.mediaKind === 'video-frames'
   const columns = useColumns(featured)
   const [current, setCurrent] = useState(null)
+  const [selecting, setSelecting] = useState(false)
+  const [selection, setSelection] = useState([])
+  const [comparing,setComparing] = useState(false), [pair,setPair] = useState([]), [comparison,setComparison] = useState(null)
+  const comparisonTrigger = useRef(null)
+  const openComparison = event => {comparisonTrigger.current=event.currentTarget;setComparison(pair.map(index=>({...gallery.photos[index],number:index+1})))}
+  const endComparison = () => {setComparing(false);setPair([])}
+  const choosePair = index => setPair(previous => previous.includes(index) ? previous.filter(value=>value!==index) : previous.length < 2 ? [...previous,index] : previous)
+  const selected = gallery.photos.map(savedPhotoKey).filter(key => key && selection.includes(key))
+  const toggle = key => setSelection(previous => previous.includes(key) ? previous.filter(item => item !== key) : previous.length < MAX_SET_ITEMS ? [...previous,key] : previous)
   const trigger = useRef(null)
   const updateLinkedUrl = photo => {
     if (!shareable || !new URLSearchParams(window.location.search).has('zdjecie')) return
@@ -47,7 +60,10 @@ export function PhotoGrid({ gallery, featured = false, previewLimit = null, eage
   const rows = featured ? [{ start: 0, items: visiblePhotos.slice(0, 1) }] : []
   for (let index = featured ? 1 : 0; index < visiblePhotos.length; index += columns) rows.push({ start: index, items: visiblePhotos.slice(index, index + columns) })
   return <>
-    <section className={`cz-gallery-grid${featured ? ' cz-portfolio-grid' : ''}`} aria-label={featured ? 'Wybrane fotografie' : `${gallery.title} — ${isVideoFrames ? 'kadry z nagrań' : 'zdjęcia z wyprawy'}`}>
+    {selectable && !isVideoFrames && <PhotoSetSelection active={selecting} selected={selected} title={gallery.title} onStart={()=>{setSelecting(true);setComparing(false);setPair([])}} onCancel={()=>{setSelecting(false);setSelection([])}} onClear={()=>setSelection([])}/>}
+    {selectable && !isVideoFrames && !selecting && <div className="cz-photo-compare-entry">{!comparing ? <button disabled={gallery.photos.length<2} onClick={()=>setComparing(true)}>Porównaj dwa zdjęcia</button> : <><span role="status">Wybierz dwa zdjęcia: {pair.length} / 2</span><button disabled={pair.length!==2} onClick={openComparison}>Otwórz porównanie</button><button onClick={endComparison}>Zakończ porównywanie</button></>}</div>}
+    {comparing && <PhotoSelectionDock><strong aria-live="polite">Do porównania: {pair.length} / 2</strong><button disabled={pair.length!==2} onClick={openComparison}>Porównaj zdjęcia</button><button onClick={endComparison}>Zakończ</button></PhotoSelectionDock>}
+    <section style={selecting || comparing ? {paddingBottom:110} : undefined} className={`cz-gallery-grid${featured ? ' cz-portfolio-grid' : ''}`} aria-label={featured ? 'Wybrane fotografie' : `${gallery.title} — ${isVideoFrames ? 'kadry z nagrań' : 'zdjęcia z wyprawy'}`}>
       {rows.map(row => <div className="cz-photo-row" key={row.start}>
         {row.items.map((item, column) => {
           const index = row.start + column
@@ -55,12 +71,15 @@ export function PhotoGrid({ gallery, featured = false, previewLimit = null, eage
           const rowRatio = row.items.reduce((sum, image) => sum + image.width / image.height, 0)
           const fraction = (item.width / item.height) / rowRatio
           const sizes = columns === 1 || lead ? '(max-width:600px) calc(100vw - 28px), (max-width:900px) calc(100vw - 40px), (max-width:1448px) calc(100vw - 88px), 1360px' : `(max-width:600px) calc(100vw - 28px), (max-width:900px) calc(${100 * fraction}vw - ${(40 + 12 * (row.items.length - 1)) * fraction}px), (max-width:1448px) calc(${100 * fraction}vw - ${(88 + 16 * (row.items.length - 1)) * fraction}px), ${(1360 - 16 * (row.items.length - 1)) * fraction}px`
-          return <div className="cz-photo-frame" key={item.src} style={{ '--ratio': item.width / item.height }}><button className="cz-photo" type="button" onClick={event => { trigger.current = event.currentTarget; setCurrent(index) }} aria-label={`Otwórz ${isVideoFrames ? 'kadr' : 'zdjęcie'} ${String(index + 1).padStart(2, '0')} z ${gallery.photos.length}`}>
+          const key = savedPhotoKey(item)
+          const checked = selected.includes(key)
+          return <div className={`cz-photo-frame${(selecting && checked) || (comparing && pair.includes(index)) ? ' is-selected' : ''}`} key={item.src} style={{ '--ratio': item.width / item.height }}><button className="cz-photo" type="button" disabled={selecting && (!key || (!checked && selected.length >= MAX_SET_ITEMS)) || comparing && !pair.includes(index) && pair.length===2} aria-pressed={selecting ? checked : comparing ? pair.includes(index) : undefined} onClick={event => { if(selecting){toggle(key);return} if(comparing){choosePair(index);return} trigger.current = event.currentTarget; setCurrent(index) }} aria-label={`${selecting || comparing ? 'Wybierz' : 'Otwórz'} ${isVideoFrames ? 'kadr' : 'zdjęcie'} ${String(index + 1).padStart(2, '0')} z ${gallery.photos.length}`}>
             <ResponsivePhoto photo={item} full={featured} sizes={sizes} loading={eagerFirst && index === 0 ? 'eager' : 'lazy'} fetchPriority={eagerFirst && index === 0 ? 'high' : undefined} />
-          </button><SaveButton itemKey={savedPhotoKey(item)} iconOnly /></div>
+          </button>{selecting ? <span className="cz-photo-selection-mark" aria-hidden="true">{checked ? '✓' : '+'}</span> : comparing ? <span className="cz-photo-selection-mark" aria-hidden="true">{pair.includes(index) ? (pair.indexOf(index)===0?'A':'B') : '+'}</span> : <SaveButton itemKey={key} iconOnly />}</div>
         })}
       </div>)}
     </section>
+    {comparison && <PhotoComparison photos={comparison} title={gallery.title} trigger={comparisonTrigger} onClose={()=>setComparison(null)}/>}
     {current !== null && <PhotoViewer gallery={gallery} current={current} onStep={step} onClose={close} shareable={shareable} trigger={trigger} />}
   </>
 }

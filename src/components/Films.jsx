@@ -5,6 +5,7 @@ import { filmFormats, filmLengths, defaultFilmFilters, readFilmFilters, filmLibr
 import { CollectionShell } from './CollectionShell'
 import { FilmLink } from './SiteTools'
 import { ContinueWatching } from './ContinueWatching'
+import { SaveButton } from './SavedItems'
 import { galleryData } from '../data/galleryData'
 import { galleryHref, galleryLinkLabel } from '../data/galleryNavigation'
 import '../filmStyles.css'
@@ -28,6 +29,7 @@ function FilmCard({ film, index }) {
       <h2>{film.title}<span aria-hidden="true">↗</span></h2>
     </FilmLink>
     {film.expeditionId && <div className="cz-film-related"><a href={`/wyprawy/${film.expeditionId}`}>Wyprawa ↗</a>{material && <a href={galleryHref(material)}>{galleryLinkLabel(material)} ↗</a>}</div>}
+    <SaveButton itemKey={`film:${film.youtubeId}`} className="cz-film-save"/>
   </article>
 }
 
