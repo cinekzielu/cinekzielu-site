@@ -1,5 +1,8 @@
 import assert from 'node:assert/strict'
-import { initializeBrowseMemory, readBrowseReturn, requestBrowseReturn } from '../src/browseMemory.js'
+import { initializeBrowseMemory, readBrowseReturn, requestBrowseReturn, browseLabel } from '../src/browseMemory.js'
+
+assert.equal(browseLabel('/szczyty/gerlach?rok=2025#wejscia'), 'szczytu')
+assert.equal(browseLabel('/szczyty?rok=2025#szczyt-gerlach'), 'szczytów')
 
 const store = new Map()
 globalThis.sessionStorage = { getItem:key => store.get(key) || null, setItem:(key,value) => store.set(key,value), removeItem:key => store.delete(key) }

@@ -27,6 +27,8 @@ import { AlpsDestination } from './components/AlpsDestination'
 import { RouteCatalog } from './components/RouteCatalog'
 import { SeasonsIndex, SeasonPage } from './components/Seasons'
 import { SummitsPage } from './components/Summits'
+import { SummitDetail } from './components/SummitDetail'
+import { summitPages } from './data/summitPages'
 import { getAtlasMaterials } from './data/atlasContent'
 import { NotFound } from './components/NotFound'
 import { expeditionCount, galleryCollectionCount } from './data/galleryNavigation'
@@ -525,6 +527,8 @@ export function SitePage({ location }) {
   if (/^\/sezony\/(2025|2026)$/.test(pathname)) page = <SeasonPage year={pathname.split('/')[2]} />
   if (pathname === '/zapisane') page = <SavedPage />
   if (pathname === '/szczyty') page = <SummitsPage />
+  const summitPage = summitPages.find(item => pathname === item.path)
+  if (summitPage) page = <SummitDetail id={summitPage.id} />
   if (pathname === '/fotografia') page = <PhotographyPage />
   if (pathname === '/o-mnie') page = <AboutPage />
   if (pageRoute?.[1] === 'galerie') page = pageSlug ? <GalleryPage slug={pageSlug} /> : <GalleryIndex />

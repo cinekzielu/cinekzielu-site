@@ -1,0 +1,614 @@
+[
+  {
+    "version": "before",
+    "size": "390x844",
+    "url": "/mapa?atlas=gerlach&rok=2025",
+    "viewport": {
+      "width": 390,
+      "client": 375,
+      "height": 844,
+      "scrollWidth": 375
+    },
+    "resources": [
+      {
+        "name": "/assets/index-O2HvI8bJ.css",
+        "encodedBodySize": 35338,
+        "transferSize": 35638,
+        "duration": 10
+      },
+      {
+        "name": "/assets/index-DH422RrU.js",
+        "encodedBodySize": 127687,
+        "transferSize": 127987,
+        "duration": 28
+      },
+      {
+        "name": "/assets/sharePages-DWIRu4CU.js",
+        "encodedBodySize": 73382,
+        "transferSize": 73682,
+        "duration": 29
+      },
+      {
+        "name": "/assets/MapPage-DwJK-Ohi.js",
+        "encodedBodySize": 350,
+        "transferSize": 650,
+        "duration": 8
+      },
+      {
+        "name": "/assets/MapAtlas-DGEo3By0.js",
+        "encodedBodySize": 34758,
+        "transferSize": 35058,
+        "duration": 11
+      },
+      {
+        "name": "/assets/TatryTerrainMap-cRp-1yjX.js",
+        "encodedBodySize": 6657,
+        "transferSize": 6957,
+        "duration": 13
+      },
+      {
+        "name": "/assets/TatryTerrainMap-Cz4RoIew.css",
+        "encodedBodySize": 1937,
+        "transferSize": 2237,
+        "duration": 6
+      },
+      {
+        "name": "/assets/MapAtlas-CqNWMmIo.css",
+        "encodedBodySize": 11577,
+        "transferSize": 11877,
+        "duration": 12
+      }
+    ],
+    "jsJSONBytes": 242834,
+    "cssBytes": 48852,
+    "errors": [],
+    "warnings": [],
+    "images": [
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/14/9107/5614.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/14/9108/5614.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/14/9107/5615.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/14/9108/5615.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/14/9107/5616.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/14/9108/5616.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "/assets/photos/galleries/gerlach-zima-2025/gerlach-12-small.webp",
+        "complete": false,
+        "naturalWidth": 0
+      }
+    ]
+  },
+  {
+    "version": "before",
+    "size": "390x844",
+    "url": "/mapa?atlas=alpy&rok=2026",
+    "viewport": {
+      "width": 390,
+      "client": 375,
+      "height": 844,
+      "scrollWidth": 375
+    },
+    "resources": [
+      {
+        "name": "/assets/sharePages-DWIRu4CU.js",
+        "encodedBodySize": 73382,
+        "transferSize": 73682,
+        "duration": 23
+      },
+      {
+        "name": "/assets/index-DH422RrU.js",
+        "encodedBodySize": 127687,
+        "transferSize": 127987,
+        "duration": 27
+      },
+      {
+        "name": "/assets/index-O2HvI8bJ.css",
+        "encodedBodySize": 35338,
+        "transferSize": 35638,
+        "duration": 26
+      },
+      {
+        "name": "/assets/MapPage-DwJK-Ohi.js",
+        "encodedBodySize": 350,
+        "transferSize": 650,
+        "duration": 10
+      },
+      {
+        "name": "/assets/TatryTerrainMap-cRp-1yjX.js",
+        "encodedBodySize": 6657,
+        "transferSize": 6957,
+        "duration": 13
+      },
+      {
+        "name": "/assets/MapAtlas-DGEo3By0.js",
+        "encodedBodySize": 34758,
+        "transferSize": 35058,
+        "duration": 13
+      },
+      {
+        "name": "/assets/TatryTerrainMap-Cz4RoIew.css",
+        "encodedBodySize": 1937,
+        "transferSize": 2237,
+        "duration": 7
+      },
+      {
+        "name": "/assets/MapAtlas-CqNWMmIo.css",
+        "encodedBodySize": 11577,
+        "transferSize": 11877,
+        "duration": 9
+      }
+    ],
+    "jsJSONBytes": 242834,
+    "cssBytes": 48852,
+    "errors": [],
+    "warnings": [],
+    "images": [
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/6/32/21.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/6/33/21.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/6/34/21.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/6/35/21.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/6/32/22.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/6/33/22.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/6/34/22.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/6/35/22.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/6/32/23.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/6/33/23.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/6/34/23.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/6/35/23.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/5/16/10.png",
+        "complete": false,
+        "naturalWidth": 0
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/5/17/10.png",
+        "complete": false,
+        "naturalWidth": 0
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/5/16/11.png",
+        "complete": false,
+        "naturalWidth": 0
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/5/17/11.png",
+        "complete": false,
+        "naturalWidth": 0
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/5/16/12.png",
+        "complete": false,
+        "naturalWidth": 0
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/5/17/12.png",
+        "complete": false,
+        "naturalWidth": 0
+      },
+      {
+        "src": "/assets/photos/galleries/alpy-2026/alpy-2026-01-small.webp",
+        "complete": false,
+        "naturalWidth": 0
+      }
+    ]
+  },
+  {
+    "version": "before",
+    "size": "390x844",
+    "url": "/szczyty",
+    "viewport": {
+      "width": 390,
+      "client": 375,
+      "height": 844,
+      "scrollWidth": 375
+    },
+    "resources": [
+      {
+        "name": "/assets/index-O2HvI8bJ.css",
+        "encodedBodySize": 35338,
+        "transferSize": 35638,
+        "duration": 11
+      },
+      {
+        "name": "/assets/index-DH422RrU.js",
+        "encodedBodySize": 127687,
+        "transferSize": 127987,
+        "duration": 24
+      },
+      {
+        "name": "/assets/sharePages-DWIRu4CU.js",
+        "encodedBodySize": 73382,
+        "transferSize": 73682,
+        "duration": 29
+      }
+    ],
+    "jsJSONBytes": 201069,
+    "cssBytes": 35338,
+    "errors": [],
+    "warnings": [],
+    "images": []
+  },
+  {
+    "version": "after",
+    "size": "390x844",
+    "url": "/mapa?atlas=gerlach&rok=2025",
+    "viewport": {
+      "width": 390,
+      "client": 375,
+      "height": 844,
+      "scrollWidth": 375
+    },
+    "resources": [
+      {
+        "name": "/assets/index-DhhdFOAK.css",
+        "encodedBodySize": 36223,
+        "transferSize": 36523,
+        "duration": 14
+      },
+      {
+        "name": "/assets/sharePages-B9_c0SPB.js",
+        "encodedBodySize": 73384,
+        "transferSize": 73684,
+        "duration": 34
+      },
+      {
+        "name": "/assets/index-Cn5eGD2-.js",
+        "encodedBodySize": 130191,
+        "transferSize": 130491,
+        "duration": 34
+      },
+      {
+        "name": "/assets/MapPage-BEtiuh7g.js",
+        "encodedBodySize": 350,
+        "transferSize": 650,
+        "duration": 9
+      },
+      {
+        "name": "/assets/MapAtlas-ChuBoHFE.js",
+        "encodedBodySize": 35216,
+        "transferSize": 35516,
+        "duration": 12
+      },
+      {
+        "name": "/assets/TatryTerrainMap-Cz4RoIew.css",
+        "encodedBodySize": 1937,
+        "transferSize": 2237,
+        "duration": 9
+      },
+      {
+        "name": "/assets/TatryTerrainMap-sSeDW8Xp.js",
+        "encodedBodySize": 6659,
+        "transferSize": 6959,
+        "duration": 11
+      },
+      {
+        "name": "/assets/MapAtlas-CwELtM9N.css",
+        "encodedBodySize": 11848,
+        "transferSize": 12148,
+        "duration": 14
+      }
+    ],
+    "jsJSONBytes": 245800,
+    "cssBytes": 50008,
+    "errors": [],
+    "warnings": [],
+    "images": [
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/14/9107/5614.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/14/9108/5614.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/14/9107/5615.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/14/9108/5615.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/14/9107/5616.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/14/9108/5616.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "/assets/photos/galleries/gerlach-zima-2025/gerlach-12-small.webp",
+        "complete": false,
+        "naturalWidth": 0
+      }
+    ]
+  },
+  {
+    "version": "after",
+    "size": "390x844",
+    "url": "/mapa?atlas=alpy&rok=2026",
+    "viewport": {
+      "width": 390,
+      "client": 375,
+      "height": 844,
+      "scrollWidth": 375
+    },
+    "resources": [
+      {
+        "name": "/assets/index-DhhdFOAK.css",
+        "encodedBodySize": 36223,
+        "transferSize": 36523,
+        "duration": 34
+      },
+      {
+        "name": "/assets/sharePages-B9_c0SPB.js",
+        "encodedBodySize": 73384,
+        "transferSize": 73684,
+        "duration": 28
+      },
+      {
+        "name": "/assets/index-Cn5eGD2-.js",
+        "encodedBodySize": 130191,
+        "transferSize": 130491,
+        "duration": 22
+      },
+      {
+        "name": "/assets/MapPage-BEtiuh7g.js",
+        "encodedBodySize": 350,
+        "transferSize": 650,
+        "duration": 8
+      },
+      {
+        "name": "/assets/TatryTerrainMap-Cz4RoIew.css",
+        "encodedBodySize": 1937,
+        "transferSize": 2237,
+        "duration": 6
+      },
+      {
+        "name": "/assets/TatryTerrainMap-sSeDW8Xp.js",
+        "encodedBodySize": 6659,
+        "transferSize": 6959,
+        "duration": 12
+      },
+      {
+        "name": "/assets/MapAtlas-ChuBoHFE.js",
+        "encodedBodySize": 35216,
+        "transferSize": 35516,
+        "duration": 12
+      },
+      {
+        "name": "/assets/MapAtlas-CwELtM9N.css",
+        "encodedBodySize": 11848,
+        "transferSize": 12148,
+        "duration": 8
+      }
+    ],
+    "jsJSONBytes": 245800,
+    "cssBytes": 50008,
+    "errors": [],
+    "warnings": [],
+    "images": [
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/6/32/21.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/6/33/21.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/6/34/21.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/6/35/21.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/6/32/22.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/6/33/22.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/6/34/22.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/6/35/22.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/6/32/23.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/6/33/23.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/6/34/23.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "https://tile.openmaps.fr/opentopomap/6/35/23.png",
+        "complete": true,
+        "naturalWidth": 256
+      },
+      {
+        "src": "/assets/photos/galleries/alpy-2026/alpy-2026-01-small.webp",
+        "complete": false,
+        "naturalWidth": 0
+      }
+    ]
+  },
+  {
+    "version": "after",
+    "size": "390x844",
+    "url": "/szczyty",
+    "viewport": {
+      "width": 390,
+      "client": 375,
+      "height": 844,
+      "scrollWidth": 375
+    },
+    "resources": [
+      {
+        "name": "/assets/index-Cn5eGD2-.js",
+        "encodedBodySize": 130191,
+        "transferSize": 130491,
+        "duration": 23
+      },
+      {
+        "name": "/assets/sharePages-B9_c0SPB.js",
+        "encodedBodySize": 73384,
+        "transferSize": 73684,
+        "duration": 30
+      },
+      {
+        "name": "/assets/index-DhhdFOAK.css",
+        "encodedBodySize": 36223,
+        "transferSize": 36523,
+        "duration": 11
+      }
+    ],
+    "jsJSONBytes": 203575,
+    "cssBytes": 36223,
+    "errors": [],
+    "warnings": [],
+    "images": []
+  },
+  {
+    "version": "after",
+    "size": "390x844",
+    "url": "/szczyty/dufourspitze",
+    "viewport": {
+      "width": 390,
+      "client": 375,
+      "height": 844,
+      "scrollWidth": 375
+    },
+    "resources": [
+      {
+        "name": "/assets/sharePages-B9_c0SPB.js",
+        "encodedBodySize": 73384,
+        "transferSize": 73684,
+        "duration": 29
+      },
+      {
+        "name": "/assets/index-Cn5eGD2-.js",
+        "encodedBodySize": 130191,
+        "transferSize": 130491,
+        "duration": 23
+      },
+      {
+        "name": "/assets/index-DhhdFOAK.css",
+        "encodedBodySize": 36223,
+        "transferSize": 36523,
+        "duration": 11
+      }
+    ],
+    "jsJSONBytes": 203575,
+    "cssBytes": 36223,
+    "errors": [],
+    "warnings": [],
+    "images": [
+      {
+        "src": "/assets/photos/galleries/alpy-2026/alpy-2026-28-small.webp",
+        "complete": false,
+        "naturalWidth": 0
+      }
+    ]
+  }
+]

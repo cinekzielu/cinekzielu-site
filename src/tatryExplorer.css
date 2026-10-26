@@ -21,3 +21,5 @@
 .cz-tatry-source{font-size:10px!important;line-height:1.8!important;color:#998c79;padding:19px 0 0;margin:0!important}
 @media(max-width:1100px){.cz-tatry-places{column-gap:12px}.cz-tatry-places button{gap:9px;padding:14px 8px}}
 @media(max-width:520px){.cz-tatry-hint{font-size:9px;gap:8px;padding-bottom:17px}.cz-tatry-wheel-hint{display:none}.cz-tatry-selection strong{font-size:22px}.cz-tatry-selection{gap:8px}.cz-tatry-search-row{flex-wrap:wrap;gap:2px}.cz-tatry-search-row .cz-atlas-search{flex-basis:100%}.cz-tatry-places{grid-template-columns:1fr}.cz-tatry-places button{min-height:70px;padding:13px 9px;gap:13px}.cz-tatry-places strong{font-size:13px}.cz-tatry-materials{padding:8px;font-size:10px!important}}
+
+@media(max-width:800px){.cz-tatry-materials{display:none}}
