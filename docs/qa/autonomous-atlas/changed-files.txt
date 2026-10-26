@@ -4,6 +4,7 @@ docs/ATLAS_GEOGRAPHIC_SEARCH_REVIEW.md
 docs/ATLAS_HELP_REVIEW.md
 docs/ATLAS_MATERIAL_LABEL_REVIEW.md
 docs/ATLAS_ROUTE_LINKS_REVIEW.md
+docs/ATLAS_SERIES_HANDOFF_2026_10_26.md
 docs/AUTONOMOUS_ATLAS_REVIEW.md
 docs/ROUTE_CARD_DESCRIPTION_REVIEW.md
 docs/ROUTE_FEEDBACK_REVIEW.md
@@ -61,6 +62,11 @@ docs/qa/route-link-recovery/build.log
 docs/qa/route-link-recovery/checks.json
 docs/qa/route-link-recovery/combined-build.log
 docs/qa/route-link-recovery/combined-checks.json
+docs/qa/series-final-26/build.log
+docs/qa/series-final-26/checks.json
+docs/qa/series-final-26/combined-build.log
+docs/qa/series-final-26/combined-checks.json
+docs/qa/series-final-26/scope-audit.json
 docs/qa/tatry-empty-results/build.log
 docs/qa/tatry-empty-results/checks.json
 docs/qa/tatry-empty-results/combined-build.log
