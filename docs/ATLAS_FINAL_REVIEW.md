@@ -1,5 +1,7 @@
 # Pakiet atlasu do wspólnego przeglądu — 25.10.2026
 
+**Aktualizacja z26.10:** [stany błędu, opis punktu porównania i aktualność kopiowanego linku](ROUTE_FEEDBACK_REVIEW.md). Najnowsze testy:53/53 PR187 i56/56 po połączeniu. **Teraz dwa konflikty integracji: RouteCatalog z PR185 i MapAtlas z PR186.** Dokładne rozwiązania i ograniczenia w nowym raporcie.
+
 **Nowszy zakres z26.10:** [opis tekstowy karty i audyt statystyk tras](ROUTE_CARD_DESCRIPTION_REVIEW.md).
 
 **Nowszy zakres z26.10:** [wyjaśnienia i odzyskiwanie błędnego lub ukrytego wyboru trasy](ROUTE_LINK_RECOVERY_REVIEW.md).

@@ -6,6 +6,7 @@ docs/ATLAS_MATERIAL_LABEL_REVIEW.md
 docs/ATLAS_ROUTE_LINKS_REVIEW.md
 docs/AUTONOMOUS_ATLAS_REVIEW.md
 docs/ROUTE_CARD_DESCRIPTION_REVIEW.md
+docs/ROUTE_FEEDBACK_REVIEW.md
 docs/ROUTE_LINK_RECOVERY_REVIEW.md
 docs/TATRY_EMPTY_RESULTS_REVIEW.md
 docs/qa/atlas-empty-results/build.log
@@ -52,6 +53,10 @@ docs/qa/route-card-description/build.log
 docs/qa/route-card-description/checks.json
 docs/qa/route-card-description/combined-build.log
 docs/qa/route-card-description/combined-checks.json
+docs/qa/route-feedback/build.log
+docs/qa/route-feedback/checks.json
+docs/qa/route-feedback/combined-build.log
+docs/qa/route-feedback/combined-checks.json
 docs/qa/route-link-recovery/build.log
 docs/qa/route-link-recovery/checks.json
 docs/qa/route-link-recovery/combined-build.log
@@ -65,6 +70,7 @@ scripts/check-atlas-help.mjs
 scripts/check-atlas-material-label.mjs
 scripts/check-atlas-view-state.mjs
 scripts/check-atlas.mjs
+scripts/check-route-feedback.mjs
 scripts/check-route-link-recovery.mjs
 scripts/check-route-summary-card.mjs
 scripts/check-summit-atlas.mjs
@@ -78,6 +84,8 @@ src/components/MapAtlas.jsx
 src/components/MapPage.jsx
 src/components/RouteCard.jsx
 src/components/RouteCatalog.jsx
+src/components/RouteComparison.jsx
+src/components/RouteComparisonShare.jsx
 src/components/RouteLinkNotice.jsx
 src/components/TatryExplorer.jsx
 src/data/atlasContent.js
@@ -85,3 +93,4 @@ src/data/atlasHelp.js
 src/data/atlasMaterialLabel.js
 src/data/routeCardDescription.js
 src/data/routeLinkRecovery.js
+src/data/routePointDescription.js
