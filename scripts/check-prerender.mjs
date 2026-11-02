@@ -1,3 +1,4 @@
+import { curatedGalleryPhotos } from '../src/data/gallerySelection.js'
 import assert from 'node:assert/strict'
 import { readFile, stat } from 'node:fs/promises'
 import { sitePages, utilityPages, sharePageMetadata, SITE_ORIGIN } from '../src/data/siteMetadata.js'
@@ -63,7 +64,8 @@ for (const summit of summits) {
 }
 for (const gallery of photoGalleries) {
   const body = rootContent(htmlByPath.get(`/galerie/${gallery.id}`))
-  for (const photo of gallery.photos) assert(body.includes(`src="${photo.src}"`), `Gallery photograph missing from initial HTML: ${photo.src}`)
+  const initialPhotos = gallery.curatedPhotoIds ? curatedGalleryPhotos(gallery) : gallery.photos
+  for (const photo of initialPhotos) assert(body.includes(`src="${photo.src}"`), `Gallery photograph missing from initial HTML: ${photo.src}`)
 }
 for (const page of sharePages.filter(item => item.kind === 'photo')) {
   const html = htmlByPath.get(page.path)

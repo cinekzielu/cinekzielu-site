@@ -1,4 +1,12 @@
 .cz-galleries{min-height:100vh;background:#151312;color:#f5f1eb;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+.cz-gallery-themes{display:flex;align-items:center;flex-wrap:wrap;gap:6px 22px;margin-bottom:24px;padding-bottom:22px;border-bottom:1px solid #d6c6a82e;font-size:13px}
+.cz-gallery-themes>span{color:#b7aa9b;font-size:11px;margin-right:8px}
+.cz-gallery-themes>a{display:flex;align-items:center;min-height:44px;color:#e2c99e}
+.cz-gallery-selection{margin:0 0 28px}
+.cz-gallery-selection>div{display:flex;flex-wrap:wrap;gap:10px}
+.cz-gallery-selection button{min-height:44px;padding:12px 18px;border:1px solid #d6c6a82e;background:transparent;color:#b7aa9b;font:inherit;font-size:13px;cursor:pointer}
+.cz-gallery-selection button[aria-pressed=true]{background:#c9a36d18;border-color:#c9a36d;color:#f5f1eb}
+.cz-gallery-selection p{color:#b7aa9b;font-size:12px;margin:16px 0 0}
 .cz-gallery-wrap{width:min(1360px,calc(100% - 88px));margin:auto}
 .cz-gallery-nav{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:29px 0;border-bottom:1px solid rgba(214,198,168,.18)}
 .cz-gallery-brand{font-size:14px;letter-spacing:.24em;font-weight:650}.cz-gallery-back{font-size:12px;color:#b7aa9b}

@@ -34,10 +34,10 @@ for (const [id, country, distance, ascent, movingTime] of expected) {
   assert.equal(getAtlasMaterials(id, '2025').galleries.length, 0)
   const current = getAtlasMaterials(id, '2026')
   assert.deepEqual(current.galleries.map(item => item.id), ['alpy-2026'])
-  assert.equal(current.photoCount, 48, 'Whole-trip gallery counted once')
+  assert.equal(current.photoCount, 52, 'Whole-trip gallery counted once')
   assert.equal(current.films.length, 0, 'No invented released summit episode')
   assert.equal(getAtlasMaterials(country, '2026').films[0].youtubeId, 'l3KltGrKz2U')
-  assert.equal(getAtlasMaterials(country, '2026').photoCount, 48)
+  assert.equal(getAtlasMaterials(country, '2026').photoCount, 52)
   assert(searchSite(`${node.name} 2026`).some(item => item.id === `place:${id}`))
   assert(searchSite(node.name).some(item => item.id === 'expedition:alpy-2026'))
 }

@@ -47,7 +47,7 @@ const imagePages = photoGalleries.flatMap(gallery => gallery.photos.map(photo =>
 const collectionPages = photographyCollections.filter(collection => collection.photos.length).map(collection => ({
   path: `/udostepnij/kolekcja/${collection.id}`, kind: 'collection', collectionId: collection.id,
   title: `${collection.title} — fotografie | Cinek Zielu`,
-  description: `${collection.title}. Wybrane fotografie Marcina Zielińskiego z Tatr i Alp.`,
+  description: `${collection.description} Wybrane fotografie Marcina Zielińskiego.`,
   image: photoShareImage(collection.photos[0]),
   view: { pathname: '/fotografia', search: `?kolekcja=${encodeURIComponent(collection.id)}` },
 }))

@@ -9,9 +9,9 @@ import { searchSite } from '../src/data/siteSearch.js'
 
 for (const id of ['switzerland','alpy']) {
   const all=getAtlasMaterials(id), old=getAtlasMaterials(id,'2025'), current=getAtlasMaterials(id,'2026')
-  assert.deepEqual([all.films.length,all.galleries.length,all.photoCount],[8,2,84])
+  assert.deepEqual([all.films.length,all.galleries.length,all.photoCount],[8,2,88])
   assert.deepEqual([old.films.length,old.galleries.length,old.photoCount],[7,1,36])
-  assert.deepEqual([current.films.length,current.galleries.length,current.photoCount],[1,1,48])
+  assert.deepEqual([current.films.length,current.galleries.length,current.photoCount],[1,1,52])
   assert.equal(current.films[0].youtubeId,'l3KltGrKz2U')
   assert.equal(current.galleries[0].id,'alpy-2026')
   assert.equal(new Set(all.films.map(film=>film.youtubeId)).size,all.films.length)

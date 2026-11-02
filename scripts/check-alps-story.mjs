@@ -4,7 +4,7 @@ import { alpsStory, alpsStoryGallery, alpsStoryHash, alpsTotals, alpsLocations, 
 import { findFilm } from '../src/data/filmCatalog.js'
 
 assert.deepEqual(alpsStory.map(chapter => chapter.id), ['triglav', 'grossglockner', 'dufourspitze', 'grauspitz', 'zugspitze'])
-assert.equal(alpsStoryGallery.photos.length, 48)
+assert.equal(alpsStoryGallery.photos.length, 52)
 assert.equal(new Set(alpsStory.map(alpsStoryHash)).size, 5)
 assert.equal(new Set(alpsStory.map(chapter => chapter.country)).size, 5)
 assert.equal(alpsStory.reduce((sum, chapter) => sum + Math.round(chapter.distance * 100), 0), Math.round(alpsTotals.distance * 100))

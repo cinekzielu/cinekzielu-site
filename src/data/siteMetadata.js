@@ -19,7 +19,7 @@ const page = (path, title, description, image = shareImages.default) => ({ path,
 
 export const sitePages = [
   page('/', 'Cinek Zielu | Góry, podróże i film', 'Marcin Zieliński — fotografie i filmy z gór i podróży. Odkryj wyprawy, galerie i miejsca na mapie.'),
-  page('/fotografia', 'Fotografia — portfolio | Cinek Zielu', 'Wybrane fotografie Marcina Zielińskiego. Góry, podróże i przyroda w osiemnastu kadrach.', shareImages['alpy-2026']),
+  page('/fotografia', 'Fotografia — portfolio | Cinek Zielu', 'Wybrane fotografie Marcina Zielińskiego. Góry, podróże, przyroda i motorsport. Autorski wybór obrobionych fotografii SONY.', shareImages['alpy-2026']),
   page('/o-mnie', 'Marcin Zieliński — o mnie i kontakt | Cinek Zielu', 'Marcin Zieliński, Cinek Zielu. Góry, fotografia i film. Kilka słów o autorze, kontakt i profile społecznościowe.', shareImages.about),
   page('/mapa', 'Mapa wypraw — Cinek Zielu', 'Odkrywaj wyprawy, filmy i galerie na mapie. Tatry, Szwajcaria, Alpy, Maroko i Jura.'),
   page('/filmy', 'Filmy z gór i podróży — Cinek Zielu', 'Filmy z Tatr, Szwajcarii, Alp, Jury, Maroka i Hungaroringu. Wybierz miejsce, znajdź film i zobacz materiały z wyprawy.', shareImages['maroko-2025']),

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import stages from '../data/alpsPhotoStages.json'
 import { alpsStoryGallery } from '../data/alpsStory'
+import { photoCount } from '../data/galleryNavigation'
 import { useInitialLocation } from '../PageLocation'
 import { PhotoGrid } from './PhotoGrid'
 import { PhotoSlideshowButton } from './PhotoSlideshow'
@@ -34,8 +35,8 @@ export function AlpsGalleryStages({ gallery }) {
   const stage = stages.find(item => item.id === selected)
   const photos = stage ? stagePhotos([stage]) : gallery.photos
   return <>
-    <div className="cz-photo-stages"><div className="cz-photo-stage-heading"><h2>Etapy wyprawy</h2><span>{photos.length} fotografii</span></div>
-      <div className="cz-photo-stage-tabs" role="group" aria-label="Etap fotografii"><button type="button" aria-pressed={!stage} onClick={() => pick('all')}>Wszystkie · 48</button>{stages.map(item => <button type="button" key={item.id} aria-pressed={selected === item.id} onClick={() => pick(item.id)}>{item.title}<small>{item.date} · {item.photos.length}</small></button>)}</div>
+    <div className="cz-photo-stages"><div className="cz-photo-stage-heading"><h2>Etapy wyprawy</h2><span>{photoCount(photos.length)}</span></div>
+      <div className="cz-photo-stage-tabs" role="group" aria-label="Etap fotografii"><button type="button" aria-pressed={!stage} onClick={() => pick('all')}>Wszystkie · {gallery.photos.length}</button>{stages.map(item => <button type="button" key={item.id} aria-pressed={selected === item.id} onClick={() => pick(item.id)}>{item.title}<small>{item.date} · {item.photos.length}</small></button>)}</div>
       <p>Podział według dat wykonania zdjęć. Przerwy między wejściami są osobnymi etapami.</p>
       {stage?.routeId && <a href={`/wyprawy/alpy-2026#${stage.routeId === 'dufourspitze' ? 'dufour' : stage.routeId}-trasa`}>Trasa i opowieść: {stage.title} ↗</a>}
     </div>

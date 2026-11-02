@@ -41,5 +41,5 @@ for (const width of [275,345,450,460,600,740]) {
   }
 }
 assert.equal(getAtlasMaterials('switzerland').films.length,8)
-assert.equal(getAtlasMaterials('switzerland').photoCount,84)
+assert.equal(getAtlasMaterials('switzerland').photoCount,88)
 console.log('PASS: six preserved Swiss destinations, sourced coordinates/projection, existing materials and non-overlapping 44px targets at six widths.')

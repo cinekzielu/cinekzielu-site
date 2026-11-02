@@ -9,9 +9,9 @@ export const shareImages = {
   "hungaroring-2026": {
     "src": "/share/hungaroring-2026.jpg",
     "width": 1600,
-    "height": 1067,
-    "alt": "Pomarańczowy bolid na torze i rozmyte tło",
-    "bytes": 269046
+    "height": 1122,
+    "alt": "Pomarańczowy bolid w zakręcie na tle rozmytych trybun",
+    "bytes": 278504
   },
   "szwajcaria-2025": {
     "src": "/share/szwajcaria-2025.jpg",

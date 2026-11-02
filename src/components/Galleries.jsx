@@ -4,6 +4,8 @@ import { findFilm } from '../data/filmCatalog'
 import React from 'react'
 import { PhotoGrid } from './PhotoGrid'
 import { AlpsGalleryStages } from './AlpsPhotoStages'
+import { GalleryPhotoSelection } from './GalleryPhotoSelection'
+import { photographyCollections, photographyCollectionHref } from '../data/portfolioData'
 import { FilmLink } from './SiteTools'
 import { ResponsivePhoto } from './ResponsivePhoto'
 import { photoGalleries as galleryData } from '../data/galleryData'
@@ -36,6 +38,7 @@ export function GalleryIndex() {
   const view = useCollectionFilters(galleryData)
   return <GalleryShell>
     <div className="cz-gallery-intro"><h1>Galerie</h1><span className="cz-gallery-count">{expeditionCount(galleryData.length)} · {galleryCollectionCount(galleryData)}</span></div>
+    <nav className="cz-gallery-themes" aria-label="Fotografia według tematu"><span>Według tematu</span>{photographyCollections.map(collection => <a key={collection.id} href={photographyCollectionHref(collection)}>{collection.title} ↗</a>)}<a href="/fotografia">Całe portfolio ↗</a></nav>
     <CollectionFilters view={view} emptyLabel="Brak pasujących galerii" />
     <GalleryCards galleries={view.matches} />
   </GalleryShell>
@@ -53,7 +56,7 @@ export function GalleryPage({ slug }) {
       {gallery.films.length > 0 && <FilmLink href={gallery.films[0].url} target="_blank" rel="noreferrer">{gallery.films[0].label === 'Zwiastun' ? 'Obejrzyj zwiastun' : 'Obejrzyj film'} ▷</FilmLink>}
       {gallery.films.length > 1 && <a href="#filmy">Wszystkie filmy ↓</a>}
     </nav>
-    {gallery.id === 'alpy-2026' ? <AlpsGalleryStages gallery={gallery} /> : <PhotoGrid gallery={gallery} shareable selectable />}
+    {gallery.id === 'alpy-2026' ? <AlpsGalleryStages gallery={gallery} /> : gallery.curatedPhotoIds?.length ? <GalleryPhotoSelection gallery={gallery} /> : <PhotoGrid gallery={gallery} shareable selectable />}
     {gallery.films.length > 1 && <section id="filmy" className="cz-gallery-films" aria-labelledby="gallery-films-title"><h2 id="gallery-films-title">Filmy z wyprawy</h2><div>{gallery.films.map(film => <FilmLink key={film.id} href={film.url} target="_blank" rel="noreferrer"><span>{film.label} · {findFilm(film.id)?.duration}</span>{film.title}<span aria-hidden="true">▷</span></FilmLink>)}</div></section>}
     <div className="cz-gallery-next"><span>Kolejna galeria</span><a href={galleryHref(next)}>{next.title} <span className="cz-gallery-year">{next.year}</span> ↗</a></div>
   </GalleryShell>

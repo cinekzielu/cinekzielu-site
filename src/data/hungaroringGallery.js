@@ -1,4 +1,3 @@
-// Reviewed photographs; original paths and EXIF remain in the private selection register.
 export const hungaroringGallery = {
   "id": "hungaroring-2026",
   "title": "Hungaroring",
@@ -7,14 +6,14 @@ export const hungaroringGallery = {
   "sourceLabel": "SONY",
   "relatedExpeditionIds": [],
   "previewPhotoIndices": [
-    7,
-    10,
-    16
+    0,
+    1,
+    10
   ],
-  "coverImage": "/assets/photos/galleries/hungaroring-2026/hungaroring-01-small.webp",
-  "coverAlt": "Pomarańczowy bolid na torze i rozmyte tło",
-  "coverWidth": 2560,
-  "coverHeight": 1707,
+  "coverImage": "/assets/photos/galleries/hungaroring-2026/hungaroring-25-small.webp",
+  "coverAlt": "Pomarańczowy bolid w zakręcie na tle rozmytych trybun",
+  "coverWidth": 2000,
+  "coverHeight": 1402,
   "mapNodeId": "hungaroring",
   "mapLabel": "Hungaroring",
   "atlasNodeIds": [
@@ -31,6 +30,134 @@ export const hungaroringGallery = {
     }
   ],
   "photos": [
+    {
+      "alt": "Pomarańczowy bolid w zakręcie na tle rozmytych trybun",
+      "width": 2000,
+      "height": 1402,
+      "src": "/assets/photos/galleries/hungaroring-2026/hungaroring-25-small.webp",
+      "full": "/assets/photos/galleries/hungaroring-2026/hungaroring-25.webp",
+      "mobileSrc": "/assets/photos/galleries/hungaroring-2026/hungaroring-25-480.webp"
+    },
+    {
+      "alt": "Bolid Red Bull na prostej, uchwycony panoramowaniem",
+      "width": 2000,
+      "height": 1400,
+      "src": "/assets/photos/galleries/hungaroring-2026/hungaroring-26-small.webp",
+      "full": "/assets/photos/galleries/hungaroring-2026/hungaroring-26.webp",
+      "mobileSrc": "/assets/photos/galleries/hungaroring-2026/hungaroring-26-480.webp"
+    },
+    {
+      "alt": "Srebrny bolid nad czerwono-białą tarką toru",
+      "width": 2000,
+      "height": 1125,
+      "src": "/assets/photos/galleries/hungaroring-2026/hungaroring-27-small.webp",
+      "full": "/assets/photos/galleries/hungaroring-2026/hungaroring-27.webp",
+      "mobileSrc": "/assets/photos/galleries/hungaroring-2026/hungaroring-27-480.webp"
+    },
+    {
+      "alt": "Srebrny bolid w świetle i cieniu, na tle rozmytych barier",
+      "width": 2000,
+      "height": 1333,
+      "src": "/assets/photos/galleries/hungaroring-2026/hungaroring-28-small.webp",
+      "full": "/assets/photos/galleries/hungaroring-2026/hungaroring-28.webp",
+      "mobileSrc": "/assets/photos/galleries/hungaroring-2026/hungaroring-28-480.webp"
+    },
+    {
+      "alt": "Bolid Red Bull w czarno-białym ujęciu z toru",
+      "width": 2000,
+      "height": 1125,
+      "src": "/assets/photos/galleries/hungaroring-2026/hungaroring-29-small.webp",
+      "full": "/assets/photos/galleries/hungaroring-2026/hungaroring-29.webp",
+      "mobileSrc": "/assets/photos/galleries/hungaroring-2026/hungaroring-29-480.webp"
+    },
+    {
+      "alt": "Samochody na szerokim zakręcie i widzowie przy ogrodzeniu",
+      "width": 2000,
+      "height": 1333,
+      "src": "/assets/photos/galleries/hungaroring-2026/hungaroring-30-small.webp",
+      "full": "/assets/photos/galleries/hungaroring-2026/hungaroring-30.webp",
+      "mobileSrc": "/assets/photos/galleries/hungaroring-2026/hungaroring-30-480.webp"
+    },
+    {
+      "alt": "Pomarańczowy bolid widziany zza ogrodzenia toru",
+      "width": 2000,
+      "height": 1400,
+      "src": "/assets/photos/galleries/hungaroring-2026/hungaroring-31-small.webp",
+      "full": "/assets/photos/galleries/hungaroring-2026/hungaroring-31.webp",
+      "mobileSrc": "/assets/photos/galleries/hungaroring-2026/hungaroring-31-480.webp"
+    },
+    {
+      "alt": "Niebieski bolid i rozmyta zieleń za torem",
+      "width": 2000,
+      "height": 1125,
+      "src": "/assets/photos/galleries/hungaroring-2026/hungaroring-32-small.webp",
+      "full": "/assets/photos/galleries/hungaroring-2026/hungaroring-32.webp",
+      "mobileSrc": "/assets/photos/galleries/hungaroring-2026/hungaroring-32-480.webp"
+    },
+    {
+      "alt": "Biało-czerwony bolid Haas nad tarką toru",
+      "width": 2000,
+      "height": 1400,
+      "src": "/assets/photos/galleries/hungaroring-2026/hungaroring-33-small.webp",
+      "full": "/assets/photos/galleries/hungaroring-2026/hungaroring-33.webp",
+      "mobileSrc": "/assets/photos/galleries/hungaroring-2026/hungaroring-33-480.webp"
+    },
+    {
+      "alt": "Bolid Red Bull na łuku z zielonym poboczem",
+      "width": 2000,
+      "height": 1400,
+      "src": "/assets/photos/galleries/hungaroring-2026/hungaroring-34-small.webp",
+      "full": "/assets/photos/galleries/hungaroring-2026/hungaroring-34.webp",
+      "mobileSrc": "/assets/photos/galleries/hungaroring-2026/hungaroring-34-480.webp"
+    },
+    {
+      "alt": "Różowy samochód wyścigowy na tle zacienionych trybun",
+      "width": 2000,
+      "height": 1125,
+      "src": "/assets/photos/galleries/hungaroring-2026/hungaroring-35-small.webp",
+      "full": "/assets/photos/galleries/hungaroring-2026/hungaroring-35.webp",
+      "mobileSrc": "/assets/photos/galleries/hungaroring-2026/hungaroring-35-480.webp"
+    },
+    {
+      "alt": "Żółty samochód wyścigowy na tle zieleni",
+      "width": 2000,
+      "height": 1400,
+      "src": "/assets/photos/galleries/hungaroring-2026/hungaroring-36-small.webp",
+      "full": "/assets/photos/galleries/hungaroring-2026/hungaroring-36.webp",
+      "mobileSrc": "/assets/photos/galleries/hungaroring-2026/hungaroring-36-480.webp"
+    },
+    {
+      "alt": "Dwa bolidy na zakręcie Hungaroringu",
+      "width": 2000,
+      "height": 1123,
+      "src": "/assets/photos/galleries/hungaroring-2026/hungaroring-37-small.webp",
+      "full": "/assets/photos/galleries/hungaroring-2026/hungaroring-37.webp",
+      "mobileSrc": "/assets/photos/galleries/hungaroring-2026/hungaroring-37-480.webp"
+    },
+    {
+      "alt": "Kibice na trawiastym zboczu pod chmurami",
+      "width": 2000,
+      "height": 1333,
+      "src": "/assets/photos/galleries/hungaroring-2026/hungaroring-38-small.webp",
+      "full": "/assets/photos/galleries/hungaroring-2026/hungaroring-38.webp",
+      "mobileSrc": "/assets/photos/galleries/hungaroring-2026/hungaroring-38-480.webp"
+    },
+    {
+      "alt": "Bolid Red Bull i widzowie w rozmytym pierwszym planie",
+      "width": 2000,
+      "height": 1400,
+      "src": "/assets/photos/galleries/hungaroring-2026/hungaroring-39-small.webp",
+      "full": "/assets/photos/galleries/hungaroring-2026/hungaroring-39.webp",
+      "mobileSrc": "/assets/photos/galleries/hungaroring-2026/hungaroring-39-480.webp"
+    },
+    {
+      "alt": "Różowy bolid sfotografowany od tyłu w zakręcie",
+      "width": 2000,
+      "height": 1125,
+      "src": "/assets/photos/galleries/hungaroring-2026/hungaroring-40-small.webp",
+      "full": "/assets/photos/galleries/hungaroring-2026/hungaroring-40.webp",
+      "mobileSrc": "/assets/photos/galleries/hungaroring-2026/hungaroring-40-480.webp"
+    },
     {
       "alt": "Pomarańczowy bolid na torze i rozmyte tło",
       "width": 2560,
@@ -223,5 +350,24 @@ export const hungaroringGallery = {
       "full": "/assets/photos/galleries/hungaroring-2026/hungaroring-24.webp",
       "mobileSrc": "/assets/photos/galleries/hungaroring-2026/hungaroring-24-480.webp"
     }
-  ]
+  ],
+  "curatedPhotoIds": [
+    "hungaroring-25",
+    "hungaroring-26",
+    "hungaroring-27",
+    "hungaroring-28",
+    "hungaroring-29",
+    "hungaroring-30",
+    "hungaroring-31",
+    "hungaroring-32",
+    "hungaroring-33",
+    "hungaroring-34",
+    "hungaroring-35",
+    "hungaroring-36",
+    "hungaroring-37",
+    "hungaroring-38",
+    "hungaroring-39",
+    "hungaroring-40"
+  ],
+  "coverPosition": "50% 70%"
 }
