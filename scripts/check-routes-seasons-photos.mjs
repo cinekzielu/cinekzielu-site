@@ -6,9 +6,9 @@ import { summits } from '../src/data/summits.js'
 import { sitePages, pageStructuredData } from '../src/data/siteMetadata.js'
 import { searchSite } from '../src/data/siteSearch.js'
 
-assert.deepEqual(stages.flatMap(stage => stage.photos).sort((a,b) => a-b), Array.from({length:48},(_,i) => i+1))
-assert.equal(stages.filter(stage=>stage.routeId).flatMap(stage=>stage.photos).length,43)
-assert.equal(stages.filter(stage=>stage.routeId==='dufourspitze').flatMap(stage=>stage.photos).length,28)
+assert.deepEqual(stages.flatMap(stage => stage.photos).sort((a,b) => a-b), Array.from({length:52},(_,i) => i+1))
+assert.equal(stages.filter(stage=>stage.routeId).flatMap(stage=>stage.photos).length,47)
+assert.equal(stages.filter(stage=>stage.routeId==='dufourspitze').flatMap(stage=>stage.photos).length,31)
 assert(stages.every(stage=>stage.photos.every(n=>alpsStoryGallery.photos[n-1])))
 const publicStages = JSON.stringify(stages)
 assert(!/CIN\d|Foto[\\/]|\.jpg|gps|lat|lng|offset/i.test(publicStages),'Public groups must not expose original metadata or coordinates')

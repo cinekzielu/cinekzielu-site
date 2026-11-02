@@ -1,4 +1,12 @@
 .cz-photo-collections{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.cz-photography .cz-photo-collections:not(.cz-photo-collections-compact){grid-template-columns:repeat(6,minmax(0,1fr))}
+.cz-photography .cz-photo-collections:not(.cz-photo-collections-compact) .cz-photo-collection{grid-column:span 2}
+.cz-photography .cz-photo-collections:not(.cz-photo-collections-compact) .cz-photo-collection:nth-child(-n+2){grid-column:span 3}
+.cz-photography .cz-photo-collections:not(.cz-photo-collections-compact) .cz-photo-collection:nth-child(-n+2) .cz-photo-collection-image{aspect-ratio:2/1}
+.cz-photography-description{color:#b7aa9b;font-size:14px;line-height:1.7;margin:0 0 24px;max-width:60ch}
+.cz-photography-source-links{display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px;padding:24px 0;border-bottom:1px solid #d6c6a82e;margin-top:24px;font-size:13px}
+.cz-photography-source-links>span{color:#b7aa9b;font-size:11px}
+.cz-photography-source-links>a{display:flex;align-items:center;min-height:44px;color:#e2c99e}
 .cz-photo-collection{display:block;min-width:0;text-decoration:none;color:#f5f1eb}
 .cz-photo-collection-image{aspect-ratio:3/2;overflow:hidden;background:#201d19}
 .cz-photo-collection-image img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .35s}
@@ -28,3 +36,9 @@
 @media(max-width:900px){.cz-photo-collections{gap:16px}.cz-photo-collection-caption{flex-wrap:wrap;gap:8px}.cz-photo-collection-caption h2{font-size:26px}.cz-photo-collection-caption span:last-child{display:none}.cz-photo-collections-home{gap:22px}.cz-photography-preview-heading{align-items:start;flex-direction:column;gap:16px}}
 @media(max-width:600px){.cz-photo-collections{grid-template-columns:1fr}.cz-photo-collection-caption{padding:14px 0;gap:18px}.cz-photo-collection-caption span:last-child{display:block}.cz-photography-selection{margin-top:40px}.cz-photography-selection-heading{gap:10px 18px;margin-bottom:20px}.cz-photography-selection-heading a{margin-left:0;flex-basis:100%}.cz-photo-collections-home{grid-template-columns:1fr}.cz-photo-collections-home .cz-photo-collection:first-child{grid-row:auto;display:block}.cz-photo-collections-home .cz-photo-collection:first-child .cz-photo-collection-image,.cz-photo-collections-home .cz-photo-collection:not(:first-child) .cz-photo-collection-image{aspect-ratio:3/2}.cz-photography-preview-footer{align-items:start;flex-direction:column;gap:4px}}
 @media(prefers-reduced-motion:reduce){.cz-photo-collection-image img{transition:none}}
+@media(max-width:600px){
+ .cz-photography .cz-photo-collections:not(.cz-photo-collections-compact){display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:72%;gap:16px;overflow-x:auto;padding-bottom:12px;scroll-snap-type:x proximity}
+ .cz-photography .cz-photo-collections:not(.cz-photo-collections-compact) .cz-photo-collection,.cz-photography .cz-photo-collections:not(.cz-photo-collections-compact) .cz-photo-collection:nth-child(-n+2){grid-column:auto;scroll-snap-align:start}
+ .cz-photography .cz-photo-collections:not(.cz-photo-collections-compact) .cz-photo-collection .cz-photo-collection-image,.cz-photography .cz-photo-collections:not(.cz-photo-collections-compact) .cz-photo-collection:nth-child(-n+2) .cz-photo-collection-image{aspect-ratio:3/2}
+ .cz-photography .cz-photo-collections-compact{gap:6px 22px}
+}

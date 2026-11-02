@@ -15,7 +15,7 @@ assert(galleryData.every(gallery => Array.isArray(gallery.relatedExpeditionIds))
 const unique = new Set()
 for (const [id,count,place,date,nodes] of [
   ['katania-2026',40,'wlochy','2026-06-15',['italy','sicily','catania','taormina','etna']],
-  ['hungaroring-2026',24,'wegry','2026-07-24',['hungary','hungaroring']],
+  ['hungaroring-2026',40,'wegry','2026-07-24',['hungary','hungaroring']],
 ]) {
   const trip=expeditionPages.find(item=>item.id===id), gallery=trip.gallery
   assert.equal(trip.sortDate,date)
@@ -59,4 +59,4 @@ assert.equal(atlasTerrainProfile('sicily').countryId,null)
 assert.equal(readAtlasContext('?atlas=etna&obszar=italy'),'italy')
 assert.equal(readAtlasContext('?atlas=hungaroring&obszar=italy'),null)
 assert.equal(atlasNodeById.etna.altitude,undefined,'No unsupported summit achievement')
-console.log('PASS: two Sony trips, 64 distinct photos/192 WebP variants, correct dates, country filters, four routes and sharing images, 4 sourced atlas pins and one verified film; no invented Catania film or Etna summit claim.')
+console.log('PASS: two Sony trips, 80 distinct photos/240 WebP variants, correct dates, country filters, four routes and sharing images, 4 sourced atlas pins and one verified film; no invented Catania film or Etna summit claim.')

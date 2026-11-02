@@ -5,7 +5,7 @@ import { storyPhotoAssets } from '../src/data/storyPhotoAssets.js'
 import { galleryData } from '../src/data/galleryData.js'
 
 assert.equal(Object.keys(storyPhotoAssets).length, 46)
-assert.equal(galleryData.find(g=>g.id==='alpy-2026').photos.length,48)
+assert.equal(galleryData.find(g=>g.id==='alpy-2026').photos.length,52)
 assert.equal(galleryData.find(g=>g.id==='baranie-rogi-lodowy-szczyt-2026').photos.length,14)
 const groups = [...Object.values(alpsPhotoStory),...baraniePhotoStory]
 assert.equal(Object.keys(alpsPhotoStory).length,12)

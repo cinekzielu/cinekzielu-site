@@ -7,7 +7,7 @@ import { sitePages, legacyRedirects, getPageMetadata } from '../src/data/siteMet
 import { siteSearchIndex, searchSite } from '../src/data/siteSearch.js'
 import { filterCollections } from '../src/data/collectionFilters.js'
 assert.equal(photoGalleries.length,13)
-assert.equal(photoGalleries.reduce((n,x)=>n+x.photos.length,0),284)
+assert.equal(photoGalleries.reduce((n,x)=>n+x.photos.length,0),304)
 assert.equal(videoFrameCollections.reduce((n,x)=>n+x.photos.length,0),154)
 assert.equal(siteSearchIndex.filter(x=>x.kind==='gallery').length,13)
 for(const frames of videoFrameCollections){

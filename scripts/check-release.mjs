@@ -16,7 +16,7 @@ const attribute = (html, key) => decode(html.match(new RegExp(`<meta (?:name|pro
 const canonicalPaths = new Set(sitePages.map(page => page.path))
 assert.equal(canonicalPaths.size, 19 + photoGalleries.length + expeditionPages.length + summitPages.length)
 assert.equal(new Set(sitePages.map(page => page.title)).size, sitePages.length)
-assert(portfolioPhotos.length >= 15 && portfolioPhotos.length <= 20)
+assert(portfolioPhotos.length === 34)
 assert.equal(new Set(portfolioPhotos.map(photo => photo.full)).size, portfolioPhotos.length)
 for (const photo of portfolioPhotos) {
   assert(galleryData.some(gallery => `/galerie/${gallery.id}` === photo.sourceHref && gallery.photos.some(item => item.full === photo.full)), 'Portfolio must reference a current, non-excluded gallery photo')

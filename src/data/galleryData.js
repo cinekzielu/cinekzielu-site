@@ -777,6 +777,38 @@ export const galleryData = [
         "src": "/assets/photos/galleries/alpy-2026/alpy-2026-48-small.webp",
         "full": "/assets/photos/galleries/alpy-2026/alpy-2026-48.webp",
         "mobileSrc": "/assets/photos/galleries/alpy-2026/alpy-2026-48-480.webp"
+      },
+      {
+        "alt": "Zielona alpejska dolina w porannym świetle",
+        "width": 1333,
+        "height": 2000,
+        "src": "/assets/photos/galleries/alpy-2026/alpy-2026-49-small.webp",
+        "full": "/assets/photos/galleries/alpy-2026/alpy-2026-49.webp",
+        "mobileSrc": "/assets/photos/galleries/alpy-2026/alpy-2026-49-480.webp"
+      },
+      {
+        "alt": "Koziorożec na skalnym zboczu na tle ośnieżonego masywu",
+        "width": 1401,
+        "height": 2000,
+        "src": "/assets/photos/galleries/alpy-2026/alpy-2026-50-small.webp",
+        "full": "/assets/photos/galleries/alpy-2026/alpy-2026-50.webp",
+        "mobileSrc": "/assets/photos/galleries/alpy-2026/alpy-2026-50-480.webp"
+      },
+      {
+        "alt": "Monochromatyczna panorama lodowca i alpejskich szczytów",
+        "width": 2000,
+        "height": 1250,
+        "src": "/assets/photos/galleries/alpy-2026/alpy-2026-51-small.webp",
+        "full": "/assets/photos/galleries/alpy-2026/alpy-2026-51.webp",
+        "mobileSrc": "/assets/photos/galleries/alpy-2026/alpy-2026-51-480.webp"
+      },
+      {
+        "alt": "Bryły lodu i szczeliny w świetle nad lodowcem",
+        "width": 2000,
+        "height": 1333,
+        "src": "/assets/photos/galleries/alpy-2026/alpy-2026-52-small.webp",
+        "full": "/assets/photos/galleries/alpy-2026/alpy-2026-52.webp",
+        "mobileSrc": "/assets/photos/galleries/alpy-2026/alpy-2026-52-480.webp"
       }
     ]
   },
