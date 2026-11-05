@@ -57,6 +57,14 @@ assert(!store.has('cz:browse:next'), 'Same-page anchors are not a page departure
 location.hash = 'podroze-2025'
 windowEvents.hashchange()
 assert.notEqual(history.state.__czBrowse.id, beforeHash, 'Anchor entry has an independent position')
+const cryptoDescriptor = Object.getOwnPropertyDescriptor(globalThis, 'crypto')
+Object.defineProperty(globalThis, 'crypto', { value: {}, configurable: true })
+page('/fotografia/sciana')
+const insecureId = history.state.__czBrowse.id
+history.pushState({}, '', '/fotografia')
+assert.notEqual(history.state.__czBrowse.id, insecureId, 'HTTP preview without randomUUID still has unique history entries')
+if (cryptoDescriptor) Object.defineProperty(globalThis, 'crypto', cryptoDescriptor)
+else delete globalThis.crypto
 globalThis.sessionStorage.setItem = () => { throw new Error('Storage blocked') }
 page('/trasy')
 assert.equal(history.scrollRestoration, 'auto', 'Unavailable storage keeps native scroll restoration')

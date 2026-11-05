@@ -8,6 +8,10 @@ import brandLogo from '../assets/brand/cinek-zielu-logo-biale.svg'
 
 const sections = [ { id: 'fotografia', label: 'Fotografia' }, { id: 'wyprawy', label: 'Wyprawy' }, { id: 'szczyty', label: 'Moje szczyty' }, { id: 'filmy', label: 'Filmy' }, { id: 'mapa', label: 'Mapa' }, { id: 'galerie', label: 'Galerie' }, { id: 'o-mnie', label: 'O mnie' } ]
 const groups = {
+  fotografia: [
+    { href: '/fotografia', label: 'Portfolio', description: 'Wybrane fotografie Marcina' },
+    { href: '/fotografia/sciana', label: 'Studio fotografii', description: 'Wybierz zdjęcia i ułóż ramki na ścianie' },
+  ],
   wyprawy: [
     { href: '/kierunki', label: 'Kierunki', description: 'Kraje, pasma i ich materiały' },
     { href: '/wyprawy', label: 'Wszystkie wyprawy', description: 'Fotografie, filmy i opisy' },
@@ -28,7 +32,7 @@ export function SiteHeader({ section, detail = false }) {
   const menu = useRef(null)
   const toggle = useRef(null)
   const { pathname, search } = usePageLocation()
-  const activeSection = pathname === '/trasy' ? 'mapa' : pathname.startsWith('/sezony') ? 'wyprawy' : section
+  const activeSection = pathname.startsWith('/fotografia') ? 'fotografia' : pathname === '/trasy' ? 'mapa' : pathname.startsWith('/sezony') ? 'wyprawy' : section
   const activePath = pathname === '/wyprawy' && new URLSearchParams(search).get('widok') === 'os' ? '/wyprawy?widok=os' : pathname
   const closeGroups = () => menu.current?.querySelectorAll('details[open]').forEach(group => { group.open = false })
   const closeMenu = () => { closeGroups(); setMenuOpen(false) }

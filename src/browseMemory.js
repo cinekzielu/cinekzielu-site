@@ -23,7 +23,8 @@ const read = key => { try { return JSON.parse(sessionStorage.getItem(key)) } cat
 const write = (key, value) => { try { sessionStorage.setItem(key, JSON.stringify(value)) } catch { /* Storage disabled: ordinary links still work. */ } }
 const remove = key => { try { sessionStorage.removeItem(key) } catch { /* optional */ } }
 const urlNow = () => location.pathname + location.search + location.hash
-const newId = () => crypto.randomUUID()
+// These IDs only distinguish navigation entries; previews may use plain HTTP.
+const newId = () => globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`
 let restorePosition = () => {}
 
 export function initializeBrowseMemory() {

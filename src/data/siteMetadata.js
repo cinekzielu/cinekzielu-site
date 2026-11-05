@@ -20,6 +20,7 @@ const page = (path, title, description, image = shareImages.default) => ({ path,
 export const sitePages = [
   page('/', 'Cinek Zielu | Góry, podróże i film', 'Marcin Zieliński — fotografie i filmy z gór i podróży. Odkryj wyprawy, galerie i miejsca na mapie.'),
   page('/fotografia', 'Fotografia — portfolio | Cinek Zielu', 'Wybrane fotografie Marcina Zielińskiego. Góry, podróże, przyroda i motorsport. Autorski wybór obrobionych fotografii SONY.', shareImages['alpy-2026']),
+  page('/fotografia/sciana', 'Studio fotografii — Cinek Zielu', 'Wybierz fotografie Marcina Zielińskiego i ułóż własną kompozycję ramek na wirtualnej ścianie. Dopasuj układ, kolory i formaty, zapisz zestaw i zapytaj o odbitki.', shareImages['alpy-2026']),
   page('/o-mnie', 'Marcin Zieliński — o mnie i kontakt | Cinek Zielu', 'Marcin Zieliński, Cinek Zielu. Góry, fotografia i film. Kilka słów o autorze, kontakt i profile społecznościowe.', shareImages.about),
   page('/mapa', 'Mapa wypraw — Cinek Zielu', 'Odkrywaj wyprawy, filmy i galerie na mapie. Tatry, Szwajcaria, Alpy, Maroko i Jura.'),
   page('/filmy', 'Filmy z gór i podróży — Cinek Zielu', 'Filmy z Tatr, Szwajcarii, Alp, Jury, Maroka i Hungaroringu. Wybierz miejsce, znajdź film i zobacz materiały z wyprawy.', shareImages['maroko-2025']),
@@ -130,7 +131,7 @@ export function pageStructuredData(metadata) {
   if (parts.length === 2) {
     base.breadcrumb = { '@type': 'BreadcrumbList', itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Cinek Zielu', item: SITE_ORIGIN + '/' },
-      { '@type': 'ListItem', position: 2, name: ({ galerie: 'Galerie', sezony: 'Sezony', szczyty: 'Szczyty', kierunki: 'Kierunki' })[parts[0]] || 'Wyprawy', item: SITE_ORIGIN + '/' + parts[0] },
+      { '@type': 'ListItem', position: 2, name: ({ fotografia: 'Fotografia', galerie: 'Galerie', sezony: 'Sezony', szczyty: 'Szczyty', kierunki: 'Kierunki' })[parts[0]] || 'Wyprawy', item: SITE_ORIGIN + '/' + parts[0] },
       { '@type': 'ListItem', position: 3, name: metadata.title.split(' — ')[0], item: metadata.canonical },
     ] }
   }
