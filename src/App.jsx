@@ -21,6 +21,7 @@ import { filmsData } from './data/filmsData'
 import { FilmIndex } from './components/Films'
 import { SiteToolsProvider, FilmLink } from './components/SiteTools'
 import { PhotographyPage, PhotographyPreview } from './components/Photography'
+import { PhotoWall } from './components/PhotoWall'
 import { AboutPage } from './components/About'
 import { TatryDestination } from './components/TatryDestination'
 import { AlpsDestination } from './components/AlpsDestination'
@@ -530,6 +531,7 @@ export function SitePage({ location }) {
   const summitPage = summitPages.find(item => pathname === item.path)
   if (summitPage) page = <SummitDetail id={summitPage.id} />
   if (pathname === '/fotografia') page = <PhotographyPage />
+  if (pathname === '/fotografia/sciana') page = <PhotoWall />
   if (pathname === '/o-mnie') page = <AboutPage />
   if (pageRoute?.[1] === 'galerie') page = pageSlug ? <GalleryPage slug={pageSlug} /> : <GalleryIndex />
   if (pageRoute?.[1] === 'wyprawy') page = pageSlug ? <ExpeditionPage slug={pageSlug} /> : <ExpeditionIndex />
