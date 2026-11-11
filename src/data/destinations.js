@@ -19,7 +19,7 @@ export function getDestination(id) {
   if (!destination) return null
   const trips = filterCollections(expeditionPages, { place:id, year:'wszystkie' })
   const tripIds = new Set(trips.map(trip => trip.id))
-  const films = filmCatalog.filter(film => tripIds.has(film.expeditionId) || film.region === id)
+  const films = filmCatalog.filter(film => (tripIds.has(film.expeditionId) || film.region === id) && (!film.atlasNodeIds || film.atlasNodeIds.includes(destination.atlas)))
   const tracks = routes.filter(route => destination.region ? route.region === destination.region : route.country.split(/\s*[·/,]\s*/).includes(destination.country))
   const galleries = trips.filter(trip => !isVideoCollection(trip.gallery) && !isTripPhotoCollection(trip.gallery))
   const coverTrip = trips.find(trip => trip.id === destination.coverTrip)

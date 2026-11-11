@@ -44,7 +44,7 @@ export const summits = [
       mapHref: `/mapa?atlas=${item.id}`,
     })
   }),
-  ...alpsStory.map(chapter => peak(chapter.id, chapter.title, chapter.altitude, [visit('alpy-2026', 'lato', ['l3KltGrKz2U'], {
+  ...alpsStory.map(chapter => peak(chapter.id, chapter.title, chapter.altitude, [visit('alpy-2026', 'lato', [...(chapter.episode ? [chapter.episode.youtubeId] : []), 'l3KltGrKz2U'], {
     orderDate: '2026-08', sequence: Number(chapter.number), tripHref: `/wyprawy/alpy-2026#alpy-${chapter.id}`,
   })], { range: 'Alpy', rangeName: 'Alpy', altitudeSource: `https://www.openstreetmap.org/node/${chapter.osmNode}` })),
   peak('toubkal', 'Toubkal', 4167, [visit('maroko-2025', null, ['BiWk6apjJOg'], { orderDate: '2025', date: '2025' })], { range: 'Atlas Wysoki', rangeName: 'Atlas Wysoki', altitudeSource: 'https://www.openstreetmap.org/node/87828608' }),

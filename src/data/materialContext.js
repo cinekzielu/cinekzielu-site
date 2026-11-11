@@ -22,8 +22,8 @@ export function searchContext(item) {
   const trip = tripById[type === 'expedition' || type === 'gallery' ? id : row?.trip || film?.expeditionId]
   const years = row ? [row.sortDate.slice(0,4)] : film ? filmYears(film) : trip ? [String(trip.year)] : []
   const seasons = film ? filmSeasons(film) : trip ? tripSeasons(trip.id) : []
-  const linkedRoutes = row ? [row] : trip ? routes.filter(route => route.trip === trip.id) : []
-  const films = film ? [film] : trip ? filmCatalog.filter(entry => entry.expeditionId === trip.id) : []
+  const linkedRoutes = row ? [row] : film?.routeIds ? routes.filter(route => film.routeIds.includes(route.id)) : trip ? routes.filter(route => route.trip === trip.id) : []
+  const films = film ? [film] : trip ? filmCatalog.filter(entry => entry.expeditionId === trip.id && (!row || !entry.routeIds || entry.routeIds.includes(row.id))) : []
   const gallery = trip?.gallery
   const badges = [...years, ...seasons.map(seasonLabel)]
   if (row || trip || film) {
@@ -34,7 +34,7 @@ export function searchContext(item) {
     if (linkedRoutes.length) badges.push(`GPX · ${linkedRoutes.length}`)
   }
   const actions = []
-  if (gallery?.photos.length) actions.push({ href:galleryHref(gallery), label:galleryLinkLabel(gallery) })
+  if (gallery?.photos.length) actions.push({ href:film?.galleryHref || galleryHref(gallery), label:galleryLinkLabel(gallery) })
   if (films.length) actions.push({ href:films.length === 1 ? films[0].youtubeUrl : `/wyprawy/${trip.id}#filmy`, label:films.length === 1 ? 'Obejrzyj film' : `Filmy (${films.length})` })
   for (const route of linkedRoutes.slice(0,2)) actions.push({ href:`/trasy?trasa=${route.id}`, label:linkedRoutes.length === 1 ? 'Zobacz trasę' : `Trasa: ${tripRoutes[route.id].title}` })
   return { badges, actions, contextWords:[...years, ...seasons.flatMap(season => season === 'zima' ? ['zima','zimą','zimowe'] : ['lato','latem','letnie'])].join(' ') }

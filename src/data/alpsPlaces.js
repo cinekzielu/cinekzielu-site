@@ -12,6 +12,7 @@ export const alpsPlaces = alpsStory.map(chapter => ({
   parent: countryByPeak[chapter.id], altitude: `${chapter.altitude} m`,
   lat: chapter.lat, lng: chapter.lng, icon: 'mountain', related: ['alpy'],
   coordinateSource: `https://www.openstreetmap.org/node/${chapter.osmNode}`,
+  ...(chapter.episode ? { chapter: { videoId: chapter.episode.youtubeId, ...chapter.episode.chapters.find(part => part.title === chapter.title) } } : {}),
   description: `${chapter.country} · Across the Alps 2026. ${chapter.id === 'grauspitz' ? 'Vorder Grauspitz.' : 'Szczyt zdobyty podczas sierpniowej wyprawy.'}`,
   visit: {
     year: '2026', expeditionId: 'alpy-2026', number: chapter.number,

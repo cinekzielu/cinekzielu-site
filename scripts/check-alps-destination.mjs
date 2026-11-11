@@ -7,7 +7,7 @@ import { searchSite } from '../src/data/siteSearch.js'
 const all = getAlpsDestination(), old = getAlpsDestination('2025'), recent = getAlpsDestination('2026')
 assert.deepEqual(all.trips.map(t => t.id).sort(), ['alpy-2026', 'szwajcaria-2025'])
 assert.equal(all.photoCount, 88)
-assert.equal(all.films.length, 8)
+assert.equal(all.films.length, 9)
 assert.equal(all.tracks.length, 11)
 assert.equal(all.peaks.length, 9)
 for (const [year, data] of [['2025', old], ['2026', recent]]) {

@@ -12,4 +12,4 @@ export const galleryAtlasIds = gallery => [...new Set([
   ...(tripGeography[gallery.id]?.areas || []),
   ...(tripGeography[gallery.id]?.places || []),
 ])]
-export const filmMatchesRegion = (film, region) => film.region === region || Boolean(tripGeography[film.expeditionId]?.filmRegions.includes(region))
+export const filmMatchesRegion = (film, region) => film.region === region || Boolean((film.filmRegions || tripGeography[film.expeditionId]?.filmRegions)?.includes(region))

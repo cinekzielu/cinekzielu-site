@@ -22,7 +22,8 @@ for (const photo of photos) {
   for (const field of ['src', 'full', 'mobileSrc']) assert(existsSync(`public${photo[field]}`))
 }
 for (const chapter of alpsStory) {
-  assert.equal(chapter.episodeStatus, 'W przygotowaniu')
+  assert.equal(chapter.episodeStatus, chapter.id === 'triglav' ? 'Dostępny' : 'W przygotowaniu')
+  assert.equal(chapter.episode?.youtubeId, chapter.id === 'triglav' ? 'C8weHwRNLiE' : undefined)
   assert.equal(chapter.episodeUrl, undefined)
   assert.equal(chapter.isoDate, undefined)
 }
@@ -32,7 +33,9 @@ for (const point of alpsLocations) {
   assert(point.lat > 45 && point.lat < 48 && point.lng > 7 && point.lng < 15)
   assert(point.coordinateSource.startsWith('https://www.openstreetmap.org/node/'))
 }
-assert.equal(alpsStoryGallery.films.length, 1)
-assert.equal(alpsStoryGallery.films[0].label, 'Zwiastun')
-assert.equal(findFilm(alpsStoryGallery.films[0].id).duration, '1:34')
-console.log('PASS: five confirmed summits in order, four pauses, three-day Dufour block, exact activity totals, 24 existing photos, five map sources, legacy anchors and unpublished episode status.')
+assert.equal(alpsStoryGallery.films.length, 2)
+assert.equal(alpsStoryGallery.films[0].label, 'Odcinek 1/5')
+assert.equal(findFilm(alpsStoryGallery.films[0].id).duration, '39:33')
+assert.equal(alpsStoryGallery.films[1].label, 'Zwiastun')
+assert.equal(findFilm(alpsStoryGallery.films[1].id).duration, '1:34')
+console.log('PASS: five confirmed summits in order, existing activity/photo data, Triglav episode and preserved trailer; four unreleased episodes stay pending.')

@@ -14,7 +14,7 @@ import { shareImages } from '../src/data/shareImages.js'
 
 const root = new URL('../public/', import.meta.url)
 const photos = photoGalleries.flatMap(gallery => gallery.photos.map(photo => ({ gallery, photo })))
-assert.equal(sitePages.length, 53 + summitPages.length, 'Only explicit summit pages extend the canonical inventory; share views do not')
+assert.equal(sitePages.length, 54 + summitPages.length, 'Canonical inventory includes the published photo wall; share views do not')
 assert.equal(sharePages.length, photos.length + photographyCollections.length + sharedAtlasIds.length)
 assert.equal(new Set(sharePages.map(page => page.path)).size, sharePages.length)
 assert.equal(sharePageMetadata.length, sharePages.length)

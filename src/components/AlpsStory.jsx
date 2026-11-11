@@ -20,12 +20,14 @@ const StoryPhotos = ({ title, photos, groupId }) => alpsPhotoStory[groupId] ? <S
 const pauseGroups = { triglav:'po-triglavie', grossglockner:'przerwa-austria', dufourspitze:'przerwa-szwajcaria', grauspitz:'przed-zugspitze' }
 const stageLinks = alpsStory.map(chapter => ({ id: chapter.id, title: chapter.title, href: alpsStoryHash(chapter) }))
 const dayGroups = ['dufour-podejscie','dufour-szczyt','dufour-powrot']
+const firstEpisode = alpsStory.find(chapter => chapter.episode)?.episode
+const trailer = alpsStoryGallery.films.find(film => film.label === 'Zwiastun')
 
 export function AlpsStoryHero() {
   return <header className="cz-alps-hero">
     <ResponsivePhoto photo={alpsStoryGallery.photos[27]} full sizes="(max-width:1448px) 100vw, 1360px" loading="eager" fetchPriority="high" />
     <div className="cz-alps-hero-copy"><p className="cz-alps-kicker">Alpy · sierpień 2026</p><h1>Across<br />the Alps</h1><p>4 osoby. 5 krajów. 5 zdobytych szczytów.</p>
-      <nav aria-label="Materiały z Alp"><a href="#opowiesc">Zobacz opowieść ↓</a><FilmLink href={alpsStoryGallery.films[0].url}>▷ Obejrzyj zwiastun</FilmLink><a href="/galerie/alpy-2026">48 fotografii ↗</a></nav>
+      <nav aria-label="Materiały z Alp"><a href="#opowiesc">Zobacz opowieść ↓</a>{firstEpisode && <FilmLink href={firstEpisode.youtubeUrl}>▷ Odcinek 1: Triglav</FilmLink>}<FilmLink href={trailer.url}>Zwiastun</FilmLink><a href="/galerie/alpy-2026">{alpsStoryGallery.photos.length} fotografie ↗</a></nav>
     </div>
   </header>
 }
@@ -93,6 +95,10 @@ export function AlpsStory() {
       <div className="cz-alps-chapters"><aside className="cz-alps-preparation" aria-label="Przed pierwszym wejściem"><h3>Przed pierwszym wejściem</h3><StoryPhotoGroup group={alpsPhotoStory['przed-triglavem']} tripId="alpy-2026" /></aside>{alpsStory.map(chapter => <React.Fragment key={chapter.id}><section id={`alpy-${chapter.id}`} data-alps-chapter={chapter.id} tabIndex={-1} aria-labelledby={`alps-title-${chapter.id}`}>
         <header><span className="cz-alps-number">{chapter.number} / 05</span><div><p className="cz-alps-kicker">{chapter.country} · {chapter.altitude} m n.p.m.</p><h3 id={`alps-title-${chapter.id}`}>{chapter.title}</h3></div></header>
         <p className="cz-alps-description">{chapter.description}</p>
+        {chapter.episode && <div className="cz-alps-episode">
+          <FilmLink className="cz-alps-episode-cover" href={chapter.episode.youtubeUrl} aria-label={`Obejrzyj: ${chapter.episode.title}`}><img src={chapter.episode.thumbnail} width="1280" height="720" loading="lazy" alt="" /><span aria-hidden="true">▷</span></FilmLink>
+          <div><p className="cz-alps-kicker">Across the Alps · Odcinek {Number(chapter.number)}/5 · {chapter.episode.duration}</p><h4>{chapter.title} {chapter.altitude} m</h4><nav aria-label={`Film z etapu ${chapter.title}`}><FilmLink href={chapter.episode.youtubeUrl}>Obejrzyj odcinek ↗</FilmLink>{chapter.episode.chapters.filter(part => part.title === chapter.title).map(part => <FilmLink key={part.seconds} href={`${chapter.episode.youtubeUrl}&t=${part.seconds}s`}>Na szczycie · {part.time} ↗</FilmLink>)}</nav></div>
+        </div>}
         <dl className="cz-alps-stage-stats"><div><dt>Dystans</dt><dd>{number(chapter.distance, 2)} km</dd></div><div><dt>Podejścia</dt><dd>+{number(chapter.ascent)} m</dd></div><div><dt>Czas ruchu</dt><dd>{chapter.movingTime}</dd></div></dl>
         {chapter.statsNote && <p className="cz-alps-stats-note">{chapter.statsNote}</p>}
         {chapter.id === 'dufourspitze' && <DufourRoute showPhotos={false} />}
@@ -102,7 +108,7 @@ export function AlpsStory() {
       </section>{chapter.pause && <aside className="cz-alps-pause" aria-label={`Przerwa po ${chapter.title}`}><p className="cz-alps-kicker">Między szczytami · {chapter.number} → {String(Number(chapter.number) + 1).padStart(2, '0')}</p><h3>{chapter.pause.title}</h3><p className="cz-alps-description">{chapter.pause.description}</p><StoryPhotos title={chapter.pause.title} photos={chapter.pause.photos} groupId={pauseGroups[chapter.id]} /></aside>}</React.Fragment>)}</div>
     </div>
     <section className="cz-alps-crew" aria-labelledby="alps-crew-title"><p className="cz-alps-kicker">Ekipa</p><h2 id="alps-crew-title">Marcin, Max, Karol i Agata.</h2><p>Cztery osoby, jeden samochód i sporo zmian planu. Zdjęcia i filmowa dokumentacja: Cinek Zielu.</p><p className="cz-alps-crew-aside">Według naszych mało naukowych obliczeń: około 10 kg makaronu, 500 razy „SIUUU” i 3 kryzysy egzystencjalne.</p></section>
-    <section className="cz-alps-series" aria-labelledby="alps-series-title"><p className="cz-alps-kicker">Seria filmowa</p><h2 id="alps-series-title">Pięć szczytów. Pięć odcinków.</h2><p>Odcinki Across the Alps powstają. Dufourspitze połączy trzy dni w jeden film.</p><ol>{alpsStory.map(chapter => <li key={chapter.id}><span>{chapter.number}</span><strong>{chapter.title}</strong><small>{chapter.episodeStatus}</small></li>)}</ol><a href="#filmy">Obejrzyj zwiastun ↓</a></section>
-    <div className="cz-alps-ending"><p className="cz-alps-kicker">Cała kolekcja</p><h2>48 fotografii w galerii.</h2><a href="/galerie/alpy-2026">Otwórz galerię ↗</a></div>
+    <section className="cz-alps-series" aria-labelledby="alps-series-title"><p className="cz-alps-kicker">Seria filmowa</p><h2 id="alps-series-title">Pięć szczytów. Pięć odcinków.</h2><p>Pierwszy odcinek — Triglav — jest już dostępny. Pozostałe odcinki są w przygotowaniu. Dufourspitze połączy trzy dni w jeden film.</p><ol>{alpsStory.map(chapter => <li key={chapter.id}><span>{chapter.number}</span><strong>{chapter.title}</strong>{chapter.episode ? <FilmLink href={chapter.episode.youtubeUrl}>Obejrzyj · {chapter.episode.duration} ↗</FilmLink> : <small>{chapter.episodeStatus}</small>}</li>)}</ol><FilmLink href={trailer.url}>Obejrzyj zwiastun ↗</FilmLink></section>
+    <div className="cz-alps-ending"><p className="cz-alps-kicker">Cała kolekcja</p><h2>{alpsStoryGallery.photos.length} fotografie w galerii.</h2><a href="/galerie/alpy-2026">Otwórz galerię ↗</a></div>
   </section>
 }

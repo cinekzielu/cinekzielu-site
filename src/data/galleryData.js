@@ -1,5 +1,6 @@
 // Reviewed web exports only; original files and private source paths stay outside this project.
 import { moroccoGallery } from './moroccoGallery.js'
+import { alpsEpisodes } from './alpsEpisodes.js'
 import { gerlachGallery } from './gerlachGallery.js'
 import { baranieWinterGallery } from './baranieWinterGallery.js'
 import { kiezmarskiWinterGallery } from './kiezmarskiWinterGallery.js'
@@ -386,6 +387,12 @@ export const galleryData = [
     ],
     "relatedExpeditionIds": [],
     "films": [
+      {
+        id: alpsEpisodes.triglav.youtubeId,
+        title: alpsEpisodes.triglav.title,
+        label: 'Odcinek 1/5',
+        url: alpsEpisodes.triglav.youtubeUrl,
+      },
       {
         "id": "l3KltGrKz2U",
         "title": "Across the Alps",
