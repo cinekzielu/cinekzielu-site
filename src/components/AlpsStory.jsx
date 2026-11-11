@@ -26,7 +26,7 @@ const trailer = alpsStoryGallery.films.find(film => film.label === 'Zwiastun')
 export function AlpsStoryHero() {
   return <header className="cz-alps-hero">
     <ResponsivePhoto photo={alpsStoryGallery.photos[27]} full sizes="(max-width:1448px) 100vw, 1360px" loading="eager" fetchPriority="high" />
-    <div className="cz-alps-hero-copy"><p className="cz-alps-kicker">Alpy · sierpień 2026</p><h1>Across<br />the Alps</h1><p>4 osoby. 5 krajów. 5 zdobytych szczytów.</p>
+    <div className="cz-alps-hero-copy"><p className="cz-alps-kicker">Alpy · sierpień 2026</p><h1>Across<br />the Alps</h1><p>Wyjazd w Alpy z Maxem, Karolem i Agatą.</p>
       <nav aria-label="Materiały z Alp"><a href="#opowiesc">Zobacz opowieść ↓</a>{firstEpisode && <FilmLink href={firstEpisode.youtubeUrl}>▷ Odcinek 1: Triglav</FilmLink>}<FilmLink href={trailer.url}>Zwiastun</FilmLink><a href="/galerie/alpy-2026">{alpsStoryGallery.photos.length} fotografie ↗</a></nav>
     </div>
   </header>
@@ -75,7 +75,7 @@ export function AlpsStory() {
     document.getElementById(`alpy-${id}`)?.scrollIntoView({ behavior: 'instant', block: 'start' })
   }
   return <section className="cz-alps-story" id="opowiesc" ref={root} aria-labelledby="alps-story-title">
-    <div className="cz-alps-intro"><div><p className="cz-alps-kicker">Pięć najwyższych szczytów pięciu państw</p><h2 id="alps-story-title">Od Triglavu<br />po Zugspitze.</h2></div><p>W sierpniu ruszyliśmy przez Alpy samochodem Maxa. Między wejściami były przejazdy, gotowanie, odpoczynek i noce w aucie. Z pięciu celów udało się zdobyć wszystkie pięć.</p></div>
+    <div className="cz-alps-intro"><div><p className="cz-alps-kicker">Pięć najwyższych szczytów pięciu państw</p><h2 id="alps-story-title">Od Triglavu<br />po Zugspitze.</h2></div><p>Zaczęliśmy od Triglavu w Słowenii, a skończyliśmy na Zugspitze w Niemczech. Po drodze weszliśmy na Grossglockner, Dufourspitze i Grauspitz. Między wejściami jeździliśmy samochodem Maxa.</p></div>
     <dl className="cz-alps-totals">
       <div><dt>Zdobyte szczyty</dt><dd>{alpsTotals.peaks} / 5</dd></div>
       <div><dt>Dystans w górach</dt><dd>{number(alpsTotals.distance, 2)} <small>km</small></dd></div>
