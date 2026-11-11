@@ -75,7 +75,7 @@ export function AlpsStory() {
     document.getElementById(`alpy-${id}`)?.scrollIntoView({ behavior: 'instant', block: 'start' })
   }
   return <section className="cz-alps-story" id="opowiesc" ref={root} aria-labelledby="alps-story-title">
-    <div className="cz-alps-intro"><div><p className="cz-alps-kicker">Pięć najwyższych szczytów pięciu państw</p><h2 id="alps-story-title">Od Triglavu<br />po Zugspitze.</h2></div><p>Zaczęliśmy od Triglavu w Słowenii, a skończyliśmy na Zugspitze w Niemczech. Po drodze weszliśmy na Grossglockner, Dufourspitze i Grauspitz. Między wejściami jeździliśmy samochodem Maxa.</p></div>
+    <div className="cz-alps-intro"><div><p className="cz-alps-kicker">Pięć najwyższych szczytów pięciu państw</p><h2 id="alps-story-title">Od Triglavu<br />po Zugspitze.</h2></div><p>Zaczęliśmy od Triglavu w Słowenii, a skończyliśmy na Zugspitze w Niemczech. Po drodze weszliśmy na Grossglockner, Dufourspitze i Grauspitz.</p></div>
     <dl className="cz-alps-totals">
       <div><dt>Zdobyte szczyty</dt><dd>{alpsTotals.peaks} / 5</dd></div>
       <div><dt>Dystans w górach</dt><dd>{number(alpsTotals.distance, 2)} <small>km</small></dd></div>
