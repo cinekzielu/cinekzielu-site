@@ -48,7 +48,7 @@ const details = {
     // Recorded mountain stages, confirmed by GPX and photo metadata; excludes travel days.
     sortDate: '2026-08-18',
     region: 'Alpy', date: '18–28 sierpnia 2026', kind: 'Etapy wyprawy alpejskiej',
-    description: 'Across the Alps: Triglav, Grossglockner, Dufourspitze, Grauspitz i Zugspitze. Pięć zdobytych szczytów pięciu krajów. Etapy górskie od 18 do 28 sierpnia 2026, fotografie i opowieść z wyprawy.',
+    description: 'Across the Alps: Triglav, Grossglockner, Dufourspitze, Grauspitz i Zugspitze. Filmy, fotografie i trasy z wyjazdu w Alpy od 18 do 28 sierpnia 2026.',
   },
   'baranie-rogi-lodowy-szczyt-2026': {
     sortDate: '2026-07',

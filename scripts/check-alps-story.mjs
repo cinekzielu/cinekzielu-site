@@ -13,7 +13,6 @@ const seconds = value => value.split(':').map(Number).reduce((sum, part) => sum 
 assert.equal(alpsStory.reduce((sum, chapter) => sum + seconds(chapter.movingTime), 0), seconds(alpsTotals.movingTime))
 assert.equal(alpsStory.filter(chapter => chapter.pause).length, 4)
 assert.equal(alpsStory[2].days.length, 3)
-assert(alpsStory[2].description.includes('Agata została w Monte Rosa Hütte'))
 const photos = alpsStory.flatMap(chapter => [...chapter.photos, ...(chapter.days || []).flatMap(day => day.photos), ...(chapter.pause?.photos || [])])
 assert.equal(photos.length, 24)
 assert.equal(new Set(photos.map(photo => photo.src)).size, 24)

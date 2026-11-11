@@ -18,7 +18,7 @@ export function AlpsHomeFeature() {
         <div className="cz-alps-feature-copy">
           <p className="cz-alps-feature-eyebrow">Alpy · Sierpień 2026</p>
           <h2 id="alps-feature-title">Across the Alps</h2>
-          <p className="cz-alps-feature-lead">Pięć szczytów. Pięć krajów.</p>
+          <p className="cz-alps-feature-lead">Filmy, fotografie i trasy z wyjazdu w Alpy.</p>
           <div className="cz-alps-feature-actions">
             <a className="button primary" href="/wyprawy/alpy-2026">Zobacz wyprawę <ArrowUpRight size={17} aria-hidden="true" /></a>
             <FilmLink className="cz-alps-feature-trailer" href={alpsEpisodes.triglav.youtubeUrl}><Play size={16} aria-hidden="true" /> Odcinek 1: Triglav · {alpsEpisodes.triglav.duration}</FilmLink>

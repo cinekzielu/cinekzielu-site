@@ -27,7 +27,7 @@ export function AlpsStoryHero() {
   return <header className="cz-alps-hero">
     <ResponsivePhoto photo={alpsStoryGallery.photos[27]} full sizes="(max-width:1448px) 100vw, 1360px" loading="eager" fetchPriority="high" />
     <div className="cz-alps-hero-copy"><p className="cz-alps-kicker">Alpy · sierpień 2026</p><h1>Across<br />the Alps</h1><p>Wyjazd w Alpy z Maxem, Karolem i Agatą.</p>
-      <nav aria-label="Materiały z Alp"><a href="#opowiesc">Zobacz opowieść ↓</a>{firstEpisode && <FilmLink href={firstEpisode.youtubeUrl}>▷ Odcinek 1: Triglav</FilmLink>}<FilmLink href={trailer.url}>Zwiastun</FilmLink><a href="/galerie/alpy-2026">{alpsStoryGallery.photos.length} fotografie ↗</a></nav>
+      <nav aria-label="Materiały z Alp"><a href="#opowiesc">Zobacz etapy ↓</a>{firstEpisode && <FilmLink href={firstEpisode.youtubeUrl}>▷ Odcinek 1: Triglav</FilmLink>}<FilmLink href={trailer.url}>Zwiastun</FilmLink><a href="/galerie/alpy-2026">{alpsStoryGallery.photos.length} fotografie ↗</a></nav>
     </div>
   </header>
 }
@@ -75,7 +75,7 @@ export function AlpsStory() {
     document.getElementById(`alpy-${id}`)?.scrollIntoView({ behavior: 'instant', block: 'start' })
   }
   return <section className="cz-alps-story" id="opowiesc" ref={root} aria-labelledby="alps-story-title">
-    <div className="cz-alps-intro"><div><p className="cz-alps-kicker">Pięć najwyższych szczytów pięciu państw</p><h2 id="alps-story-title">Od Triglavu<br />po Zugspitze.</h2></div><p>Zaczęliśmy od Triglavu w Słowenii, a skończyliśmy na Zugspitze w Niemczech. Po drodze weszliśmy na Grossglockner, Dufourspitze i Grauspitz.</p></div>
+    <div className="cz-alps-intro"><div><p className="cz-alps-kicker">Przebieg wyprawy</p><h2 id="alps-story-title">Od Triglavu<br />po Zugspitze.</h2></div><p>Zaczęliśmy od Triglavu w Słowenii, a skończyliśmy na Zugspitze w Niemczech. Po drodze weszliśmy na Grossglockner, Dufourspitze i Grauspitz.</p></div>
     <dl className="cz-alps-totals">
       <div><dt>Zdobyte szczyty</dt><dd>{alpsTotals.peaks} / 5</dd></div>
       <div><dt>Dystans w górach</dt><dd>{number(alpsTotals.distance, 2)} <small>km</small></dd></div>
@@ -86,7 +86,7 @@ export function AlpsStory() {
       <button className="cz-alps-map-toggle" aria-expanded={mapOpen} aria-controls="alps-map-content" onClick={() => setMapOpen(value => !value)}><span>Pięć szczytów na mapie</span><span>{mapOpen ? 'Zwiń −' : 'Rozwiń +'}</span></button>
       <div id="alps-map-content" hidden={!mapOpen}>
         {nearby && mapOpen && <Suspense fallback={<p className="cz-alps-description">Wczytywanie mapy…</p>}><TerrainMap embedded points={alpsLocations} locations={alpsLocations} locationById={alpsLocationById} overviewPoints={alpsLocations} selectedId={mapSelected} onSelect={pickPeak} regionId="alps-story" initialTone="dark" focusZoom={9} resetLabel="Pięć szczytów" surfaceLabel="Mapa pięciu szczytów wyprawy Across the Alps. Wybierz szczyt, aby przejść do jego rozdziału. Strzałki przesuwają, plus i minus zmieniają skalę." /></Suspense>}
-        <div className="cz-alps-map-footer"><span>Wybierz szczyt, aby przejść do opowieści.</span><a href="/mapa?atlas=alpy">Cały atlas Alp ↗</a></div>
+        <div className="cz-alps-map-footer"><span>Wybierz szczyt, aby zobaczyć opis etapu.</span><a href="/mapa?atlas=alpy">Cały atlas Alp ↗</a></div>
       </div>
     </div>
     <div className="cz-alps-layout">
@@ -107,8 +107,8 @@ export function AlpsStory() {
         {chapter.days?.map((day, index) => <div className="cz-alps-day" key={day.title}><p className="cz-alps-kicker">Dzień {index + 1} / 3</p><h4>{day.title}</h4><p className="cz-alps-description">{day.description}</p><StoryPhotos title={`Dufourspitze · ${day.title}`} photos={day.photos} groupId={dayGroups[index]} /></div>)}
       </section>{chapter.pause && <aside className="cz-alps-pause" aria-label={`Przerwa po ${chapter.title}`}><p className="cz-alps-kicker">Między szczytami · {chapter.number} → {String(Number(chapter.number) + 1).padStart(2, '0')}</p><h3>{chapter.pause.title}</h3><p className="cz-alps-description">{chapter.pause.description}</p><StoryPhotos title={chapter.pause.title} photos={chapter.pause.photos} groupId={pauseGroups[chapter.id]} /></aside>}</React.Fragment>)}</div>
     </div>
-    <section className="cz-alps-crew" aria-labelledby="alps-crew-title"><p className="cz-alps-kicker">Ekipa</p><h2 id="alps-crew-title">Marcin, Max, Karol i Agata.</h2><p>Cztery osoby, jeden samochód i sporo zmian planu. Zdjęcia i filmowa dokumentacja: Cinek Zielu.</p><p className="cz-alps-crew-aside">Według naszych mało naukowych obliczeń: około 10 kg makaronu, 500 razy „SIUUU” i 3 kryzysy egzystencjalne.</p></section>
-    <section className="cz-alps-series" aria-labelledby="alps-series-title"><p className="cz-alps-kicker">Seria filmowa</p><h2 id="alps-series-title">Pięć szczytów. Pięć odcinków.</h2><p>Pierwszy odcinek — Triglav — jest już dostępny. Pozostałe odcinki są w przygotowaniu. Dufourspitze połączy trzy dni w jeden film.</p><ol>{alpsStory.map(chapter => <li key={chapter.id}><span>{chapter.number}</span><strong>{chapter.title}</strong>{chapter.episode ? <FilmLink href={chapter.episode.youtubeUrl}>Obejrzyj · {chapter.episode.duration} ↗</FilmLink> : <small>{chapter.episodeStatus}</small>}</li>)}</ol><FilmLink href={trailer.url}>Obejrzyj zwiastun ↗</FilmLink></section>
+    <section className="cz-alps-crew" aria-labelledby="alps-crew-title"><p className="cz-alps-kicker">Ekipa</p><h2 id="alps-crew-title">Marcin, Max, Karol i Agata.</h2><p>Fotografie i filmy: Marcin Zieliński / Cinek Zielu.</p></section>
+    <section className="cz-alps-series" aria-labelledby="alps-series-title"><p className="cz-alps-kicker">Seria filmowa</p><h2 id="alps-series-title">Odcinki Across the Alps</h2><p>Pierwszy odcinek z Triglavu jest już dostępny. Kolejne odcinki są w przygotowaniu.</p><ol>{alpsStory.map(chapter => <li key={chapter.id}><span>{chapter.number}</span><strong>{chapter.title}</strong>{chapter.episode ? <FilmLink href={chapter.episode.youtubeUrl}>Obejrzyj · {chapter.episode.duration} ↗</FilmLink> : <small>{chapter.episodeStatus}</small>}</li>)}</ol><FilmLink href={trailer.url}>Obejrzyj zwiastun ↗</FilmLink></section>
     <div className="cz-alps-ending"><p className="cz-alps-kicker">Cała kolekcja</p><h2>{alpsStoryGallery.photos.length} fotografie w galerii.</h2><a href="/galerie/alpy-2026">Otwórz galerię ↗</a></div>
   </section>
 }
