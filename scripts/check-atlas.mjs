@@ -32,7 +32,7 @@ for (const id of Object.getOwnPropertyNames(Object.prototype)) {
 
 assert.equal(searchAtlasNodes('konczysta')[0].id, 'konczysta')
 assert.equal(searchAtlasNodes('murren')[0].id, 'murren-gimmelwald')
-for (const [id, expected] of Object.entries({ world: [29, 21, 510], europe: [27, 20, 470], poland: [8, 7, 127], tatry: [16, 14, 256], krywan: [0, 1, 8], 'zabi-kon': [1, 1, 13], switzerland: [8, 2, 88], alpy: [8, 2, 88], morocco: [2, 1, 40], konczysta: [1, 1, 24], koscielec: [2, 1, 17], swinica: [2, 2, 29], 'baranie-rogi': [2, 2, 34], 'lodowy-szczyt': [1, 1, 14], 'durny-szczyt': [1, 1, 24], lomnica: [1, 1, 24], romania: [0, 1, 30], gerlach: [0, 1, 22], 'lodowa-kopa': [1, 1, 14], 'szpiglasowy-wierch': [1, 2, 36], 'huncowski-szczyt': [1, 1, 20], 'kiezmarski-szczyt': [1, 1, 20], 'walentkowy-wierch': [1, 1, 21], 'walentkowa-gran': [1, 1, 21], gorce: [0, 1, 16], turbacz: [0, 1, 16] })) {
+for (const [id, expected] of Object.entries({ world: [30, 21, 510], europe: [28, 20, 470], poland: [8, 7, 127], tatry: [16, 14, 256], krywan: [0, 1, 8], 'zabi-kon': [1, 1, 13], switzerland: [8, 2, 88], alpy: [9, 2, 88], morocco: [2, 1, 40], konczysta: [1, 1, 24], koscielec: [2, 1, 17], swinica: [2, 2, 29], 'baranie-rogi': [2, 2, 34], 'lodowy-szczyt': [1, 1, 14], 'durny-szczyt': [1, 1, 24], lomnica: [1, 1, 24], romania: [0, 1, 30], gerlach: [0, 1, 22], 'lodowa-kopa': [1, 1, 14], 'szpiglasowy-wierch': [1, 2, 36], 'huncowski-szczyt': [1, 1, 20], 'kiezmarski-szczyt': [1, 1, 20], 'walentkowy-wierch': [1, 1, 21], 'walentkowa-gran': [1, 1, 21], gorce: [0, 1, 16], turbacz: [0, 1, 16] })) {
   const result = getAtlasMaterials(id)
   assert.deepEqual([result.films.length, result.galleries.length, result.photoCount], expected, id)
 }

@@ -28,7 +28,7 @@ function FilmCard({ film, index }) {
       <div className="cz-film-meta"><span>{film.series || filmRegionLabel(film.region)}</span></div>
       <h2>{film.title}<span aria-hidden="true">↗</span></h2>
     </FilmLink>
-    {film.expeditionId && <div className="cz-film-related"><a href={`/wyprawy/${film.expeditionId}`}>Wyprawa ↗</a>{material && <a href={galleryHref(material)}>{galleryLinkLabel(material)} ↗</a>}</div>}
+    {film.expeditionId && <div className="cz-film-related"><a href={film.expeditionHref || `/wyprawy/${film.expeditionId}`}>Wyprawa ↗</a>{material && <a href={film.galleryHref || galleryHref(material)}>{galleryLinkLabel(material)} ↗</a>}{film.routeIds?.length === 1 && <a href={`/trasy?trasa=${film.routeIds[0]}#profil`}>Trasa GPX ↗</a>}</div>}
     <SaveButton itemKey={`film:${film.youtubeId}`} className="cz-film-save"/>
   </article>
 }

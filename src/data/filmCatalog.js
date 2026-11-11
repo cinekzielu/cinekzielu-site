@@ -1,4 +1,5 @@
 import { filmMatchesRegion } from './tripGeography.js'
+import { alpsEpisodes } from './alpsEpisodes.js'
 
 // Verified on the author's YouTube channel, 2026-10-04. Order follows the channel.
 // Publication dates are present only when confirmed in the expanded video description.
@@ -10,6 +11,7 @@ const video = (youtubeId, title, duration, region, format = 'Film', extra = {}) 
 })
 
 export const filmCatalog = [
+  ...Object.values(alpsEpisodes).map(episode => video(episode.youtubeId, episode.title, episode.duration, 'alpy', 'Film', episode)),
   video('0YhbiEncSmo', 'Żabi Koń · free solo', '37:57', 'tatry', 'Film', { expeditionId: 'zabi-kon-2026' }),
   video('eWK-80Idong', 'Hungaroring 2026', '1:24', 'wegry', 'Krótki film', { expeditionId: 'hungaroring-2026', publishedAt: '2026-07-30', searchTerms: 'Formuła 1 F1 F2 F3 Porsche Supercup Mogyoród motorsport Sony A6700' }),
   video('eB5BItG2tfk', 'Lodowy Szczyt przez Lodową Kopę', '44:08', 'tatry', 'Film', { expeditionId: 'baranie-rogi-lodowy-szczyt-2026', searchTerms: 'lato' }),

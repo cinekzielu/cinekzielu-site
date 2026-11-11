@@ -9,15 +9,15 @@ import { searchSite } from '../src/data/siteSearch.js'
 
 for (const id of ['switzerland','alpy']) {
   const all=getAtlasMaterials(id), old=getAtlasMaterials(id,'2025'), current=getAtlasMaterials(id,'2026')
-  assert.deepEqual([all.films.length,all.galleries.length,all.photoCount],[8,2,88])
+  assert.deepEqual([all.films.length,all.galleries.length,all.photoCount],[id === 'alpy' ? 9 : 8,2,88])
   assert.deepEqual([old.films.length,old.galleries.length,old.photoCount],[7,1,36])
-  assert.deepEqual([current.films.length,current.galleries.length,current.photoCount],[1,1,52])
-  assert.equal(current.films[0].youtubeId,'l3KltGrKz2U')
+  assert.deepEqual([current.films.length,current.galleries.length,current.photoCount],[id === 'alpy' ? 2 : 1,1,52])
+  assert.equal(current.films[0].youtubeId,id === 'alpy' ? 'C8weHwRNLiE' : 'l3KltGrKz2U')
   assert.equal(current.galleries[0].id,'alpy-2026')
   assert.equal(new Set(all.films.map(film=>film.youtubeId)).size,all.films.length)
   assert.deepEqual(atlasYears(id),['2026','2025'])
   const profile=atlasTerrainProfile(id)
-  assert.equal(profile.locations.filter(point => getAtlasMaterials(point.id,'2026').films.length).length,0,'Trip teaser is not a released summit episode')
+  assert.equal(profile.locations.filter(point => getAtlasMaterials(point.id,'2026').films.length).length,id === 'alpy' ? 1 : 0,'Only Triglav has a released episode')
   assert.equal(profile.locations.filter(point => getAtlasMaterials(point.id,'2026').galleries.length).length,id === 'alpy' ? 5 : 1,'Only author-confirmed 2026 summit visits')
 }
 assert.equal(getAtlasMaterials('lomnica','2025').films.length,1,'Trip year confirmed by the original June 2025 recordings')
@@ -44,7 +44,7 @@ for (const [id, scope, year] of [['dufourspitze','alpy','2026'], ['saxer-lucke',
 
 assert.equal(atlasHref('saxer-lucke','2025','alpy'),'/mapa?atlas=saxer-lucke&rok=2025&obszar=alpy')
 for (const region of ['szwajcaria','alpy']) {
-  assert.equal(filterFilms(region,'').length,8)
+  assert.equal(filterFilms(region,'').length,region === 'alpy' ? 9 : 8)
   assert.deepEqual(filterCollections(galleryData,{place:region,year:'2026'}).map(g=>g.id),['alpy-2026'])
   assert.equal(filterCollections(galleryData,{place:region,year:'wszystkie'}).length,2)
 }

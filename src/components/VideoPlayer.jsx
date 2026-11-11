@@ -54,7 +54,8 @@ export function VideoPlayer({ video, onRestart }) {
     <div className="cz-video-details"><p>{filmRegionLabel(film.region)} · {film.format} · {film.duration}{start > 0 && <span>Od {formatVideoTime(start)}</span>}</p>
       <div className="cz-video-actions">
         {start > 0 && <button type="button" onClick={onRestart}><RotateCcw size={14} aria-hidden="true" />Od początku</button>}
-        {expedition && <><a href={`/wyprawy/${expedition.id}`}>Wyprawa ↗</a><a href={galleryHref(expedition.gallery)}>{galleryLinkLabel(expedition.gallery)} ↗</a></>}
+        {expedition && <><a href={film.expeditionHref || `/wyprawy/${expedition.id}`}>Wyprawa ↗</a><a href={film.galleryHref || galleryHref(expedition.gallery)}>{galleryLinkLabel(expedition.gallery)} ↗</a></>}
+        {film.routeIds?.length === 1 && <a href={`/trasy?trasa=${film.routeIds[0]}#profil`}>Trasa GPX ↗</a>}
         <a href={href} target="_blank" rel="noreferrer">Na YouTube <ExternalLink size={13} aria-hidden="true" /></a>
       </div>
     </div>

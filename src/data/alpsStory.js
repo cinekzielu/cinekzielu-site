@@ -1,4 +1,5 @@
 import { galleryData } from './galleryData.js'
+import { alpsEpisodes } from './alpsEpisodes.js'
 
 export const alpsStoryGallery = galleryData.find(gallery => gallery.id === 'alpy-2026')
 const photos = numbers => numbers.map(number => alpsStoryGallery.photos[number - 1])
@@ -51,7 +52,7 @@ export const alpsStory = [
     photos: photos([48, 47]),
     lat: 47.4212150, lng: 10.9862970, osmNode: 27384190,
   },
-].map((chapter, index) => ({ ...chapter, number: String(index + 1).padStart(2, '0'), episodeStatus: 'W przygotowaniu' }))
+].map((chapter, index) => ({ ...chapter, number: String(index + 1).padStart(2, '0'), episode: alpsEpisodes[chapter.id] || null, episodeStatus: alpsEpisodes[chapter.id] ? 'Dostępny' : 'W przygotowaniu' }))
 
 export const alpsTotals = { peaks: 5, countries: 5, participants: 4, distance: 119.98, ascent: 11385, movingTime: '51:35:11' }
 export const alpsLocations = alpsStory.map(({ id, title, lat, lng, osmNode }) => ({ id, name: title, lat, lng, icon: 'mountain', coordinateSource: `https://www.openstreetmap.org/node/${osmNode}` }))

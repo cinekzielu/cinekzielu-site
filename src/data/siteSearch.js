@@ -20,7 +20,7 @@ const placeWords = ids => ids.flatMap(id => atlasAncestry(id).map(place => place
 const filmPlaces = film => atlasContentNodes.filter(place => place.filmIds?.includes(film.youtubeId))
 const filmTripWords = film => {
   const gallery = galleryData.find(item => item.id === film.expeditionId)
-  return gallery ? `${gallery.year} ${placeWords(galleryAtlasIds(gallery))}` : ''
+  return gallery ? `${gallery.year} ${placeWords(film.atlasNodeIds || galleryAtlasIds(gallery))}` : ''
 }
 const entry = data => {
   const { badges, actions, contextWords } = searchContext(data)

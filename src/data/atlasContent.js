@@ -125,7 +125,7 @@ export function getAtlasMaterials(id, year = 'all') {
   for (const ascent of ascents) if (ascent.tripId) tripIds.add(ascent.tripId)
   const aggregateTrips = ['Kraj','Region','Kontynent'].includes(node.kind)
   const filmYear = film => String(galleryData.find(gallery => gallery.id === film.expeditionId)?.year || 'undated')
-  const films = filmCatalog.filter(film => (node.all || node.regions?.some(region => filmMatchesRegion(film, region)) || placeFilms.has(film.youtubeId) || (aggregateTrips && tripIds.has(film.expeditionId))) && (year === 'all' || filmYear(film) === year))
+  const films = filmCatalog.filter(film => (node.all || node.regions?.some(region => filmMatchesRegion(film, region)) || placeFilms.has(film.youtubeId) || (aggregateTrips && tripIds.has(film.expeditionId))) && (!film.atlasNodeIds || node.all || film.atlasNodeIds.some(place => placeIds.has(place))) && (year === 'all' || filmYear(film) === year))
   const relatedIds = new Set(films.map(film => film.expeditionId).filter(Boolean))
   const galleries = galleryData.filter(gallery => (node.all || relatedIds.has(gallery.id) || tripIds.has(gallery.id)) && (year === 'all' || String(gallery.year) === year))
   return { films, galleries, routes, photoCount: galleries.reduce((sum, gallery) => sum + gallery.photos.length, 0) }
