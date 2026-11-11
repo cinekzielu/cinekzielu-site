@@ -10,7 +10,7 @@ export const alpsStory = [
   {
     id: 'triglav', title: 'Triglav', country: 'Słowenia', altitude: 2864,
     distance: 18.33, ascent: 2035, movingTime: '08:13:27',
-    description: 'Pierwszy szczyt. Ruszyliśmy przy czołówkach, jeszcze po ciemku. Długie podejście z doliny, skalne odcinki, ferraty i ekspozycja — tak zaczęło się Across the Alps.',
+    description: 'Na Triglav wyszliśmy jeszcze po ciemku, przy czołówkach. Po długim podejściu z doliny zaczęły się skały i ferraty.',
     photos: photos([2, 5, 7]),
     pause: { title: 'Od razu w drogę', description: 'Po zejściu z Triglavu pojechaliśmy prosto pod Grossglockner. Nocleg w samochodzie na parkingu. Budzik miał zadzwonić o północy, ale obudziliśmy się o szóstej rano.', photos: [] },
     lat: 46.3782982, lng: 13.8365822, osmNode: 26864958,
