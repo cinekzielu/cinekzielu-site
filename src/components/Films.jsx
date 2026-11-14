@@ -52,7 +52,7 @@ export function FilmIndex() {
   const filtered = filters.region !== 'wszystkie' || filters.query.trim() || filters.format !== 'wszystkie' || filters.length !== 'wszystkie'
   return <CollectionShell section="filmy" className="cz-films">
     <div className="cz-gallery-intro"><h1>Filmy</h1><span className="cz-gallery-count">{filmCatalog.length} filmów</span></div>
-    <p className="cz-film-intro">Z gór i podróży. Długie wyprawy, krótkie formy.</p>
+    <p className="cz-film-intro">Moje filmy z gór i pozostałych wyjazdów.</p>
     <ContinueWatching />
     <div className="cz-film-tools">
       <div className="cz-film-filters" role="group" aria-label="Filtruj filmy według miejsca">{filmRegions.map(region => <button type="button" key={region.id} aria-pressed={filters.region === region.id} onClick={() => updateFilters({ ...filters, region: region.id }, true)}>{region.label}</button>)}</div>

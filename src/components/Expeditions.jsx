@@ -72,7 +72,7 @@ export function ExpeditionIndex() {
   }
   return <ExpeditionShell>
     <div className="cz-gallery-intro"><h1>Wyprawy</h1><span className="cz-gallery-count">{[...view.options.years].join(' · ')}</span></div>
-    <p className="cz-expedition-index-intro">Od najnowszych. Zdjęcia, filmy, miejsca. <a href="/kierunki">Kierunki ↗</a> · <a href="/szczyty">Moje szczyty ↗</a> · <a href="/trasy">Trasy GPX ↗</a> · <a href="/sezony">Sezony 2025 / 2026 ↗</a> · <a href="/kierunki/alpy">Alpy ↗</a> · <a href="/kierunki/tatry">Tatry ↗</a></p>
+    <p className="cz-expedition-index-intro">Moje wyjazdy, od najnowszych. <a href="/kierunki">Kierunki ↗</a> · <a href="/szczyty">Moje szczyty ↗</a> · <a href="/trasy">Trasy GPX ↗</a> · <a href="/sezony">Sezony 2025 / 2026 ↗</a> · <a href="/kierunki/alpy">Alpy ↗</a> · <a href="/kierunki/tatry">Tatry ↗</a></p>
     <div className="cz-trip-view-switch" role="group" aria-label="Widok wypraw">
       <button type="button" aria-pressed={mode === 'lista'} onClick={() => changeMode('lista')}>Lista</button>
       <button type="button" aria-pressed={mode === 'os'} onClick={() => changeMode('os')}>Oś podróży</button>
@@ -137,7 +137,7 @@ export function ExpeditionPage({ slug }) {
       {expedition.id === 'wysoka-ganek-rysy-2026' && <TripRoute routeId="ganek-wysoka-rysy" headingLevel={2} />}
       {expedition.id === 'rumunia-2024' && <section className="cz-trip-preparation" aria-labelledby="trip-preparation-title">
         <img src="/assets/photos/romania-pakowanie.webp" width="1182" height="1200" loading="lazy" alt="Rower, sakwy i wyposażenie przygotowane do wyprawy po Rumunii" />
-        <div><p className="cz-expedition-eyebrow">Rumunia 2024</p><h2 id="trip-preparation-title">Przed wyjazdem</h2><p>Rower, sakwy, namiot i rzeczy na drogę. Tak wyglądały przygotowania do lipcowej wyprawy.</p><a href="#zdjecia">Zdjęcia z podróży ↓</a></div>
+        <div><p className="cz-expedition-eyebrow">Rumunia 2024</p><h2 id="trip-preparation-title">Przed wyjazdem</h2><p>Rower i rzeczy spakowane na wyjazd.</p><a href="#zdjecia">Zdjęcia z podróży ↓</a></div>
       </section>}
       {gallery.films.length > 0 && <section id="filmy" className="cz-expedition-films" aria-labelledby="expedition-films-title">
         <div className="cz-expedition-section-heading"><h2 id="expedition-films-title">{gallery.films[0].label === 'Zwiastun' ? 'Zwiastun' : 'Filmy'}</h2><span>YouTube</span></div>
@@ -147,7 +147,7 @@ export function ExpeditionPage({ slug }) {
       </section>}
       {videoFrames || tripPhotos ? <section id={tripPhotos ? "zdjecia" : "kadry"} className="cz-expedition-photos cz-expedition-frames" aria-labelledby="expedition-frames-title">
         <div className="cz-expedition-section-heading"><h2 id="expedition-frames-title">{tripPhotos ? "Zdjęcia z wyprawy" : "Kadry z wyprawy"}</h2><span>{galleryItemCount(gallery)} · {gallery.sourceLabel}</span></div>
-        <p className="cz-expedition-frames-intro">{tripPhotos ? (gallery.photoIntro || 'Wybrane zdjęcia z wyprawy.') : gallery.films.length ? 'Kilka ujęć z drogi. Cała historia w filmie.' : 'Wybrane ujęcia z nagrań wyprawy.'}</p>
+        <p className="cz-expedition-frames-intro">{tripPhotos ? (gallery.photoIntro || 'Wybrane zdjęcia z wyprawy.') : gallery.films.length ? 'Wybrane kadry z nagrań. Film znajdziesz wyżej.' : 'Wybrane ujęcia z nagrań wyprawy.'}</p>
         <div id="expedition-frame-grid"><PhotoGrid gallery={gallery} previewLimit={allFrames ? null : 3} /></div>
         <button type="button" className="cz-expedition-frames-toggle" aria-expanded={allFrames} aria-controls="expedition-frame-grid" onClick={() => setAllFrames(value => !value)}>{allFrames ? (tripPhotos ? 'Zwiń zdjęcia ↑' : 'Zwiń kadry ↑') : `Zobacz wszystkie ${tripPhotos ? 'zdjęcia' : 'kadry'} · ${gallery.photos.length} ↓`}</button>
       </section> : <section className="cz-expedition-photos" aria-labelledby="expedition-photos-title">

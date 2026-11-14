@@ -5,16 +5,16 @@ import { moroccoGallery } from './moroccoGallery.js'
 // Frame associations: reviewed landmarks and dated original-clip provenance;
 // broad stops remain broad, never a claimed camera position or GPS track.
 const definitions = [
-  ['miasta', 'Rabat i Fez', ['rabat', 'fez'], [19, 4], 'Pierwszy dzień. Rabat i Fez, od placów po wąskie uliczki.'],
-  ['cedry', 'Okolice Azrou', ['azrou'], [22], 'Las cedrowy i małpy. Drugi dzień podróży.'],
+  ['miasta', 'Rabat i Fez', ['rabat', 'fez'], [19, 4], 'Pierwszego dnia odwiedziliśmy Rabat i Fez.'],
+  ['cedry', 'Okolice Azrou', ['azrou'], [22], 'Drugiego dnia zatrzymaliśmy się w lesie cedrowym koło Azrou.'],
   ['sahara', 'Sahara', ['merzouga'], [7, 24], 'Wydmy i wielbłądy w okolicach Merzougi.'],
   ['wawoz', 'Wąwóz Todra', ['todra'], [25], 'Wąwóz i trekking w okolicach Tinghir.'],
-  ['gliniane-miasta', 'Warzazat i Ajt Bin Haddu', ['ouarzazate', 'ait-ben-haddou'], [11, 12], 'Piąty dzień. Warzazat i zabudowa Ajt Bin Haddu.'],
-  ['marrakesz', 'Marrakesz', ['marrakesh'], [31], 'Szósty dzień w mieście. Uliczki, targ i kolorowe stoiska.'],
+  ['gliniane-miasta', 'Warzazat i Ajt Bin Haddu', ['ouarzazate', 'ait-ben-haddou'], [11, 12], 'Piątego dnia byliśmy w Warzazat i Ajt Bin Haddu.'],
+  ['marrakesz', 'Marrakesz', ['marrakesh'], [31], 'Szósty dzień spędziliśmy w Marrakeszu.'],
   ['wodospad', 'Ouzoud', ['ouzoud'], [13], 'Wodospad Ouzoud. Ostatni rozdział pierwszego filmu.'],
   ['podejscie', 'Z Imlil w góry', ['imlil'], [37], 'Początek wejścia na Toubkal. Ósmy dzień podróży.'],
   ['schronisko', 'Refuge du Toubkal', ['refuge-du-toubkal'], [38], 'Schronisko podczas wejścia na Toubkal.'],
-  ['szczyt', 'Toubkal', ['toubkal'], [40, 16], 'Dziewiąty dzień. Szczyt i górska panorama o poranku.'],
+  ['szczyt', 'Toubkal', ['toubkal'], [40, 16], 'Dziewiątego dnia weszliśmy na Toubkal.'],
 ]
 
 export const moroccoStory = definitions.map(([id, title, placeIds, frames, description], index) => {

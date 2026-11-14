@@ -59,7 +59,7 @@ const mapPages = sharedAtlasIds.map(id => {
   return {
     path: `/udostepnij/mapa/${id}`, kind: 'atlas', atlasId: id,
     title: `${place.name} — ${place.status === 'planned' ? 'w planach' : 'mapa'} | Cinek Zielu`,
-    description: `${place.name} w atlasie Cinek Zielu. ${place.description || 'Zobacz miejsce na mapie i powiązane materiały.'}`,
+    description: `${place.name} w atlasie Cinek Zielu. ${place.description || 'Zobacz to miejsce na mapie moich wyjazdów.'}`,
     image: ['world', 'europe'].includes(id) ? shareImages.default : shareImages[gallery?.id] || shareImages.default,
     view: { pathname: '/mapa', search: `?atlas=${encodeURIComponent(id)}` },
   }

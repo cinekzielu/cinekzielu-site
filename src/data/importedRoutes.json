@@ -4,7 +4,7 @@
     "title": "Grześ i Rakoń",
     "anchor": "trasa-grzes-rakon-2024",
     "dates": "5 stycznia 2024",
-    "intro": "Przebieg przejścia zapisany w GPX.",
+    "intro": "Mój zapis tej trasy.",
     "peaks": [
       {
         "id": "grzes",
@@ -36,7 +36,7 @@
     "title": "Dolina Pięciu Stawów",
     "anchor": "trasa-piec-stawow-2024",
     "dates": "6 stycznia 2024",
-    "intro": "Przebieg przejścia zapisany w GPX.",
+    "intro": "Mój zapis tej trasy.",
     "peaks": [],
     "marker": {
       "lat": 49.255713,
@@ -49,7 +49,7 @@
     "title": "Sławkowski Szczyt",
     "anchor": "trasa-slawkowski-2024",
     "dates": "3 marca 2024",
-    "intro": "Przebieg przejścia zapisany w GPX. Nagłe skoki GPS pozostają rozdzielone i nie zwiększają dystansu.",
+    "intro": "Mój zapis tej trasy. Nagłe skoki GPS pozostają rozdzielone i nie zwiększają dystansu.",
     "peaks": [
       {
         "id": "slawkowski-szczyt",
@@ -72,7 +72,7 @@
     "title": "Kościelec i Orla Perć",
     "anchor": "trasa-koscielec-orla-2024",
     "dates": "4 sierpnia 2024",
-    "intro": "Przebieg przejścia zapisany w GPX.",
+    "intro": "Mój zapis tej trasy.",
     "peaks": [
       {
         "id": "koscielec",
@@ -94,7 +94,7 @@
     "title": "Czerwona Ławka i Široká veža",
     "anchor": "trasa-czerwona-lawka-2024",
     "dates": "25 sierpnia 2024",
-    "intro": "Przebieg przejścia zapisany w GPX. Nagłe skoki GPS pozostają rozdzielone i nie zwiększają dystansu.",
+    "intro": "Mój zapis tej trasy. Nagłe skoki GPS pozostają rozdzielone i nie zwiększają dystansu.",
     "peaks": [
       {
         "id": "maly-lodowy-szczyt",
@@ -117,7 +117,7 @@
     "title": "Gerlach · wrzesień 2024",
     "anchor": "trasa-gerlach-2024",
     "dates": "12 września 2024",
-    "intro": "Przebieg przejścia zapisany w GPX.",
+    "intro": "Mój zapis tej trasy.",
     "peaks": [
       {
         "id": "gerlach",
@@ -139,7 +139,7 @@
     "title": "Bradavica",
     "anchor": "trasa-bradavica-2024",
     "dates": "1 listopada 2024",
-    "intro": "Przebieg przejścia zapisany w GPX.",
+    "intro": "Mój zapis tej trasy.",
     "peaks": [
       {
         "id": "starolesny-szczyt",
@@ -175,7 +175,7 @@
     "title": "Gerlach zimą",
     "anchor": "trasa-gerlach-zima-2025",
     "dates": "25 stycznia 2025",
-    "intro": "Zapis przejścia z tej wyprawy.",
+    "intro": "Trasa z tego wyjścia.",
     "peaks": [
       {
         "id": "gerlach",
@@ -197,7 +197,7 @@
     "title": "Wysoka · luty 2025",
     "anchor": "trasa-wysoka-2025",
     "dates": "8 lutego 2025",
-    "intro": "Przebieg przejścia zapisany w GPX.",
+    "intro": "Mój zapis tej trasy.",
     "peaks": [
       {
         "id": "wysoka",
@@ -219,7 +219,7 @@
     "title": "Szatan · luty 2025",
     "anchor": "trasa-szatan-2025",
     "dates": "9 lutego 2025",
-    "intro": "Przebieg przejścia zapisany w GPX.",
+    "intro": "Mój zapis tej trasy.",
     "peaks": [
       {
         "id": "szatan",
@@ -241,7 +241,7 @@
     "title": "Lodowy Szczyt · luty 2025",
     "anchor": "trasa-lodowy-2025",
     "dates": "22 lutego 2025",
-    "intro": "Przebieg przejścia zapisany w GPX.",
+    "intro": "Mój zapis tej trasy.",
     "peaks": [
       {
         "id": "lodowy-szczyt",
@@ -263,7 +263,7 @@
     "title": "Baraniec",
     "anchor": "trasa-baraniec-2025",
     "dates": "23 lutego 2025",
-    "intro": "Przebieg przejścia zapisany w GPX.",
+    "intro": "Mój zapis tej trasy.",
     "peaks": [
       {
         "id": "baraniec",
@@ -286,7 +286,7 @@
     "title": "Toubkal — cała wyprawa",
     "anchor": "trasa-toubkal-2025",
     "dates": "4–5 maja 2025",
-    "intro": "Trzy zapisy w jednej trasie: podejście z Imlil do schroniska, wejście na Toubkal i zejście. Przerwy między odcinkami pozostają widoczne, bez dopisywania brakującego śladu.",
+    "intro": "Podejście z Imlil do schroniska, wejście na Toubkal i zejście. Trzy zapisy połączone w jedną trasę, z zachowanymi przerwami.",
     "peaks": [
       {
         "id": "toubkal",
@@ -316,7 +316,7 @@
     "title": "Durny Szczyt",
     "anchor": "trasa-durny-2025",
     "dates": "14 czerwca 2025",
-    "intro": "Zapis przejścia z tej wyprawy.",
+    "intro": "Trasa z tego wyjścia.",
     "peaks": [
       {
         "id": "durny-szczyt",
@@ -338,7 +338,7 @@
     "title": "Łomnica",
     "anchor": "trasa-lomnica-2025",
     "dates": "15 czerwca 2025",
-    "intro": "Zapis przejścia z tej wyprawy.",
+    "intro": "Trasa z tego wyjścia.",
     "peaks": [
       {
         "id": "lomnica",
@@ -360,7 +360,7 @@
     "title": "Mięguszowiecki Szczyt Wielki",
     "anchor": "trasa-mieguszowiecki-2025",
     "dates": "5 lipca 2025",
-    "intro": "Zapis przejścia z tej wyprawy. Nagłe skoki GPS pozostają rozdzielone i nie zwiększają dystansu.",
+    "intro": "Trasa z tego wyjścia. Nagłe skoki GPS pozostają rozdzielone i nie zwiększają dystansu.",
     "peaks": [
       {
         "id": "mieguszowiecki-szczyt-wielki",
@@ -382,7 +382,7 @@
     "title": "Pośrednia Grań",
     "anchor": "trasa-posrednia-gran-2025",
     "dates": "6 lipca 2025",
-    "intro": "Zapis przejścia z tej wyprawy.",
+    "intro": "Trasa z tego wyjścia.",
     "peaks": [
       {
         "id": "posrednia-gran",
@@ -404,7 +404,7 @@
     "title": "Kasprowy Wierch i Świnica",
     "anchor": "trasa-swinica-2025",
     "dates": "19–20 lipca 2025",
-    "intro": "Dwa dni w jednej trasie. Wybierz całą wyprawę lub pojedynczy dzień; przerwa między zapisami pozostaje rozdzielona.",
+    "intro": "Trasa z dwóch dni. Możesz zobaczyć całą wyprawę lub każdy dzień osobno. Przerwa między zapisami jest zaznaczona.",
     "peaks": [
       {
         "id": "swinica",
@@ -442,7 +442,7 @@
     "title": "Saxer Lücke",
     "anchor": "trasa-saxer-lucke-2025",
     "dates": "28 lipca 2025",
-    "intro": "Zapis przejścia z tej wyprawy.",
+    "intro": "Trasa z tego wyjścia.",
     "peaks": [],
     "marker": {
       "lat": 47.286752,
@@ -455,7 +455,7 @@
     "title": "Klingenstock — Fronalpstock",
     "anchor": "trasa-fronalpstock-2025",
     "dates": "29 lipca 2025",
-    "intro": "Zapis przejścia z tej wyprawy.",
+    "intro": "Trasa z tego wyjścia.",
     "peaks": [
       {
         "id": "fronalpstock",
@@ -486,7 +486,7 @@
     "title": "Augstmatthorn",
     "anchor": "trasa-augstmatthorn-2025",
     "dates": "30 lipca 2025",
-    "intro": "Zapis przejścia z tej wyprawy.",
+    "intro": "Trasa z tego wyjścia.",
     "peaks": [
       {
         "id": "augstmatthorn",
@@ -508,7 +508,7 @@
     "title": "Via ferrata Mürren",
     "anchor": "trasa-murren-2025",
     "dates": "31 lipca 2025",
-    "intro": "Zapis przejścia z tej wyprawy.",
+    "intro": "Trasa z tego wyjścia.",
     "peaks": [],
     "marker": {
       "lat": 46.559238,
@@ -521,7 +521,7 @@
     "title": "Zermatt — szlak pięciu jezior",
     "anchor": "trasa-zermatt-2025",
     "dates": "1 sierpnia 2025",
-    "intro": "Zapis przejścia z tej wyprawy.",
+    "intro": "Trasa z tego wyjścia.",
     "peaks": [],
     "marker": {
       "lat": 46.02063,
@@ -534,7 +534,7 @@
     "title": "Bettmerhorn",
     "anchor": "trasa-bettmerhorn-2025",
     "dates": "2 sierpnia 2025",
-    "intro": "Zapis przejścia z tej wyprawy.",
+    "intro": "Trasa z tego wyjścia.",
     "peaks": [
       {
         "id": "bettmerhorn",
@@ -556,7 +556,7 @@
     "title": "Szpiglasowy Wierch",
     "anchor": "trasa-szpiglasowy-2025",
     "dates": "14 sierpnia 2025",
-    "intro": "Zapis przejścia z tej wyprawy.",
+    "intro": "Trasa z tego wyjścia.",
     "peaks": [
       {
         "id": "szpiglasowy-wierch",
@@ -578,7 +578,7 @@
     "title": "Krywań",
     "anchor": "trasa-krywan-2025",
     "dates": "21 września 2025",
-    "intro": "Zapis przejścia z tej wyprawy.",
+    "intro": "Trasa z tego wyjścia.",
     "peaks": [
       {
         "id": "krywan",
@@ -600,7 +600,7 @@
     "title": "Baranie Rogi zimą",
     "anchor": "trasa-baranie-rogi-zima-2025",
     "dates": "30 listopada 2025",
-    "intro": "Zapis przejścia z tej wyprawy. Nagłe skoki GPS pozostają rozdzielone i nie zwiększają dystansu.",
+    "intro": "Trasa z tego wyjścia. Nagłe skoki GPS pozostają rozdzielone i nie zwiększają dystansu.",
     "peaks": [
       {
         "id": "baranie-rogi",
@@ -622,7 +622,7 @@
     "title": "Kieżmarski Szczyt zimą",
     "anchor": "trasa-kiezmarski-zima-2025",
     "dates": "1 grudnia 2025",
-    "intro": "Zapis przejścia z tej wyprawy. Nagłe skoki GPS pozostają rozdzielone i nie zwiększają dystansu.",
+    "intro": "Trasa z tego wyjścia. Nagłe skoki GPS pozostają rozdzielone i nie zwiększają dystansu.",
     "peaks": [
       {
         "id": "kiezmarski-szczyt",
@@ -652,7 +652,7 @@
     "title": "Turbacz",
     "anchor": "trasa-turbacz-2026",
     "dates": "10 stycznia 2026",
-    "intro": "Zapis przejścia z tej wyprawy. Nagłe skoki GPS pozostają rozdzielone i nie zwiększają dystansu.",
+    "intro": "Trasa z tego wyjścia. Nagłe skoki GPS pozostają rozdzielone i nie zwiększają dystansu.",
     "peaks": [],
     "marker": {
       "lat": 49.504348,
@@ -665,7 +665,7 @@
     "title": "Kończysta",
     "anchor": "trasa-konczysta-2026",
     "dates": "8 lutego 2026",
-    "intro": "Zapis przejścia z tej wyprawy.",
+    "intro": "Trasa z tego wyjścia.",
     "peaks": [
       {
         "id": "konczysta",
@@ -687,7 +687,7 @@
     "title": "Kościelec",
     "anchor": "trasa-koscielec-2026",
     "dates": "7 marca 2026",
-    "intro": "Zapis przejścia z tej wyprawy.",
+    "intro": "Trasa z tego wyjścia.",
     "peaks": [
       {
         "id": "koscielec",
@@ -709,7 +709,7 @@
     "title": "Liptowskie Mury — Szpiglasowy i Świnica",
     "anchor": "trasa-liptowskie-mury-2026",
     "dates": "6 czerwca 2026",
-    "intro": "Zapis przejścia z tej wyprawy.",
+    "intro": "Trasa z tego wyjścia.",
     "peaks": [
       {
         "id": "szpiglasowy-wierch",
@@ -739,7 +739,7 @@
     "title": "Baranie Rogi i Lodowy Szczyt",
     "anchor": "trasa-baranie-rogi-lato-2026",
     "dates": "4–5 lipca 2026",
-    "intro": "Dwa dni w jednej trasie. Wybierz całą wyprawę lub pojedynczy dzień; przerwa między zapisami pozostaje rozdzielona.",
+    "intro": "Trasa z dwóch dni. Możesz zobaczyć całą wyprawę lub każdy dzień osobno. Przerwa między zapisami jest zaznaczona.",
     "peaks": [
       {
         "id": "baranie-rogi",
@@ -784,7 +784,7 @@
     "title": "Żabi Koń",
     "anchor": "trasa-zabi-kon-2026",
     "dates": "19 września 2026",
-    "intro": "Zapis przejścia z tej wyprawy.",
+    "intro": "Trasa z tego wyjścia.",
     "peaks": [
       {
         "id": "zabi-kon",

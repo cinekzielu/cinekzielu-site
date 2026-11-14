@@ -28,18 +28,18 @@ const summitFilms = {
 
 const countries = europeAtlasNodes.filter(node => ['country', 'microstate'].includes(node.type)).map(node => ({
   id: node.id, name: node.label, kind: 'Kraj', parent: 'europe', view: 'terrain',
-  ...(alpsCountryIds.includes(node.id) ? { related: ['alpy'], description: `Across the Alps 2026 · ${alpsPlaces.find(place => place.parent === node.id).name}. Miejsca i materiały z podróży.` } : {}),
+  ...(alpsCountryIds.includes(node.id) ? { related: ['alpy'], description: `Across the Alps 2026 · ${alpsPlaces.find(place => place.parent === node.id).name}. Zdjęcia i trasa z tego etapu.` } : {}),
   ...(node.id === 'romania' ? { description: 'Rowerowa wyprawa przez Rumunię w lipcu 2024. Zdjęcia z drogi i biwaków.' } : {}),
-  ...(node.id === 'italy' ? { related:['sicily'], description:'Sycylia: Katania, Taormina i wulkaniczne krajobrazy Etny.' } : {}),
+  ...(node.id === 'italy' ? { related:['sicily'], description:'Zdjęcia z Katanii, Taorminy i zboczy Etny.' } : {}),
   ...(node.id === 'hungary' ? { regions:['wegry'], description:'Hungaroring — fotografie i film z weekendu Formuły 1.' } : {}),
-  ...(node.id === 'switzerland' ? { regions: ['szwajcaria'], related:['alpy'], description:'Miejsca i materiały ze Szwajcarii. Wybierz rok lub zobacz wszystkie podróże.' } : {}),
+  ...(node.id === 'switzerland' ? { regions: ['szwajcaria'], related:['alpy'], description:'Moje wyjazdy do Szwajcarii. Możesz wybrać rok albo zobaczyć wszystkie.' } : {}),
   ...(node.id === 'poland' ? { regions: ['jura'], filmIds: ['rs4zN-7f60Q', 'QRSSYlhRGMM', 'BJC4tc71d50'], related: ['tatry', 'gorce', 'jura'] } : {}),
   ...(node.id === 'slovakia' ? { related: ['tatry'], filmIds: Object.entries(summitFilms).filter(([id]) => !['koscielec', 'swinica', 'mieguszowiecki-szczyt-wielki'].includes(id)).flatMap(([, films]) => films) } : {}),
 }))
 
 export const atlasContentNodes = [
-  { id: 'world', name: 'Świat', kind: 'Mapa wypraw', view: 'world', all: true, description: 'Wybierz miejsce i zobacz materiały z podróży.' },
-  { id: 'europe', name: 'Europa', kind: 'Kontynent', parent: 'world', view: 'europe', regions: ['tatry', 'szwajcaria', 'alpy', 'jura', 'wegry'], description: 'Góry, miasta i miejsca z podróży po Europie.' },
+  { id: 'world', name: 'Świat', kind: 'Mapa wypraw', view: 'world', all: true, description: 'Wybierz miejsce, żeby zobaczyć moje zdjęcia, filmy i trasy.' },
+  { id: 'europe', name: 'Europa', kind: 'Kontynent', parent: 'world', view: 'europe', regions: ['tatry', 'szwajcaria', 'alpy', 'jura', 'wegry'], description: 'Moje wyjazdy po Europie.' },
   { id: 'africa', name: 'Afryka', kind: 'Kontynent', parent: 'world', view: 'africa', regions: ['maroko'], related: ['morocco'], description: 'Filmy z podróży po Maroku.' },
   ...travelAtlasData.continents.filter(node => !['europe', 'africa'].includes(node.id)).map(node => ({ id: node.id, name: node.name, kind: 'Kontynent', parent: 'world', view: 'world' })),
   ...countries,
@@ -47,11 +47,11 @@ export const atlasContentNodes = [
   ...sicilyPlaces,
   ...hungaryPlaces,
   { id: 'tatry', name: 'Tatry', kind: 'Region', parent: 'europe', view: 'tatry', regions: ['tatry'], description: 'Zimowe wejścia, granie i filmy ze szczytów.' },
-  { id: 'alpy', name: 'Alpy', kind: 'Region', parent: 'europe', view: 'terrain', regions: ['alpy'], related:alpsCountryIds, description: 'Alpy ponad granicami krajów. Wspólna mapa miejsc i wypraw z różnych lat.' },
+  { id: 'alpy', name: 'Alpy', kind: 'Region', parent: 'europe', view: 'terrain', regions: ['alpy'], related:alpsCountryIds, description: 'Miejsca z moich wyjazdów w Alpy w 2025 i 2026 roku.' },
   { id: 'jura', name: 'Jura', kind: 'Region', parent: 'poland', view: 'terrain', regions: ['jura'], description: 'Wspinanie w Dolinie Kobylańskiej.' },
   { id: 'gorce', name: 'Gorce', kind: 'Region', parent: 'poland', view: 'terrain', related: ['turbacz'], description: 'Zimowa wyprawa na Turbacz.' },
   { id: 'turbacz', name: 'Turbacz', kind: 'Szczyt', parent: 'gorce', view: 'terrain', description: 'Fotografie z zimowej wyprawy w styczniu 2026.' },
-  { id: 'morocco', name: 'Maroko', kind: 'Kraj', parent: 'africa', view: 'terrain', regions: ['maroko'], related:['morocco-atlas'], description: 'Od Rabatu i Fezu przez Saharę po Atlas Wysoki. Wybierz ikonę miejsca i obejrzyj ten fragment podróży.' },
+  { id: 'morocco', name: 'Maroko', kind: 'Kraj', parent: 'africa', view: 'terrain', regions: ['maroko'], related:['morocco-atlas'], description: 'Miejsca z podróży po Maroku. Wybierz punkt, żeby przejść do fragmentu filmu.' },
   ...travelAtlasData.summits.map(node => ({ id: node.id, name: node.id === 'kiezmarski-szczyt' ? 'Kieżmarski Szczyt' : node.name, kind: 'Szczyt', altitude: node.altitude, parent: 'tatry', view: 'tatry', filmIds: summitFilms[node.id] || [] })),
   { id: 'zabi-kon', name: 'Żabi Koń', kind: 'Szczyt', parent: 'tatry', view: 'tatry', filmIds: ['0YhbiEncSmo'] },
   { id: 'lodowa-kopa', name: 'Lodowa Kopa', kind: 'Szczyt', parent: 'tatry', view: 'tatry', filmIds: ['eB5BItG2tfk'], description: 'Na drodze na Lodowy Szczyt. Letnia wyprawa z 2026 roku.' },

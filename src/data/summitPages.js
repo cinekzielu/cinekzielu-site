@@ -7,9 +7,9 @@ import { galleryHref, galleryLinkLabel } from './galleryNavigation.js'
 // These pages collect existing ascent records; they do not add new ascents or
 // infer summit dates from GPS recordings or trip photographs.
 const descriptions = {
-  gerlach: 'Zimowa wyprawa z 2025 roku i zapis przejścia z września 2024. Wejścia, kadry z nagrań oraz dostępne trasy GPX.',
-  'baranie-rogi': 'Letnie i zimowe wejścia z 2026 i 2025 roku. Fotografie, kadry z nagrań, filmy oraz zapisy przejść.',
-  dufourspitze: 'Etap Across the Alps 2026 w masywie Monte Rosa. Opis wejścia, materiały z wyprawy oraz trzydniowy zapis GPS.',
+  gerlach: 'Moje wejścia na Gerlach: wrzesień 2024 i zima 2025. Są tu trasy GPX oraz kadry z zimowego wyjścia.',
+  'baranie-rogi': 'Baranie Rogi zimą w 2025 i latem w 2026 roku. Zdjęcia, filmy i trasy z obu wejść.',
+  dufourspitze: 'Dufourspitze podczas Across the Alps 2026. Zdjęcia i trasa z trzech dni: podejścia, wejścia na szczyt i powrotu.',
 }
 const tripById = new Map(expeditionPages.map(trip => [trip.id, trip]))
 const dufour = alpsStory.find(chapter => chapter.id === 'dufourspitze')
