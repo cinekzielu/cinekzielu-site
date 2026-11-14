@@ -17,6 +17,8 @@ import { requiredRouteTracks } from '../data/routeTrackLoader'
 import { highestPeak, readRouteAtlas, routeAtlasHref, routeHref, distanceFilters, ascentFilters, matchesRouteFilters, routeRegions, routeSorts, sortRoutes, routeYears, materialFilters } from '../data/routeAtlas'
 import catalog from '../data/routeCatalog.json'
 import '../routeCatalog.css'
+import { MaterialIcon } from './MaterialIcon'
+import '../cardDetails.css'
 
 const AtlasMap = lazy(() => import('./RouteAtlasMap'))
 const number = (value, digits = 0) => value.toLocaleString('pl-PL', { maximumFractionDigits: digits })
@@ -158,10 +160,20 @@ export function RouteCatalog() {
         {!rows.length && areaReady && <div className="cz-route-compare-empty"><p>Brak tras dla tych filtrów.</p><button type="button" onClick={clearFilters}>Wyczyść filtry</button></div>}
         <div className="cz-route-catalog-list">{rows.map(row => {
           const route = tripRoutes[row.id], peak = highestPeak(route), slot = compare.indexOf(row.id)
-          return <article className="cz-route-catalog-row" data-selected={selected === row.id} key={row.id} onMouseEnter={() => setHovered(row.id)} onMouseLeave={() => setHovered(null)} onFocus={() => setHovered(row.id)} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setHovered(null) }}>
-            <button className="cz-route-pick" type="button" aria-label={`Pokaż trasę: ${route.title}`} aria-pressed={selected === row.id} onClick={() => selectRoute(row.id)}><span>{row.region} · {route.dates}</span><h3>{route.title}<span aria-hidden="true">↗</span></h3></button>
-            <div className="cz-route-row-metrics"><span>{number(row.distance / 1000, 1)} <small>km</small></span><span>↗ ≈ {number(row.ascentEstimate)} <small>m</small></span>{peak && <span title={peak.name}>{peak.altitude.toLocaleString('pl-PL')} <small>m</small><small> szczyt</small></span>}</div>
-            <div className="cz-route-row-actions">{view === 'list' && <button type="button" aria-label={`Na mapie: ${route.title}`} onClick={() => { update({ view: 'map', selected: row.id }); requestAnimationFrame(() => mapSection.current?.scrollIntoView({ behavior: 'instant', block: 'start' })) }}>Na mapie</button>}<a href={routeHref(row, route)}>{row.trip ? 'Trasa i wyprawa ↗' : 'Profil trasy ↗'}</a><button type="button" aria-label={`${slot >= 0 ? 'Usuń z porównania' : 'Porównaj'}: ${route.title}`} aria-pressed={slot >= 0} disabled={slot < 0 && compare.length === 2} onClick={() => toggleCompare(row.id)}>{slot >= 0 ? `${compare[0] === compare[1] ? 'A/B' : slot === 0 ? 'A' : 'B'} · Wybrana ✓` : 'Porównaj +'}</button><SaveButton itemKey={`route:${row.id}`} iconOnly /></div>
+          return <article className="cz-route-catalog-row cz-route-result" data-selected={selected === row.id} key={row.id} onMouseEnter={() => setHovered(row.id)} onMouseLeave={() => setHovered(null)} onFocus={() => setHovered(row.id)} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setHovered(null) }}>
+            <div className="cz-route-result-title">
+              <div className="cz-route-result-meta"><span>{row.region}</span><span>{route.dates}</span></div>
+              <h3><button className="cz-route-pick" type="button" aria-label={`Pokaż trasę: ${route.title}`} aria-pressed={selected === row.id} onClick={() => selectRoute(row.id)}>{route.title}<MaterialIcon name="arrow" size={18} /></button></h3>
+            </div>
+            <dl className="cz-route-result-metrics">
+              <div><dt><MaterialIcon name="route" size={18} />Dystans</dt><dd>{number(row.distance / 1000, 1)} <small>km</small></dd></div>
+              <div><dt><MaterialIcon name="ascent" size={18} />Podejścia GPS</dt><dd>≈ {number(row.ascentEstimate)} <small>m</small></dd></div>
+              {peak && <div><dt><MaterialIcon name="summit" size={18} /><span title={peak.name}>Szczyt<span className="cz-card-sr-only">: {peak.name}</span></span></dt><dd>{peak.altitude.toLocaleString('pl-PL')} <small>m</small></dd></div>}
+            </dl>
+            <div className="cz-route-row-actions">
+              <div className="cz-route-result-links">{view === 'list' && <button type="button" aria-label={`Na mapie: ${route.title}`} onClick={() => { update({ view: 'map', selected: row.id }); requestAnimationFrame(() => mapSection.current?.scrollIntoView({ behavior: 'instant', block: 'start' })) }}><MaterialIcon name="map" size={17} />Na mapie</button>}<a href={routeHref(row, route)}>{row.trip ? 'Trasa i wyprawa' : 'Profil trasy'}<MaterialIcon name="arrow" size={16} /></a></div>
+              <div className="cz-route-result-controls"><button className="cz-route-compare-toggle" type="button" aria-label={`${slot >= 0 ? 'Usuń z porównania' : 'Porównaj'}: ${route.title}`} aria-pressed={slot >= 0} disabled={slot < 0 && compare.length === 2} onClick={() => toggleCompare(row.id)}><MaterialIcon name="compare" size={18} />{slot >= 0 ? `${compare[0] === compare[1] ? 'A/B' : slot === 0 ? 'A' : 'B'} · Wybrana` : 'Porównaj'}</button><SaveButton itemKey={`route:${row.id}`} iconOnly /></div>
+            </div>
           </article>
         })}</div>
         <p className="cz-route-selection-note" role="status">{compare.length === 2 ? 'Dwie trasy wybrane. Porównanie znajdziesz poniżej; trasy i dni możesz zmienić w jego ustawieniach.' : 'Zaznacz dwie trasy do porównania. Możesz łączyć różne pasma i lata.'}</p>
