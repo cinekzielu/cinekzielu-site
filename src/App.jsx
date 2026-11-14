@@ -16,6 +16,7 @@ import './headingTypography.css'
 import './captionTypography.css'
 import { SiteHeader } from './components/SiteHeader'
 import { AlpsHomeFeature } from './components/AlpsHomeFeature'
+import { HomeUpdates } from './components/HomeUpdates'
 import { contentData } from './data/contentData'
 import { filmsData } from './data/filmsData'
 import { FilmIndex } from './components/Films'
@@ -74,7 +75,7 @@ const homepageFilms = (featuredFilms.length ? featuredFilms : filmsData.slice(0,
   }
 })
 
-const filmFallbackLabel = 'CINEMATIC STORY'
+const filmFallbackLabel = 'FILM'
 const homepageFeaturedExpeditions = [
   { id: 'tatry', name: 'Tatry', location: 'Polska i Słowacja', continent: 'EUROPA', code: 'ATLS-TAT-001', description: 'Granie, zimowe wejścia i filmy ze szczytów.', tags: ['Tatry', 'granie', 'zima'] },
   { id: 'morocco', name: 'Maroko / Toubkal', location: 'Maroko', continent: 'AFRYKA', code: 'ATLS-MAR-002', description: 'Podróż po Maroku i wejście na Toubkal.', tags: ['Atlas Wysoki', 'podróż', 'film'] },
@@ -215,7 +216,10 @@ function App() {
             <div className="cz-home-kicker">Marcin Zieliński / Cinek Zielu</div>
             <h1>Moje wyprawy,<br /> zdjęcia i filmy.</h1>
             <p>
-              Chodzę po górach i podróżuję z aparatem. Tutaj zbieram fotografie, filmy i trasy z moich wyjazdów.
+              Najwięcej jest tu Tatr,<br />
+              Ale ciągnie mnie również do Alp.<br />
+              A kiedy góry mi się znudzą,<br />
+              To pora na inne podróże.
             </p>
             <div className="cz-home-actions">
               <a className="cz-home-action is-primary" href="#films">
@@ -241,14 +245,15 @@ function App() {
 
       <div className="container"><a className="cz-gallery-text-link" href="/szczyty">Moje szczyty →</a></div>
       <AlpsHomeFeature />
+      <HomeUpdates />
 
       <section id="films" className="section sectionDark reveal">
         <div className="container">
           <SectionHeader
             icon={iconFilm}
             label="WYBRANE FILMY"
-            title="Filmy z drogi"
-            text="Trzy wybrane filmy. Więcej znajdziesz w bibliotece."
+            title="Wybrane filmy"
+            text="Na początek trzy filmy z moich wyjazdów. Pozostałe znajdziesz w zakładce Filmy."
           />
           <div className="filmGrid">
             {homepageFilms.map((film) => (
@@ -361,7 +366,7 @@ function App() {
             icon={iconLocationMark}
             label="WYPRAWY"
             title="Wyprawy"
-            text="Zdjęcia, filmy, miejsca."
+            text="Moje ostatnie wyjazdy."
           />
           {activeExpedition || isExpeditionNotFound ? (
             activeExpedition ? (
@@ -422,19 +427,19 @@ function App() {
                 <div className="expeditionNextStory reveal">
                   <div className="expeditionNextStoryHeader">
                     <p className="storyLabel">Zobacz też</p>
-                    <p className="expeditionNextStoryHint">Kolejna historia, jeśli chcesz iść dalej tym szlakiem.</p>
+                    <p className="expeditionNextStoryHint">Zobacz też inną wyprawę.</p>
                   </div>
                   <article className="expeditionCard expeditionNextStoryCard">
                     <div className="expeditionImageWrap">
                       <img src={randomRelatedExpedition.heroImage} alt={randomRelatedExpedition.title} />
                     </div>
                     <div className="expeditionBody">
-                      <div className="cardType">Polecana historia</div>
+                      <div className="cardType">Inna wyprawa</div>
                       <h3>{randomRelatedExpedition.title}</h3>
                       <p className="expeditionLocation">{randomRelatedExpedition.location}</p>
                       <p>{randomRelatedExpedition.shortDescription}</p>
                       <button className="smallButton" type="button" onClick={() => openExpedition(randomRelatedExpedition.slug)}>
-                        Wejdź w historię
+                        Zobacz wyprawę
                       </button>
                     </div>
                   </article>
@@ -453,7 +458,7 @@ function App() {
                   <div>
                     <div className="cardType">Spokojnie</div>
                     <h3>Nie znaleziono tej wyprawy</h3>
-                    <p>Ten adres nie prowadzi do istniejącej relacji. Wróć do listy wypraw i wybierz jedną z dostępnych historii.</p>
+                    <p>Nie ma wyprawy pod tym adresem. Wróć do listy wyjazdów.</p>
                   </div>
                 </div>
               </article>
@@ -474,8 +479,7 @@ function App() {
         <div className="container footerInner">
           <div className="footerBrand">
             <p className="footerEyebrow">Cinek Zielu</p>
-            <p className="footerTagline">Historie z drogi — góry, podróże i film.</p>
-            <p className="footerMicro">Dzięki, że jesteś tu ze mną.</p>
+            <p className="footerTagline">Zdjęcia, filmy i trasy z moich wyjazdów.</p>
           </div>
 
           <div className="footerLinksWrap">

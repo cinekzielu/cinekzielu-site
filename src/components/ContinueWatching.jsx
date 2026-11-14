@@ -15,7 +15,7 @@ export function ContinueWatching() {
   }, [])
   return <section className="cz-continue" aria-labelledby="continue-title">
     <div className="cz-continue-heading"><h2 id="continue-title">Oglądaj dalej</h2>{items.length > 0 && <button type="button" onClick={() => watchStore.clear()}>Wyczyść historię</button>}</div>
-    <p>{persistent ? 'Filmy oglądane tutaj zapamiętują moment w tej przeglądarce. Bez konta i synchronizacji z YouTube.' : 'Pamięć przeglądarki jest niedostępna. Postęp zostanie tylko do zamknięcia lub odświeżenia strony.'}</p>
+    <p>{persistent ? 'Tutaj wrócisz do przerwanego filmu. Postęp zapisuje się tylko w tej przeglądarce, bez synchronizacji z YouTube.' : 'Pamięć przeglądarki jest niedostępna. Postęp zostanie tylko do zamknięcia lub odświeżenia strony.'}</p>
     {items.length ? <div className="cz-continue-list">{items.map(item => {
       const film = filmCatalog.find(film => film.youtubeId === item.id)
       return <article key={item.id} className="cz-continue-card">
@@ -25,6 +25,6 @@ export function ContinueWatching() {
         </FilmLink>
         <button type="button" className="cz-continue-remove" aria-label={`Usuń z oglądaj dalej: ${film.title}`} onClick={() => watchStore.remove(item.id)}>Usuń</button>
       </article>
-    })}</div> : <p className="cz-continue-empty">Rozpocznij dowolny film poniżej — wrócisz tutaj do przerwanego oglądania.</p>}
+    })}</div> : <p className="cz-continue-empty">Włącz jeden z filmów poniżej. Gdy przerwiesz, pojawi się tutaj.</p>}
   </section>
 }

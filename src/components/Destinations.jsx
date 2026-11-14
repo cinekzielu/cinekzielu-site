@@ -10,7 +10,7 @@ import '../destinations.css'
 
 export function DestinationsIndex() {
   return <CollectionShell section="wyprawy" className="cz-directions">
-    <header className="cz-directions-intro"><p className="cz-directions-kicker">Kraje i pasma</p><h1>Kierunki</h1><p>Wybierz miejsce. Wyprawy, fotografie, filmy i trasy zebrane razem.</p></header>
+    <header className="cz-directions-intro"><p className="cz-directions-kicker">Kraje i pasma</p><h1>Kierunki</h1><p>Wybierz kraj lub pasmo, żeby zobaczyć moje wyjazdy.</p></header>
     <div className="cz-directions-grid">{destinations.map(item => {
       const data = getDestination(item.id)
       return <a key={item.id} href={destinationHref(item)} className="cz-direction-card">
@@ -18,7 +18,7 @@ export function DestinationsIndex() {
         <div className="cz-direction-body"><small>{item.type} · {item.area}</small><h2>{item.name} <span aria-hidden="true">↗</span></h2><p>{item.description}</p><p className="cz-direction-counts">Wyprawy: {data.trips.length}{data.films.length > 0 && ` · Filmy: ${data.films.length}`}{data.tracks.length > 0 && ` · Trasy GPX: ${data.tracks.length}`}</p></div>
       </a>
     })}</div>
-    <p className="cz-directions-note">Kierunki obejmują materiały dostępne na stronie. Jedna wyprawa może należeć do kilku krajów lub pasm.</p>
+    <p className="cz-directions-note">Są tu wyjazdy, które dodałem na stronę. Podróż przez kilka krajów znajdziesz w każdym z nich.</p>
     <nav className="cz-directions-bottom"><a href="/mapa">Wszystkie miejsca na mapie ↗</a><a href="/wyprawy?widok=os">Oś podróży ↗</a></nav>
   </CollectionShell>
 }

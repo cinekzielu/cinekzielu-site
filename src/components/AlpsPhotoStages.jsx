@@ -38,7 +38,7 @@ export function AlpsGalleryStages({ gallery }) {
     <div className="cz-photo-stages"><div className="cz-photo-stage-heading"><h2>Etapy wyprawy</h2><span>{photoCount(photos.length)}</span></div>
       <div className="cz-photo-stage-tabs" role="group" aria-label="Etap fotografii"><button type="button" aria-pressed={!stage} onClick={() => pick('all')}>Wszystkie · {gallery.photos.length}</button>{stages.map(item => <button type="button" key={item.id} aria-pressed={selected === item.id} onClick={() => pick(item.id)}>{item.title}<small>{item.date} · {item.photos.length}</small></button>)}</div>
       <p>Podział według dat wykonania zdjęć. Przerwy między wejściami są osobnymi etapami.</p>
-      {stage?.routeId && <a href={`/wyprawy/alpy-2026#${stage.routeId === 'dufourspitze' ? 'dufour' : stage.routeId}-trasa`}>Trasa i opowieść: {stage.title} ↗</a>}
+      {stage?.routeId && <a href={`/wyprawy/alpy-2026#${stage.routeId === 'dufourspitze' ? 'dufour' : stage.routeId}-trasa`}>Trasa i zdjęcia: {stage.title} ↗</a>}
     </div>
     <PhotoSlideshowButton key={`show-${selected}`} photos={photos} stage={stage?.title} chapters={stages.map(item=>({id:item.id,title:item.title,photos:stagePhotos([item]).map(photo=>photo.full)}))} />
     <PhotoGrid key={selected} gallery={{ ...gallery, photos }} shareable selectable />

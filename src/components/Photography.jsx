@@ -35,9 +35,9 @@ export function PhotographyPage() {
   const photos = active?.photos || portfolioPhotos
   return <CollectionShell section="fotografia" className="cz-galleries cz-photography">
     <div className="cz-gallery-intro"><h1>Fotografia</h1><span className="cz-gallery-count">{photoCount(portfolioPhotos.length)}</span></div>
-    <div className="cz-photography-lead"><p>Góry, podróże i motorsport. Mój wybór fotografii.</p><a href="/galerie">Galerie z wypraw ↗</a></div>
+    <div className="cz-photography-lead"><p>Wybrałem tu swoje ulubione zdjęcia z gór, podróży i Hungaroringu.</p><a href="/galerie">Galerie z wypraw ↗</a></div>
     <aside className="cz-wall-entry" aria-labelledby="photo-wall-entry-title">
-      <div><span>Studio fotografii</span><h2 id="photo-wall-entry-title">Fotografie na Twojej ścianie.</h2><p>Wybierz moje fotografie, dopasuj ramki i ułóż własną kompozycję na wirtualnej ścianie.</p></div>
+      <div><span>Studio fotografii</span><h2 id="photo-wall-entry-title">Fotografie na Twojej ścianie.</h2><p>Zobacz, jak moje zdjęcia wyglądają w ramkach. Możesz zmienić ich układ i rozmiar.</p></div>
       <a href="/fotografia/sciana">Ułóż swoją ścianę <span aria-hidden="true">↗</span></a>
     </aside>
     <PhotographyCollections activeId={active?.id} />

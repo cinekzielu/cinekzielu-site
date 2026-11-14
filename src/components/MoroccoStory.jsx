@@ -20,9 +20,9 @@ export function MoroccoStoryHero() {
     <div className="cz-story-hero-content">
       <p className="cz-story-kicker">Podróż · 2025</p>
       <h1>Maroko</h1>
-      <p className="cz-story-subtitle">Od miast po Toubkal.</p>
-      <p className="cz-story-hero-meta">Dwa filmy. Dziesięć rozdziałów podróży.</p>
-      <nav aria-label="Materiały z Maroka"><a className="cz-story-start" href="#opowiesc">Przejdź przez podróż ↓</a><a href="#filmy">Obejrzyj filmy ↗</a><a href="#kadry">40 kadrów ↓</a></nav>
+      <p className="cz-story-subtitle">Podróż po Maroku i wejście na Toubkal.</p>
+      <p className="cz-story-hero-meta">Kadry z nagrań i dwa filmy z wyjazdu.</p>
+      <nav aria-label="Materiały z Maroka"><a className="cz-story-start" href="#opowiesc">Zobacz miejsca z wyjazdu ↓</a><a href="#filmy">Obejrzyj filmy ↗</a><a href="#kadry">40 kadrów ↓</a></nav>
     </div>
     <span className="cz-story-source">Kadr z nagrania DJI</span>
   </header>
@@ -86,7 +86,7 @@ export function MoroccoStory() {
   }
 
   return <section id="opowiesc" className="cz-story" ref={root} aria-labelledby="cz-story-title">
-    <div className="cz-story-intro"><p className="cz-story-kicker">Maroko · 2025</p><h2 id="cz-story-title">Miejsca po drodze</h2><p>Od Rabatu i Fezu przez Saharę po Atlas Wysoki. Wybierz rozdział albo przewijaj dalej.</p></div>
+    <div className="cz-story-intro"><p className="cz-story-kicker">Maroko · 2025</p><h2 id="cz-story-title">Miejsca po drodze</h2><p>Tutaj są miejsca z obu filmów. Przy każdym możesz włączyć odpowiedni fragment.</p></div>
     <nav className="cz-story-chapters" aria-label="Rozdziały podróży">{moroccoStory.map(stop => <a key={stop.id} href={moroccoStoryHash(stop)} aria-current={active.id === stop.id ? 'step' : undefined}><span>{stop.number}</span>{stop.title}</a>)}</nav>
     <div className="cz-story-layout">
       <aside className="cz-story-map">
@@ -105,6 +105,6 @@ export function MoroccoStory() {
         <div className="cz-story-stop-footer"><span>Kadry z nagrań DJI</span><FilmLink href={stop.filmHref}>▷ Obejrzyj od {stop.chapter.time}</FilmLink></div>
       </section>)}</div>
     </div>
-    <div className="cz-story-end"><p className="cz-story-kicker">Dalej w filmach</p><h2>Cała podróż, w dwóch częściach.</h2><a href="#filmy">Wybierz film ↓</a></div>
+    <div className="cz-story-end"><p className="cz-story-kicker">Dalej w filmach</p><h2>Filmy z Maroka</h2><a href="#filmy">Wybierz film ↓</a></div>
   </section>
 }

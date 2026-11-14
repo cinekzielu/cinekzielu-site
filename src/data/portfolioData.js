@@ -163,7 +163,7 @@ const collections = [
   {
     "id": "motorsport",
     "title": "Motorsport",
-    "description": "Hungaroring 2026. Bolidy, samochody wyścigowe i panoramowanie z trybun.",
+    "description": "Zdjęcia z trybun Hungaroringu podczas weekendu wyścigowego w 2026 roku.",
     "coverPosition": "50% 70%",
     "files": [
       "hungaroring-25",
@@ -201,7 +201,7 @@ const collections = [
   {
     "id": "sycylia",
     "title": "Sycylia",
-    "description": "Katania, wybrzeże i Etna. Architektura, krajobrazy i detale z podróży.",
+    "description": "Zdjęcia z Katanii, Taorminy i zboczy Etny.",
     "files": [
       "catania-01",
       "catania-03",
