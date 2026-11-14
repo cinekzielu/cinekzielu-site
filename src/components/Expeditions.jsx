@@ -5,7 +5,7 @@ import { CollectionFilters, useCollectionFilters } from './CollectionFilters'
 import { findFilm } from '../data/filmCatalog'
 import { FilmLink } from './SiteTools'
 import React, { useEffect, useState } from 'react'
-import { expeditionPages, expeditionHref, findExpeditionPage, filmCount, sortExpeditionsNewest } from '../data/expeditionPages'
+import { expeditionPages, expeditionHref, findExpeditionPage, sortExpeditionsNewest } from '../data/expeditionPages'
 import { galleryHref, galleryMapLinks, galleryItemCount, isVideoCollection, isTripPhotoCollection } from '../data/galleryNavigation'
 import { relatedExpeditions } from '../data/relatedExpeditions'
 import { MoroccoStory, MoroccoStoryHero } from './MoroccoStory'
@@ -18,18 +18,20 @@ import importedRoutes from '../data/importedRoutes.json'
 import '../expeditionStyles.css'
 import { useInitialLocation } from '../PageLocation'
 import { SaveButton } from './SavedItems'
+import { MaterialIcon } from './MaterialIcon'
+import { ExpeditionMaterials } from './ExpeditionMaterials'
 
 export function ExpeditionList({ expeditions = expeditionPages, compact = false }) {
   return <div className={`cz-expedition-list${compact ? ' is-compact' : ''}`}>
-    {sortExpeditionsNewest(expeditions).map((expedition, index) => <div className="cz-expedition-save-row" key={expedition.id}><a className="cz-expedition-row" href={expeditionHref(expedition)} aria-label={`Wyprawa: ${expedition.title} ${expedition.year}`}>
-      <div className="cz-expedition-row-image"><ResponsivePhoto photo={expedition.gallery.photos.find(photo => photo.src === expedition.gallery.coverImage)} sizes="(max-width:520px) calc(100vw - 28px), (max-width:760px) 150px, (max-width:1000px) 220px, 260px" style={{ objectPosition: expedition.gallery.coverPosition }} loading={compact || index > 0 ? 'lazy' : 'eager'} /></div>
+    {sortExpeditionsNewest(expeditions).map((expedition, index) => <article className="cz-expedition-save-row cz-trip-card" key={expedition.id}><a className="cz-expedition-row" href={expeditionHref(expedition)} aria-label={`Wyprawa: ${expedition.title} ${expedition.year}`}>
+      <div className="cz-expedition-row-image"><ResponsivePhoto photo={expedition.gallery.photos.find(photo => photo.src === expedition.gallery.coverImage)} sizes="(max-width:600px) calc(100vw - 60px), (max-width:900px) 180px, 250px" style={{ objectPosition: expedition.gallery.coverPosition }} loading={compact || index > 0 ? 'lazy' : 'eager'} /></div>
       <div className="cz-expedition-row-body">
-        <span className="cz-expedition-eyebrow">{expedition.region} · {expedition.kind}</span>
-        <h2>{expedition.title} <span>{expedition.year}</span></h2>
-        <span className="cz-expedition-material-count">{galleryItemCount(expedition.gallery)}{expedition.gallery.films.length > 0 && ` · ${filmCount(expedition.gallery.films)}`}</span>
+        <div className="cz-trip-card-meta"><span className="cz-expedition-eyebrow">{expedition.region}</span><span className="cz-card-date">{expedition.date}</span></div>
+        <h2>{expedition.title}</h2>
+        <p className="cz-trip-card-kind">{expedition.kind}</p>
+        <div className="cz-trip-card-footer"><ExpeditionMaterials gallery={expedition.gallery} /><span className="cz-card-open">Zobacz wyprawę <MaterialIcon name="arrow" size={17} /></span></div>
       </div>
-      <span className="cz-expedition-row-arrow" aria-hidden="true">↗</span>
-    </a><SaveButton itemKey={`trip:${expedition.id}`} iconOnly /></div>)}
+    </a><SaveButton itemKey={`trip:${expedition.id}`} iconOnly /></article>)}
   </div>
 }
 
@@ -44,7 +46,7 @@ function RelatedExpeditions({ expedition }) {
       <div className="cz-expedition-section-heading"><h2>Z tej samej okolicy</h2></div>
       <div className="cz-related-grid">{related.map(trip => <a className="cz-related-card" key={trip.id} href={expeditionHref(trip)}>
         <div className="cz-related-image"><ResponsivePhoto photo={trip.gallery.photos.find(photo => photo.src === trip.gallery.coverImage)} sizes="(max-width:600px) calc(100vw - 28px), (max-width:1448px) 31vw, 437px" style={{ objectPosition: trip.gallery.coverPosition }} loading="lazy" /></div>
-        <div className="cz-related-caption"><span className="cz-expedition-eyebrow">{trip.region} · {trip.kind}</span><h3>{trip.title} <span>{trip.year}</span></h3><div><span className="cz-expedition-material-count">{galleryItemCount(trip.gallery)}{trip.gallery.films.length > 0 && ` · ${filmCount(trip.gallery.films)}`}</span><span aria-hidden="true">↗</span></div></div>
+        <div className="cz-related-caption"><span className="cz-expedition-eyebrow">{trip.region} · {trip.kind}</span><h3>{trip.title} <span>{trip.year}</span></h3><div><ExpeditionMaterials gallery={trip.gallery} /><MaterialIcon name="arrow" size={20} /></div></div>
       </a>)}</div>
     </>}
     <a className="cz-related-all" href="/wyprawy">Wszystkie wyprawy ↗</a>

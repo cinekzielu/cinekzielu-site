@@ -12,7 +12,7 @@ assert.equal(new Set(catalog.map(row => row.id)).size, catalog.length)
 assert.deepEqual(catalog.map(row => row.sortDate), catalog.map(row => row.sortDate).sort().reverse())
 const page = await readFile(new URL('../dist/trasy.html', import.meta.url), 'utf8')
 assert(page.includes('<h1>Trasy</h1>'))
-assert.equal((page.match(/class="cz-route-catalog-row"/g) || []).length, catalog.length)
+assert.equal((page.match(/<article\b[^>]*class="[^"]*\bcz-route-catalog-row\b[^"]*"/g) || []).length, catalog.length)
 for (const row of catalog) {
   const route = tripRoutes[row.id]
   const source = row.id === 'dufourspitze' ? 'dufourTrack.json' : `tracks/${row.id}.json`
