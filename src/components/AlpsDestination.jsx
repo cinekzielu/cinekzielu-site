@@ -16,6 +16,10 @@ export function AlpsDestination() {
   const yearQuery = year === 'all' ? '' : `&rok=${year}`
   return <CollectionShell section="wyprawy" detail className="cz-destination-alps">
     <header className="cz-destination-alps-hero"><div><p className="cz-destination-alps-eyebrow"><a href="/kierunki">Kierunki ↗</a></p><h1>Alpy</h1><p>Moje wyjazdy w Alpy: Szwajcaria w 2025 roku i Across the Alps w 2026.</p><a href="/mapa?atlas=alpy">Otwórz mapę Alp ↗</a></div><a href={`/wyprawy/${hero.id}`} aria-label={`${hero.title} — zobacz wyprawę`}><ResponsivePhoto photo={cover(hero)} full loading="eager" fetchPriority="high" sizes="(max-width:700px) 100vw, 65vw" /></a></header>
+    <aside className="cz-alps-partner-teaser" aria-labelledby="alps-partnership-teaser">
+      <div><h2 id="alps-partnership-teaser">Alpy 2027</h2><p>Latem wracamy w Alpy. Tym razem celujemy w Matterhorn i Mont Blanc.</p></div>
+      <a href="/wyprawy/alpy-2027">Współpraca przy wyprawie ↗</a>
+    </aside>
     <div className="cz-destination-alps-browse"><nav aria-label="Rok wypraw w Alpach">{[['all','Wszystkie lata'],...alpsYears.map(value => [value,value])].map(([value,label]) => <a key={value} href={`/kierunki/alpy${value === 'all' ? '' : `?rok=${value}`}`} aria-current={year === value ? 'page' : undefined}>{label}</a>)}</nav><nav aria-label="Sekcje kierunku Alpy"><a href="#wyprawy">Wyprawy</a><a href="#fotografie">Fotografie</a><a href="#filmy">Filmy</a><a href="#szczyty">Szczyty</a><a href="#trasy">Trasy GPX</a></nav></div>
     <dl className="cz-destination-alps-stats"><div><dt>Wyprawy</dt><dd>{data.trips.length}</dd></div><div><dt>Fotografie</dt><dd>{data.photoCount}</dd></div><div><dt>Filmy i zwiastuny</dt><dd>{data.films.length}</dd></div><div><dt>Trasy GPX</dt><dd>{data.tracks.length}</dd></div></dl>
     <p className="cz-destination-alps-note">Materiały dodane na stronę{year !== 'all' ? ` z wypraw w ${year} roku` : ''}. Wybór roku zmienia poniższe zestawienia.</p>

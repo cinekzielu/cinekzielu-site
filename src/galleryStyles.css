@@ -55,6 +55,7 @@
 /* Shared mobile navigation and touch photo viewer. */
 .cz-collection-menu-toggle{display:none;min-height:44px;padding:10px 14px;border:1px solid rgba(214,198,168,.25);border-radius:0;background:transparent;color:#e2c99e;font:inherit;font-size:12px;cursor:pointer}
 .cz-gallery-footer nav{display:flex;align-items:center;gap:24px}.cz-gallery-footer a{display:inline-flex;align-items:center;min-height:44px}.cz-gallery-context a{display:inline-flex;align-items:center;min-height:44px}
+.cz-gallery-footer nav{flex-wrap:wrap;row-gap:0}
 .cz-collection a:focus-visible,.cz-collection button:focus-visible{outline:2px solid #c9a36d;outline-offset:4px}
 .cz-lightbox{padding-top:max(12px,env(safe-area-inset-top));padding-bottom:max(12px,env(safe-area-inset-bottom));overscroll-behavior:contain}
 .cz-lightbox-stage{height:calc(100dvh - 150px - env(safe-area-inset-top) - env(safe-area-inset-bottom));touch-action:pan-y pinch-zoom;user-select:none}

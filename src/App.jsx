@@ -26,6 +26,8 @@ import { PhotoWall } from './components/PhotoWall'
 import { AboutPage } from './components/About'
 import { TatryDestination } from './components/TatryDestination'
 import { AlpsDestination } from './components/AlpsDestination'
+import { Alps2027Partnership } from './components/Alps2027Partnership'
+import { FooterSupport } from './components/FooterSupport'
 import { RouteCatalog } from './components/RouteCatalog'
 import { SeasonsIndex, SeasonPage } from './components/Seasons'
 import { SummitsPage } from './components/Summits'
@@ -487,7 +489,9 @@ function App() {
               <a href={socials.instagram} target="_blank" rel="noreferrer">Instagram</a>
               <a href={socials.youtube} target="_blank" rel="noreferrer">YouTube</a>
               <a href={socials.tiktok} target="_blank" rel="noreferrer">TikTok</a>
+              <FooterSupport />
             </div>
+            <a className="footerAnchor" href="/wyprawy/alpy-2027">Alpy 2027 · Współpraca</a>
             <a className="footerAnchor" href="/o-mnie#kontakt">O mnie i kontakt</a>
             <p className="footerCopyright">© 2026 Cinek Zielu</p>
           </div>
@@ -538,6 +542,7 @@ export function SitePage({ location }) {
   if (pathname === '/fotografia/sciana') page = <PhotoWall />
   if (pathname === '/o-mnie') page = <AboutPage />
   if (pageRoute?.[1] === 'galerie') page = pageSlug ? <GalleryPage slug={pageSlug} /> : <GalleryIndex />
-  if (pageRoute?.[1] === 'wyprawy') page = pageSlug ? <ExpeditionPage slug={pageSlug} /> : <ExpeditionIndex />
+  if (pathname === '/wyprawy/alpy-2027') page = <Alps2027Partnership />
+  else if (pageRoute?.[1] === 'wyprawy') page = pageSlug ? <ExpeditionPage slug={pageSlug} /> : <ExpeditionIndex />
   return <PageLocationProvider value={location}><SavedProvider><SiteToolsProvider>{page}</SiteToolsProvider></SavedProvider></PageLocationProvider>
 }
