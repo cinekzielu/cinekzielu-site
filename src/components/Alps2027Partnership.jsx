@@ -18,8 +18,8 @@ export function Alps2027Partnership() {
         <a className="cz-alps-partner-back" href="/kierunki/alpy">← Wyprawy w Alpy</a>
         <h1>Alpy 2027</h1>
         <p className="cz-alps-partner-lead">Szukam partnera wyprawy</p>
-        <p>Nazywam się Marcin Zieliński. Latem 2027 planuję z ekipą wrócić w Alpy z kamerą i aparatem. Nasze główne cele to Matterhorn i Mont Blanc, a z przygotowań i drogi chcę przywieźć filmy i fotografie.</p>
-        <a className="cz-alps-partner-email" href={contact}>Porozmawiajmy o współpracy <ArrowUpRight size={17} aria-hidden="true" /></a>
+        <p>Latem 2027 wracamy w Alpy. Tym razem celujemy w Matterhorn i Mont Blanc. Biorę kamerę i aparat, żeby pokazać, jak wygląda taki wyjazd od pakowania po zejście z gór.</p>
+        <a className="cz-alps-partner-email" href={contact}>Napisz w sprawie współpracy <ArrowUpRight size={17} aria-hidden="true" /></a>
       </div>
       <figure>
         <ResponsivePhoto photo={cover} full sizes="(max-width:760px) 100vw, 55vw" fetchPriority="high" />
@@ -27,20 +27,25 @@ export function Alps2027Partnership() {
       </figure>
     </header>
 
-    <section className="cz-alps-partner-section" aria-labelledby="partnership-formats">
-      <h2 id="partnership-formats">Co możemy stworzyć razem</h2>
+    <section className="cz-alps-partner-section" aria-labelledby="partnership-gear">
+      <h2 id="partnership-gear">Jaki sprzęt przyda się na wyjeździe?</h2>
       <div className="cz-alps-partner-formats">
-        <div><h3>Film z wyprawy</h3><p>Pokazanie sprzętu lub marki w naturalnym kontekście przygotowań i wyjazdu.</p></div>
-        <div><h3>Fotografie w terenie</h3><p>Zdjęcia z wyprawy i sprzętu w użyciu, z zakresem wykorzystania ustalonym przed wyjazdem.</p></div>
-        <div><h3>Krótkie materiały</h3><p>Pionowe ujęcia z przygotowań i wyjazdu do publikacji w mediach społecznościowych.</p></div>
+        <div><h3>W góry</h3><p>Buty, raki, odzież i plecaki na długie podejścia.</p></div>
+        <div><h3>Na biwak</h3><p>Lekki namiot, śpiwór, mata albo sprzęt do gotowania.</p></div>
+        <div><h3>Do nagrywania</h3><p>Mocowania do kamery, mikrofon i zasilanie na kilka dni w terenie.</p></div>
       </div>
-      <p>Jestem otwarty na partnerstwo sprzętowe lub finansowe. Zakres materiałów, terminy i sposób publikacji ustalimy wspólnie.</p>
+      <p>Jeśli macie coś, co pasuje do tego wyjazdu, chętnie pogadam. W grę wchodzi też wypożyczenie sprzętu na czas wyprawy albo wsparcie jej kosztów.</p>
+    </section>
+
+    <section className="cz-alps-partner-section" aria-labelledby="partnership-formats">
+      <h2 id="partnership-formats">Jak mogę pokazać Wasz sprzęt?</h2>
+      <p>Mogę pokazać go w filmie na YouTube, zrobić zdjęcia w terenie albo nagrać krótką rolkę. Na przykład pokazać, jak pakujemy plecaki na kilka dni i co faktycznie wyciągamy z nich na podejściu. Przed wyjazdem dogadamy, co chcecie dostać i gdzie materiał się pojawi.</p>
     </section>
 
     <section className="cz-alps-partner-section cz-alps-partner-previous" aria-labelledby="partnership-previous">
       <div>
-        <h2 id="partnership-previous">Zobacz, co przywieźliśmy w 2026</h2>
-        <p>Across the Alps to historia wyprawy od Triglavu po Zugspitze. Trasa objęła pięć szczytów, prawie 120 km i ponad 11 000 m podejść.</p>
+        <h2 id="partnership-previous">Tak wyglądał poprzedni wyjazd</h2>
+        <p>W 2026 weszliśmy na pięć alpejskich szczytów, od Triglavu po Zugspitze. W pierwszym odcinku widać, jak dojeżdżamy, biwakujemy i ruszamy na Triglav.</p>
       </div>
       <div className="cz-alps-partner-links">
         <FilmLink href={alpsEpisodes.triglav.youtubeUrl}>Obejrzyj odcinek z Triglavu ↗</FilmLink>
@@ -49,7 +54,7 @@ export function Alps2027Partnership() {
     </section>
 
     <section className="cz-alps-partner-section cz-alps-partner-contact" aria-labelledby="partnership-contact">
-      <h2 id="partnership-contact">Kontakt w sprawie Alp 2027</h2>
+      <h2 id="partnership-contact">Pogadajmy o wyjeździe</h2>
       <p>{author.name} · Cinek Zielu</p>
       <a href={contact}>{author.email} ↗</a>
     </section>
