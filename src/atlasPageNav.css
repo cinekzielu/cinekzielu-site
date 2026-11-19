@@ -1,0 +1,42 @@
+.cz-atlas-page-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.cz-atlas-page-nav > a,
+.cz-atlas-page-nav > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 6px 14px;
+  border: 1px solid #c9a36d66;
+  color: #e2c99e;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.cz-atlas-page-nav > [aria-current] {
+  border-color: #c9a36d;
+  background: #c9a36d18;
+  color: #f5f1eb;
+}
+
+.cz-atlas-page-nav > a:hover {
+  border-color: #c9a36d;
+  color: #fff7e9;
+}
+
+@media (max-width: 520px) {
+  .cz-routes .cz-gallery-intro,
+  .cz-map-page .cz-gallery-intro {
+    flex-wrap: wrap;
+    gap: 8px 14px;
+  }
+
+  .cz-routes .cz-gallery-intro .cz-gallery-count {
+    white-space: normal;
+  }
+}

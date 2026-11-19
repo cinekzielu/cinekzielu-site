@@ -1,8 +1,10 @@
 // Verified against the author's channel and expanded description on 2026-11-11.
-// Publication date is not the ascent date; existing GPX/photo dates stay unchanged.
+// Add an episode here after its publication is confirmed. Keep its date separate
+// from the dates of the ascent and photos.
 export const alpsEpisodes = {
   triglav: {
     youtubeId: 'C8weHwRNLiE', title: 'Triglav 2864 m · Across the Alps 1/5',
+    episodeNumber: 1,
     youtubeUrl: 'https://www.youtube.com/watch?v=C8weHwRNLiE',
     thumbnail: 'https://i.ytimg.com/vi/C8weHwRNLiE/hq720.jpg',
     duration: '39:33', publishedAt: '2026-11-11',

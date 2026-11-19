@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { fittedPhotoSize, photoViewUrl } from '../data/photoView'
 import { photoInquiry } from '../data/photoInquiry'
 import { photoSharePath } from '../data/sharePages'
+import { wallPathForPhotos } from '../data/photoWall'
 import '../photoViewer.css'
 import { SaveButton } from './SavedItems'
 import { savedPhotoKey } from '../data/savedItems'
@@ -10,6 +11,7 @@ export function PhotoViewer({ gallery, current, onStep, onClose, shareable, trig
   const photo = gallery.photos[current]
   const frames = gallery.mediaKind === 'video-frames'
   const inquiry = frames ? null : photoInquiry(photo)
+  const studioPath = frames ? null : wallPathForPhotos([photo])
   const dialog = useRef(null), stage = useRef(null), gesture = useRef(null), linkInput = useRef(null)
   const [zoom, setZoom] = useState(1)
   const [size, setSize] = useState({ width: 1, height: 1 })
@@ -75,6 +77,7 @@ export function PhotoViewer({ gallery, current, onStep, onClose, shareable, trig
       <div className="cz-photo-viewer-actions">
         <SaveButton key={photo.full} itemKey={savedPhotoKey(photo)} />
         {shareable && <button type="button" onClick={copyLink}>Kopiuj link</button>}
+        {studioPath && <a className="cz-photo-wall-link" href={studioPath}>Zobacz w ramce <span aria-hidden="true">↗</span></a>}
         {inquiry && <a className="cz-photo-inquiry" href={inquiry.href} title={`Otwórz wiadomość do ${inquiry.email} z linkiem do zdjęcia`}>Zapytaj o zdjęcie ↗</a>}
       </div>
     </div>

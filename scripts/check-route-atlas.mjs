@@ -49,6 +49,6 @@ assert.equal(readComparisonDistance(new URL(sharedUrl,'https://www.cinekzielu.pl
 assert.equal(comparisonPaths(long,shared)[0].split(' L')[1],comparisonPaths(short,shared)[0].split(' L')[1], 'Same distance/elevation must occupy exactly the same coordinate on both profiles')
 const html = await readFile(new URL('../dist/trasy.html',import.meta.url),'utf8')
 assert(html.includes('id="porownanie"') && html.includes('aria-label="Mapa tras"'))
-assert.equal((html.match(/class="cz-route-catalog-row"/g)||[]).length,catalog.length)
+assert.equal((html.match(/<article\b[^>]*class="[^"]*\bcz-route-catalog-row\b[^"]*"/g)||[]).length,catalog.length)
 assert(html.includes('Suma podejść') || html.includes('suma podejść'))
 console.log('PASS: ascent noise and gaps, URL validation/history state, all real tracks, shared distance/elevation scales and server-rendered list.')

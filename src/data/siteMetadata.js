@@ -22,7 +22,7 @@ export const sitePages = [
   page('/fotografia', 'Fotografia — portfolio | Cinek Zielu', 'Moje ulubione zdjęcia z gór, podróży i Hungaroringu. Portfolio fotograficzne Marcina Zielińskiego / Cinek Zielu.', shareImages['alpy-2026']),
   page('/fotografia/sciana', 'Studio fotografii — Cinek Zielu', 'Sprawdź, jak moje fotografie wyglądają w ramkach. Wybierz zdjęcia, zmień ich rozmiary i ułóż je na wirtualnej ścianie.', shareImages['alpy-2026']),
   page('/o-mnie', 'Marcin Zieliński — o mnie i kontakt | Cinek Zielu', 'Marcin Zieliński, Cinek Zielu. Góry, fotografia i film. Kilka słów o autorze, kontakt i profile społecznościowe.', shareImages.about),
-  page('/mapa', 'Mapa wypraw — Cinek Zielu', 'Miejsca z moich wyjazdów. Wybierz punkt na mapie, żeby zobaczyć zdjęcia, filmy i trasy.'),
+  page('/mapa', 'Atlas miejsc — mapa wypraw | Cinek Zielu', 'Miejsca z moich wyjazdów. Wybierz punkt na mapie, żeby zobaczyć zdjęcia, filmy i trasy.'),
   page('/filmy', 'Filmy z gór i podróży — Cinek Zielu', 'Moje filmy z Tatr, Alp, Jury, Maroka i Hungaroringu. Dłuższe filmy, krótkie nagrania i pierwszy odcinek Across the Alps.', shareImages['maroko-2025']),
   page('/szczyty', 'Moje szczyty — Cinek Zielu', 'Szczyty, na które wszedłem, latem i zimą. Daty wejść, zdjęcia, filmy i trasy z moich wypraw.', shareImages['konczysta-2026']),
   ...summitPages.map(item => page(item.path, item.title, item.description, item.id === 'gerlach' ? shareImages['gerlach-zima-2025'] : photoShareImage(item.cover))),

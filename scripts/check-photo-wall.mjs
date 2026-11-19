@@ -2,9 +2,9 @@ import assert from 'node:assert/strict'
 import { access } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import {
-  WALL_PATH, WALL_WIDTH, WALL_HEIGHT, wallPhotos, wallPhotoById, WALL_COLORS, FRAME_COLORS,
+  WALL_PATH, WALL_WIDTH, WALL_HEIGHT, WALL_MAX_FRAMES, wallPhotos, wallPhotoById, WALL_COLORS, FRAME_COLORS,
   PRINT_FORMATS, LAYOUTS, frameDimensions, clampFrame, createLayout, normalizeWallConfig,
-  parseWallConfig, serializeWallConfig, wallSharePath, buildWallInquiry,
+  parseWallConfig, serializeWallConfig, wallSharePath, wallPathForPhotos, findWallPhoto, buildWallInquiry,
 } from '../src/data/photoWall.js'
 import { portfolioPhotos } from '../src/data/portfolioData.js'
 import { author } from '../src/data/authorData.js'
@@ -46,6 +46,33 @@ assert.equal(expanded.wall, changed.wall)
 assert.equal(expanded.frame, changed.frame)
 assert.equal(expanded.mat, false)
 
+const portrait = wallPhotos.find(photo => photo.height > photo.width)
+const landscape = wallPhotos.find(photo => photo.width > photo.height)
+const selection = [portrait, landscape, ...wallPhotos.filter(photo => photo !== portrait && photo !== landscape)]
+for (let count = 1; count <= WALL_MAX_FRAMES; count++) {
+  const photos = selection.slice(0, count)
+  const href = new URL(wallPathForPhotos(photos), 'https://www.cinekzielu.pl')
+  const config = parseWallConfig(href.searchParams.get('uklad'))
+  assert.equal(href.pathname, WALL_PATH)
+  assert.deepEqual(config.frames.map(frame => frame.photoId), photos.map(photo => photo.id), 'Studio opens with exactly the selected photographs in order')
+  withinWall(config)
+  const positioned = config.frames.map(frame => ({ ...frame, ...frameDimensions(frame, config.mat) }))
+  positioned.forEach((frame, index) => {
+    assert.equal(frame.height > frame.width, photos[index].height > photos[index].width)
+    for (const other of positioned.slice(index + 1)) {
+      const horizontallySeparate = Math.abs(frame.x - other.x) > (frame.width + other.width) / WALL_WIDTH * 50
+      const verticallySeparate = Math.abs(frame.y - other.y) > (frame.height + other.height) / WALL_HEIGHT * 50
+      assert(horizontallySeparate || verticallySeparate, 'Imported frames must not overlap')
+    }
+  })
+}
+assert.equal(findWallPhoto({ ...portrait, sourceHref: '/galerie/inna' }), portrait)
+const unrelated = { full: `/other/${portrait.full.split('/').at(-1)}` }
+assert.equal(findWallPhoto(unrelated), undefined, 'A matching filename outside the portfolio is not enough')
+for (const photos of [null, [], [unrelated], [portrait, unrelated], Array(1), selection.slice(0, WALL_MAX_FRAMES + 1)]) {
+  assert.equal(wallPathForPhotos(photos), null, 'Unavailable or oversized selections must not silently change')
+}
+
 for (const format of PRINT_FORMATS) for (const mat of [true, false]) {
   for (const [x, y] of [[-1e308, 1e308], [1e308, -1e308], [0, 0], [100, 100]]) {
     const frame = clampFrame({ ...original.frames[0], format: format.id, x, y }, mat)
@@ -82,4 +109,4 @@ for (const frame of changed.frames) {
 assert(inquiry.body.includes(new URL(wallSharePath(changed), 'https://www.cinekzielu.pl').href))
 assert(!inquiry.body.includes('unused=1'))
 
-console.log(`PASS: ${wallPhotos.length} genuine portfolio photos and assets, stable IDs, four presets, preserved selections, all format bounds, strict URL validation, roundtrips and complete contact inquiry.`)
+console.log(`PASS: ${wallPhotos.length} genuine portfolio photos and assets, stable IDs, four presets, ordered photo links for one to six frames, all format bounds, strict URL validation, roundtrips and complete contact inquiry.`)

@@ -1,24 +1,25 @@
-import { alpsEpisodes } from './alpsEpisodes.js'
+import { latestAlpsChapter } from './alpsStory.js'
 import { photoGalleries } from './galleryData.js'
 import { portfolioPhotos } from './portfolioData.js'
 
 const hungaroring = photoGalleries.find(gallery => gallery.id === 'hungaroring-2026')
+const latestAlpsUpdate = latestAlpsChapter && {
+  id: `alps-episode-${latestAlpsChapter.id}`,
+  publishedAt: latestAlpsChapter.episode.publishedAt,
+  kind: 'film',
+  label: 'Nowy film',
+  title: `${latestAlpsChapter.title} — odcinek ${Number(latestAlpsChapter.number)}`,
+  description: `Across the Alps · ${latestAlpsChapter.episode.duration}`,
+  href: latestAlpsChapter.episode.youtubeUrl,
+  action: 'Obejrzyj odcinek',
+  thumbnail: latestAlpsChapter.episode.thumbnail,
+}
 
-// Dates describe publication on the site, not the trip or photograph date.
+// Dates describe publication of the material, not the trip or photograph date.
 // Keep this a short editorial selection of material updates; copy fixes are omitted.
 // Photography entries were published together in PR189 on 2 November 2026.
 export const homeUpdates = [
-  {
-    id: 'triglav-episode-one',
-    publishedAt: alpsEpisodes.triglav.publishedAt,
-    kind: 'film',
-    label: 'Nowy film',
-    title: 'Triglav — odcinek 1',
-    description: `Across the Alps · ${alpsEpisodes.triglav.duration}`,
-    href: alpsEpisodes.triglav.youtubeUrl,
-    action: 'Obejrzyj odcinek',
-    thumbnail: alpsEpisodes.triglav.thumbnail,
-  },
+  ...(latestAlpsUpdate ? [latestAlpsUpdate] : []),
   {
     id: 'hungaroring-edited-photos',
     publishedAt: '2026-11-02',

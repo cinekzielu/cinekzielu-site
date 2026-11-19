@@ -11,7 +11,14 @@ assert.equal(catalog.length, 42)
 assert.equal(new Set(catalog.map(row => row.id)).size, catalog.length)
 assert.deepEqual(catalog.map(row => row.sortDate), catalog.map(row => row.sortDate).sort().reverse())
 const page = await readFile(new URL('../dist/trasy.html', import.meta.url), 'utf8')
-assert(page.includes('<h1>Trasy</h1>'))
+const mapPage = await readFile(new URL('../dist/mapa.html', import.meta.url), 'utf8')
+assert(page.includes('<h1>Trasy GPX</h1>'))
+assert(mapPage.includes('<h1>Atlas miejsc</h1>'))
+const atlasNav = html => html.match(/<nav\b[^>]*aria-label="Mapa i trasy"[^>]*>(.*?)<\/nav>/s)?.[1] || ''
+assert.match(atlasNav(page), /href="\/mapa">Atlas miejsc/)
+assert.match(atlasNav(page), /aria-current="page">Trasy GPX/)
+assert.match(atlasNav(mapPage), /href="\/trasy">Trasy GPX/)
+assert.match(atlasNav(mapPage), /aria-current="page">Atlas miejsc/)
 assert.equal((page.match(/<article\b[^>]*class="[^"]*\bcz-route-catalog-row\b[^"]*"/g) || []).length, catalog.length)
 for (const row of catalog) {
   const route = tripRoutes[row.id]

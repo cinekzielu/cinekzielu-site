@@ -1,5 +1,7 @@
 import React, { lazy, Suspense, useEffect, useRef, useState } from 'react'
-import { alpsStory, alpsStoryGallery, alpsStoryHash, alpsTotals, alpsLocations, alpsLocationById, alpsLegacyChapters } from '../data/alpsStory'
+import { alpsStory, alpsStoryGallery, alpsStoryHash, alpsTotals, alpsLocations, alpsLocationById, alpsLegacyChapters, latestAlpsChapter } from '../data/alpsStory'
+import { tripRoutes } from '../data/tripRoutes'
+import { photoCount } from '../data/galleryNavigation'
 import { ResponsivePhoto } from './ResponsivePhoto'
 import { PhotoGrid } from './PhotoGrid'
 import { FilmLink } from './SiteTools'
@@ -20,14 +22,42 @@ const StoryPhotos = ({ title, photos, groupId }) => alpsPhotoStory[groupId] ? <S
 const pauseGroups = { triglav:'po-triglavie', grossglockner:'przerwa-austria', dufourspitze:'przerwa-szwajcaria', grauspitz:'przed-zugspitze' }
 const stageLinks = alpsStory.map(chapter => ({ id: chapter.id, title: chapter.title, href: alpsStoryHash(chapter) }))
 const dayGroups = ['dufour-podejscie','dufour-szczyt','dufour-powrot']
-const firstEpisode = alpsStory.find(chapter => chapter.episode)?.episode
 const trailer = alpsStoryGallery.films.find(film => film.label === 'Zwiastun')
+const hasStagePhotos = chapter => chapter.photos.length > 0 || chapter.days?.some(day => day.photos.length > 0)
+const photoAnchor = chapter => `alpy-${chapter.id}-zdjecia`
+const stageIndexId = 'alpy-etapy'
+
+function AlpsStageIndex() {
+  return <section className="cz-alps-series" id={stageIndexId} aria-labelledby="alps-series-title" tabIndex={-1}>
+    <h2 id="alps-series-title">Odcinki i etapy</h2>
+    <ol role="list">{alpsStory.map(chapter => {
+      const route = tripRoutes[chapter.id]
+      return <li key={chapter.id}>
+        <a className="cz-alps-stage-title" href={alpsStoryHash(chapter)}>
+          <span aria-hidden="true">{chapter.number}</span>{chapter.title}
+        </a>
+        <div className="cz-alps-stage-links">
+          {chapter.episode && <FilmLink href={chapter.episode.youtubeUrl} aria-label={`Obejrzyj odcinek z etapu ${chapter.title}`}>
+            Odcinek · {chapter.episode.duration}
+          </FilmLink>}
+          {hasStagePhotos(chapter) && <a href={`#${photoAnchor(chapter)}`} aria-label={`Zdjęcia z etapu ${chapter.title}`}>Zdjęcia</a>}
+          {route?.load && <a href={`#${route.anchor}`} aria-label={`Trasa GPX z etapu ${chapter.title}`}>Trasa GPX</a>}
+        </div>
+      </li>
+    })}</ol>
+  </section>
+}
 
 export function AlpsStoryHero() {
   return <header className="cz-alps-hero">
     <ResponsivePhoto photo={alpsStoryGallery.photos[27]} full sizes="(max-width:1448px) 100vw, 1360px" loading="eager" fetchPriority="high" />
     <div className="cz-alps-hero-copy"><p className="cz-alps-kicker">Alpy · sierpień 2026</p><h1>Across<br />the Alps</h1><p>Wyjazd w Alpy z Maxem, Karolem i Agatą.</p>
-      <nav aria-label="Materiały z Alp"><a href="#opowiesc">Zobacz etapy ↓</a>{firstEpisode && <FilmLink href={firstEpisode.youtubeUrl}>▷ Odcinek 1: Triglav</FilmLink>}<FilmLink href={trailer.url}>Zwiastun</FilmLink><a href="/galerie/alpy-2026">{alpsStoryGallery.photos.length} fotografie ↗</a></nav>
+      <nav aria-label="Materiały z Alp">
+        <a href={`#${stageIndexId}`}>Odcinki i etapy ↓</a>
+        {latestAlpsChapter && <FilmLink href={latestAlpsChapter.episode.youtubeUrl}>▷ Odcinek {Number(latestAlpsChapter.number)}: {latestAlpsChapter.title}</FilmLink>}
+        <FilmLink href={trailer.url}>Zwiastun</FilmLink>
+        <a href="/galerie/alpy-2026">{photoCount(alpsStoryGallery.photos.length)} ↗</a>
+      </nav>
     </div>
   </header>
 }
@@ -57,7 +87,10 @@ export function AlpsStory() {
     const scroll = () => { if (frame === null) frame = requestAnimationFrame(update) }
     const hash = () => {
       const chapter = chapterFromHash()
-      if (chapter) document.getElementById(`alpy-${chapter.id}`)?.scrollIntoView({ behavior: 'instant', block: 'start' })
+      const id = chapter ? alpsStoryHash(chapter).slice(1) : window.location.hash.slice(1)
+      if (chapter || id === stageIndexId || alpsStory.some(item => photoAnchor(item) === id)) {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'instant', block: 'start' })
+      }
       update()
     }
     hash()
@@ -82,6 +115,7 @@ export function AlpsStory() {
       <div><dt>Suma podejść</dt><dd>+{number(alpsTotals.ascent)} <small>m</small></dd></div>
       <div><dt>Łączny czas ruchu</dt><dd>{alpsTotals.movingTime}</dd></div>
     </dl>
+    <AlpsStageIndex />
     <div className="cz-alps-map" id="alpy-mapa">
       <button className="cz-alps-map-toggle" aria-expanded={mapOpen} aria-controls="alps-map-content" onClick={() => setMapOpen(value => !value)}><span>Pięć szczytów na mapie</span><span>{mapOpen ? 'Zwiń −' : 'Rozwiń +'}</span></button>
       <div id="alps-map-content" hidden={!mapOpen}>
@@ -97,18 +131,19 @@ export function AlpsStory() {
         <p className="cz-alps-description">{chapter.description}</p>
         {chapter.episode && <div className="cz-alps-episode">
           <FilmLink className="cz-alps-episode-cover" href={chapter.episode.youtubeUrl} aria-label={`Obejrzyj: ${chapter.episode.title}`}><img src={chapter.episode.thumbnail} width="1280" height="720" loading="lazy" alt="" /><span aria-hidden="true">▷</span></FilmLink>
-          <div><p className="cz-alps-kicker">Across the Alps · Odcinek {Number(chapter.number)}/5 · {chapter.episode.duration}</p><h4>{chapter.title} {chapter.altitude} m</h4><nav aria-label={`Film z etapu ${chapter.title}`}><FilmLink href={chapter.episode.youtubeUrl}>Obejrzyj odcinek ↗</FilmLink>{chapter.episode.chapters.filter(part => part.title === chapter.title).map(part => <FilmLink key={part.seconds} href={`${chapter.episode.youtubeUrl}&t=${part.seconds}s`}>Na szczycie · {part.time} ↗</FilmLink>)}</nav></div>
+          <div><p className="cz-alps-kicker">Across the Alps · Odcinek {Number(chapter.number)}/5 · {chapter.episode.duration}</p><h4>{chapter.title} {chapter.altitude} m</h4><nav aria-label={`Film z etapu ${chapter.title}`}><FilmLink href={chapter.episode.youtubeUrl}>Obejrzyj odcinek ↗</FilmLink>{chapter.episode.chapters?.filter(part => part.title === chapter.title).map(part => <FilmLink key={part.seconds} href={`${chapter.episode.youtubeUrl}&t=${part.seconds}s`}>Na szczycie · {part.time} ↗</FilmLink>)}</nav></div>
         </div>}
         <dl className="cz-alps-stage-stats"><div><dt>Dystans</dt><dd>{number(chapter.distance, 2)} km</dd></div><div><dt>Podejścia</dt><dd>+{number(chapter.ascent)} m</dd></div><div><dt>Czas ruchu</dt><dd>{chapter.movingTime}</dd></div></dl>
         {chapter.statsNote && <p className="cz-alps-stats-note">{chapter.statsNote}</p>}
         {chapter.id === 'dufourspitze' && <DufourRoute showPhotos={false} />}
         {chapter.id !== 'dufourspitze' && <TripRoute routeId={chapter.id} showPhotos={false} />}
-        {chapter.photos.length > 0 && <StoryPhotos title={chapter.title} photos={chapter.photos} groupId={chapter.id} />}
-        {chapter.days?.map((day, index) => <div className="cz-alps-day" key={day.title}><p className="cz-alps-kicker">Dzień {index + 1} / 3</p><h4>{day.title}</h4><p className="cz-alps-description">{day.description}</p><StoryPhotos title={`Dufourspitze · ${day.title}`} photos={day.photos} groupId={dayGroups[index]} /></div>)}
+        {hasStagePhotos(chapter) && <div className="cz-alps-stage-photos" id={photoAnchor(chapter)} tabIndex={-1}>
+          {chapter.photos.length > 0 && <StoryPhotos title={chapter.title} photos={chapter.photos} groupId={chapter.id} />}
+          {chapter.days?.map((day, index) => <div className="cz-alps-day" key={day.title}><p className="cz-alps-kicker">Dzień {index + 1} / 3</p><h4>{day.title}</h4><p className="cz-alps-description">{day.description}</p><StoryPhotos title={`Dufourspitze · ${day.title}`} photos={day.photos} groupId={dayGroups[index]} /></div>)}
+        </div>}
       </section>{chapter.pause && <aside className="cz-alps-pause" aria-label={`Przerwa po ${chapter.title}`}><p className="cz-alps-kicker">Między szczytami · {chapter.number} → {String(Number(chapter.number) + 1).padStart(2, '0')}</p><h3>{chapter.pause.title}</h3><p className="cz-alps-description">{chapter.pause.description}</p><StoryPhotos title={chapter.pause.title} photos={chapter.pause.photos} groupId={pauseGroups[chapter.id]} /></aside>}</React.Fragment>)}</div>
     </div>
     <section className="cz-alps-crew" aria-labelledby="alps-crew-title"><p className="cz-alps-kicker">Ekipa</p><h2 id="alps-crew-title">Marcin, Max, Karol i Agata.</h2><p>Fotografie i filmy: Marcin Zieliński / Cinek Zielu.</p></section>
-    <section className="cz-alps-series" aria-labelledby="alps-series-title"><p className="cz-alps-kicker">Seria filmowa</p><h2 id="alps-series-title">Odcinki Across the Alps</h2><p>Pierwszy odcinek z Triglavu jest już dostępny. Kolejne odcinki są w przygotowaniu.</p><ol>{alpsStory.map(chapter => <li key={chapter.id}><span>{chapter.number}</span><strong>{chapter.title}</strong>{chapter.episode ? <FilmLink href={chapter.episode.youtubeUrl}>Obejrzyj · {chapter.episode.duration} ↗</FilmLink> : <small>{chapter.episodeStatus}</small>}</li>)}</ol><FilmLink href={trailer.url}>Obejrzyj zwiastun ↗</FilmLink></section>
-    <div className="cz-alps-ending"><p className="cz-alps-kicker">Cała kolekcja</p><h2>{alpsStoryGallery.photos.length} fotografie w galerii.</h2><a href="/galerie/alpy-2026">Otwórz galerię ↗</a></div>
+    <div className="cz-alps-ending"><p className="cz-alps-kicker">Cała kolekcja</p><h2>{photoCount(alpsStoryGallery.photos.length)} w galerii.</h2><a href="/galerie/alpy-2026">Otwórz galerię ↗</a></div>
   </section>
 }

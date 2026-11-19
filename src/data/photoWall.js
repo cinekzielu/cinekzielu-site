@@ -6,6 +6,7 @@ export const WALL_PATH = '/fotografia/sciana'
 export const STORAGE_KEY = 'cz-photo-wall-v1'
 export const WALL_WIDTH = 300
 export const WALL_HEIGHT = 200
+export const WALL_MAX_FRAMES = 6
 
 // Only the author's existing portfolio is available in saved and shared walls.
 // The asset filename remains stable when the portfolio is reordered.
@@ -16,6 +17,8 @@ export const wallPhotos = portfolioPhotos.map(photo => ({
   collectionIds: photographyCollections.filter(collection => collection.photos.some(item => item.full === photo.full)).map(collection => collection.id),
 }))
 export const wallPhotoById = new Map(wallPhotos.map(photo => [photo.id, photo]))
+const wallPhotoByFull = new Map(wallPhotos.map(photo => [photo.full, photo]))
+export const findWallPhoto = photo => wallPhotoByFull.get(photo?.full)
 
 export const WALL_COLORS = [
   { id: 'linen', label: 'Ciepła biel', color: '#e5e0d7' },
@@ -44,6 +47,7 @@ export const LAYOUTS = [
 ]
 
 const formatsById = new Map(PRINT_FORMATS.map(format => [format.id, format]))
+const defaultWall = { version: 1, wall: 'linen', frame: 'black', mat: true }
 const isRecord = value => value !== null && typeof value === 'object' && !Array.isArray(value) && [Object.prototype, null].includes(Object.getPrototypeOf(value))
 const hasId = (items, id) => typeof id === 'string' && items.some(item => item.id === id)
 const finite = value => typeof value === 'number' && Number.isFinite(value)
@@ -70,7 +74,7 @@ export function clampFrame(frame, mat = true) {
 
 export function normalizeWallConfig(input) {
   if (!isRecord(input) || input.version !== 1 || !hasId(WALL_COLORS, input.wall) || !hasId(FRAME_COLORS, input.frame)
-    || typeof input.mat !== 'boolean' || !Array.isArray(input.frames) || input.frames.length < 1 || input.frames.length > 6) return null
+    || typeof input.mat !== 'boolean' || !Array.isArray(input.frames) || input.frames.length < 1 || input.frames.length > WALL_MAX_FRAMES) return null
   const frames = []
   for (const frame of input.frames) {
     if (!isRecord(frame) || !wallPhotoById.has(frame.photoId) || !formatsById.has(frame.format) || !finite(frame.x) || !finite(frame.y)) return null
@@ -97,7 +101,7 @@ export function createLayout(layoutId = 'triptych', previousConfig) {
   const extras = [...defaultPhotos, ...wallPhotos].filter((photo, index, photos) => !used.has(photo.id) && photos.findIndex(item => item.id === photo.id) === index)
   const photos = [...(previous?.frames.map(frame => wallPhotoById.get(frame.photoId)) || []), ...extras]
   return normalizeWallConfig({
-    version: 1, wall: previous?.wall || 'linen', frame: previous?.frame || 'black', mat: previous?.mat ?? true,
+    ...(previous || defaultWall),
     frames: layout.map((frame, index) => ({ photoId: photos[index % photos.length].id, ...frame })),
   })
 }
@@ -116,6 +120,33 @@ export function parseWallConfig(text) {
 export function wallSharePath(config) {
   const params = new URLSearchParams({ uklad: serializeWallConfig(config) })
   return `${WALL_PATH}?${params}`
+}
+
+export function wallPathForPhotos(photos) {
+  if (!Array.isArray(photos) || !photos.length || photos.length > WALL_MAX_FRAMES) return null
+  const eligible = Array.from(photos, findWallPhoto)
+  if (eligible.some(photo => !photo)) return null
+
+  const count = eligible.length
+  const singleRow = { 1: layoutFrames.solo, 2: layoutFrames.duet, 3: layoutFrames.triptych }[count]
+  const topRowCount = Math.ceil(count / 2)
+  const frames = eligible.map((photo, index) => {
+    const portrait = photo.height > photo.width
+    if (singleRow) {
+      const { x, y, format } = singleRow[index]
+      return { photoId: photo.id, x, y, format: portrait ? format.split('x').reverse().join('x') : format }
+    }
+    const top = index < topRowCount
+    const rowCount = top ? topRowCount : count - topRowCount
+    const column = top ? index : index - topRowCount
+    return {
+      photoId: photo.id,
+      x: 50 + (column - (rowCount - 1) / 2) * 21,
+      y: top ? 28 : 56,
+      format: portrait ? '30x40' : '40x30',
+    }
+  })
+  return wallSharePath({ ...defaultWall, frames })
 }
 
 export function buildWallInquiry(config, absoluteURL) {

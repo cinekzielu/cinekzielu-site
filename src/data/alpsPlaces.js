@@ -7,17 +7,20 @@ const countryByPeak = {
   grauspitz: 'liechtenstein', zugspitze: 'germany',
 }
 export const alpsCountryIds = [...new Set(Object.values(countryByPeak))]
-export const alpsPlaces = alpsStory.map(chapter => ({
-  id: chapter.id, name: chapter.title, kind: 'Szczyt', view: 'terrain',
-  parent: countryByPeak[chapter.id], altitude: `${chapter.altitude} m`,
-  lat: chapter.lat, lng: chapter.lng, icon: 'mountain', related: ['alpy'],
-  coordinateSource: `https://www.openstreetmap.org/node/${chapter.osmNode}`,
-  ...(chapter.episode ? { chapter: { videoId: chapter.episode.youtubeId, ...chapter.episode.chapters.find(part => part.title === chapter.title) } } : {}),
-  description: `${chapter.country} · Across the Alps 2026. ${chapter.id === 'grauspitz' ? 'Vorder Grauspitz.' : 'Szczyt zdobyty podczas sierpniowej wyprawy.'}`,
-  visit: {
-    year: '2026', expeditionId: 'alpy-2026', number: chapter.number,
-    distance: chapter.distance, ascent: chapter.ascent, movingTime: chapter.movingTime,
-    note: chapter.statsNote || 'Dane z aktywności podczas tego etapu wyprawy.',
-    href: `/wyprawy/alpy-2026${alpsStoryHash(chapter)}`,
-  },
-}))
+export const alpsPlaces = alpsStory.map(chapter => {
+  const summitMoment = chapter.episode?.chapters?.find(part => part.title === chapter.title)
+  return {
+    id: chapter.id, name: chapter.title, kind: 'Szczyt', view: 'terrain',
+    parent: countryByPeak[chapter.id], altitude: `${chapter.altitude} m`,
+    lat: chapter.lat, lng: chapter.lng, icon: 'mountain', related: ['alpy'],
+    coordinateSource: `https://www.openstreetmap.org/node/${chapter.osmNode}`,
+    ...(summitMoment ? { chapter: { videoId: chapter.episode.youtubeId, ...summitMoment } } : {}),
+    description: `${chapter.country} · Across the Alps 2026. ${chapter.id === 'grauspitz' ? 'Vorder Grauspitz.' : 'Szczyt zdobyty podczas sierpniowej wyprawy.'}`,
+    visit: {
+      year: '2026', expeditionId: 'alpy-2026', number: chapter.number,
+      distance: chapter.distance, ascent: chapter.ascent, movingTime: chapter.movingTime,
+      note: chapter.statsNote || 'Dane z aktywności podczas tego etapu wyprawy.',
+      href: `/wyprawy/alpy-2026${alpsStoryHash(chapter)}`,
+    },
+  }
+})
