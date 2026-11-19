@@ -1,6 +1,7 @@
 import React, { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { RouteLinkNotice } from './RouteLinkNotice'
 import { CollectionShell } from './CollectionShell'
+import { AtlasPageNav } from './AtlasPageNav'
 import { SaveButton } from './SavedItems'
 import { TripRoute } from './TripRoute'
 import { RoutePhotoPreview } from './RoutePhotoPreview'
@@ -118,8 +119,9 @@ export function RouteCatalog() {
     requestAnimationFrame(() => { mapSection.current?.scrollIntoView({ behavior: 'instant', block: 'start' }); mapSection.current?.focus({ preventScroll: true }) })
   }
   return <CollectionShell section="wyprawy" detail className="cz-routes">
-    <div className="cz-gallery-intro"><h1>Trasy</h1><span className="cz-gallery-count">{catalog.length} tras GPX · {routeRegions.join(' · ')}</span></div>
+    <div className="cz-gallery-intro"><h1>Trasy GPX</h1><span className="cz-gallery-count">{catalog.length} tras · {routeRegions.join(' · ')}</span></div>
     <p className="cz-route-catalog-intro">Moje przejścia na mapie. Wybierz trasę, zobacz jej przebieg albo porównaj dwa profile wysokości.</p>
+    <AtlasPageNav current="/trasy" />
     <RouteLinkNotice search={searchRef.current} outsideArea={areaReady && Boolean(requestedSelected) && !selected} />
     <ComparisonPicks state={state} onSelect={pick => {
       update({ compare: pick.compare, compareDays: pick.compareDays }, '#porownanie')

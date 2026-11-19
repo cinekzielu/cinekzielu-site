@@ -5,7 +5,7 @@ import { ResponsivePhoto } from './ResponsivePhoto'
 import { photographyCollections } from '../data/portfolioData'
 import { SITE_ORIGIN } from '../data/siteMetadata'
 import {
-  STORAGE_KEY, WALL_WIDTH, WALL_HEIGHT, wallPhotos, wallPhotoById,
+  STORAGE_KEY, WALL_WIDTH, WALL_HEIGHT, WALL_MAX_FRAMES, wallPhotos, wallPhotoById,
   WALL_COLORS, FRAME_COLORS, PRINT_FORMATS, LAYOUTS, frameDimensions,
   clampFrame, createLayout, normalizeWallConfig, serializeWallConfig,
   parseWallConfig, wallSharePath, buildWallInquiry,
@@ -89,7 +89,7 @@ export function PhotoWall() {
     window.requestAnimationFrame(() => frameButtons.current[next]?.focus({ preventScroll: true }))
   }
   const addFrame = () => {
-    if (config.frames.length >= 6) return
+    if (config.frames.length >= WALL_MAX_FRAMES) return
     const nextPhoto = wallPhotos.find(item => !config.frames.some(frame => frame.photoId === item.id)) || wallPhotos[0]
     const next = config.frames.length
     change(current => ({ ...current, frames: [...current.frames, clampFrame({ photoId: nextPhoto.id, format: '40x30', x: 50, y: 65 }, current.mat)] }))
@@ -151,7 +151,7 @@ export function PhotoWall() {
     <noscript><p>Do układania ramek włącz JavaScript. <a href="/fotografia">Zobacz portfolio fotografii.</a></p></noscript>
     <div className="cz-wall-workspace">
       <section id="kompozycja" className="cz-wall-preview" aria-labelledby="cz-wall-preview-title">
-        <div className="cz-wall-preview-top"><h2 id="cz-wall-preview-title">Twoja kompozycja</h2><span>{config.frames.length} / 6 ramek</span></div>
+        <div className="cz-wall-preview-top"><h2 id="cz-wall-preview-title">Twoja kompozycja</h2><span>{config.frames.length} / {WALL_MAX_FRAMES} ramek</span></div>
         <div ref={scene} className={`cz-wall-scene is-${config.wall}`} style={{ '--wall-color': wall.color }}
           role="group" aria-label="Podgląd ściany z fotografiami" aria-describedby="cz-wall-help">
           <div className="cz-wall-light" aria-hidden="true" />
@@ -196,7 +196,7 @@ export function PhotoWall() {
           <div className="cz-wall-position"><span>Przesuń ramkę</span><div role="group" aria-label="Przesuń wybraną ramkę">
             {[[ArrowLeft, -2, 0, 'W lewo'], [ArrowUp, 0, -2, 'W górę'], [ArrowDown, 0, 2, 'W dół'], [ArrowRight, 2, 0, 'W prawo']].map(([Icon, x, y, label]) => <button type="button" key={label} aria-label={label} onClick={() => move(x, y)}><Icon size={17} aria-hidden="true" /></button>)}
           </div></div>
-          <div className="cz-wall-frame-actions"><button type="button" onClick={addFrame} disabled={config.frames.length >= 6}><Plus size={15} aria-hidden="true" />Dodaj ramkę</button><button type="button" onClick={() => removeFrame()} disabled={config.frames.length <= 1}><Trash2 size={15} aria-hidden="true" />Usuń</button></div>
+          <div className="cz-wall-frame-actions"><button type="button" onClick={addFrame} disabled={config.frames.length >= WALL_MAX_FRAMES}><Plus size={15} aria-hidden="true" />Dodaj ramkę</button><button type="button" onClick={() => removeFrame()} disabled={config.frames.length <= 1}><Trash2 size={15} aria-hidden="true" />Usuń</button></div>
         </div>
         <p className="cz-wall-note">Pełny kadr, bez przycinania. Format dotyczy fotografii; rama i passe-partout powiększają jej obrys.</p>
       </aside>

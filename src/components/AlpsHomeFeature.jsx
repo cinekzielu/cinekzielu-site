@@ -2,8 +2,7 @@ import React from 'react'
 import { ArrowUpRight, Play } from 'lucide-react'
 import { ResponsivePhoto } from './ResponsivePhoto'
 import { FilmLink } from './SiteTools'
-import { alpsStoryGallery } from '../data/alpsStory'
-import { alpsEpisodes } from '../data/alpsEpisodes'
+import { alpsStoryGallery, latestAlpsChapter } from '../data/alpsStory'
 import '../alpsHomeFeature.css'
 
 const photo = alpsStoryGallery.photos.find(item => item.src.endsWith('/alpy-2026-25-small.webp'))
@@ -21,7 +20,9 @@ export function AlpsHomeFeature() {
           <p className="cz-alps-feature-lead">Filmy, fotografie i trasy z wyjazdu w Alpy.</p>
           <div className="cz-alps-feature-actions">
             <a className="button primary" href="/wyprawy/alpy-2026">Zobacz wyprawę <ArrowUpRight size={17} aria-hidden="true" /></a>
-            <FilmLink className="cz-alps-feature-trailer" href={alpsEpisodes.triglav.youtubeUrl}><Play size={16} aria-hidden="true" /> Odcinek 1: Triglav · {alpsEpisodes.triglav.duration}</FilmLink>
+            {latestAlpsChapter && <FilmLink className="cz-alps-feature-trailer" href={latestAlpsChapter.episode.youtubeUrl}>
+              <Play size={16} aria-hidden="true" /> Odcinek {Number(latestAlpsChapter.number)}: {latestAlpsChapter.title} · {latestAlpsChapter.episode.duration}
+            </FilmLink>}
           </div>
         </div>
       </div>

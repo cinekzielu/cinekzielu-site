@@ -9,6 +9,7 @@ import {useSavedSets} from './useSavedSets'
 import {savedByKey, savedCatalog, savedComparisonHref} from '../data/savedItems'
 import {MAX_SETS, MAX_SET_ITEMS, decodeSharedSet, setName, sharedSetPath} from '../data/savedSets'
 import {normalizeFilmSearch} from '../data/filmCatalog'
+import {findWallPhoto, wallPathForPhotos, WALL_MAX_FRAMES} from '../data/photoWall'
 import '../savedSets.css'
 
 const materialCount = n => `${n} ${n === 1 ? 'materiał' : n % 10 >= 2 && n % 10 <= 4 && !(n % 100 >= 12 && n % 100 <= 14) ? 'materiały' : 'materiałów'}`
@@ -26,8 +27,18 @@ function SetItems({set, remove, move}) {
   const routes = set.items.filter(key => savedByKey.get(key)?.type === 'route')
   const moveItem = (event,key,delta) => { const group=event.currentTarget.parentElement; move(key,delta); requestAnimationFrame(()=>group.querySelector('button:not(:disabled)')?.focus({preventScroll:true})) }
   const photos = set.items.map(key => savedByKey.get(key)).filter(item => item?.type === 'photo').map(item => ({...item.photo, sourceHref:item.href}))
+  const wallPhotos = photos.filter(findWallPhoto)
+  const wallLimited = wallPhotos.length > WALL_MAX_FRAMES
+  const wallHref = wallPathForPhotos(wallPhotos.slice(0, WALL_MAX_FRAMES))
   return <>
     {photos.length > 0 && <PhotoSlideshowButton photos={photos} title={set.name} tripHref={null} />}
+    {wallHref && <div className="cz-set-wall-entry">
+      <a className="cz-set-wall-link" href={wallHref}>{wallLimited ? `Ułóż pierwsze ${WALL_MAX_FRAMES} na ścianie` : 'Ułóż na ścianie'} <span aria-hidden="true">↗</span></a>
+      {wallLimited
+        ? <p>Układ otworzy pierwsze {WALL_MAX_FRAMES} z {wallPhotos.length} zdjęć z portfolio w kolejności zestawu.</p>
+        : wallPhotos.length < set.items.length && <p>Studio pokaże zdjęcia z portfolio ({wallPhotos.length} z {set.items.length} materiałów). Pozostałe materiały zostaną w zestawie.</p>}
+    </div>}
+    {photos.length > 0 && !wallHref && <p className="cz-set-muted">Studio korzysta ze zdjęć z portfolio. W tym zestawie nie ma takich zdjęć.</p>}
     {routes.length > 1 && <div className="cz-saved-compare"><p>Wybierz dwie trasy. <span aria-live="polite">{chosen.length} / 2</span></p>{href ? <a href={href}>Porównaj trasy ↗</a> : <button disabled>Porównaj trasy</button>}</div>}
     {photoOnly && <div className="cz-set-view" role="group" aria-label="Widok fotografii w zestawie"><button aria-pressed={grid} onClick={()=>setView('grid')}>Siatka zdjęć</button><button aria-pressed={!grid} onClick={()=>setView('list')}>Lista</button></div>}
     <div className={`cz-set-items${grid ? ' is-photo-grid' : ''}`}>{set.items.map((key, index) => {

@@ -13,7 +13,7 @@ export function HomeUpdates() {
       <header className="cz-home-updates-heading">
         <p className="cz-home-updates-eyebrow">Na stronie</p>
         <h2 id="home-updates-title">Ostatnio dodane</h2>
-        <p>Nowe materiały i uzupełnienia. Według daty dodania na stronę.</p>
+        <p>Nowe materiały i uzupełnienia według daty publikacji.</p>
       </header>
       <ol className="cz-home-updates-list">
         {homeUpdates.map(update => {

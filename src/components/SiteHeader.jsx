@@ -6,10 +6,11 @@ import { usePageLocation } from '../PageLocation'
 import '../siteHeader.css'
 import brandLogo from '../assets/brand/cinek-zielu-logo-biale.svg'
 
-const sections = [ { id: 'fotografia', label: 'Fotografia' }, { id: 'wyprawy', label: 'Wyprawy' }, { id: 'szczyty', label: 'Moje szczyty' }, { id: 'filmy', label: 'Filmy' }, { id: 'mapa', label: 'Mapa' }, { id: 'galerie', label: 'Galerie' }, { id: 'o-mnie', label: 'O mnie' } ]
+const sections = [ { id: 'fotografia', label: 'Fotografia' }, { id: 'wyprawy', label: 'Wyprawy' }, { id: 'szczyty', label: 'Moje szczyty' }, { id: 'filmy', label: 'Filmy' }, { id: 'mapa', label: 'Mapa' }, { id: 'o-mnie', label: 'O mnie' } ]
 const groups = {
   fotografia: [
     { href: '/fotografia', label: 'Portfolio', description: 'Wybrane fotografie Marcina' },
+    { href: '/galerie', label: 'Galerie z wypraw', description: 'Zdjęcia pogrupowane według wypraw' },
     { href: '/fotografia/sciana', label: 'Studio fotografii', description: 'Wybierz zdjęcia i ułóż ramki na ścianie' },
   ],
   wyprawy: [
@@ -22,7 +23,7 @@ const groups = {
   ],
   mapa: [
     { href: '/mapa', label: 'Atlas miejsc', description: 'Kraje, pasma i szczyty' },
-    { href: '/trasy', label: 'Atlas tras', description: 'Ślady GPX i porównanie tras' },
+    { href: '/trasy', label: 'Trasy GPX', description: 'Przebiegi tras i profile wysokości' },
   ],
 }
 
@@ -31,8 +32,12 @@ export function SiteHeader({ section, detail = false }) {
   const menuId = useId()
   const menu = useRef(null)
   const toggle = useRef(null)
-  const { pathname, search } = usePageLocation()
-  const activeSection = pathname.startsWith('/fotografia') ? 'fotografia' : pathname === '/trasy' ? 'mapa' : pathname.startsWith('/sezony') ? 'wyprawy' : section
+  const location = usePageLocation()
+  const pathname = location.pathname.replace(/\/+$/, '') || '/'
+  const { search } = location
+  const sectionPath = pathname.split('/')[1]
+  const isGallery = pathname.startsWith('/galerie/')
+  const activeSection = ['fotografia', 'galerie'].includes(sectionPath) ? 'fotografia' : pathname === '/trasy' ? 'mapa' : pathname.startsWith('/sezony') ? 'wyprawy' : section
   const activePath = pathname === '/wyprawy' && new URLSearchParams(search).get('widok') === 'os' ? '/wyprawy?widok=os' : pathname
   const closeGroups = () => menu.current?.querySelectorAll('details[open]').forEach(group => { group.open = false })
   const closeMenu = () => { closeGroups(); setMenuOpen(false) }
@@ -64,7 +69,7 @@ export function SiteHeader({ section, detail = false }) {
             onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) event.currentTarget.open = false }}
             onKeyDown={event => { if (event.key === 'Escape' && event.currentTarget.open) { event.stopPropagation(); event.currentTarget.open = false; event.currentTarget.querySelector('summary')?.focus() } }}>
             <summary>{item.label}<svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.5" /></svg></summary>
-            <div className="cz-nav-submenu">{groups[item.id].map(link => <a key={link.href} href={link.href} aria-current={activePath === link.href ? 'page' : undefined} onClick={closeMenu}><span>{link.label}</span><small>{link.description}</small></a>)}</div>
+            <div className="cz-nav-submenu">{groups[item.id].map(link => <a key={link.href} href={link.href} aria-current={activePath === link.href ? 'page' : isGallery && link.href === '/galerie' ? 'location' : undefined} onClick={closeMenu}><span>{link.label}</span><small>{link.description}</small></a>)}</div>
           </details> : <a key={item.id} href={`/${item.id}`} aria-current={item.id === activeSection && !detail ? 'page' : undefined} onClick={closeMenu} className={item.id === activeSection ? 'is-active' : ''}>{item.label}</a>)}
         </nav>
       </header>

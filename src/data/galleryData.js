@@ -387,12 +387,14 @@ export const galleryData = [
     ],
     "relatedExpeditionIds": [],
     "films": [
-      {
-        id: alpsEpisodes.triglav.youtubeId,
-        title: alpsEpisodes.triglav.title,
-        label: 'Odcinek 1/5',
-        url: alpsEpisodes.triglav.youtubeUrl,
-      },
+      ...Object.values(alpsEpisodes)
+        .sort((a, b) => a.episodeNumber - b.episodeNumber)
+        .map(episode => ({
+          id: episode.youtubeId,
+          title: episode.title,
+          label: `Odcinek ${episode.episodeNumber}/5`,
+          url: episode.youtubeUrl,
+        })),
       {
         "id": "l3KltGrKz2U",
         "title": "Across the Alps",
